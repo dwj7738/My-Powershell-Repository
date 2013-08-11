@@ -1,0 +1,18 @@
+lease"/>
+			<assemblyIdentity name="Microsoft-Windows-ServerCore-WOW64-Package" language="tr-TR" version="6.1.7600.16385" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-FailoverCluster-Core-WOW64-Package" language="tr-TR" version="6.1.7600.16385" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-WindowsFoundation-LanguagePack-Package" language="uk-UA" version="6.1.7601.17514" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-WindowsFoundation-LanguagePack-Package" language="uk-UA" version="6.1.7600.16385" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-FailoverCluster-Core-WOW64-Package" language="uk-UA" version="6.1.7601.17514" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-ServerCore-WOW64-Package" language="uk-UA" version="6.1.7601.17514" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-ServerCore-WOW64-Package" language="uk-UA" version="6.1.7600.16385" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-FailoverCluster-Core-WOW64-Package" language="uk-UA" version="6.1.7600.16385" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-WindowsFoundation-LanguagePack-Package" language="zh-CN" version="6.1.7601.17514" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-WindowsFoundation-LanguagePack-Package" language="zh-CN" version="6.1.7600.16385" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-FailoverCluster-Core-WOW64-Package" language="zh-CN" version="6.1.7601.17514" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-ServerCore-WOW64-Package" language="zh-CN" version="6.1.7601.17514" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-ServerCore-WOW64-Package" language="zh-CN" version="6.1.7600.16385" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-FailoverCluster-Core-WOW64-Package" language="zh-CN" version="6.1.7600.16385" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-WindowsFoundation-LanguagePack-Package" language="zh-TW" version="6.1.7601.17514" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-WindowsFoundation-LanguagePack-Package" language="zh-HK" version="6.1.7601.17514" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" buildType="release"/>
+			<assemblyIdentity name="Microsoft-Windows-WindowsFoundation-LanguagePack-Package" language="zh-TW" version="6.1.7600.16385" processorArchitecture="amd6
