@@ -1,0 +1,11 @@
+﻿  <Type>
+    <Name>MOL.SystemInfo</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>NormalizedBIOSSerial</Name>
+        <GetScriptBlock>
+            $this.biosserial -replace ' ',''
+        </GetScriptBlock>
+        </ScriptProperty>
+    </Members>
+  </Type>

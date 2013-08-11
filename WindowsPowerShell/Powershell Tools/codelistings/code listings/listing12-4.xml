@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>MOL.SystemInfo</Name>
+            <ViewSelectedBy>
+                <TypeName>MOL.SystemInfo</TypeName>
+            </ViewSelectedBy>
+
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader/>    #1
+                    <TableColumnHeader>     #2
+                        <Label>Mfgr</Label> #2
+                        <Width>20</Width>   #2
+                    </TableColumnHeader>    #2
+                    <TableColumnHeader>     #3
+                        <Width>20</Width>   #3
+                    </TableColumnHeader>    #3
+                    <TableColumnHeader/>    #4
+                    <TableColumnHeader>     #5
+                        <Label>SP</Label>   #5
+                    </TableColumnHeader>    #5
+                    <TableColumnHeader/>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                        <TableColumnItems>
+                            <TableColumnItem>
+                                <PropertyName>ComputerName</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Manufacturer</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <PropertyName>Model</PropertyName>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <Propertyname>OSVersion</Propertyname>
+                            </TableColumnItem>
+                            <TableColumnItem>
+                                <Propertyname>SPVersion</Propertyname>
+                            </TableColumnItem>
+                        </TableColumnItems>
+                    </TableRowEntry>
+                 </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>

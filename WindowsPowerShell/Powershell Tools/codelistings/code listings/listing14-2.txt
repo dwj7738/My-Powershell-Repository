@@ -1,0 +1,5 @@
+﻿Use [Inventory]
+Go
+INSERT INTO Computers (computername) VALUES ('localhost')
+INSERT INTO Computers (computername) VALUES ('localhost')
+INSERT INTO Computers (computername) VALUES ('not-online')
