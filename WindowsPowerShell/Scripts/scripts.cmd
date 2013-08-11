@@ -1,0 +1,1 @@
+for /F %i in (*.ps1) do scripts2.cmd %%i

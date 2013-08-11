@@ -1,0 +1,1 @@
+﻿Get-Content C:\Windows\WindowsUpdate.Log | Where-Object { $_–like ‘*FATAL*’ –or $_ -like ‘*WARNING*’} | MORE

@@ -1,0 +1,1 @@
+﻿Get-WinEvent -ListLog * -Force |? {$_.IsEnabled } |% {if ($_.LogType -match '^(Analytical|Debug)$') { $_ |Get-WinEvent -Oldest -ea SilentlyContinue|select -First 1 } elseif ($_.RecordCount) {$_ |Get-WinEvent -MaxEvents 1 }} |sort TimeCreated -Des |Format-List TimeCreated, LogName, Id, Message

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<configuration>
+  <connectionStrings>
+    <add name="ConStringPSupply" connectionString="Data Source=.;Initial Catalog=pSupply;User ID=sa;Password=1234" />
+    <add name="ConString1" connectionString="Data Source=.;Initial Catalog=NEW1;Integrated Security=True" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+</configuration>
