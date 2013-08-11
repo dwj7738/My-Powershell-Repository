@@ -1,0 +1,2 @@
+$DisconnectedUsers = Get-MailboxStatistics -Server usb-mail1 | where-object { $_.DisconnectDate -ne $null } | ?{$_.DisconnectDate -lt (get-date).AddDays(-10)} | Select DisplayName,Database,MailboxGuid
+$DisconnectedUsers | ForEach { Remove-Mailbox -Database $_.Database -StoreMailboxIdentity $_.MailboxGuid -confirm:$false }

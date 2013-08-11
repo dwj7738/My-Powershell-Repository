@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>try...catch</Title>
+      <Shortcut>tc</Shortcut>
+      <Description>Code snippet for try...catch block</Description>
+      <Author>Quest Software, Inc.</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+        <SnippetType>SurroundsWith</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>exceptionType</ID>
+          <Default>[System.IO.IOException]</Default>
+          <ToolTip>Type of exception to trap</ToolTip>
+        </Literal>
+	  </Declarations>
+      <Code Language="powershell">
+        <![CDATA[<#
+	For more information on the try, catch and finally keywords, see:
+		Get-Help about_try_catch_finally
+#>
+
+# Try one or more commands
+try {
+	$selected$$end$
+}
+# Catch specific types of exceptions thrown by one of those commands
+catch $exceptionType$ {
+}
+# Catch all other exceptions thrown by one of those commands
+catch {
+}]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

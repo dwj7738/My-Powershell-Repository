@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Remote command</Title>
+      <Shortcut>remote</Shortcut>
+      <Description>Code snippet for running a command or a script block on a remote system</Description>
+      <Author>Quest Software, Inc.</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+        <SnippetType>SurroundsWith</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>computerName</ID>
+          <Default>localhost</Default>
+          <ToolTip>The name of one or more computers on which the script will be run</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="powershell">
+        <![CDATA[<#
+	For more information about PowerShell remoting, see:
+		Get-Help about_remoting
+		Get-Help about_remote_requirements
+		Get-Help about_remote_FAQ
+		Get-Help Invoke-Command	
+#>
+Invoke-Command -ComputerName $computerName$ -ScriptBlock {
+	$selected$$end$
+}]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
