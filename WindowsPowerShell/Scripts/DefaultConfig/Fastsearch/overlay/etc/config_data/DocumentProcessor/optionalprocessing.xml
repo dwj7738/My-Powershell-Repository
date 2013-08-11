@@ -1,0 +1,79 @@
+<!--
+  Optional processing features.
+-->
+
+<optionalprocessing>
+  
+<!-- 
+    The optional feature 'personnameextraction' is emitting a crawled 
+    property MESG Linguistcs personname(31) that can be used as a 
+    refiner displaying person names extracted from the content.
+  -->
+  
+<processor name="personnameextraction" active="no"/>
+
+  
+<!--
+    Work in progress!
+  -->
+  
+<processor name="XMLMapper" active="yes"/>
+
+  
+<!--
+    The OffensiveContentFilter (OCF) feature analyzes the amount of pornographic
+    content in each processed document, tags the documents with an according 
+    crawled property and finally drops documents that are pornographic.
+  -->
+  
+<processor name="OffensiveContentFilter" active="no"/>
+
+  
+<!-- 
+    The FFDDumper feature is mainly used for support and debugging purposes.
+    If activated all procserver processes in the system start populating the
+    directory %FASTSEARCH%\data\ffd on the same processing nodes with so called
+    FFD files.
+
+    The feature causes a considerable I/O load on the feeding nodes and consumes
+    disk space in the mentioned folder on the same machines. 
+  -->
+  
+<processor name="FFDDumper" active="no"/>
+
+  
+<!--
+    The following machers are based on dictionaries in the Resource Store:
+    
+    dictionaries/matching/wholewords_extraction{1,2,3}.xml
+    dictionaries/matching/wordparts_extraction{1,2}.xml
+
+    which can be edited by users to implement custom crawled properties
+    extracted from the content. These can e.g. be used for refiners.
+
+    The WholeWordsExtractor{1,2,3} features are optimized for matching
+    words in Western languages, and the WordsPartExtractor{1,2} features
+    are optimized for substring lookup which is needed e.g. for Asian
+    languages.
+  -->
+  
+<processor name="wholewordsextractor1" active="no"/>
+  
+<processor name="wholewordsextractor2" active="no"/>
+  
+<processor name="wholewordsextractor3" active="no"/>
+  
+<processor name="wordpartextractor1" active="no"/>
+  
+<processor name="wordpartextractor2" active="no"/>
+  
+  
+<!--
+  NOTE: This feature must be enabled/disabled with %FASTSEARCH%\installer\scripts\AdvancedFilterPack.ps1.
+  Do not manually modify this setting.
+  -->
+  
+<processor name="SearchExportConverter" active="no"/>
+
+
+</optionalprocessing>
