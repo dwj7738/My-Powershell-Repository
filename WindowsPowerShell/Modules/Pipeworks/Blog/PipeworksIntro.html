@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>PowerShell is now a Web Language</title>
+<style type="text/css">
+.auto-style1 {
+	margin-left: 40px;
+}
+</style>
+</head>
+
+<body>
+<div itemscope="" itemtype="http://schema.org/BlogPosting">
+<meta content="Update-Web -with PowerShell Pipeworks" itemprop="Name" />
+<meta content="James Brundage" itemprop="Author" />
+<meta content="Wed, 01 Feb 2012 02:05:52 GMT" itemprop="DatePublished" />
+<div itemprop="ArticleText">
+<p>PowerShell is now a Web Language.</p>
+<p><a href="http://powershellpipeworks.com/">PowerShell&nbsp; Pipeworks</a> is a module for making sites and services with 
+PowerShell.&nbsp; It lets you write any web application or service oriented 
+application with Windows PowerShell, and helps you deploy those applications to 
+the cloud.</p>
+<p>PowerShell is an amazing scripting language that is built into every Windows 
+computer starting around Windows 7.&nbsp; It has several capabilities that have 
+the capacity to help fundamentally simplify the way that web applications are 
+built.</p>
+<p>Three things make PowerShell an amazing fit for developing modern 
+applications:</p>
+<ol>
+	<li>The World Is Tasks, and PowerShell is a Task-Oriented Language</li>
+	<li>Views are as Important as Data, and PowerShell has an Amazing View 
+	Engine</li>
+	<li>Connectivity is Key, and PowerShell can Connect Any and All Dots</li>
+</ol>
+<p><strong>The World Is Tasks, and PowerShell is a Task-Oriented Language</strong></p>
+<p style="margin-left:40px;">The people that use the application and the people 
+that develop an application work on different planes of existence.&nbsp; The 
+people who use an application do so to get a thing done.&nbsp; Often, it's 
+describable in simple language, and that language comes out comically when the 
+application is having an issue or two: "Come on, I'm just trying to send a mail 
+here, it's not rocket science!"</p>
+<p style="margin-left:40px;">The people that develop an application live in a 
+world of abstraction.&nbsp;&nbsp; Seriously.&nbsp; Programming language design 
+revolves around the concept of a "real-world metaphor", or a way to make 
+program model the real world as closely as possible.&nbsp; To understand why 
+PowerShell is a new type of language, and why that new type of languages helps 
+you build web applications in seconds, we have to take a quick look back at some 
+of the real-world metaphors that have come before.</p>
+<p style="margin-left:40px;">For the first years of programming, the most common 
+metaphor was the "procedure", which is better understood by what working with 
+them feels like: "a black box".&nbsp; You had stuff that went into a procedure, 
+and stuff came out.&nbsp; What it was, who knew.&nbsp; Languages like C, Fortan, 
+Cobol, Basic, and Pascal are all procedural.&nbsp; To the person making the 
+black box the procedural language makes sense.&nbsp; To the person who uses the 
+black box, well, it's a black box.&nbsp; Black box languages are often very hard 
+to build a user experience around, because black box languages offer only very 
+fundamental building blocks, and they are often very poorly documented.</p>
+<p style="margin-left:40px;">The dominant form of thought for the past 20 years 
+has been something called Object Oriented Programming.&nbsp; In this world. 
+you're working with dealing with carefully constructed objects that have 
+properties (things about them) and methods (things they can do).&nbsp; This 
+sounds good, but the eventual user awkwardness is obvious when you talk out the 
+classic example: The Vehicle Class, and the Plane, the Train, and the 
+Automobile.&nbsp; In the classic example, you take the common things of a 
+vehicle and you put them all in one place.&nbsp; Stuff like Start and Stop often 
+are methods in something called a base class, which is an abstract thing shares 
+common characteristics and useful components for each of the things.&nbsp; It 
+sounds fine in theory, but in effect, it breaks down.&nbsp; Specialization makes 
+these hierarchies of stuff harder to manage, and cases that only work in one 
+place or the other are difficult to deal with and hard to predict.&nbsp; Because 
+most of the time is spent with the abstraction, little is spent with the 
+experience.&nbsp; Sure, you could view all Planes, Trains, and Automobiles as 
+more like Vehicles than like themselves, but if you really designed any Vehicle 
+that way it would probably crash.</p>
+<p style="margin-left:40px;">Task-Oriented Languages combine a little of both 
+approaches, and add this missing ingredient of help.&nbsp; Tasks are like procedures, but unlike the black boxes of 
+procedural language, a task-oriented language focuses on providing a lot of 
+metadata about what the task does, how it works with other tasks, and how you 
+can use it in different ways.&nbsp; Task-oriented languages will also output 
+rich objects from a task, and be able to take complex objects as input.&nbsp; 
+The deep hiearchies of objects are usable in a task-oriented language, but they 
+are never designed to be the primary way experiencing the software.&nbsp;&nbsp; 
+The primary way you'll work with a task-oriented language is with understandable 
+names and understandable parameters.&nbsp; Task-Oriented Languages have 
+everything you need to understand them built into the runtime.</p>
+<p style="margin-left:40px;">This changes everything, because it gets the right 
+real world metaphor.</p>
+<p style="margin-left:40px;">When you write well-defined PowerShell functions, 
+you provide enough 
+information to recreate the experience in any form.&nbsp; Even if you're not 
+deeply versed in software engineering, you're doing a very complex software 
+design technique called Task Modeling.&nbsp; With a good task model, you can take the 
+information and use it to create applications consistently.</p>
+<p style="margin-left:40px;">In Pipeworks, we take the well-defined tasks you've 
+written in PowerShell and&nbsp; turn them into web sites and services, and the 
+scaffolding for applications that interact with this task.</p>
+<p style="margin-left:40px;">The World is Tasks.&nbsp; Once you've written a 
+task in PowerShell, it becomes a site and service in Pipeworks for free.</p>
+	<p style="margin-left:40px;">To turn any module into a service, one 
+	logically named PowerShell Pipeworks command does it all:&nbsp; 
+	ConvertTo-ModuleService.</p>
+	<p style="margin-left:40px;">To turn any command into a service, one 
+	logically named PowerShell Pipeworks command takes care of it: 
+	ConvertTo-CommandService.</p>
+<p><strong>Views are as Important as Data, and PowerShell has an Amazing View 
+Engine</strong></p>
+<p style="margin-left:40px;">Having all of the world's data at your fingertips 
+might be useful, but it can also be overwhelming.&nbsp; Most languages leave 
+this question unanswered, and different answers show up in each UI framework 
+that comes out.&nbsp; This means the same data looks different 
+all over the place.&nbsp; Not "nice" different, but "why is this experience feel 
+weird?" different.&nbsp; It also means that each person 
+writing a solution has to spend a lot of time determining how they make that 
+solution look and feel, and less time is spent actually making it work or adding 
+capabilities.</p>
+<p style="margin-left:40px;">PowerShell has a formatting engine built in, and 
+that formatting engine can be used to descibe what is important to display about 
+any object.&nbsp; This means if you're building a site and service, you can say 
+what pieces of information you want to display, and they'll show up every place 
+you display the content.&nbsp; This is considerably simpler and less error-prone 
+than duplicating the display logic in many places, or investing a lot of time in 
+your own rendering engine. </p>
+<p style="margin-left:40px;">PowerShell Pipeworks leverages this view engine.&nbsp; 
+Any object piped into Out-HTML is rendered for a web page.&nbsp; Types that have defined 
+a set of properties to display become tables with HTML5 
+Microdata.&nbsp; Types that have a custom view defined will run that custom 
+view, and PowerShell Pipeworks ships several custom views for common web 
+microdata schemas found on <a href="http://schema.org/">http://schema.org/</a>.&nbsp; 
+You can define a view for any type you'd like, and create simple property bags 
+on the fly in PowerShell, which allows you to have incredible control over how 
+things are displayed.</p>
+
+<p><strong>Connectivity is Key, and PowerShell can Connect Any and All Dots</strong></p>
+<p style="margin-left:40px;">Writing a complex solution is a factor of how 
+easily you can connect existing pieces, and how many new pieces you must create.&nbsp; 
+PowerShell is what I like to call a superglue language.&nbsp; Where most 
+programming languages spend little time trying to develop packaging or 
+intergrate with other languages, PowerShell was designed from day 1 to leverage 
+other technology and make it usuable within PowerShell or within .NET.&nbsp; While you can use well written tasks, called Cmdlets, to 
+create some solutions, you can also combine more types of solutions with less 
+cost.&nbsp;&nbsp;&nbsp; PowerShell can interact with SOAP or REST web services 
+in just a few lines, work with any .NET or COM object on the system, call old C 
+thru a convention called P/Invoke, run command line programs, work with SQL 
+databases, and almost anything else you can imagine.&nbsp; PowerShell has a rich 
+and helpful open source community, and thousands of solutions for different 
+problems already exist for you to leverage.</p>
+	<p style="margin-left:40px;"><a href="http://powershellpipeworks.com/">PowerShell Pipeworks</a> 
+is our attempt to fundamentally simplify the process of making sites and 
+services, and, in the process, introduce PowerShell to a new set of people.</p>
+	<p style="margin-left:40px;"><a href="http://powershellpipeworks.com/">
+	PowerShell Pipeworks</a> is one of several solutions Start-Automating 
+	provides to the PowerShell community, and it allows people familiar with 
+	PowerShell to easily author web applications.&nbsp; You can use
+	<a href="http://ezout.start-automating.com/">EZOut</a> to create output 
+	views, and use those views within PowerShell Pipeworks. You can use
+	<a href="http://scriptcop.start-automating.com/">ScriptCop</a> to help 
+	prepare your modules and commands for publication, and you can use the
+	<a href="http://autobrowse.start-automating.com/">AutoBrowse</a>,
+	<a href="http://heatmap.start-automating.com/">Heatmap</a>, or
+	<a href="http://pingme.start-automating.com/">PingMe</a> modules to help 
+	test your deployments and monitor your application.&nbsp; We will continue 
+	to add new tools to the PowerShell ecosystem, and new capabilities to 
+	PowerShell Pipeworks.</p>
+	<p>&nbsp;</p>
+	<p>Hope this Helps,</p>
+<p>James Brundage |&nbsp; Founder <a href="http://start-automating.com/">
+Start-Automating</a> | <a href="http://twitter.com/@jamesbru">@jamesBru</a></p>
+<p>&nbsp;</p>
+<p style="margin-left:40px;">&nbsp;</p>
+</div>
+</div>
+</body>
+
+</html>

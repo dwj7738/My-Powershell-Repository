@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>ScriptCopError</Name>
+      <ViewSelectedBy>
+        <TypeName>ScriptCopError</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <PropertyName>Rule</PropertyName>
+      </GroupBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+          </TableColumnHeader>
+          <TableColumnHeader>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <Wrap />
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Problem</PropertyName>                
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ItemWithProblem</PropertyName>                
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

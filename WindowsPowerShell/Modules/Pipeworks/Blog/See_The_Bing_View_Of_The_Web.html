@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>PowerShell is now a Web Language</title>
+</head>
+
+<body>
+<div itemscope="" itemtype="http://schema.org/BlogPosting">
+<meta content="See the Web Thru the Eyes of a Search Engine" itemprop="Name" />
+<meta content="James Brundage" itemprop="Author" />
+<meta content="Get-Web" itemprop="Keyword" />
+<meta content="Microdata" itemprop="Keyword" />
+<meta content="HTML5" itemprop="Keyword" />
+<meta content="Thu, 02 Feb 2012 14:09:49 GMT" itemprop="DatePublished" />
+<div itemprop="ArticleText">
+<p><a href="http://powershellpipeworks.com/">PowerShell&nbsp; Pipeworks</a> has a very handy command that you can use to see the web through the eyes of a search engine: Get-Web.
+</p>
+<p>
+Get-Web helps you consume web pages and build sites that rely on aggregated web data, like small search engines and content aggregation sites. 
+</p>
+<p>
+One handy parameter, -AsMicrodata, helps you pick out Microdata from sites.  In case you don't know about it, <a href="http://www.w3.org/TR/microdata/">Microdata</a> is a way that you can embed structred information inside of a web page.  
+Microsoft, Google, and Yahoo have combined forces to help determine a set of common structures for web sites to use, and have posted them on <a href="http://schema.org">Schema.org</a>.  
+Get-Web -AsMicrodata will parse out that Microdata, which allows you to see the world like a search 
+engine does.</p>
+	<p>
+	For instance, this pulls out information about a movie on&nbsp; IMDB</p>
+
+<pre class='PowerShellColorizedScript'>            
+<span style='color:#0000ff'>Get-Web</span> <span style='color:#000080'>-Url</span> <span style='color:#8b0000'>"http://www.imdb.com/title/tt01/"</span> <span style='color:#000080'>-AsMicrodata</span> <span style='color:#000080'>-ItemType</span> <span style='color:#8a2be2'>http://schema.org/Movie</span>             
+            
+</pre>
+	<p>This one liner can help make me dinner:</p>
+<pre class='PowerShellColorizedScript'><span style='color:#0000ff'>Get-Web</span> <span style='color:#000080'>-Url</span> <span style='color:#8b0000'>"http://www.myrecipes.com/recipe/veal-and-artichoke-stew-with-avgolemono-10000000226585/"</span> <span style='color:#000080'>-AsMicrodata</span> <span style='color:#000080'>-ItemType</span> <span style='color:#8a2be2'>http://data-vocabulary.org/Recipe</span></pre>
+
+<p>
+Having something like Get-Web in your toolkit can help you make mincemeat of 
+content aggregation problems.&nbsp; Many more sites are adopting Microdata by 
+the day, and you can easily consume, search, and aggregate that content with 
+PowerShell Pipeworks.</p>
+
+	<p>Hope this Helps,</p>
+<p>James Brundage |&nbsp; Founder <a href="http://start-automating.com/">
+Start-Automating</a> | <a href="http://twitter.com/@jamesbru">@jamesBru</a></p>
+<p>&nbsp;</p>
+<p style="margin-left:40px;">&nbsp;</p>
+</div>
+</div>
+</body>
+
+</html>

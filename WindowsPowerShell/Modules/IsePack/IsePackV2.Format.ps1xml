@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>IcicleInfo</Name>
+      <ViewSelectedBy>
+        <TypeName>IcicleInfo</TypeName>
+      </ViewSelectedBy>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <Frame>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <ScriptBlock>
+    if ($request -and $response) {
+        # Web view
+        "&lt;h3&gt;$($_.Name)&lt;/h3&gt;
+        &lt;hr/&gt;
+        &lt;blockquote&gt;
+            $(Write-ScriptHTML -Script $_.Icicle )
+        &lt;/blockquote&gt;
+        "
+    } else {
+        # Local view
+        Write-Host $_.Name
+        Write-Host ("-" * $_.Name.Length)
+        Write-Host ($_.Icicle)
+        ""
+    }
+</ScriptBlock>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

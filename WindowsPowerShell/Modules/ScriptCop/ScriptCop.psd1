@@ -1,0 +1,41 @@
+@{
+    ModuleVersion='1.4'
+    FormatsToProcess='ScriptCop.Format.ps1xml'
+    ModuleToProcess='ScriptCop.psm1'
+    CompanyName='Start-Automating'
+    GUID='785d9883-8a2a-4df4-975d-6a14a19cbc2f'
+    Description='ScriptCop is a module to help make sure your PowerShell scripts are following the rules'
+    Copyright='Copyright 2011'
+    Author='James Brundage'
+    FileList='Get-FunctionFromScript.ps1',
+        'Get-ScriptCopFixer.ps1',
+        'Get-ScriptCopRule.ps1',
+        'Get-ScriptToken.ps1',
+        'Get-WalkthruMetaData.ps1',
+        'Register-ScriptCopFixer.ps1',
+        'Register-ScriptCopRule.ps1',
+        'Repair-Command.ps1',
+        'Save-Function.ps1',
+        'ScriptCop.Format.ps1xml',
+        'ScriptCop.psd1',
+        'ScriptCop.psm1',
+        'Test-Command.ps1',
+        'Test-ScriptCopFixer.ps1',
+        'Test-ScriptCopRule.ps1',
+        'Unregister-ScriptCopFixer.ps1',
+        'Unregister-ScriptCopRule.ps1',
+        'en-us\about_ScriptCop.help.txt',
+        'en-us\about_scriptcop_fixers.help.txt',
+        'en-us\about_ScriptCop_Rules.help.txt',
+        'en-us\writing_a_scriptcop_rule.walkthru.help.txt',
+        'Fixers\Repair-ModuleManifest.ps1',
+        'Rules\Test-CommandNamingConvention.ps1',
+        'Rules\Test-ForCommonParameterMistake.ps1',
+        'Rules\Test-ForShouldProcess.ps1',
+        'Rules\Test-Help.ps1',
+        'Rules\Test-ModuleHasAnAboutTopic.ps1',
+        'Rules\Test-ModuleHasAWalkthru.ps1',
+        'Rules\Test-ModuleManifestQuality.ps1',
+        'Rules\Test-ProcessBlockImplemented.ps1',
+        'Rules\Test-ScriptHasRegion.ps1'    
+}

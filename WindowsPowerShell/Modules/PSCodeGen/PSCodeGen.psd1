@@ -1,0 +1,32 @@
+@{
+        ProcessorArchitecture=''
+        Author='jamesbru'
+        Description='Scripts to help with managed code generation'
+        ModuleToProcess='PSCodeGen.psm1'
+        RequiredModules=''
+        FunctionsToExport='*'
+        FileList='New-Enum.ps1',
+            'New-PInvoke.ps1',
+            'New-ScriptCmdlet.ps1',
+            'PSCodeGen.psd1',
+            'PSCodeGen.psm1'
+        TypesToProcess=''
+        DotNetFrameworkVersion=''
+        VariablesToExport='*'
+        CLRVersion=''
+        PowerShellHostVersion=''
+        CmdletsToExport='*'
+        Copyright='(c) 2009 jamesbru. All rights reserved.'
+        PrivateData=''
+        PowerShellHostName=''
+        FormatsToProcess=''
+        RequiredAssemblies=''
+        ModuleVersion='1.0'
+        GUID='8bf087e0-22ac-4e36-83ac-5598b60566bd'
+        PowerShellVersion=''
+        CompanyName='Microsoft'
+        AliasesToExport='*'
+        ScriptsToProcess=''
+        ModuleList=''
+        NestedModules=''
+    }

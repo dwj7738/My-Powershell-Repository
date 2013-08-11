@@ -1,0 +1,143 @@
+TOPIC
+    about_RemoteRegistry_Module
+
+SHORT DESCRIPTION
+    Describes the RemoteRegistry module.
+
+LONG DESCRIPTION
+    The RemoteRegistry module contains functions to create, modify, or delete registry subkeys and values on local or remote computers.
+    The following functions are added to the current session when you import the module:
+
+	Get-RegBinary
+	-------------
+	Use Get-RegBinary to retrieve a binary data registry value (REG_BINARY) from local or remote computers.
+
+
+	Get-RegDefault
+	--------------
+	Use Get-RegDefault to retrieve registry default string (REG_SZ) value from local or remote computers.
+
+
+	Get-RegDWord
+	------------
+	Use Get-RegDWord to retrieve a 32-bit binary number (REG_DWORD) registry value from local or remote computers.
+
+
+	Get-RegExpandString
+	-------------------
+	Use Get-RegExpandString to retrieve a null-terminated string that contains unexpanded references to environment variables (REG_EXPAND_SZ) from local or remote computers.
+
+
+	Get-RegKey
+	----------
+	Use Get-RegKey to get registry keys on local or remote computers
+
+
+	Get-RegMultipleString
+	---------------------
+	Use Get-RegMultipleString to retrieve an array of null-terminated strings (REG_MULTI_SZ) from local or remote computers.
+
+
+	Get-RegQWord
+	------------
+	Use Get-RegQWord to retrieve a 64-bit binary number registry value (REG_QWORD) from local or remote computers.
+
+
+	Get-RegString
+	-------------
+	Use Get-RegString to retrieve a registry string (REG_SZ) value from local or remote computers.
+
+
+	Get-RegValue
+	------------
+	Use Set-RegDefault to set the default value (REG_SZ) of the registry key on local or remote computers.
+
+
+	New-RegKey
+	----------
+	Use New-RegKey to create a new registry key on local or remote machines.
+
+
+	Remove-RegKey
+	-------------
+	Use Remove-RegKey to delete the specified registry key from local or remote computers.
+
+
+	Remove-RegValue
+	---------------
+	Use Set-RegString to delete the specified registry value from local or remote computers.
+
+
+	Set-RegBinary
+	-------------
+	Use Set-RegBinary to set or create a binary data registry value (REG_BINARY) from local or remote computers.
+
+
+	Set-RegDefault
+	--------------
+	Use Set-RegDefault to set the default value (REG_SZ) of the registry key on local or remote computers.
+
+
+	Set-RegDWord
+	------------
+	Use Set-RegDWord to set or create a 32-bit binary number (REG_DWORD) on local or remote computers.
+
+
+	Set-RegExpandString
+	-------------------
+	Use Set-RegExpandString to set or create registry string (REG_EXPAND_SZ) value on local or remote computers.
+
+
+	Set-RegMultipleString
+	---------------------
+	Use Set-RegMultipleString to set or create an array of null-terminated strings (REG_MULTI_SZ) on local or remote computers.
+
+
+	Set-RegQWord
+	------------
+	Use Set-RegQWord to set or create a 64-bit binary number (REG_QWORD) on local or remote computers.
+
+
+	Set-RegString
+	-------------
+	Use Set-RegString to set or create registry string (REG_SZ) value on local or remote computers.
+
+
+	Test-RegKey
+	-----------
+	Use Test-RegKey to determine if a registry key exists.
+
+
+	Test-RegValue
+	-------------
+	Use Test-RegValue to determine if the registry value exists.
+
+
+
+
+	NOTE
+	----
+	1. All the module functions that removes or sets regsitry values or keys (Set-Reg*,Remove-Reg*) are considered commands that modifies the system and the caller
+	must confirm whether or not to make the change. To override these confirmations use -Confirm:$false or the -Force parameter.
+
+	2. Elavated PowerShell session is needed to load the module. If the PowerShell session is not elevated a warning message is logged to the console
+	and you wont be able to use any of the module functions.
+
+	3. To view troubleshooting messages execute the functions with the Verbose parameter.
+	
+	Module Common Parameters
+	-----------------
+	All functions support pinging target computers before to test if the machine is available before connecting to it. 
+	If the machine is not responding to the test a warning message is written to the console.
+
+
+
+
+SEE ALSO
+    about_Modules
+    Get-Module
+    Import-Module
+    Remove-Module
+
+    "RegistryKey Class" (MSDN)
+    http://msdn.microsoft.com/en-us/library/microsoft.win32.registrykey.aspx
