@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>PowerGUI Welcome Page</title>
+
+    <link href="Style.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript">
+		function onResizeHandler() {
+			var windowHeight = document.body.clientHeight;
+			var headerHeight = document.getElementById("HeaderPart").clientHeight;
+			var left = document.getElementById("LeftPart");
+			var right = document.getElementById("RightPart");
+
+			var minHeight = (windowHeight - headerHeight - parseInt(left.currentStyle.borderTopWidth) 
+									- parseInt(left.currentStyle.borderBottomWidth));
+			if (minHeight < right.clientHeight) {
+				minHeight = right.clientHeight;
+			}
+
+			left.style.minHeight = minHeight + "px";
+		}
+
+		function OnVideoImgClick(click) {
+			var img = document.getElementById("YouTubeVideoImg");
+			var video = document.getElementById("YouTubeVideo");
+
+			img.style.display = click ? "none" : "block";
+			video.style.display = click ? "block" : "none";
+		}
+
+		function initAllDataHandlers() {
+			GenericDataHandler("DataCache_video",
+							function () { return document.getElementById("YouTubeVideo").src; },
+							function (value) { document.getElementById("YouTubeVideo").src = value; },
+							"http://community-downloads.quest.com/powergui/WelcomePage/welcome.config.xml",
+							function (xmlDoc) {
+								var node = xmlDoc.selectSingleNode("//configuration/video/@url");
+								if (node != null) {
+									var val = node.value;
+									if (val != document.getElementById("YouTubeVideo").src)	{
+										var node2 = xmlDoc.selectSingleNode("//configuration/video/@img");
+										if (node2 != null)	{
+											try {
+												var postfix = "?v=" +  (new Date()).getTime();
+												var img = getXMLHttpRequest();
+												img.open("GET", node2.value + postfix, false);
+												img.send();
+												if (img.readyState == 4 && img.status == 200) {
+													window.external.SaveFile("Images/VideoPreview.png", img.responseBody);
+													document.getElementById("YouTubeVideoImg").src = "Images/VideoPreview.png" + postfix;
+												}
+											}
+											catch(e) {
+											}
+										}
+
+										OnVideoImgClick(false);
+									}
+
+									return val;
+								}
+							});
+
+
+
+			var cntr = parseInt(getPersistentData("DataCache_tip_Counter"));
+			if (isNaN(cntr)) {
+				cntr = 1;
+			}
+			cntr = (cntr + 1) % 2;
+
+			updatePersistentDataStorage("DataCache_tip_Counter", cntr);
+
+			if (cntr == 0) {
+				SimpleDivStaticDataHandler("DataCache_tip", "TipText",
+							function () {
+								var arrMsg = ["Need to fix something while on the go? <a href=\"http://www.powerguipro.com\" target=\"_blank\">PowerGUI Pro</a> with <B>MobileShell</B> gives you PowerPacks on your handheld device!",
+											  "Want to manage changes to your scripts and track their history? Use integrated <B>Version Control</B> in <a href=\"http://www.powerguipro.com\" target=\"_blank\">PowerGUI Pro</a>!",
+											  "Harness all of the power of PowerShell Remoting using <B>Easy Remote Script Execution</B> in <a href=\"http://www.powerguipro.com\" target=\"_blank\">PowerGUI Pro</a>!",
+										   	  "Use <a href=\"http://www.powerguipro.com\" target=\"_blank\">PowerGUI Pro</a> to <B>create executable programs from your scripts</B> that you can share with others!",
+											  "Create and manage your functions more easily with <B>go to definition</B> support in <a href=\"http://www.powerguipro.com\" target=\"_blank\">PowerGUI Pro</a>!",
+											  "Want to customize your Start Page? With <a href=\"http://www.powerguipro.com\" target=\"_blank\">PowerGUI Pro</a> you can add RSS feeds, customize the number of headlines, or simply hide the Start Page."]
+								return arrMsg[Math.floor(Math.random() * arrMsg.length)]; 
+							});
+			}
+			else {
+				SimpleDivDataHandler("DataCache_tip", "TipText",
+							"http://twitter.com/statuses/user_timeline/powerguiorg.rss",
+							function (xmlDoc) {
+								var node = xmlDoc.selectSingleNode("//rss/channel/item/title/text()");
+								if (node != null) {
+									return anchorLinks(strip(node.text).trim());
+								}
+							});
+			}
+
+
+			SimpleDivDataHandler("DataCache_addons", "RecentAddons",
+							"http://feeds.feedburner.com/powergui/EditorAddons",
+							function (xmlDoc) {
+								var nodes = xmlDoc.selectNodes("//rss/channel/item");
+								if (nodes != null) {
+									var strRecentAddons = "";
+									var nItemsToShow = 0;
+									for (var i = 0; i < nodes.length; i++) {
+										var title = nodes[i].selectSingleNode("title");
+										var urls = nodes[i].selectNodes("qc:attachment/@qc:url");
+										var link = nodes[i].selectSingleNode("link");
+
+										var url = null;
+										if (urls != null) {
+											for (j = 0; j < urls.length; j++) {
+												if (urls[j].text.endsWithI(".zip")) {
+													url = urls[j];
+													break;
+												}
+											}
+										}
+
+										if (title != null && link != null && url != null) {
+											strRecentAddons += "<div><a href=\"" + link.text + "\" target=\"_blank\">" + strip(title.text).trim() + "<a></div>";
+
+											nItemsToShow++;
+											if (nItemsToShow >= g_MaxItemsInList) {
+												break;
+											}
+										}
+									}
+
+									return strRecentAddons;
+								}
+							});
+
+			// Add discussions feeds
+			var defaultFeedBlock = document.getElementById("Discussions");
+
+			var arrFeeds = getConfigurationSettingAsArray("WelcomePageRsss");
+			arrFeeds.push("http://feeds.feedburner.com/PowerGUIBlogPosts");
+			initDiscussionFeedHandler("DataCache_discussions", arrFeeds, findChildByClass(defaultFeedBlock, "SimpleNamesList"));
+		}
+
+		function toggleVideoPart() {
+			var objVideo = document.getElementById("VideoPart");
+			if (objVideo.className == "VideoPart") {
+				objVideo.className = "VideoPartCollapsed";
+			}
+			else {
+				objVideo.className = "VideoPart";
+			}
+		}
+	</script>
+
+    <script src="Common.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+<div class="outer">
+<div class="minwidth">
+<div class="container">
+
+	<div id="HeaderPart" class="HeaderPart">
+		<div class="HeaderTitle">Welcome to the PowerGUI<sup>&reg;</sup> Script Editor!</div>
+		<div class="HeaderTitleShadow">Welcome to the PowerGUI<sup>&reg;</sup> Script Editor!</div>
+
+		<div class="HeaderLine"></div>
+
+		<div class="HeaderSubtitle">An integrated, extensible script editor for Windows PowerShell</div>
+		<div class="HeaderSubtitleShadow">An integrated, extensible script editor for Windows PowerShell</div>
+	</div>
+
+	<div class="Content">
+
+		<div id="RightPart" class="RightPart">
+			<div id="VideoPart" class="VideoPartCollapsed">
+				<div class="TextBlockOuterDivWrapper">
+					<div class="TextBlock">
+						<div class="BlockTitleLogo" style="background-image: url('Images/Video.png');"></div>
+						<div class="BlockTitle">Featured Video</div>
+						<div id="VideoCollapser" class="BlockCollapser" onmousedown="toggleVideoPart();"></div>
+						<div class="BlockCollapsableBody">
+							<iframe id="YouTubeVideo" class="YouTubeVideo" style="display: none;" frameborder="0" allowfullscreen></iframe>
+							<img id="YouTubeVideoImg" class="YouTubeVideo" style="display: block; cursor: pointer;" src="Images/VideoPreview.png" onclick="OnVideoImgClick(true);"></img>
+							<div class="VideosLink">Watch more videos on the <a href="http://www.youtube.com/user/questsoftware#grid/user/807CCBBC67873456" target="_blank">PowerGUI channel</a> on YouTube</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="TipsPart" style="background-image: url('Images/ORG.png');">
+				<div id="TipText" class="TipText"></div>
+			</div>
+		</div>
+
+		<div class="LeftPart">
+			<div id="LeftPart" class="LeftPartInner">
+				<div class="TopLeftAngle"></div>
+				<div class="TopRightAngle"></div>
+
+				<div class="TextBlockOuterDivWrapper">
+					<div class="TextBlock">
+						<div class="BlockTitleLogo" style="background-image: url('Images/QuickStart.png');"></div>
+						<div class="BlockTitle">Quick Start</div>
+						<div class="BlockTitleLine"></div>
+						<div id="QuickStartCollapser" class="BlockCollapser"></div>
+						<div class="BlockCollapsableBody">
+							<div class="QuickStartPad">
+								<a href="powergui://InvokeCommand/FileCommand.New" class="QuickStartButton" style="background-image: url(Images/New_File.png);" onmouseover="onButtonHoverChanged(this);" onmouseout="onButtonHoverChanged(this);" >New File</a>
+								<a href="powergui://InvokeCommand/FileCommand.Open" class="QuickStartButton" style="background-image: url(Images/Open_File.png);" onmouseover="onButtonHoverChanged(this);" onmouseout="onButtonHoverChanged(this);" >Open File</a>
+								<a href="powergui://InvokeCommand/FileCommand.SearchOnline" class="QuickStartButton" style="background-image: url(Images/Find_a_script.png);" onmouseover="onButtonHoverChanged(this);" onmouseout="onButtonHoverChanged(this);" >Find a Script</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="TextBlockOuterDivWrapper">
+					<div class="TextBlock">
+						<div class="BlockTitleLogo" style="background-image: url('Images/SearchAddon.png');"></div>
+						<div class="BlockTitle">Most Recent Add-ons</div>
+						<div class="BlockTitleLine"></div>
+						<div id="AddonsCollapser" class="BlockCollapser"></div>
+						<div class="BlockCollapsableBody">
+							<div id="RecentAddons" class="SimpleNamesList"></div>
+							<div class="SeeAlso">
+								See also:
+								<div class="SeeAlsoLinks">
+									<a href="powergui://InvokeCommand/ToolsCommand.FindAddons">Find Add-ons Online...</a><br />
+									<a href="http://wiki.powergui.org/index.php/Add-ons" target="_blank">How to Create an Add-on</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="TextBlockOuterDivWrapper">
+					<div class="TextBlock" id="Discussions" >
+						<div class="BlockTitleLogo" style="background-image: url('Images/Discussions.png');"></div>
+						<div class="BlockTitle">PowerGUI Discussions</div>
+						<div class="BlockTitleLine"></div>
+						<div id="DiscussionsCollapser" class="BlockCollapser"></div>
+						<div class="BlockCollapsableBody">
+							<div class="SimpleNamesList"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

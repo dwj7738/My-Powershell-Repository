@@ -1,0 +1,35 @@
+gContainerType.registerEnum('CUI.ImgContainerType', false);
+
+
+CUI.ImgContainerSize = function() {}
+CUI.ImgContainerSize.prototype = {
+    none: 0, 
+    size5by3: 1, 
+    size13by13: 2, 
+    size16by16: 3, 
+    size32by32: 4, 
+    size48by48: 5, 
+    size64by48: 6, 
+    size72by96: 7, 
+    size96by72: 8, 
+    size96by96: 9, 
+    size56by24: 10, 
+    size2by16: 11
+}
+CUI.ImgContainerSize.registerEnum('CUI.ImgContainerSize', false);
+
+
+CUI.PMarker = function() {}
+CUI.PMarker.prototype = {
+    beginSession: 1, 
+    endSession: 2, 
+    perfCUIRibbonInitStart: 7103, 
+    perfCUIRibbonInitPercvdEnd: 7104, 
+    perfCUIRibbonTabSwitchWarmStart: 7105, 
+    perfCUIRibbonTabSwitchWarmPercvdEnd: 7106, 
+    perfCUIRibbonTabSwitchWarmEnd: 7107, 
+    perfCUIRibbonCompleteConstruction: 7108, 
+    perfCUIRibbonQueryDataStart: 7109, 
+    perfCUIRibbonQueryDataEnd: 7110, 
+    perfWSSWikiUpdatePanelStart: 7111, 
+    perfWSSWikiUpdatePanelEnd: 71

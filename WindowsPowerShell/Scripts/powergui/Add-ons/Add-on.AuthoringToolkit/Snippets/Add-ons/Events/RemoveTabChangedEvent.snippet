@@ -1,0 +1,16 @@
+e="{$maNSUri}">
+						<xsl:value-of select="@UserSelectionScope" />
+					</xsl:attribute>
+				</xsl:if>
+				<xsl:if test="@Name">
+					<xsl:attribute name="ma:internalName" namespace="{$maNSUri}">
+						<xsl:value-of select="@Name" />
+					</xsl:attribute>
+				</xsl:if>
+				<!-- {5a14d1ab-1513-48c7-97b3-657a5ba6c742} and {b1996002-9167-45e5-a4df-b2c41c6723c7} are the AverageRating and RatingCount field guids-->
+				<xsl:if test="translate(@ID, $uppercase, $lowercase)='{5a14d1ab-1513-48c7-97b3-657a5ba6c742}' or translate(@ID, $uppercase, $lowercase)='{b1996002-9167-45e5-a4df-b2c41c6723c7}'">
+					<xsl:attribute name="ma:readOnly" namespace="{$maNSUri}">true</xsl:attribute>
+				</xsl:if>
+				<xsl:if test="@ReadOnly and not(@BdcField)">
+					<xsl:attribute name="ma:readOnly" namespace="{$maNSUri}">
+						<xsl:value-o

@@ -1,0 +1,3948 @@
+tion() {ULSpEN:;
+        CUI.Utility.ensureCSSClassOnElement(this.$I_2, 'ms-cui-ctl-light-hoveredOver');
+    },
+    
+    removeHighlight: function() {ULSpEN:;
+        CUI.Utility.removeCSSClassFromElement(this.$I_2, 'ms-cui-ctl-light-hoveredOver');
+    },
+    
+    onLaunchedMenuClosed: function() {ULSpEN:;
+        this.$X();
+        this.removeHighlight();
+        this.get_displayedComponent().raiseCommandEvent(this.get_properties().CommandMenuClose, 10, null);
+        CUI.Controls.DropDown.callBaseMethod(this, 'onLaunchedMenuClosed');
+    },
+    
+    $4y: function() {ULSpEN:;
+        var $v_0 = this.get_stateProperties()[CUI.Controls.DropDownCommandProperties.SelectedItemId];
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            this.get_stateProperties()[CUI.Controls.DropDownCommandProperties.SelectedItemId] = this.get_properties().InitialItem;
+        }
+        this.pollForStateAndUpdateInternal(this.get_properties().Command, this.get_properties().QueryCommand, this.get_stateProperties(), false);
+        var $v_1 = this.get_stateProperties()[CUI.Controls.DropDownCommandProperties.SelectedItemId];
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_1)) {
+            if ($v_0 !== $v_1 || !this._itemEverSelected) {
+                if (!this.$2R($v_1)) {
+                    throw Error.create('The menu item id requested via polling does not exist');
+                }
+            }
+        }
+        else {
+            if (!CUI.ScriptUtility.isNullOrUndefined(this.get_stateProperties()[CUI.Controls.DropDownCommandProperties.Value])) {
+                var $v_2 = this.get_stateProperties()[CUI.Controls.DropDownCommandProperties.Value];
+                this.$Y_2.innerHTML = '<a>' + CUI.Utility.$3A($v_2) + '</a>';
+            }
+        }
+    },
+    
+    dispose: function() {ULSpEN:;
+        CUI.Controls.DropDown.callBaseMethod(this, 'dispose');
+        this.$8_2 = null;
+        this.$1x_2 = null;
+        this.$1y_2 = null;
+        this.$I_2 = null;
+        this.$Y_2 = null;
+    },
+    
+    get_properties: function() {ULSpEN:;
+        return this.$5_0;
+    }
+}
+
+
+CUI.Controls.FlyoutAnchor = function(root, id, properties, menu) {ULSpEN:;
+    this.$8d = Function.createDelegate(this, this.$DN_2);
+    this.$8c = Function.createDelegate(this, this.$DM_2);
+    this.$8e = Function.createDelegate(this, this.$DO_2);
+    this.$7x = Function.createDelegate(this, this.$2e_2);
+    this.$49 = Function.createDelegate(this, this.$5w_2);
+    this.$4A = Function.createDelegate(this, this.$5x_2);
+    this.$48 = Function.createDelegate(this, this.$42_2);
+    this.$8n = Function.createDelegate(this, this.$DX_2);
+    this.$8m = Function.createDelegate(this, this.$DW_2);
+    this.$90 = Function.createDelegate(this, this.$De_2);
+    this.$8T = Function.createDelegate(this, this.$Ar_2);
+    this.$3I = Function.createDelegate(this, this.$4u_2);
+    this.$1H = Function.createDelegate(this, this.onClick);
+    CUI.Controls.FlyoutAnchor.initializeBase(this, [ root, id, properties, menu ]);
+    this.addDisplayMode('Menu');
+    this.addDisplayMode('Menu16');
+    this.addDisplayMode('Menu32');
+    this.addDisplayMode('Small');
+    this.addDisplayMode('Medium');
+    this.addDisplayMode('Large');
+    this.addDisplayMode('Thin');
+}
+CUI.Controls.FlyoutAnchor.prototype = {
+    $5R_2: null,
+    $5S_2: null,
+    $3a_2: null,
+    $4P_2: null,
+    $6P_2: null,
+    $4Q_2: null,
+    $6Q_2: null,
+    $h_2: null,
+    $T_2: null,
+    $Z_2: null,
+    $F_2: null,
+    $9H_2: null,
+    $1v_2: null,
+    $8_2: null,
+    $9J_2: null,
+    $2E_2: null,
+    $9_2: null,
+    $9L_2: null,
+    $2G_2: null,
+    $1b_2: null,
+    $3d_2: null,
+    $4T_2: null,
+    
+    createDOMElementForDisplayMode: function($p0) {
+        var $v_0 = (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_2().Alt)) ? this.get_$1_2().LabelText : this.get_$1_2().Alt;
+        switch ($p0) {
+            case 'Menu':
+                this.$h_2 = this.createMenuDOMElement('Menu', 'ms-cui-textmenuitem ms-cui-fa-menuitem ms-cui-ctl-menu', $v_0, null, null, null, null);
+                this.$O($p0);
+                this.$h_2.setAttribute('aria-haspopup', true);
+                return this.$h_2;
+            case 'Menu16':
+                this.$T_2 = this.createMenuDOMElement('Menu16', 'ms-cui-fa-menuitem ms-cui-ctl-menu', $v_0, this.get_$1_2().Image16by16, this.get_$1_2().Image16by16Class, this.get_$1_2().Image16by16Top, this.get_$1_2().Image16by16Left);
+                this.$O($p0);
+                this.$T_2.setAttribute('aria-haspopup', true);
+                return this.$T_2;
+            case 'Menu32':
+                this.$Z_2 = this.createMenuDOMElement('Menu32', 'ms-cui-fa-menuitem ms-cui-ctl-menu', $v_0, this.get_$1_2().Image32by32, this.get_$1_2().Image32by32Class, this.get_$1_2().Image32by32Top, this.get_$1_2().Image32by32Left);
+                this.$Z_2.setAttribute('aria-haspopup', true);
+                this.$O($p0);
+                return this.$Z_2;
+            case 'Large':
+                this.$F_2 = CUI.Control.createStandardControlDOMElement(this, this.$0_0, 'Large', this.get_$1_2(), false, true);
+                this.$F_2.setAttribute('aria-haspopup', true);
+                if (this.$6U_2) {
+                    CUI.Utility.ensureCSSClassOnElement(this.$F_2, 'ms-cui-ctl-large-groupPopup');
+                }
+                this.$O('Large');
+                return this.$F_2;
+            case 'Medium':
+                this.$8_2 = CUI.Control.createStandardControlDOMElement(this, this.$0_0, 'Medium', this.get_$1_2(), false, true);
+                this.$O('Medium');
+                this.$8_2.setAttribute('aria-haspopup', true);
+                return this.$8_2;
+            case 'Small':
+                this.$9_2 = CUI.Control.createStandardControlDOMElement(this, this.$0_0, 'Small', this.get_$1_2(), false, true);
+                this.$O('Small');
+                this.$9_2.setAttribute('aria-haspopup', true);
+                return this.$9_2;
+            case 'Thin':
+                this.$1b_2 = CUI.Utility.$4q();
+                this.$1b_2.className = 'ms-cui-ctl-thin';
+                this.$3d_2 = CUI.Utility.$3('img');
+                this.$3d_2.alt = '';
+                if (CUI.ScriptUtility.isNullOrEmptyString(this.get_$1_2().ToolTipTitle)) {
+                    this.$1b_2.title = $v_0;
+                    this.$3d_2.alt = $v_0;
+                }
+                var $v_1 = this.$0_0;
+                this.$4T_2 = CUI.Utility.$j(2, 1, $v_1.$5_1.ImageDownArrow, $v_1.$5_1.ImageDownArrowClass, this.$3d_2, true, false, $v_1.$5_1.ImageDownArrowTop, $v_1.$5_1.ImageDownArrowLeft);
+                this.$1b_2.appendChild(this.$4T_2);
+                this.$O('Thin');
+                this.$1b_2.setAttribute('aria-haspopup', true);
+                return this.$1b_2;
+            default:
+                this.ensureValidDisplayMode($p0);
+                break;
+        }
+        return null;
+    },
+    
+    $35: function($p0) {
+        var $v_0 = $get(this.$6_0 + '-' + $p0);
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            this.storeElementForDisplayMode($v_0, $p0);
+        }
+        switch ($p0) {
+            case 'Large':
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+                    this.$F_2 = $v_0;
+                }
+                this.$9H_2 = this.$F_2.childNodes[0].childNodes[0];
+                this.$1v_2 = this.$F_2.lastChild.lastChild.childNodes[0];
+                break;
+            case 'Medium':
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+                    this.$8_2 = $v_0;
+                }
+                this.$9J_2 = this.$8_2.childNodes[0].childNodes[0];
+                this.$2E_2 = this.$8_2.lastChild.lastChild.childNodes[0];
+                break;
+            case 'Small':
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+                    this.$9_2 = $v_0;
+                }
+                this.$9L_2 = this.$9_2.childNodes[0].childNodes[0];
+                this.$2G_2 = this.$9_2.lastChild.lastChild.childNodes[0];
+                break;
+            case 'Thin':
+                this.$1b_2 = $v_0;
+                this.$4T_2 = $v_0.firstChild;
+                this.$3d_2 = this.$4T_2.firstChild;
+                break;
+        }
+    },
+    
+    get_$15: function() {ULSpEN:;
+        return 'FlyoutAnchor';
+    },
+    
+    createMenuDOMElement: function($p0, $p1, $p2, $p3, $p4, $p5, $p6) {
+        var $v_0 = CUI.Utility.$4q();
+        $v_0.setAttribute('role', this.get_$1e());
+        $v_0.className = $p1;
+        $v_0.title = $p2;
+        $v_0.setAttribute('mscui:controltype', this.get_$15());
+        CUI.Utility.$1i(this.get_$1_2(), $v_0);
+        var $v_1 = null;
+        switch ($p0) {
+            case 'Menu16':
+                if (CUI.ScriptUtility.isNullOrUndefined(this.$4P_2)) {
+                    this.$4P_2 = CUI.Utility.$3('img');
+                    this.$6P_2 = CUI.Utility.$j(2, 3, $p3, $p4, this.$4P_2, true, true, $p5, $p6);
+                    this.$4P_2.alt = $p2;
+                    $v_1 = this.$6P_2;
+                }
+                break;
+            case 'Menu32':
+                if (CUI.ScriptUtility.isNullOrUndefined(this.$4Q_2)) {
+                    this.$4Q_2 = CUI.Utility.$3('img');
+                    this.$6Q_2 = CUI.Utility.$j(2, 4, $p3, $p4, this.$4Q_2, true, true, $p5, $p6);
+                    this.$4Q_2.alt = $p2;
+                    $v_1 = this.$6Q_2;
+                }
+                break;
+        }
+        this.createMenuLabelDOMElementIfNeeded($p0);
+        if (CUI.ScriptUtility.isNullOrUndefined(this.$5R_2)) {
+            this.$5R_2 = CUI.Utility.$3('img');
+            this.$5S_2 = CUI.Utility.$j(2, 2, this.$0_0.$5_1.ImageSideArrow, this.$0_0.$5_1.ImageSideArrowClass, this.$5R_2, false, true, this.$0_0.$5_1.ImageSideArrowTop, this.$0_0.$5_1.ImageSideArrowLeft);
+            CUI.Utility.ensureCSSClassOnElement(this.$5S_2, 'ms-cui-fa-menu-arrow');
+        }
+        if ($v_1) {
+            var $v_2 = CUI.Utility.$3('span');
+            $v_2.className = 'ms-cui-ctl-iconContainer';
+            $v_2.appendChild($v_1);
+            $v_0.appendChild($v_2);
+        }
+        $v_0.appendChild(this.$3a_2);
+        $v_0.appendChild(this.$5S_2);
+        return $v_0;
+    },
+    
+    createMenuLabelDOMElementIfNeeded: function($p0) {
+        if (CUI.ScriptUtility.isNullOrUndefined(this.$3a_2)) {
+            this.$3a_2 = CUI.Utility.$3('span');
+            this.$3a_2.className = 'ms-cui-ctl-mediumlabel';
+            CUI.UIUtility.setInnerText(this.$3a_2, this.get_$1_2().LabelText);
+        }
+    },
+    
+    $O: function($p0) {
+        var $v_0 = this.getDisplayedDOMElement($p0);
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            return;
+        }
+        var $v_1 = { click: this.$1H, blur: this.$3I, keypress: this.$8T, focus: this.$90 };
+        var $v_2;
+        if (Sys.Browser.agent === Sys.Browser.InternetExplorer) {
+            if ($p0.startsWith('Menu')) {
+                $v_2 = { mouseenter: this.$8m, mouseleave: this.$8n };
+            }
+            else {
+                $v_2 = { mouseenter: this.$48, mouseleave: this.$3I };
+            }
+        }
+        else {
+            if ($p0.startsWith('Menu')) {
+                $v_2 = { mouseover: this.$4A, mouseout: this.$49 };
+            }
+            else {
+                $v_2 = { mouseover: this.$48, mouseout: this.$3I };
+            }
+        }
+        $addHandlers($v_0, $v_1);
+        $addHandlers($v_0, $v_2);
+    },
+    
+    onEnabledChanged: function($p0) {
+        CUI.Utility.setEnabledOnElement(this.$h_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$T_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$Z_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$F_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$8_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$9_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$1b_2, $p0);
+    },
+    
+    positionMenu: function($p0, $p1) {
+        if (this.get_displayedComponent().get_displayMode().startsWith('Menu')) {
+            this.$0_0.$Do($p0, $p1);
+        }
+        else {
+            CUI.Controls.FlyoutAnchor.callBaseMethod(this, 'positionMenu', [ $p0, $p1 ]);
+        }
+    },
+    
+    createComponentForDisplayModeInternal: function($p0) {
+        var $v_0;
+        if ($p0.startsWith('Menu')) {
+            $v_0 = this.$0_0.$3w(this.$6_0 + '-' + $p0 + this.$0_0.$27(), $p0, this);
+        }
+        else {
+            $v_0 = CUI.Controls.FlyoutAnchor.callBaseMethod(this, 'createComponentForDisplayModeInternal', [ $p0 ]);
+        }
+        return $v_0;
+    },
+    
+    getDisplayedDOMElement: function($p0) {
+        switch ($p0) {
+            case 'Menu':
+                return this.$h_2;
+            case 'Menu16':
+                return this.$T_2;
+            case 'Menu32':
+                return this.$Z_2;
+            case 'Large':
+                return this.$F_2;
+            case 'Medium':
+                return this.$8_2;
+            case 'Small':
+                return this.$9_2;
+            case 'Thin':
+                return this.$1b_2;
+            default:
+                this.ensureValidDisplayMode($p0);
+                return null;
+        }
+    },
+    
+    onClick: function($p0) {
+        var $v_0 = this.get_enabled();
+        if ($v_0 && !this.$i_1) {
+            CUI.PMetrics.perfMark(7190);
+        }
+        this.$X();
+        $p0.preventDefault();
+        if (!$v_0 || this.$i_1) {
+            return;
+        }
+        this.$0_0.set_$3z(this);
+        var $v_1 = this.get_displayedComponent();
+        var $v_2 = $v_1.get_$2();
+        this.$5t_2($v_2);
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.get_$1_2().Command)) {
+            $v_1.raiseCommandEvent(this.get_$1_2().Command, 4, null);
+        }
+        CUI.PMetrics.perfMark(7191);
+    },
+    
+    $42_2: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+    },
+    
+    $DW_2: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled() || this.$i_1) {
+            return;
+        }
+        var $v_0 = this.get_displayedComponent();
+        var $v_1 = $v_0.get_$2();
+        this.$5t_2($v_1);
+        var $v_2 = this.get_$1_2().Command;
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_2)) {
+            $v_0.raiseCommandEvent($v_2, 4, null);
+        }
+    },
+    
+    $5x_2: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled() || this.$i_1) {
+            return;
+        }
+        var $v_0 = $p0.target;
+        var $v_1 = $p0.rawEvent.relatedTarget;
+        if (!($v_0 === this.$h_2 || $v_0 === this.$T_2 || $v_0 === this.$Z_2)) {
+            return;
+        }
+        while ($v_1 !== $v_0) {
+            try {
+                if ($v_1.nodeName.toLowerCase() === 'body') {
+                    break;
+                }
+            }
+            catch ($$e_2_0) {
+                break;
+            }
+            $v_1 = $v_1.parentNode;
+        }
+        if ($v_1 === $v_0) {
+            return;
+        }
+        var $v_2 = this.get_displayedComponent();
+        var $v_3 = $v_2.get_$2();
+        this.$5t_2($v_3);
+        var $v_4 = this.get_$1_2().Command;
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_4)) {
+            $v_2.raiseCommandEvent($v_4, 4, null);
+        }
+    },
+    
+    $DO_2: function($p0) {
+        var $v_0 = Array.indexOf(this.$0_0.$W_1, this);
+        var $v_1 = this.$0_0.$2a_1;
+        if ($v_1 !== -1 && $v_0 >= this.$0_0.$3m_1) {
+            window.clearTimeout($v_1);
+            this.$0_0.$2a_1 = -1;
+            this.$0_0.$3m_1 = -1;
+        }
+    },
+    
+    $De_2: function($p0) {
+        this.onBeginFocus();
+        if (this.get_displayedComponent().get_displayMode().startsWith('Menu')) {
+            this.$39_2(this.get_enabled());
+        }
+        if (this.get_enabled()) {
+            this.$0_0.set_$o(this);
+        }
+    },
+    
+    $4u_2: function($p0) {
+        this.onEndFocus();
+        if (this.$i_1) {
+            return;
+        }
+        this.$1U_2();
+    },
+    
+    $DX_2: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (this.$i_1) {
+            var $v_0 = Array.indexOf(this.$0_0.$W_1, this);
+            for (var $v_1 = $v_0; $v_1 < this.$0_0.$W_1.length; $v_1++) {
+                if (CUI.Utility.isDescendantOf((this.$0_0.$W_1[$v_1]).$B_1.get_$2(), $p0.rawEvent.toElement)) {
+                    return;
+                }
+            }
+            this.$62_2();
+        }
+    },
+    
+    $DM_2: function($p0) {
+        this.onEndFocus();
+        if (CUI.Utility.isDescendantOf(this.get_displayedComponent().get_$2(), $p0.rawEvent.toElement)) {
+            return;
+        }
+        if (this.$i_1) {
+            var $v_0 = Array.indexOf(this.$0_0.$W_1, this);
+            for (var $v_1 = $v_0; $v_1 < this.$0_0.$W_1.length; $v_1++) {
+                if (CUI.Utility.isDescendantOf((this.$0_0.$W_1[$v_1]).$B_1.get_$2(), $p0.rawEvent.toElement)) {
+                    return;
+                }
+            }
+            this.$62_2();
+        }
+    },
+    
+    $5w_2: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled() || CUI.Utility.isDescendantOf(this.get_displayedComponent().get_$2(), $p0.rawEvent.relatedTarget)) {
+            return;
+        }
+        if (this.$i_1) {
+            var $v_0 = Array.indexOf(this.$0_0.$W_1, this);
+            for (var $v_1 = $v_0; $v_1 < this.$0_0.$W_1.length; $v_1++) {
+                if (CUI.Utility.isDescendantOf((this.$0_0.$W_1[$v_1]).$B_1.get_$2(), $p0.rawEvent.relatedTarget)) {
+                    return;
+                }
+            }
+            this.$62_2();
+        }
+    },
+    
+    $DN_2: function($p0) {
+        this.onEndFocus();
+        if (CUI.Utility.isDescendantOf(this.get_displayedComponent().get_$2(), $p0.rawEvent.relatedTarget)) {
+            return;
+        }
+        if (this.$i_1) {
+            var $v_0 = Array.indexOf(this.$0_0.$W_1, this);
+            for (var $v_1 = $v_0; $v_1 < this.$0_0.$W_1.length; $v_1++) {
+                if (CUI.Utility.isDescendantOf((this.$0_0.$W_1[$v_1]).$B_1.get_$2(), $p0.rawEvent.relatedTarget)) {
+                    return;
+                }
+            }
+            this.$62_2();
+        }
+        this.$1U_2();
+    },
+    
+    $Ar_2: function($p0) {
+        this.$X();
+        if (!this.get_enabled()) {
+            return;
+        }
+        var $v_0 = $p0.rawEvent.keyCode;
+        if (this.$i_1) {
+            if ((!this.$0_0._textDirection && $v_0 === 39) || (this.$0_0._textDirection === 1 && $v_0 === 37)) {
+                this.$B_1.$1r();
+            }
+        }
+        else {
+            if ($v_0 === 13 || $v_0 === 32 || (((!this.$0_0._textDirection && $v_0 === 39) || (this.$0_0._textDirection === 1 && $v_0 === 37)) && (!$p0.ctrlKey || !$p0.shiftKey))) {
+                this.$1E_1 = true;
+                var $v_1 = this.get_displayedComponent();
+                var $v_2 = $v_1.get_$2();
+                var $v_3 = this.get_$1_2().Command;
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_3)) {
+                    $v_1.raiseCommandEvent($v_3, 4, null);
+                }
+                this.$5t_2($v_2);
+            }
+        }
+    },
+    
+    $6S_2: false,
+    
+    onModalKeyPress: function($p0) {
+        if ($p0) {
+            if ($p0.rawEvent) {
+                if ((((!this.$0_0._textDirection && $p0.rawEvent.keyCode === 37) || (this.$0_0._textDirection === 1 && $p0.rawEvent.keyCode === 39)) && this.get_displayedComponent().get_displayMode().startsWith('Menu')) || $p0.rawEvent.keyCode === 27) {
+                    this.$0_0.$2e(this);
+                    return;
+                }
+            }
+        }
+        if (this.$6U_2) {
+            if (this.$6S_2) {
+                return;
+            }
+            if (this.$B_1.$50()) {
+                this.$6S_2 = true;
+            }
+            $p0.preventDefault();
+        }
+        else {
+            CUI.Controls.FlyoutAnchor.callBaseMethod(this, 'onModalKeyPress', [ $p0 ]);
+        }
+    },
+    
+    onModalBodyClick: function($p0) {
+        this.$0_0.$4n();
+    },
+    
+    onLaunchedMenuClosed: function() {ULSpEN:;
+        var $v_0 = this.$0_0.$2a_1;
+        if ($v_0 !== -1) {
+            window.clearTimeout($v_0);
+        }
+        this.$0_0.$2a_1 = -1;
+        this.$0_0.$3m_1 = -1;
+        this.$1U_2();
+        this.$X();
+        var $v_1 = this.get_displayedComponent();
+        if ($v_1.get_displayMode().startsWith('Menu')) {
+            var $v_2 = $v_1.$K_0.$K_0;
+            $v_2.set_$B0(null);
+        }
+        $v_1.raiseCommandEvent(this.get_$1_2().CommandMenuClose, 10, null);
+        CUI.Controls.FlyoutAnchor.callBaseMethod(this, 'onLaunchedMenuClosed');
+    },
+    
+    $62_2: function() {ULSpEN:;
+        var $v_0 = this.$0_0.$2a_1;
+        if ($v_0 !== -1) {
+            window.clearTimeout($v_0);
+        }
+        if (null === this.$6A_2) {
+            this.$6A_2 = this.$7x;
+        }
+        this.$0_0.$3m_1 = Array.indexOf(this.$0_0.$W_1, this);
+        this.$0_0.$2a_1 = window.setTimeout(this.$6A_2, 500);
+    },
+    
+    $6A_2: null,
+    
+    $2e_2: function() {ULSpEN:;
+        this.$0_0.$2e(this);
+        this.$0_0.$2a_1 = -1;
+        this.$0_0.$3m_1 = -1;
+    },
+    
+    $6j_2: null,
+    $6h_2: null,
+    $6i_2: null,
+    
+    $5t_2: function($p0) {
+        this.$X();
+        this.$39_2(true);
+        this.$0_0.$2v_1 = false;
+        this.$6S_2 = false;
+        var $v_0 = this.get_displayedComponent();
+        var $v_1 = $v_0.get_displayMode().startsWith('Menu');
+        if ($v_1) {
+            var $v_2 = $v_0.$K_0.$K_0;
+            $v_2.set_$B0(this);
+        }
+        this.launchMenu($p0);
+        if (!$v_1) {
+            return;
+        }
+        if (null === this.$6j_2) {
+            this.$6j_2 = this.$8e;
+        }
+        $addHandler(this.$B_1.get_$2(), 'mouseover', this.$6j_2);
+        if (Sys.Browser.agent === Sys.Browser.InternetExplorer) {
+            if (null === this.$6h_2) {
+                this.$6h_2 = this.$8c;
+            }
+            $addHandler(this.$B_1.get_$2(), 'mouseleave', this.$6h_2);
+        }
+        else {
+            if (null === this.$6i_2) {
+                this.$6i_2 = this.$8d;
+            }
+            $addHandler(this.$B_1.get_$2(), 'mouseout', this.$6i_2);
+        }
+    },
+    
+    $1U_2: function() {ULSpEN:;
+        var $v_0 = 'ms-cui-ctl-disabledHoveredOver';
+        var $v_1 = 'ms-cui-ctl-hoveredOver';
+        CUI.Utility.removeCSSClassFromElement(this.$h_2, $v_1);
+        CUI.Utility.removeCSSClassFromElement(this.$T_2, $v_1);
+        CUI.Utility.removeCSSClassFromElement(this.$Z_2, $v_1);
+        CUI.Utility.removeCSSClassFromElement(this.$F_2, $v_1);
+        CUI.Utility.removeCSSClassFromElement(this.$8_2, $v_1);
+        CUI.Utility.removeCSSClassFromElement(this.$9_2, $v_1);
+        CUI.Utility.removeCSSClassFromElement(this.$1b_2, $v_1);
+        CUI.Utility.removeCSSClassFromElement(this.$h_2, $v_0);
+        CUI.Utility.removeCSSClassFromElement(this.$T_2, $v_0);
+        CUI.Utility.removeCSSClassFromElement(this.$Z_2, $v_0);
+    },
+    
+    $39_2: function($p0) {
+        var $v_0 = 'ms-cui-ctl-hoveredOver';
+        if (!$p0) {
+            $v_0 = 'ms-cui-ctl-disabledHoveredOver';
+            CUI.Utility.ensureCSSClassOnElement(this.$h_2, $v_0);
+            CUI.Utility.ensureCSSClassOnElement(this.$T_2, $v_0);
+            CUI.Utility.ensureCSSClassOnElement(this.$Z_2, $v_0);
+        }
+        else {
+            CUI.Utility.ensureCSSClassOnElement(this.$h_2, $v_0);
+            CUI.Utility.ensureCSSClassOnElement(this.$T_2, $v_0);
+            CUI.Utility.ensureCSSClassOnElement(this.$Z_2, $v_0);
+            CUI.Utility.ensureCSSClassOnElement(this.$F_2, $v_0);
+            CUI.Utility.ensureCSSClassOnElement(this.$8_2, $v_0);
+            CUI.Utility.ensureCSSClassOnElement(this.$9_2, $v_0);
+            CUI.Utility.ensureCSSClassOnElement(this.$1b_2, $v_0);
+        }
+    },
+    
+    $6U_2: false,
+    
+    getTextValue: function() {ULSpEN:;
+        return this.get_$1_2().LabelText;
+    },
+    
+    $7o: function() {ULSpEN:;
+        if (!this.get_enabled()) {
+            return false;
+        }
+        this.receiveFocus();
+        return true;
+    },
+    
+    receiveFocus: function() {ULSpEN:;
+        var $v_0 = this.get_displayedComponent().get_$2();
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            $v_0.focus();
+        }
+    },
+    
+    onMenuClosed: function() {ULSpEN:;
+        this.$1U_2();
+    },
+    
+    dispose: function() {ULSpEN:;
+        CUI.Controls.FlyoutAnchor.callBaseMethod(this, 'dispose');
+        this.$1b_2 = null;
+        this.$3d_2 = null;
+        this.$4T_2 = null;
+        this.$F_2 = null;
+        this.$1v_2 = null;
+        this.$9H_2 = null;
+        this.$8_2 = null;
+        this.$2E_2 = null;
+        this.$9J_2 = null;
+        this.$h_2 = null;
+        this.$T_2 = null;
+        this.$Z_2 = null;
+        this.$5R_2 = null;
+        this.$5S_2 = null;
+        this.$4P_2 = null;
+        this.$6P_2 = null;
+        this.$4Q_2 = null;
+        this.$6Q_2 = null;
+        this.$3a_2 = null;
+        this.$9_2 = null;
+        this.$2G_2 = null;
+        this.$9L_2 = null;
+    },
+    
+    get_$1_2: function() {ULSpEN:;
+        return this.$5_0;
+    }
+}
+
+
+CUI.Controls.GalleryButtonCommandProperties = function() {
+}
+
+
+CUI.Controls.GalleryButton = function(root, id, properties, dims) {ULSpEN:;
+    this.$3H = Function.createDelegate(this, this.onBlur);
+    this.$3K = Function.createDelegate(this, this.onFocus);
+    this.$1H = Function.createDelegate(this, this.onClick);
+    CUI.Controls.GalleryButton.initializeBase(this, [ root, id, properties ]);
+    this.addDisplayMode('Large');
+    this.addDisplayMode('Menu');
+    this.$4E_1 = dims;
+}
+CUI.Controls.GalleryButton.prototype = {
+    $E_1: null,
+    $H_1: null,
+    $4H_1: null,
+    $4I_1: null,
+    $4E_1: 0,
+    
+    createComponentForDisplayModeInternal: function($p0) {
+        var $v_0;
+        if ($p0 === 'Menu') {
+            $v_0 = this.$0_0.$3w(this.$6_0 + '-' + $p0 + this.$0_0.$27(), $p0, this);
+            if (CUI.ScriptUtility.isNullOrUndefined(this.get_properties().CommandValueId)) {
+                this.get_properties().CommandValueId = this.get_properties().MenuItemId;
+            }
+        }
+        else {
+            $v_0 = CUI.Controls.GalleryButton.callBaseMethod(this, 'createComponentForDisplayModeInternal', [ $p0 ]);
+        }
+        return $v_0;
+    },
+    
+    createDOMElementForDisplayMode: function($p0) {
+        switch ($p0) {
+            case 'Large':
+            case 'Menu':
+                var $v_0 = (CUI.ScriptUtility.isNullOrUndefined(this.get_properties().Alt)) ? '' : this.get_properties().Alt;
+                this.$E_1 = CUI.Utility.$3('span');
+                this.$E_1.setAttribute('mscui:controltype', this.get_$15());
+                this.$E_1.className = 'ms-cui-gallerybutton ms-cui-gallerybutton-' + CUI.Utility.$AJ[this.$4E_1];
+                this.$H_1 = CUI.Utility.$3('a');
+                this.$H_1.title = $v_0;
+                this.$H_1.className = 'ms-cui-gallerybutton-a';
+                this.$H_1.setAttribute('role', this.get_$1e());
+                CUI.Utility.$1s(this.$H_1);
+                CUI.Utility.$1i(this.get_properties(), this.$H_1);
+                this.$E_1.appendChild(this.$H_1);
+                if (!CUI.ScriptUtility.isNullOrUndefined(this.get_properties().InnerHTML)) {
+                    this.$H_1.innerHTML = this.get_properties().InnerHTML;
+                    CUI.Utility.$29(this.$H_1, true, true);
+                }
+                else {
+                    if (CUI.ScriptUtility.isNullOrUndefined(this.get_properties().Image)) {
+                        throw Error.create('InnerHTML or Image must be defined for this GalleryButton');
+                    }
+                    var $v_1 = 4;
+                    switch (this.$4E_1) {
+                        case 1:
+                            $v_1 = 3;
+                            break;
+                        case 2:
+                            $v_1 = 4;
+                            break;
+                        case 3:
+                            $v_1 = 5;
+                            break;
+                        case 4:
+                            $v_1 = 6;
+                            break;
+                        case 5:
+                            $v_1 = 7;
+                            break;
+                        case 6:
+                            $v_1 = 8;
+                            break;
+                        case 7:
+                            $v_1 = 9;
+                            break;
+                    }
+                    this.$4H_1 = CUI.Utility.$3('img');
+                    this.$4I_1 = CUI.Utility.$j(2, $v_1, this.get_properties().Image, this.get_properties().ImageClass, this.$4H_1, true, false, this.get_properties().ImageTop, this.get_properties().ImageLeft);
+                    this.$4H_1.alt = $v_0;
+                    this.$H_1.appendChild(this.$4I_1);
+                }
+                this.$O($p0);
+                return this.$E_1;
+            default:
+                this.ensureValidDisplayMode($p0);
+                return null;
+        }
+    },
+    
+    $35: function($p0) {
+        var $v_0 = $get(this.$6_0 + '-' + $p0);
+        this.storeElementForDisplayMode($v_0, $p0);
+        switch ($p0) {
+            case 'Large':
+            case 'Menu':
+                this.$E_1 = $v_0;
+                this.$H_1 = this.$E_1.childNodes[0];
+                this.$4I_1 = this.$H_1.childNodes[0];
+                this.$4H_1 = this.$4I_1.childNodes[0];
+                break;
+        }
+    },
+    
+    $O: function($p0) {
+        switch ($p0) {
+            case 'Large':
+            case 'Menu':
+                this.$N_1();
+                break;
+        }
+    },
+    
+    $N_1: function() {ULSpEN:;
+        $addHandler(this.$H_1, 'click', this.$1H);
+        $addHandler(this.$H_1, 'focus', this.$3K);
+        $addHandler(this.$H_1, 'mouseover', this.$3K);
+        $addHandler(this.$H_1, 'blur', this.$3H);
+        $addHandler(this.$H_1, 'mouseout', this.$3H);
+    },
+    
+    get_$15: function() {ULSpEN:;
+        return 'GalleryButton';
+    },
+    
+    onEnabledChanged: function($p0) {
+        if ($p0) {
+            CUI.Utility.enableElement(this.$H_1);
+        }
+        else {
+            CUI.Utility.disableElement(this.$H_1);
+        }
+    },
+    
+    onClick: function($p0) {
+        this.$X();
+        $p0.preventDefault();
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.toggle();
+        var $v_0 = 1;
+        var $v_1 = this.get_properties().CommandType;
+        var $v_2 = this.get_stateProperties();
+        $v_2[CUI.Controls.GalleryButtonCommandProperties.CommandValueId] = this.get_properties().CommandValueId;
+        $v_2['MenuItemId'] = this.get_properties().MenuItemId;
+        $v_2['SourceControlId'] = this.get_properties().Id;
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_1) && $v_1 === 'OptionSelection') {
+            $v_0 = 3;
+        }
+        this.get_displayedComponent().raiseCommandEvent(this.get_properties().Command, $v_0, $v_2);
+        if (this.$0_0.get_$4x()) {
+            this.$4y();
+        }
+        else {
+            this.$51_1(this.get_stateProperties()[CUI.Controls.GalleryButtonCommandProperties.On]);
+        }
+    },
+    
+    onFocus: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.$0_0.set_$o(this);
+        if (CUI.ScriptUtility.isNullOrUndefined(this.get_properties().CommandPreview)) {
+            return;
+        }
+        var $v_0 = 5;
+        var $v_1 = this.get_properties().CommandType;
+        this.get_stateProperties()[CUI.Controls.GalleryButtonCommandProperties.CommandValueId] = this.get_properties().CommandValueId;
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_1) && $v_1 === 'OptionSelection') {
+            $v_0 = 7;
+        }
+        this.get_displayedComponent().raiseCommandEvent(this.get_properties().CommandPreview, $v_0, this.get_stateProperties());
+    },
+    
+    onBlur: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined(this.get_properties().CommandRevert)) {
+            return;
+        }
+        var $v_0 = 6;
+        var $v_1 = this.get_properties().CommandType;
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_1) && $v_1 === 'OptionSelection') {
+            $v_0 = 8;
+            this.get_stateProperties()[CUI.Controls.GalleryButtonCommandProperties.CommandValueId] = this.get_properties().CommandValueId;
+        }
+        this.get_displayedComponent().raiseCommandEvent(this.get_properties().CommandRevert, $v_0, this.get_stateProperties());
+    },
+    
+    getDropDownDOMElementForDisplayMode: function($p0) {
+        return CUI.Utility.$3('span');
+    },
+    
+    deselect: function() {ULSpEN:;
+        this.set_selected(false);
+    },
+    
+    getMenuItemId: function() {ULSpEN:;
+        return this.get_properties().MenuItemId;
+    },
+    
+    getCommandValueId: function() {ULSpEN:;
+        return this.get_properties().CommandValueId;
+    },
+    
+    focusOnDisplayedComponent: function() {ULSpEN:;
+        this.receiveFocus();
+    },
+    
+    getTextValue: function() {ULSpEN:;
+        return this.get_properties().Alt;
+    },
+    
+    receiveFocus: function() {ULSpEN:;
+        this.$H_1.focus();
+    },
+    
+    onMenuClosed: function() {ULSpEN:;
+        CUI.Controls.GalleryButton.callBaseMethod(this, 'onMenuClosed');
+    },
+    
+    $39_1: function() {ULSpEN:;
+        CUI.Utility.ensureCSSClassOnElement(this.$E_1, 'ms-cui-gallerybutton-highlighted');
+    },
+    
+    $1U_1: function() {ULSpEN:;
+        CUI.Utility.removeCSSClassFromElement(this.$E_1, 'ms-cui-gallerybutton-highlighted');
+    },
+    
+    toggle: function() {ULSpEN:;
+        var $v_0 = !this.get_stateProperties()[CUI.Controls.GalleryButtonCommandProperties.On];
+        this.get_stateProperties()[CUI.Controls.GalleryButtonCommandProperties.On] = $v_0;
+        this.$51_1($v_0);
+    },
+    
+    $51_1: function($p0) {
+        if ($p0) {
+            this.$39_1();
+        }
+        else {
+            this.$1U_1();
+        }
+    },
+    
+    $4y: function() {ULSpEN:;
+        var $v_0 = this.get_stateProperties();
+        $v_0[CUI.Controls.GalleryButtonCommandProperties.CommandValueId] = this.get_properties().CommandValueId;
+        $v_0['MenuItemId'] = this.get_properties().MenuItemId;
+        $v_0['SourceControlId'] = this.get_properties().Id;
+        var $v_1 = this.pollForStateAndUpdateInternal(this.get_properties().Command, this.get_properties().QueryCommand, $v_0, false);
+        if ($v_1) {
+            this.$51_1(this.get_stateProperties()[CUI.Controls.GalleryButtonCommandProperties.On]);
+        }
+    },
+    
+    get_selected: function() {ULSpEN:;
+        return this.get_stateProperties()[CUI.Controls.GalleryButtonCommandProperties.On];
+    },
+    set_selected: function($p0) {
+        this.get_stateProperties()[CUI.Controls.GalleryButtonCommandProperties.On] = $p0;
+        if ($p0) {
+            this.$39_1();
+        }
+        else {
+            this.$1U_1();
+        }
+        return $p0;
+    },
+    
+    get_elementDimensions: function() {ULSpEN:;
+        return this.$4E_1;
+    },
+    set_elementDimensions: function($p0) {
+        this.$4E_1 = $p0;
+        return $p0;
+    },
+    
+    dispose: function() {ULSpEN:;
+        CUI.Controls.GalleryButton.callBaseMethod(this, 'dispose');
+        this.$E_1 = null;
+        this.$H_1 = null;
+        this.$4H_1 = null;
+        this.$4I_1 = null;
+    },
+    
+    get_properties: function() {ULSpEN:;
+        return this.$5_0;
+    }
+}
+
+
+CUI.Controls.InsertTableCommandProperties = function() {
+}
+
+
+CUI.Controls.InsertTable = function(root, id, properties) {ULSpEN:;
+    this.$53 = Function.createDelegate(this, this.$An_1);
+    this.$55 = Function.createDelegate(this, this.$Ap_1);
+    this.$54 = Function.createDelegate(this, this.$Ao_1);
+    this.$8E = Function.createDelegate(this, this.$DC_1);
+    this.$1c_1 = -1;
+    this.$43_1 = -1;
+    this.$44_1 = -1;
+    CUI.Controls.InsertTable.initializeBase(this, [ root, id, properties ]);
+    this.addDisplayMode('Menu');
+}
+CUI.Controls.InsertTable.prototype = {
+    $2I_1: null,
+    $4g_1: null,
+    
+    createComponentForDisplayModeInternal: function($p0) {
+        if (this.$k_0.length > 0) {
+            throw Error.create('Only one ControlComponent can be created for each InsertTable Control');
+        }
+        var $v_0;
+        $v_0 = this.$0_0.$3w(this.$6_0 + '-' + $p0 + this.$0_0.$27(), $p0, this);
+        return $v_0;
+    },
+    
+    $E_1: null,
+    $2o_1: null,
+    
+    createDOMElementForDisplayMode: function($p0) {
+        switch ($p0) {
+            case 'Menu':
+                this.$E_1 = CUI.Utility.$3('table');
+                this.$E_1.setAttribute('mscui:controltype', this.get_$15());
+                this.$2o_1 = CUI.Utility.$3('tbody');
+                this.$2o_1.className = 'ms-cui-it';
+                this.$E_1.setAttribute('cellspacing', '0');
+                this.$E_1.setAttribute('cellpadding', '0');
+                this.$2o_1.setAttribute('cellspacing', '0');
+                this.$2o_1.setAttribute('cellpadding', '0');
+                $addHandler(this.$E_1, 'mouseout', this.$8E);
+                this.$Ca_1();
+                var $v_0;
+                var $v_1;
+                var $v_2;
+                var $v_3;
+                var $v_4;
+                var $v_5 = 0;
+                for (var $v_6 = 0; $v_6 < 10; $v_6++) {
+                    $v_0 = CUI.Utility.$3('tr');
+                    this.$2o_1.appendChild($v_0);
+                    for (var $v_7 = 0; $v_7 < 10; $v_7++) {
+                        $v_1 = CUI.Utility.$3('td');
+                        $v_1.style.padding = '0px';
+                        $v_0.appendChild($v_1);
+                        $v_2 = CUI.Utility.$3('a');
+                        CUI.Utility.$1s($v_2);
+                        CUI.Utility.$1i(this.get_$1_1(), $v_2);
+                        $addHandler($v_2, 'focus', this.$54);
+                        $v_3 = CUI.Utility.$3('div');
+                        $v_3.className = 'ms-cui-it-inactiveCell';
+                        $v_4 = CUI.Utility.$3('div');
+                        $v_4.id = this.$6_0 + '-' + $v_5;
+                        $v_4.className = 'ms-cui-it-inactiveCellOuter';
+                        $addHandler($v_1, 'mouseover', this.$55);
+                        $addHandler($v_1, 'click', this.$53);
+                        $v_1.appendChild($v_4);
+                        $v_4.appendChild($v_3);
+                        $v_3.appendChild($v_2);
+                        this.$2I_1[$v_5] = $v_3;
+                        this.$4g_1[$v_5] = $v_4;
+                        $v_5++;
+                    }
+                }
+                this.$E_1.appendChild(this.$2o_1);
+                return this.$E_1;
+            default:
+                this.ensureValidDisplayMode($p0);
+                break;
+        }
+        return null;
+    },
+    
+    onEnabledChanged: function($p0) {
+    },
+    
+    get_$15: function() {ULSpEN:;
+        return 'InsertTable';
+    },
+    
+    $An_1: function($p0) {
+        if (!CUI.ScriptUtility.isNullOrUndefined(CUI.PMetrics)) {
+            CUI.PMetrics.perfMark(7702);
+        }
+        $p0.preventDefault();
+        if (!this.get_enabled()) {
+            return;
+        }
+        var $v_0 = this.$7O_1($p0.target);
+        var $v_1 = this.$7M_1($v_0);
+        var $v_2 = this.$4s_1($v_1);
+        var $v_3 = this.$4t_1($v_1);
+        this.$76_1();
+        this.get_commandProperties()['Rows'] = $v_3 + 1;
+        this.get_commandProperties()['Columns'] = $v_2 + 1;
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_1().Command, 1, this.get_commandProperties());
+        if (!CUI.ScriptUtility.isNullOrUndefined(CUI.PMetrics)) {
+            CUI.PMetrics.perfMark(7703);
+        }
+    },
+    
+    $7O_1: function($p0) {
+        while ($p0.hasChildNodes()) {
+            $p0 = $p0.childNodes[0];
+        }
+        return $p0.parentNode.parentNode;
+    },
+    
+    $BG_1: function($p0) {
+        var $v_0 = $p0.childNodes[0].childNodes[0];
+        var $v_1 = this.$7M_1($p0);
+        $v_0.title = this.$AL_1(this.$4t_1($v_1) + 1, this.$4s_1($v_1) + 1);
+    },
+    
+    $AL_1: function($p0, $p1) {
+        var $v_0 = this.get_$1_1().Alt;
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            $v_0 = this.get_$1_1().MenuSectionTitle;
+        }
+        $v_0 = String.format($v_0, $p1.toString(), $p0.toString());
+        return $v_0;
+    },
+    
+    $Ap_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        var $v_0 = this.$7O_1($p0.target);
+        this.$BG_1($v_0);
+        this.$AY_1($v_0);
+    },
+    
+    $Ao_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        var $v_0 = this.$7O_1($p0.target);
+        this.$BG_1($v_0);
+        this.$AY_1($v_0);
+    },
+    
+    $DC_1: function($p0) {
+        var $v_0 = CUI.Utility.$AP(this.$E_1);
+        if ($p0.clientX <= $v_0.x || $p0.clientX >= $v_0.x + $v_0.width || $p0.clientY <= $v_0.y || $p0.clientY >= $v_0.y + $v_0.height) {
+            this.$60_1();
+        }
+    },
+    
+    $60_1: function() {ULSpEN:;
+        this.$EG_1();
+        this.$7E_1();
+        this.$43_1 = -1;
+        this.$44_1 = -1;
+        this.$3C_1 = false;
+    },
+    
+    $7M_1: function($p0) {
+        return parseInt($p0.id.substr(this.$6_0.length + 1));
+    },
+    
+    $3C_1: false,
+    
+    $AY_1: function($p0) {
+        var $v_0 = this.$7M_1($p0);
+        if (this.$1c_1 === $v_0) {
+            return;
+        }
+        this.$Cz_1($v_0);
+    },
+    
+    $Cz_1: function($p0) {
+        this.$Bb_1($p0);
+        this.$1c_1 = $p0;
+        this.$7E_1();
+        this.$B8_1($p0);
+    },
+    
+    $4t_1: function($p0) {
+        return Math.floor($p0 / 10);
+    },
+    
+    $4s_1: function($p0) {
+        return $p0 % 10;
+    },
+    
+    $Bb_1: function($p0) {
+        var $v_0 = this.$4s_1($p0);
+        var $v_1 = this.$4t_1($p0);
+        var $v_2 = -1;
+        var $v_3 = -1;
+        if (this.$1c_1 !== -1) {
+            $v_2 = this.$4t_1(this.$1c_1);
+            $v_3 = this.$4s_1(this.$1c_1);
+        }
+        while ($v_2 !== $v_1 || $v_3 !== $v_0) {
+            if ($v_2 < $v_1) {
+                this.$BE_1(++$v_2, $v_3, true);
+            }
+            else if ($v_2 > $v_1) {
+                this.$BE_1($v_2, $v_3, false);
+                $v_2--;
+            }
+            else if ($v_3 < $v_0) {
+                this.$BA_1(++$v_3, $v_2, true);
+            }
+            else if ($v_3 > $v_0) {
+                this.$BA_1($v_3, $v_2, false);
+                $v_3--;
+            }
+        }
+        this.get_$Ab_1().$BF(this.$AL_1($v_1 + 1, $v_0 + 1));
+    },
+    
+    $BE_1: function($p0, $p1, $p2) {
+        for (var $v_0 = 0; $v_0 <= $p1; $v_0++) {
+            this.$B9_1($p0, $v_0, $p2);
+        }
+    },
+    
+    $BA_1: function($p0, $p1, $p2) {
+        for (var $v_0 = 0; $v_0 <= $p1; $v_0++) {
+            this.$B9_1($v_0, $p0, $p2);
+        }
+    },
+    
+    $B9_1: function($p0, $p1, $p2) {
+        var $v_0 = $p0 * 10 + $p1;
+        var $v_1 = this.$2I_1[$v_0];
+        var $v_2 = this.$4g_1[$v_0];
+        if ($p2) {
+            $v_1.className = 'ms-cui-it-activeCell';
+            $v_2.className = 'ms-cui-it-activeCellOuter';
+        }
+        else {
+            $v_1.className = 'ms-cui-it-inactiveCell';
+            $v_2.className = 'ms-cui-it-inactiveCellOuter';
+        }
+    },
+    
+    $EG_1: function() {ULSpEN:;
+        for (var $v_1 = 0; $v_1 < 100; $v_1++) {
+            this.$2I_1[$v_1].className = 'ms-cui-it-inactiveCell';
+            this.$4g_1[$v_1].className = 'ms-cui-it-inactiveCellOuter';
+        }
+        this.$1c_1 = -1;
+        var $v_0 = this.get_$1_1().MenuSectionInitialTitle;
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            $v_0 = '';
+        }
+        this.get_$Ab_1().$BF($v_0);
+    },
+    
+    $Ca_1: function() {ULSpEN:;
+        if (CUI.ScriptUtility.isNullOrUndefined(this.$2I_1)) {
+            this.$2I_1 = new Array(100);
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined(this.$4g_1)) {
+            this.$4g_1 = new Array(100);
+        }
+    },
+    
+    receiveFocus: function() {ULSpEN:;
+        var $v_0 = this.$2I_1[0];
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            return;
+        }
+        $v_0.firstChild.focus();
+    },
+    
+    $76_1: function() {ULSpEN:;
+        this.$43_1 = -1;
+        this.$44_1 = -1;
+        this.$3C_1 = false;
+    },
+    
+    $7E_1: function() {ULSpEN:;
+        if (this.$3C_1) {
+            var $v_0 = this.get_$1_1().CommandRevert;
+            if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+                this.get_commandProperties()['Rows'] = this.$44_1 + 1;
+                this.get_commandProperties()['Columns'] = this.$43_1 + 1;
+                this.get_displayedComponent().raiseCommandEvent($v_0, 6, this.get_commandProperties());
+            }
+            this.$76_1();
+        }
+    },
+    
+    $B8_1: function($p0) {
+        this.$43_1 = this.$4s_1($p0);
+        this.$44_1 = this.$4t_1($p0);
+        this.$3C_1 = true;
+        var $v_0 = this.get_$1_1().CommandPreview;
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            this.get_commandProperties()['Rows'] = this.$44_1 + 1;
+            this.get_commandProperties()['Columns'] = this.$43_1 + 1;
+            this.get_displayedComponent().raiseCommandEvent($v_0, 5, this.get_commandProperties());
+        }
+    },
+    
+    get_$Ab_1: function() {ULSpEN:;
+        var $v_0 = this.get_displayedComponent().$K_0;
+        if (!CUI.MenuSection.isInstanceOfType($v_0)) {
+            throw Error.create('InsertTable must live inside of a MenuSection.');
+        }
+        return $v_0;
+    },
+    
+    onMenuClosed: function() {ULSpEN:;
+        this.$60_1();
+    },
+    
+    $2i: function() {ULSpEN:;
+        if (this.$1c_1 === 99) {
+            this.$60_1();
+            return false;
+        }
+        this.$2I_1[this.$1c_1 + 1].firstChild.focus();
+        return true;
+    },
+    
+    $2j: function() {ULSpEN:;
+        if (!this.$1c_1) {
+            this.$60_1();
+            return false;
+        }
+        else if (this.$1c_1 === -1) {
+            this.$2I_1[99].firstChild.focus();
+        }
+        else {
+            this.$2I_1[this.$1c_1 - 1].firstChild.focus();
+        }
+        return true;
+    },
+    
+    dispose: function() {ULSpEN:;
+        CUI.Controls.InsertTable.callBaseMethod(this, 'dispose');
+        this.$E_1 = null;
+        this.$2o_1 = null;
+    },
+    
+    get_$1_1: function() {ULSpEN:;
+        return this.$5_0;
+    }
+}
+
+
+CUI.Controls.LabelCommandProperties = function() {
+}
+
+
+CUI.Controls.Label = function(root, id, properties) {ULSpEN:;
+    CUI.Controls.Label.initializeBase(this, [ root, id, properties ]);
+    this.addDisplayMode('Medium');
+    this.addDisplayMode('Small');
+}
+CUI.Controls.Label.prototype = {
+    $E_1: null,
+    $5K_1: null,
+    $2B_1: null,
+    $9_1: null,
+    $4S_1: null,
+    $5i_1: '',
+    
+    createDOMElementForDisplayMode: function($p0) {
+        var $v_0 = this.get_$1_1().ForId;
+        var $v_1 = this.get_$1_1().LabelText;
+        switch ($p0) {
+            case 'Medium':
+                if ($v_0) {
+                    this.$E_1 = CUI.Utility.$3('label');
+                    if (CUI.Utility.$3B()) {
+                        this.$E_1.setAttribute('htmlFor', $v_0);
+                    }
+                    else {
+                        this.$E_1.setAttribute('for', $v_0);
+                    }
+                }
+                else {
+                    this.$E_1 = CUI.Utility.$3('span');
+                }
+                this.$E_1.setAttribute('mscui:controltype', this.get_$15());
+                this.$E_1.className = 'ms-cui-ctl-small ms-cui-fslb';
+                if (!CUI.ScriptUtility.isNullOrEmptyString(this.get_$1_1().Image16by16)) {
+                    this.$5K_1 = CUI.Utility.$3('img');
+                    var $v_4 = CUI.Utility.$j(2, 3, this.get_$1_1().Image16by16, this.get_$1_1().Image16by16Class, this.$5K_1, true, false, this.get_$1_1().Image16by16Top, this.get_$1_1().Image16by16Left);
+                    var $v_5 = CUI.Utility.$3('span');
+                    $v_5.className = 'ms-cui-ctl-iconContainer';
+                    $v_5.appendChild($v_4);
+                    this.$E_1.appendChild($v_5);
+                }
+                this.$2B_1 = CUI.Utility.$3('span');
+                this.$2B_1.className = 'ms-cui-ctl-mediumlabel';
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_1)) {
+                    CUI.UIUtility.setInnerText(this.$2B_1, $v_1);
+                }
+                this.$E_1.appendChild(this.$2B_1);
+                return this.$E_1;
+            case 'Small':
+                if ($v_0) {
+                    this.$9_1 = CUI.Utility.$3('label');
+                    if (CUI.Utility.$3B()) {
+                        this.$9_1.setAttribute('htmlFor', $v_0);
+                    }
+                    else {
+                        this.$9_1.setAttribute('for', $v_0);
+                    }
+                }
+                else {
+                    this.$9_1 = CUI.Utility.$3('span');
+                }
+                this.$9_1.setAttribute('mscui:controltype', this.get_$15());
+                this.$9_1.className = 'ms-cui-ctl-small ms-cui-fslb';
+                if (CUI.ScriptUtility.isNullOrEmptyString(this.get_$1_1().Image16by16)) {
+                    throw Error.argumentNull('Image16by16', 'Small display mode must have an icon set');
+                }
+                this.$4S_1 = CUI.Utility.$3('img');
+                var $v_2 = CUI.Utility.$j(2, 3, this.get_$1_1().Image16by16, this.get_$1_1().Image16by16Class, this.$4S_1, true, false, this.get_$1_1().Image16by16Top, this.get_$1_1().Image16by16Left);
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_1)) {
+                    this.$4S_1.alt = $v_1;
+                }
+                var $v_3 = CUI.Utility.$3('span');
+                $v_3.className = 'ms-cui-ctl-iconContainer';
+                $v_3.appendChild($v_2);
+                this.$9_1.appendChild($v_3);
+                return this.$9_1;
+            default:
+                this.ensureValidDisplayMode($p0);
+                break;
+        }
+        return null;
+    },
+    
+    $35: function($p0) {
+        var $v_0 = $get(this.$6_0 + '-' + $p0);
+        this.storeElementForDisplayMode($v_0, $p0);
+        switch ($p0) {
+            case 'Medium':
+                this.$E_1 = $v_0;
+                if (!CUI.ScriptUtility.isNullOrEmptyString(this.get_$1_1().Image16by16)) {
+                    this.$5K_1 = this.$E_1.firstChild.firstChild.firstChild;
+                    this.$2B_1 = this.$E_1.childNodes[1];
+                }
+                else {
+                    this.$2B_1 = this.$E_1.firstChild;
+                }
+                break;
+            case 'Small':
+                this.$9_1 = $v_0;
+                this.$4S_1 = this.$9_1.firstChild.firstChild.firstChild;
+                break;
+        }
+    },
+    
+    onEnabledChanged: function($p0) {
+        CUI.Utility.setEnabledOnElement(this.$E_1, $p0);
+        CUI.Utility.setEnabledOnElement(this.$9_1, $p0);
+    },
+    
+    get_$15: function() {ULSpEN:;
+        return 'Label';
+    },
+    
+    $4y: function() {ULSpEN:;
+        if (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_1().Command)) {
+            return;
+        }
+        var $v_0 = this.pollForStateAndUpdateInternal(this.get_$1_1().Command, this.get_$1_1().QueryCommand, this.get_stateProperties(), false);
+        if ($v_0 && !CUI.ScriptUtility.isNullOrUndefined(this.get_$1_1().QueryCommand)) {
+            var $v_1 = this.$5i_1;
+            if (!CUI.ScriptUtility.isNullOrEmptyString(this.get_stateProperties()[CUI.Controls.LabelCommandProperties.Value])) {
+                CUI.UIUtility.setInnerText(this.$2B_1, this.get_stateProperties()[CUI.Controls.LabelCommandProperties.Value]);
+                this.$5i_1 = this.get_stateProperties()[CUI.Controls.LabelCommandProperties.Value];
+            }
+            else {
+                CUI.UIUtility.setInnerText(this.$2B_1, this.get_$1_1().LabelText);
+                this.$5i_1 = this.get_$1_1().LabelText;
+            }
+            if (this.$5i_1 !== $v_1) {
+                this.$0_0.$3N_1 = true;
+            }
+        }
+    },
+    
+    dispose: function() {ULSpEN:;
+        CUI.Controls.Label.callBaseMethod(this, 'dispose');
+        this.$E_1 = null;
+        this.$5K_1 = null;
+        this.$2B_1 = null;
+        this.$9_1 = null;
+        this.$4S_1 = null;
+    },
+    
+    get_$1_1: function() {ULSpEN:;
+        return this.$5_0;
+    }
+}
+
+
+CUI.Controls.MRUSplitButton = function(root, id, properties, menu) {ULSpEN:;
+    this.$3J = Function.createDelegate(this, this.onDblClick);
+    this.$8z = Function.createDelegate(this, this.$Ay_3);
+    this.$5A = Function.createDelegate(this, this.$Dc_3);
+    this.$5B = Function.createDelegate(this, this.$Dd_3);
+    CUI.Controls.MRUSplitButton.initializeBase(this, [ root, id, properties, menu ]);
+}
+CUI.Controls.MRUSplitButton.prototype = {
+    $F_3: null,
+    $1I_3: null,
+    $R_3: null,
+    $1v_3: null,
+    $8_3: null,
+    $Y_3: null,
+    $S_3: null,
+    $2E_3: null,
+    $9_3: null,
+    $1P_3: null,
+    $U_3: null,
+    $2G_3: null,
+    $1V_3: false,
+    $3P_3: false,
+    
+    $7o: function() {ULSpEN:;
+        if (!this.get_enabled()) {
+            return false;
+        }
+        if (this.$1V_3) {
+            this.get_displayedComponent().get_$2().firstChild.firstChild.focus();
+            return true;
+        }
+        return false;
+    },
+    
+    createDOMElementForDisplayMode: function($p0) {
+        var $v_0 = true;
+        var $v_1 = (CUI.ScriptUtility.isNullOrEmptyString(this.get_properties().Alt)) ? '' : this.get_properties().Alt;
+        var $v_2 = ($p0 === 'Medium' && !CUI.ScriptUtility.isNullOrUndefined(this.get_properties().Width)) ? this.get_properties().Width : 'auto';
+        var $v_3 = null;
+        var $v_4 = this.get_stateProperties()[CUI.Controls.DropDownCommandProperties.SelectedItemId];
+        if (CUI.ScriptUtility.isNullOrUndefined($v_4)) {
+            $v_4 = this.get_properties().InitialItem;
+        }
+        this.$3P_3 = true;
+        switch ($p0) {
+            case 'Large':
+                this.$F_3 = CUI.Utility.$3('span');
+                this.$F_3.setAttribute('mscui:controltype', this.get_$15());
+                CUI.Utility.ensureCSSClassOnElement(this.$F_3, 'ms-cui-ctl-large');
+                this.$1I_3 = CUI.Utility.$3('span');
+                this.$1I_3.className = 'ms-cui-mrusb-selecteditem';
+                if (!this.$2R($v_4)) {
+                    if (!CUI.Utility.$v(this.get_properties().PopulateDynamically)) {
+                        throw Error.create('No menu item with id \'' + this.get_properties().InitialItem + '\' exists in this control\'s menu');
+                    }
+                    else {
+                        this.$1I_3.style.width = '32px';
+                        this.$1I_3.style.height = '32px';
+                    }
+                }
+                this.$R_3 = CUI.Utility.$3('a');
+                this.$R_3.className = 'ms-cui-ctl-a2';
+                this.$R_3.style.display = 'block';
+                this.$R_3.setAttribute('role', this.get_$1e());
+                this.$R_3.setAttribute('aria-haspopup', true);
+                CUI.Utility.$1s(this.$R_3);
+                CUI.Utility.$1i(this.get_properties(), this.$R_3);
+                this.$1v_3 = CUI.Utility.$3('img');
+                var $v_5 = CUI.Utility.$j(2, 1, this.$0_0.$5_1.ImageDownArrow, this.$0_0.$5_1.ImageDownArrowClass, this.$1v_3, true, false, this.$0_0.$5_1.ImageDownArrowTop, this.$0_0.$5_1.ImageDownArrowLeft);
+                if (CUI.ScriptUtility.isNullOrEmptyString(this.get_properties().ToolTipTitle)) {
+                    $v_0 = false;
+                    this.$R_3.title = $v_1;
+                    this.$1v_3.alt = $v_1;
+                }
+                this.$O($p0);
+                this.$R_3.appendChild($v_5);
+                if ($v_0) {
+                    $v_3 = CUI.Utility.$2h($v_1);
+                    this.$R_3.appendChild($v_3);
+                }
+                this.$F_3.appendChild(this.$1I_3);
+                this.$F_3.appendChild(this.$R_3);
+                this.$3P_3 = false;
+                return this.$F_3;
+            case 'Medium':
+                this.$8_3 = CUI.Utility.$3('span');
+                this.$8_3.setAttribute('mscui:controltype', this.get_$15());
+                this.$8_3.className = 'ms-cui-ctl-medium ms-cui-ctl';
+                this.$Y_3 = CUI.Utility.$3('span');
+                this.$Y_3.className = 'ms-cui-mrusb-selecteditem';
+                this.$Y_3.style.width = $v_2;
+                if (!this.$2R($v_4)) {
+                    throw Error.create('No menu item with id \'' + this.get_properties().InitialItem + '\' exists in this control\'s menu');
+                }
+                this.$S_3 = CUI.Utility.$3('a');
+                CUI.Utility.$1s(this.$S_3);
+                CUI.Utility.$1i(this.get_properties(), this.$S_3);
+                this.$S_3.className = 'ms-cui-ctl';
+                this.$S_3.setAttribute('role', this.get_$1e());
+                this.$S_3.setAttribute('aria-haspopup', true);
+                this.$2E_3 = CUI.Utility.$3('img');
+                if (CUI.ScriptUtility.isNullOrEmptyString(this.get_properties().ToolTipTitle)) {
+                    $v_0 = false;
+                    this.$S_3.title = $v_1;
+                    this.$2E_3.alt = $v_1;
+                }
+                var $v_6 = CUI.Utility.$j(2, 1, this.$0_0.$5_1.ImageDownArrow, this.$0_0.$5_1.ImageDownArrowClass, this.$2E_3, true, false, this.$0_0.$5_1.ImageDownArrowTop, this.$0_0.$5_1.ImageDownArrowLeft);
+                this.$O($p0);
+                this.$S_3.appendChild($v_6);
+                if ($v_0) {
+                    $v_3 = CUI.Utility.$2h($v_1);
+                    this.$S_3.appendChild($v_3);
+                }
+                this.$8_3.appendChild(this.$Y_3);
+                this.$8_3.appendChild(this.$S_3);
+                this.$3P_3 = false;
+                return this.$8_3;
+            case 'Small':
+                this.$9_3 = CUI.Utility.$3('span');
+                this.$9_3.setAttribute('mscui:controltype', this.get_$15());
+                this.$9_3.className = 'ms-cui-ctl-medium ms-cui-ctl';
+                this.$1P_3 = CUI.Utility.$3('span');
+                this.$1P_3.className = 'ms-cui-mrusb-selecteditem';
+                this.$1P_3.style.width = $v_2;
+                if (!this.$2R($v_4)) {
+                    throw Error.create('No menu item with id \'' + this.get_properties().InitialItem + '\' exists in this control\'s menu');
+                }
+                this.$U_3 = CUI.Utility.$3('a');
+                CUI.Utility.$1s(this.$U_3);
+                CUI.Utility.$1i(this.get_properties(), this.$U_3);
+                this.$U_3.setAttribute('role', this.get_$1e());
+                this.$U_3.setAttribute('aria-haspopup', true);
+                this.$U_3.className = 'ms-cui-ctl ms-cui-mrusb-arwbtn';
+                this.$2G_3 = CUI.Utility.$3('img');
+                if (CUI.ScriptUtility.isNullOrEmptyString(this.get_properties().ToolTipTitle)) {
+                    this.$U_3.title = $v_1;
+                    this.$2G_3.alt = $v_1;
+                    $v_0 = false;
+                }
+                var $v_7 = CUI.Utility.$j(2, 1, this.$0_0.$5_1.ImageDownArrow, this.$0_0.$5_1.ImageDownArrowClass, this.$2G_3, true, false, this.$0_0.$5_1.ImageDownArrowTop, this.$0_0.$5_1.ImageDownArrowLeft);
+                this.$O($p0);
+                this.$U_3.appendChild($v_7);
+                if ($v_0) {
+                    $v_3 = CUI.Utility.$2h($v_1);
+                    this.$U_3.appendChild($v_3);
+                }
+                this.$9_3.appendChild(this.$1P_3);
+                this.$9_3.appendChild(this.$U_3);
+                this.$3P_3 = false;
+                return this.$9_3;
+            default:
+                this.$3P_3 = false;
+                this.ensureValidDisplayMode($p0);
+                return null;
+        }
+    },
+    
+    $35: function($p0) {
+        var $v_0 = $get(this.$6_0 + '-' + $p0);
+        this.storeElementForDisplayMode($v_0, $p0);
+        switch ($p0) {
+            case 'Large':
+                this.$F_3 = $v_0;
+                this.$1I_3 = this.$F_3.childNodes[0];
+                this.$R_3 = this.$F_3.childNodes[1];
+                this.$1v_3 = this.$R_3.childNodes[0].childNodes[0];
+                break;
+            case 'Medium':
+                this.$8_3 = $v_0;
+                this.$Y_3 = this.$8_3.childNodes[0];
+                this.$S_3 = this.$8_3.childNodes[1];
+                this.$2E_3 = this.$S_3.childNodes[0].childNodes[0];
+                break;
+            case 'Small':
+                this.$9_3 = $v_0;
+                this.$1P_3 = this.$9_3.childNodes[0];
+                this.$U_3 = this.$9_3.childNodes[1];
+                this.$2G_3 = this.$U_3.childNodes[0].childNodes[0];
+                break;
+        }
+    },
+    
+    $O: function($p0) {
+        this.$N_3($p0);
+    },
+    
+    $N_3: function($p0) {
+        switch ($p0) {
+            case 'Large':
+                $addHandler(this.$R_3, 'click', this.$3F);
+                $addHandler(this.$1I_3, 'mouseover', this.$5B);
+                $addHandler(this.$1I_3, 'mouseout', this.$5A);
+                $addHandler(this.$R_3, 'mouseover', this.$2l);
+                $addHandler(this.$R_3, 'mouseout', this.$1j);
+                $addHandler(this.$R_3, 'focus', this.$47);
+                $addHandler(this.$R_3, 'blur', this.$1j);
+                $addHandler(this.$R_3, 'keypress', this.$3G);
+                break;
+            case 'Medium':
+                $addHandler(this.$S_3, 'click', this.$3F);
+                $addHandler(this.$Y_3, 'mouseover', this.$5B);
+                $addHandler(this.$Y_3, 'mouseout', this.$5A);
+                $addHandler(this.$S_3, 'mouseover', this.$2l);
+                $addHandler(this.$S_3, 'mouseout', this.$1j);
+                $addHandler(this.$S_3, 'focus', this.$47);
+                $addHandler(this.$S_3, 'blur', this.$1j);
+                $addHandler(this.$S_3, 'keypress', this.$3G);
+                break;
+            case 'Small':
+                $addHandler(this.$U_3, 'click', this.$3F);
+                $addHandler(this.$1P_3, 'mouseover', this.$5B);
+                $addHandler(this.$1P_3, 'mouseout', this.$5A);
+                $addHandler(this.$U_3, 'mouseover', this.$2l);
+                $addHandler(this.$U_3, 'mouseout', this.$1j);
+                $addHandler(this.$U_3, 'focus', this.$47);
+                $addHandler(this.$U_3, 'blur', this.$1j);
+                $addHandler(this.$U_3, 'keypress', this.$3G);
+                break;
+        }
+    },
+    
+    get_$15: function() {ULSpEN:;
+        return 'MRUSplitButton';
+    },
+    
+    selectMenuItem: function($p0) {
+        if (this._selectedControl === $p0 && !this.$3P_3) {
+            return;
+        }
+        var $v_0 = (!CUI.ScriptUtility.isNullOrUndefined(this.get_displayedComponent())) ? this.get_displayedComponent().get_title() : this.$6D_0;
+        var $v_1;
+        switch ($v_0) {
+            case 'Large':
+                $v_1 = this.$1I_3;
+                break;
+            case 'Medium':
+                $v_1 = this.$Y_3;
+                break;
+            case 'Small':
+                $v_1 = this.$1P_3;
+                break;
+            default:
+                throw Error.create('Invalid display mode on split button while selecting a menu item');
+        }
+        this._selectedControl = $p0;
+        this.get_stateProperties()[CUI.Controls.DropDownCommandProperties.SelectedItemId] = $p0.getMenuItemId();
+        var $v_2 = $p0;
+        if (CUI.MenuItem.isInstanceOfType($v_2.get_displayedComponent())) {
+            this.$B_1.$3p_1 = $v_2.get_displayedComponent();
+        }
+        var $v_3 = this._selectedControl.getDropDownDOMElementForDisplayMode($v_0);
+        if ($v_3.childNodes.length > 1) {
+            var $v_4 = $v_3.childNodes[1];
+            if ($v_4.childNodes.length > 1) {
+                if ($v_4.childNodes[1].tagName.toLowerCase() === 'br') {
+                    var $v_5 = CUI.Utility.$3('span');
+                    CUI.Utility.$2k($v_5, ' ');
+                    $v_4.replaceChild($v_5, $v_4.childNodes[1]);
+                }
+            }
+        }
+        $v_3.id = this.$6_0 + '-SelectedItem';
+        if ($v_1.hasChildNodes()) {
+            var $v_6 = $v_1.firstChild;
+            $v_1.replaceChild($v_3, $v_6);
+            $clearHandlers($v_6);
+        }
+        else {
+            $v_1.appendChild($v_3);
+        }
+        $addHandler($v_3, 'click', this.$8z);
+        $addHandler($v_3, 'dblclick', this.$3J);
+    },
+    
+    addDisplayModes: function() {ULSpEN:;
+        this.addDisplayMode('Large');
+        this.addDisplayMode('Medium');
+        this.addDisplayMode('Small');
+    },
+    
+    launchMenuInternal: function($p0) {
+        var $v_0 = false;
+        this.$0_0.$2v_1 = false;
+        switch (this.get_displayedComponent().get_title()) {
+            case 'Large':
+                $v_0 = this.launchMenu(this.$R_3, this.$3M);
+                break;
+            case 'Medium':
+                $v_0 = this.launchMenu(this.$S_3, this.$3M);
+                break;
+            case 'Small':
+                $v_0 = this.launchMenu(this.$U_3, this.$3M);
+                break;
+        }
+        if ($v_0) {
+            this.sendMenuCreationCommandEvent();
+        }
+    },
+    
+    onEnabledChanged: function($p0) {
+        CUI.Controls.MRUSplitButton.callBaseMethod(this, 'onEnabledChanged', [ $p0 ]);
+        var $v_0 = 'ms-cui-disabled';
+        this.$1V_3 = $p0;
+        if ($p0) {
+            CUI.Utility.removeCSSClassFromElement(this.$F_3, $v_0);
+            CUI.Utility.enableElement(this.$R_3);
+            CUI.Utility.removeCSSClassFromElement(this.$8_3, $v_0);
+            CUI.Utility.enableElement(this.$S_3);
+            CUI.Utility.removeCSSClassFromElement(this.$9_3, $v_0);
+            CUI.Utility.enableElement(this.$U_3);
+        }
+        else {
+            CUI.Utility.ensureCSSClassOnElement(this.$F_3, $v_0);
+            CUI.Utility.disableElement(this.$R_3);
+            CUI.Utility.ensureCSSClassOnElement(this.$8_3, $v_0);
+            CUI.Utility.disableElement(this.$S_3);
+            CUI.Utility.ensureCSSClassOnElement(this.$9_3, $v_0);
+            CUI.Utility.disableElement(this.$U_3);
+        }
+        CUI.Utility.setEnabledOnElement(this.$R_3, $p0);
+        CUI.Utility.setEnabledOnElement(this.$S_3, $p0);
+        CUI.Utility.setEnabledOnElement(this.$U_3, $p0);
+    },
+    
+    onDblClick: function($p0) {
+        this.$X();
+        $p0.preventDefault();
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.$Ay_3($p0);
+    },
+    
+    $Ay_3: function($p0) {
+        CUI.PMetrics.perfMark(7735);
+        this.$X();
+        $p0.preventDefault();
+        if (!this.get_enabled()) {
+            return;
+        }
+        var $v_0 = 3;
+        this.get_displayedComponent().raiseCommandEvent(this.get_properties().Command, $v_0, { CommandValueId: this._selectedControl.getCommandValueId() });
+    },
+    
+    $Dd_3: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        switch (this.get_displayedComponent().get_title()) {
+            case 'Large':
+                CUI.Utility.ensureCSSClassOnElement(this.$1I_3, 'ms-cui-ctl-light-hoveredOver');
+                CUI.Utility.ensureCSSClassOnElement(this.$R_3, 'ms-cui-ctl-split-hover');
+                break;
+            case 'Medium':
+                CUI.Utility.ensureCSSClassOnElement(this.$Y_3, 'ms-cui-ctl-light-hoveredOver');
+                CUI.Utility.ensureCSSClassOnElement(this.$S_3, 'ms-cui-ctl-split-hover');
+                break;
+            case 'Small':
+                CUI.Utility.ensureCSSClassOnElement(this.$1P_3, 'ms-cui-ctl-light-hoveredOver');
+                CUI.Utility.ensureCSSClassOnElement(this.$U_3, 'ms-cui-ctl-split-hover');
+                break;
+        }
+        if (CUI.ScriptUtility.isNullOrEmptyString(this.get_properties().CommandPreview)) {
+            return;
+        }
+        this.get_displayedComponent().raiseCommandEvent(this.get_properties().CommandPreview, 5, { CommandValueId: this._selectedControl.getCommandValueId() });
+    },
+    
+    $Dc_3: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        switch (this.get_displayedComponent().get_title()) {
+            case 'Large':
+                CUI.Utility.removeCSSClassFromElement(this.$1I_3, 'ms-cui-ctl-light-hoveredOver');
+                CUI.Utility.removeCSSClassFromElement(this.$R_3, 'ms-cui-ctl-split-hover');
+                break;
+            case 'Medium':
+                CUI.Utility.removeCSSClassFromElement(this.$Y_3, 'ms-cui-ctl-light-hoveredOver');
+                CUI.Utility.removeCSSClassFromElement(this.$S_3, 'ms-cui-ctl-split-hover');
+                break;
+            case 'Small':
+                CUI.Utility.removeCSSClassFromElement(this.$1P_3, 'ms-cui-ctl-light-hoveredOver');
+                CUI.Utility.removeCSSClassFromElement(this.$U_3, 'ms-cui-ctl-split-hover');
+                break;
+        }
+        if (CUI.ScriptUtility.isNullOrEmptyString(this.get_properties().CommandRevert)) {
+            return;
+        }
+        this.get_displayedComponent().raiseCommandEvent(this.get_properties().CommandRevert, 6, { CommandValueId: this._selectedControl.getCommandValueId() });
+    },
+    
+    highlight: function() {ULSpEN:;
+        switch (this.get_displayedComponent().get_title()) {
+            case 'Large':
+                CUI.Utility.ensureCSSClassOnElement(this.$1I_3, 'ms-cui-ctl-split-hover');
+                CUI.Utility.ensureCSSClassOnElement(this.$R_3, 'ms-cui-ctl-light-hoveredOver');
+                break;
+            case 'Medium':
+                CUI.Utility.ensureCSSClassOnElement(this.$Y_3, 'ms-cui-ctl-split-hover');
+                CUI.Utility.ensureCSSClassOnElement(this.$S_3, 'ms-cui-ctl-light-hoveredOver');
+                break;
+            case 'Small':
+                CUI.Utility.ensureCSSClassOnElement(this.$1P_3, 'ms-cui-ctl-split-hover');
+                CUI.Utility.ensureCSSClassOnElement(this.$U_3, 'ms-cui-ctl-light-hoveredOver');
+                break;
+        }
+    },
+    
+    removeHighlight: function() {ULSpEN:;
+        switch (this.get_displayedComponent().get_title()) {
+            case 'Large':
+                CUI.Utility.removeCSSClassFromElement(this.$1I_3, 'ms-cui-ctl-split-hover');
+                CUI.Utility.removeCSSClassFromElement(this.$R_3, 'ms-cui-ctl-light-hoveredOver');
+                break;
+            case 'Medium':
+                CUI.Utility.removeCSSClassFromElement(this.$Y_3, 'ms-cui-ctl-split-hover');
+                CUI.Utility.removeCSSClassFromElement(this.$S_3, 'ms-cui-ctl-light-hoveredOver');
+                break;
+            case 'Small':
+                CUI.Utility.removeCSSClassFromElement(this.$1P_3, 'ms-cui-ctl-split-hover');
+                CUI.Utility.removeCSSClassFromElement(this.$U_3, 'ms-cui-ctl-light-hoveredOver');
+                break;
+        }
+    },
+    
+    dispose: function() {ULSpEN:;
+        CUI.Controls.MRUSplitButton.callBaseMethod(this, 'dispose');
+        this.$F_3 = null;
+        this.$1v_3 = null;
+        this.$R_3 = null;
+        this.$1I_3 = null;
+        this.$8_3 = null;
+        this.$2E_3 = null;
+        this.$S_3 = null;
+        this.$Y_3 = null;
+        this.$9_3 = null;
+        this.$2G_3 = null;
+        this.$U_3 = null;
+        this.$1P_3 = null;
+    }
+}
+
+
+CUI.Controls.Separator = function(root, id, properties) {ULSpEN:;
+    CUI.Controls.Separator.initializeBase(this, [ root, id, properties ]);
+    this.addDisplayMode('Small');
+}
+CUI.Controls.Separator.prototype = {
+    $5P_1: null,
+    $5Q_1: null,
+    $9_1: null,
+    
+    createDOMElementForDisplayMode: function($p0) {
+        switch ($p0) {
+            case 'Small':
+                this.$5P_1 = CUI.Utility.$3('img');
+                this.$5P_1.style.cursor = 'default';
+                this.$5Q_1 = CUI.Utility.$j(2, 11, this.get_$1_1().Image, this.get_$1_1().ImageClass, this.$5P_1, true, false, this.get_$1_1().ImageTop, this.get_$1_1().ImageLeft);
+                this.$9_1 = CUI.Utility.$3('span');
+                this.$9_1.className = 'ms-cui-ctl ms-cui-ctl-small ms-cui-separator';
+                this.$9_1.appendChild(this.$5Q_1);
+                return this.$9_1;
+            default:
+                this.ensureValidDisplayMode($p0);
+                break;
+        }
+        return null;
+    },
+    
+    $35: function($p0) {
+        var $v_0 = $get(this.$6_0 + '-' + $p0);
+        this.storeElementForDisplayMode($v_0, $p0);
+        switch ($p0) {
+            case 'Small':
+                this.$5Q_1 = $v_0;
+                break;
+        }
+    },
+    
+    onEnabledChanged: function($p0) {
+    },
+    
+    get_$15: function() {ULSpEN:;
+        return 'Separator';
+    },
+    
+    $4y: function() {
+    },
+    
+    dispose: function() {ULSpEN:;
+        CUI.Controls.Separator.callBaseMethod(this, 'dispose');
+        this.$5P_1 = null;
+        this.$5Q_1 = null;
+        this.$9_1 = null;
+    },
+    
+    get_$1_1: function() {ULSpEN:;
+        return this.$5_0;
+    }
+}
+
+
+CUI.Controls.SpinnerCommandProperties = function() {
+}
+
+
+CUI.Controls.Spinner = function(root, id, properties, validUnits) {ULSpEN:;
+    this.$7u = Function.createDelegate(this, this.$BT_1);
+    this.$7v = Function.createDelegate(this, this.$BU_1);
+    this.$9A = Function.createDelegate(this, this.$EC_1);
+    this.$9B = Function.createDelegate(this, this.$ED_1);
+    this.$8q = Function.createDelegate(this, this.$At_1);
+    this.$8k = Function.createDelegate(this, this.$DU_1);
+    this.$96 = Function.createDelegate(this, this.$Di_1);
+    this.$8J = Function.createDelegate(this, this.$DE_1);
+    this.$8r = Function.createDelegate(this, this.$Au_1);
+    this.$8l = Function.createDelegate(this, this.$DV_1);
+    this.$97 = Function.createDelegate(this, this.$Dj_1);
+    this.$8K = Function.createDelegate(this, this.$DF_1);
+    this.$8U = Function.createDelegate(this, this.$DL_1);
+    this.$8P = Function.createDelegate(this, this.$DH_1);
+    this.$56 = Function.createDelegate(this, this.$Aq_1);
+    this.$95 = Function.createDelegate(this, this.$5y_1);
+    this.$8I = Function.createDelegate(this, this.$5v_1);
+    this.$8C = Function.createDelegate(this, this.$7Y_1);
+    this.$2m = Function.createDelegate(this, this.$4u_1);
+    this.$3L = Function.createDelegate(this, this.$42_1);
+    CUI.Controls.Spinner.initializeBase(this, [ root, id, properties ]);
+    this.addDisplayMode('Medium');
+    this.$4B_1 = 0;
+    this.$3k_1 = 1;
+    this.$2N_1 = validUnits;
+    this.$1d_1 = parseFloat(this.get_$1_1().DefaultValue);
+    this.get_stateProperties()['Value'] = this.$1d_1;
+    this.$n_1 = this.$AG_1(this.get_$1_1().DefaultUnit);
+    if (CUI.ScriptUtility.isNullOrUndefined(this.$n_1)) {
+        throw Error.create('The default unit is not in the list of valid units');
+    }
+    this.get_stateProperties()['Unit'] = this.$n_1.$5Z_0;
+}
+CUI.Controls.Spinner.createUnit = function($p0, $p1, $p2, $p3, $p4, $p5) {
+    return new CUI.Unit($p0, $p1, $p2, $p3, $p4, $p5);
+}
+CUI.Controls.Spinner.$Co_1 = function($p0, $p1) {
+    var $v_0 = Math.pow(10, $p1.$6F_0);
+    return Math.round($p0 * $v_0) / $v_0;
+}
+CUI.Controls.Spinner.prototype = {
+    $E_1: null,
+    $C_1: null,
+    $2A_1: null,
+    $d_1: null,
+    $c_1: null,
+    $4k_1: null,
+    $3t_1: null,
+    $4G_1: null,
+    $3V_1: null,
+    $n_1: null,
+    $2N_1: null,
+    $1d_1: 0,
+    $9l_1: false,
+    $4B_1: 0,
+    $5D_1: 0,
+    $9X_1: 0,
+    $3k_1: 0,
+    $2Z_1: 0,
+    $3r_1: 0,
+    $5F_1: null,
+    $3R_1: false,
+    
+    createDOMElementForDisplayMode: function($p0) {
+        switch ($p0) {
+            case 'Medium':
+                this.$E_1 = CUI.Utility.$3('span');
+                this.$E_1.className = 'ms-cui-spn';
+                this.$E_1.setAttribute('mscui:controltype', this.get_$15());
+                this.$C_1 = CUI.Utility.$7A('input');
+                this.$C_1.className = 'ms-cui-spn-txtbx';
+                this.$C_1.id = this.$6_0;
+                this.$C_1.setAttribute('role', 'textbox');
+                CUI.Utility.$1i(this.get_$1_1(), this.$C_1);
+                CUI.Utility.$7p(this.$C_1, (this.get_$1_1()).ImeEnabled);
+                this.$2A_1 = CUI.Utility.$3('span');
+                this.$2A_1.className = 'ms-cui-spn-arwbx';
+                this.$d_1 = CUI.Utility.$3('a');
+                this.$d_1.className = 'ms-cui-spn-btnup';
+                this.$d_1.setAttribute('role', 'spinbutton');
+                this.$c_1 = CUI.Utility.$3('a');
+                this.$c_1.className = 'ms-cui-spn-btndown';
+                this.$c_1.setAttribute('role', 'spinbutton');
+                this.$4k_1 = CUI.Utility.$3('img');
+                this.$4k_1.alt = '';
+                this.$3t_1 = CUI.Utility.$j(2, 1, this.$0_0.$5_1.ImageUpArrow, this.$0_0.$5_1.ImageUpArrowClass, this.$4k_1, true, false, this.$0_0.$5_1.ImageUpArrowTop, this.$0_0.$5_1.ImageUpArrowLeft);
+                CUI.Utility.ensureCSSClassOnElement(this.$3t_1, 'ms-cui-spn-imgcnt');
+                if (!CUI.ScriptUtility.isNullOrUndefined(this.get_$1_1().AltUpArrow)) {
+                    this.$d_1.title = this.get_$1_1().AltUpArrow;
+                }
+                this.$4G_1 = CUI.Utility.$3('img');
+                this.$4G_1.alt = '';
+                this.$3V_1 = CUI.Utility.$j(2, 1, this.$0_0.$5_1.ImageDownArrow, this.$0_0.$5_1.ImageDownArrowClass, this.$4G_1, true, false, this.$0_0.$5_1.ImageDownArrowTop, this.$0_0.$5_1.ImageDownArrowLeft);
+                CUI.Utility.ensureCSSClassOnElement(this.$3V_1, 'ms-cui-spn-imgcnt');
+                if (!CUI.ScriptUtility.isNullOrUndefined(this.get_$1_1().AltDownArrow)) {
+                    this.$c_1.title = this.get_$1_1().AltDownArrow;
+                }
+                this.$O($p0);
+                this.$E_1.appendChild(this.$C_1);
+                this.$E_1.appendChild(this.$2A_1);
+                this.$2A_1.appendChild(this.$d_1);
+                this.$2A_1.appendChild(this.$c_1);
+                this.$d_1.appendChild(this.$3t_1);
+                this.$c_1.appendChild(this.$3V_1);
+                return this.$E_1;
+            default:
+                this.ensureValidDisplayMode($p0);
+                return null;
+        }
+    },
+    
+    $E2_1: function() {ULSpEN:;
+        this.$E8_1(parseFloat(this.get_$1_1().DefaultValue));
+        this.$5D_1 = parseInt(this.get_$1_1().AccelerationInterval);
+        this.$9X_1 = parseInt(this.get_$1_1().MultiplierInterval);
+        this.$5F_1 = this.get_$1_1().Command;
+    },
+    
+    $35: function($p0) {
+        var $v_0 = $get(this.$6_0 + '-' + $p0);
+        this.storeElementForDisplayMode($v_0, $p0);
+        switch ($p0) {
+            case 'Medium':
+                this.$E_1 = $v_0;
+                this.$C_1 = this.$E_1.childNodes[0];
+                this.$2A_1 = this.$E_1.childNodes[1];
+                this.$d_1 = this.$2A_1.childNodes[0];
+                this.$c_1 = this.$2A_1.childNodes[1];
+                this.$3t_1 = this.$d_1.childNodes[0];
+                this.$3V_1 = this.$c_1.childNodes[0];
+                this.$4k_1 = this.$3t_1.childNodes[0];
+                this.$4G_1 = this.$3V_1.childNodes[0];
+                break;
+        }
+    },
+    
+    $O: function($p0) {
+        switch ($p0) {
+            case 'Medium':
+                this.$N_1();
+                this.$E2_1();
+                break;
+        }
+    },
+    
+    $N_1: function() {ULSpEN:;
+        $addHandler(this.$C_1, 'focus', this.$3L);
+        $addHandler(this.$C_1, 'blur', this.$2m);
+        $addHandler(this.$C_1, 'change', this.$8C);
+        $addHandler(this.$C_1, 'mouseover', this.$8I);
+        $addHandler(this.$C_1, 'mouseout', this.$95);
+        $addHandler(this.$C_1, 'keypress', this.$56);
+        $addHandler(this.$C_1, 'keydown', this.$8P);
+        $addHandler(this.$C_1, 'keyup', this.$8U);
+        $addHandler(this.$d_1, 'mouseover', this.$8K);
+        $addHandler(this.$d_1, 'mouseout', this.$97);
+        $addHandler(this.$d_1, 'mousedown', this.$8l);
+        $addHandler(this.$d_1, 'mouseup', this.$8r);
+        $addHandler(this.$c_1, 'mouseover', this.$8J);
+        $addHandler(this.$c_1, 'mouseout', this.$96);
+        $addHandler(this.$c_1, 'mousedown', this.$8k);
+        $addHandler(this.$c_1, 'mouseup', this.$8q);
+    },
+    
+    get_$15: function() {ULSpEN:;
+        return 'Spinner';
+    },
+    
+    onEnabledChanged: function($p0) {
+        CUI.Utility.setEnabledOnElement(this.$C_1, $p0);
+    },
+    
+    $7o: function() {ULSpEN:;
+        if (!this.get_enabled()) {
+            return false;
+        }
+        this.$C_1.focus();
+        return true;
+    },
+    
+    $42_1: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.$0_0.set_$o(this);
+        this.$Aj_1($p0);
+        CUI.Utility.$7i(this.$C_1);
+    },
+    
+    $4u_1: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (this.$2x_1) {
+            this.$46_1();
+        }
+        this.$Aj_1($p0);
+    },
+    
+    $3i_1: false,
+    
+    $Aj_1: function($p0) {
+        this.$3i_1 = !this.$3i_1;
+        if (this.$3i_1) {
+            this.$5v_1($p0);
+        }
+        else {
+            this.$5y_1($p0);
+        }
+    },
+    
+    $7Y_1: function($p0) {
+        this.$X();
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (!this.$EJ_1()) {
+            this.$4z_1();
+            return;
+        }
+        var $v_0 = 1;
+        this.get_stateProperties()['ChangeType'] = 'manual';
+        this.get_stateProperties()['ChangedByMouse'] = false;
+        this.get_displayedComponent().raiseCommandEvent(this.$5F_1, $v_0, this.get_stateProperties());
+    },
+    
+    $C7: function() {ULSpEN:;
+        this.$7Y_1(null);
+    },
+    
+    $5v_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        CUI.Utility.ensureCSSClassOnElement(this.$C_1, 'ms-cui-spn-txtbx-hover');
+        CUI.Utility.ensureCSSClassOnElement(this.$d_1, 'ms-cui-spn-btnup-ctl-hover');
+        CUI.Utility.ensureCSSClassOnElement(this.$c_1, 'ms-cui-spn-btndown-ctl-hover');
+    },
+    
+    $5y_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (!this.$3i_1) {
+            CUI.Utility.removeCSSClassFromElement(this.$C_1, 'ms-cui-spn-txtbx-hover');
+            CUI.Utility.removeCSSClassFromElement(this.$d_1, 'ms-cui-spn-btnup-ctl-hover');
+            CUI.Utility.removeCSSClassFromElement(this.$c_1, 'ms-cui-spn-btndown-ctl-hover');
+            CUI.Utility.removeCSSClassFromElement(this.$d_1, 'ms-cui-spn-btnup-down');
+            CUI.Utility.removeCSSClassFromElement(this.$c_1, 'ms-cui-spn-btndown-down');
+        }
+    },
+    
+    $DF_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.$5v_1($p0);
+        CUI.Utility.removeCSSClassFromElement(this.$d_1, 'ms-cui-spn-btnup-ctl-hover');
+        CUI.Utility.ensureCSSClassOnElement(this.$d_1, 'ms-cui-spn-btnup-hover');
+    },
+    
+    $Dj_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (!this.$2x_1) {
+            this.$Au_1($p0);
+        }
+        this.$5y_1($p0);
+        if (this.$3i_1) {
+            CUI.Utility.ensureCSSClassOnElement(this.$d_1, 'ms-cui-spn-btnup-ctl-hover');
+        }
+        CUI.Utility.removeCSSClassFromElement(this.$d_1, 'ms-cui-spn-btnup-hover');
+    },
+    
+    $DV_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.$3R_1 = true;
+        if ($p0.button) {
+            this.$46_1();
+            return;
+        }
+        this.$63_1(1);
+        CUI.Utility.ensureCSSClassOnElement(this.$d_1, 'ms-cui-spn-btnup-down');
+    },
+    
+    $Au_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.$46_1();
+        this.$0_0.set_$o(this);
+        CUI.Utility.removeCSSClassFromElement(this.$d_1, 'ms-cui-spn-btnup-down');
+    },
+    
+    $Af_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (!this.$3E_1(this.$n_1, this.$1d_1 + $p0 * this.$n_1.$6x_0)) {
+            if (this.$1d_1 < this.$n_1.$4b_0) {
+                this.$3E_1(this.$n_1, this.$n_1.$4b_0);
+            }
+            else {
+                this.$4z_1();
+                return;
+            }
+        }
+        var $v_0 = 9;
+        this.get_stateProperties()['ChangeType'] = 'increase';
+        this.get_stateProperties()['ChangedByMouse'] = this.$3R_1;
+        this.get_displayedComponent().raiseCommandEvent(this.$5F_1, $v_0, this.get_stateProperties());
+    },
+    
+    $DE_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.$5v_1($p0);
+        CUI.Utility.removeCSSClassFromElement(this.$c_1, 'ms-cui-spn-btndown-ctl-hover');
+        CUI.Utility.ensureCSSClassOnElement(this.$c_1, 'ms-cui-spn-btndown-hover');
+    },
+    
+    $Di_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (!this.$2x_1) {
+            this.$At_1($p0);
+        }
+        this.$5y_1($p0);
+        if (this.$3i_1) {
+            CUI.Utility.ensureCSSClassOnElement(this.$c_1, 'ms-cui-spn-btndown-ctl-hover');
+        }
+        CUI.Utility.removeCSSClassFromElement(this.$c_1, 'ms-cui-spn-btndown-hover');
+    },
+    
+    $DU_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.$3R_1 = true;
+        if ($p0.button) {
+            this.$46_1();
+            return;
+        }
+        this.$63_1(CUI.Controls.Spinner.$7C_1);
+        CUI.Utility.ensureCSSClassOnElement(this.$c_1, 'ms-cui-spn-btndown-down');
+    },
+    
+    $At_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.$46_1();
+        this.$0_0.set_$o(this);
+        CUI.Utility.removeCSSClassFromElement(this.$c_1, 'ms-cui-spn-btndown-down');
+    },
+    
+    $A9_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (!this.$3E_1(this.$n_1, this.$1d_1 - $p0 * this.$n_1.$6x_0)) {
+            if (this.$1d_1 > this.$n_1.$4d_0) {
+                this.$3E_1(this.$n_1, this.$n_1.$4d_0);
+            }
+            else {
+                this.$4z_1();
+                return;
+            }
+        }
+        var $v_0 = 9;
+        this.get_stateProperties()['ChangeType'] = 'decrease';
+        this.get_stateProperties()['ChangedByMouse'] = this.$3R_1;
+        this.get_displayedComponent().raiseCommandEvent(this.$5F_1, $v_0, this.get_stateProperties());
+    },
+    
+    $Aq_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.$3R_1 = false;
+        var $v_0 = $p0.rawEvent.keyCode;
+        if ($v_0 === 27) {
+            this.$4z_1();
+        }
+        else if ($v_0 === 13) {
+            this.$7Y_1($p0);
+            $p0.preventDefault();
+        }
+        else {
+            return;
+        }
+    },
+    
+    $2x_1: false,
+    
+    $DH_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (this.$2x_1) {
+            return;
+        }
+        this.$3R_1 = false;
+        var $v_0 = $p0.rawEvent.keyCode;
+        if ($v_0 === 38) {
+            this.$63_1(1);
+            CUI.Utility.ensureCSSClassOnElement(this.$d_1, 'ms-cui-spn-btnup-down');
+        }
+        else if ($v_0 === 40) {
+            this.$63_1(CUI.Controls.Spinner.$7C_1);
+            CUI.Utility.ensureCSSClassOnElement(this.$c_1, 'ms-cui-spn-btndown-down');
+        }
+        else {
+            return;
+        }
+        this.$2x_1 = true;
+    },
+    
+    $DL_1: function($p0) {
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (!this.$2x_1) {
+            return;
+        }
+        this.$46_1();
+        CUI.Utility.removeCSSClassFromElement(this.$d_1, 'ms-cui-spn-btnup-down');
+        CUI.Utility.removeCSSClassFromElement(this.$c_1, 'ms-cui-spn-btndown-down');
+        this.$2x_1 = false;
+    },
+    
+    $BU_1: function() {ULSpEN:;
+        this.$4B_1++;
+        this.$Af_1(this.$AK_1());
+    },
+    
+    $BT_1: function() {ULSpEN:;
+        this.$4B_1++;
+        this.$A9_1(this.$AK_1());
+    },
+    
+    $63_1: function($p0) {
+        if (this.$2Z_1 > -1 || this.$3r_1 > -1) {
+            return;
+        }
+        if ($p0 === 1) {
+            this.$Af_1(1);
+        }
+        else {
+            this.$A9_1(1);
+        }
+        if ($p0 === 1) {
+            this.$3r_1 = window.setTimeout(this.$9B, 500);
+        }
+        else {
+            this.$3r_1 = window.setTimeout(this.$9A, 500);
+        }
+    },
+    
+    $46_1: function() {ULSpEN:;
+        if (this.$3r_1 > -1) {
+            window.clearTimeout(this.$3r_1);
+            this.$3r_1 = -1;
+        }
+        if (this.$2Z_1 > -1) {
+            window.clearInterval(this.$2Z_1);
+            this.$2Z_1 = -1;
+            this.$3k_1 = 1;
+            this.$4B_1 = 0;
+        }
+    },
+    
+    $ED_1: function() {ULSpEN:;
+        if (this.$2Z_1 !== -1) {
+            return;
+        }
+        this.$2Z_1 = window.setInterval(this.$7v, this.$5D_1);
+    },
+    
+    $EC_1: function() {ULSpEN:;
+        if (this.$2Z_1 !== -1) {
+            return;
+        }
+        this.$2Z_1 = window.setInterval(this.$7u, this.$5D_1);
+    },
+    
+    $AK_1: function() {ULSpEN:;
+        var $v_0 = this.$4B_1 * this.$5D_1;
+        if ($v_0 >= this.$3k_1 * this.$9X_1 && this.$3k_1 <= 3) {
+            this.$3k_1++;
+        }
+        return this.$3k_1;
+    },
+    
+    $E8_1: function($p0) {
+        this.$1d_1 = $p0;
+        this.$C_1.value = this.$7J_1($p0, this.$n_1.get_$5m());
+        this.get_stateProperties()['Value'] = this.$1d_1;
+    },
+    
+    get_value: function() {ULSpEN:;
+        return this.$1d_1;
+    },
+    set_value: function($p0) {
+        if (!this.$3E_1(this.$n_1, $p0)) {
+            throw Error.create('Invalid value');
+        }
+        return $p0;
+    },
+    
+    get_unitString: function() {ULSpEN:;
+        return this.$n_1.get_$5m();
+    },
+    set_unitString: function($p0) {
+        if (!this.$BJ_1(this.$1d_1.toString() + $p0)) {
+            this.$4z_1();
+            throw Error.create('Invalid unit');
+        }
+        return $p0;
+    },
+    
+    $9R_1: false,
+    $9Q_1: false,
+    
+    get_$7W_1: function() {ULSpEN:;
+        if (!this.$9R_1) {
+            var $v_0 = 1.1;
+            var $v_1 = $v_0.toLocaleString().substring(1, 2);
+            this.$9Q_1 = $v_1 === ',';
+            this.$9R_1 = true;
+        }
+        return this.$9Q_1;
+    },
+    
+    $EJ_1: function() {ULSpEN:;
+        var $v_0 = this.$C_1.value;
+        return this.$BJ_1($v_0);
+    },
+    
+    $BJ_1: function($p0) {
+        var $v_0 = '(\\-)?[0-9]*[\\.,]?[0-9]+';
+        var $v_1 = new RegExp($v_0);
+        $p0 = $p0.trim();
+        if ($p0.search($v_1)) {
+            return false;
+        }
+        var $v_2 = $p0.replace($v_1, '');
+        var $v_3 = $p0.replace($v_2, '');
+        var $v_4 = $v_2.trim();
+        var $v_5;
+        var $v_6;
+        var $v_7 = false;
+        if (this.get_$7W_1()) {
+            $v_3 = $v_3.replace('.', '');
+            if ($v_3.indexOf(',') > -1) {
+                $v_7 = true;
+                $v_3 = $v_3.replace(',', '.');
+            }
+        }
+        else {
+            $v_3 = $v_3.replace(',', '');
+        }
+        $v_6 = parseFloat($v_3);
+        if (!CUI.ScriptUtility.isNullOrEmptyString($v_4)) {
+            if (this.$n_1.$78($v_4)) {
+                $v_5 = this.$n_1;
+            }
+            else {
+                $v_5 = this.$Cn_1($v_4);
+            }
+        }
+        else {
+            $v_5 = this.$n_1;
+        }
+        return this.$3E_1($v_5, $v_6, $v_7);
+    },
+    
+    $3E_1: function($p0, $p1, $p2) {
+        if (arguments.length < 3) {
+            $p2 = this.get_$7W_1();
+        }
+        if (!$p0) {
+            return false;
+        }
+        var $v_0 = $p0.$EK($p1);
+        if ($v_0 === CUI.Unit.$7V) {
+            return false;
+        }
+        else if ($v_0 === 1) {
+            $p1 = CUI.Controls.Spinner.$Co_1($p1, $p0);
+        }
+        else if ($v_0 === 2) {
+            $p1 = $p0.$4d_0;
+        }
+        else if ($v_0 === 3) {
+            $p1 = $p0.$4b_0;
+        }
+        this.$C_1.value = this.$7J_1($p1, $p0.get_$5m(), $p2);
+        this.$n_1 = $p0;
+        this.$1d_1 = $p1;
+        this.$9l_1 = $p2;
+        this.get_stateProperties()['Unit'] = $p0.$5Z_0;
+        this.get_stateProperties()['Value'] = $p1;
+        return true;
+    },
+    
+    $4z_1: function() {ULSpEN:;
+        this.$C_1.value = this.$7J_1(this.$1d_1, this.$n_1.get_$5m(), this.$9l_1);
+    },
+    
+    $7J_1: function($p0, $p1, $p2) {
+        if (arguments.length < 3) {
+            $p2 = this.get_$7W_1();
+        }
+        var $v_0 = $p0.toString();
+        if ($p2) {
+            $v_0 = $v_0.replace('.', ',');
+        }
+        return $v_0 + ' ' + $p1;
+    },
+    
+    $Cn_1: function($p0) {
+        for (var $v_0 = 0; $v_0 < this.$2N_1.length; $v_0++) {
+            if (this.$2N_1[$v_0].$78($p0)) {
+                return this.$2N_1[$v_0];
+            }
+        }
+        return null;
+    },
+    
+    $AG_1: function($p0) {
+        for (var $v_0 = 0; $v_0 < this.$2N_1.length; $v_0++) {
+            if (this.$2N_1[$v_0].$5Z_0 === $p0) {
+                return this.$2N_1[$v_0];
+            }
+            if (this.$2N_1[$v_0].$78($p0)) {
+                return this.$2N_1[$v_0];
+            }
+        }
+        return null;
+    },
+    
+    $4y: function() {ULSpEN:;
+        if (CUI.ScriptUtility.isNullOrUndefined(this.$E_1)) {
+            return;
+        }
+        var $v_0 = this.pollForStateAndUpdateInternal(this.get_$1_1().Command, this.get_$1_1().QueryCommand, this.get_stateProperties(), true);
+        var $v_1 = this.$AG_1(this.get_stateProperties()['Unit']);
+        if (!this.$3E_1($v_1, this.get_stateProperties()['Value'])) {
+            throw Error.create('Invalid valid and/or unit returned when polling');
+        }
+    },
+    
+    dispose: function() {ULSpEN:;
+        CUI.Controls.Spinner.callBaseMethod(this, 'dispose');
+        this.$4G_1 = null;
+        this.$3V_1 = null;
+        this.$4k_1 = null;
+        this.$3t_1 = null;
+        this.$E_1 = null;
+        this.$2A_1 = null;
+        this.$c_1 = null;
+        this.$C_1 = null;
+        this.$d_1 = null;
+    },
+    
+    get_$1_1: function() {ULSpEN:;
+        return this.$5_0;
+    }
+}
+
+
+CUI.Controls.SplitButton = function(root, id, properties, menu) {ULSpEN:;
+    this.$8b = Function.createDelegate(this, this.onMenuButtonKeyPress);
+    this.$8W = Function.createDelegate(this, this.onMenuButtonABlur);
+    this.$8a = Function.createDelegate(this, this.onMenuButtonKeyboardFocus);
+    this.$8X = Function.createDelegate(this, this.onMenuButtonBlur);
+    this.$8Z = Function.createDelegate(this, this.onMenuButtonFocus);
+    this.$8Y = Function.createDelegate(this, this.onMenuButtonClick);
+    this.$89 = Function.createDelegate(this, this.onButtonKeyboardFocus);
+    this.$66 = Function.createDelegate(this, this.onButtonBlur);
+    this.$88 = Function.createDelegate(this, this.onButtonFocus);
+    this.$8o = Function.createDelegate(this, this.onMouseOut);
+    this.$8p = Function.createDelegate(this, this.onMouseOver);
+    this.$3J = Function.createDelegate(this, this.onDblClick);
+    this.$87 = Function.createDelegate(this, this.onButtonClick);
+    CUI.Controls.SplitButton.initializeBase(this, [ root, id, properties, menu ]);
+    this.addDisplayMode('Large');
+    this.addDisplayMode('Medium');
+    this.addDisplayMode('Small');
+}
+CUI.Controls.SplitButton.prototype = {
+    $F_2: null,
+    $9I_2: null,
+    $4N_2: null,
+    $3Y_2: null,
+    $1v_2: null,
+    $8_2: null,
+    $9K_2: null,
+    $4O_2: null,
+    $3Z_2: null,
+    $2E_2: null,
+    $9_2: null,
+    $9M_2: null,
+    $4R_2: null,
+    $3c_2: null,
+    $2G_2: null,
+    
+    createDOMElementForDisplayMode: function($p0) {
+        var $v_0 = (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_2().Alt)) ? this.get_$1_2().LabelText : this.get_$1_2().Alt;
+        var $v_1 = (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_2().MenuAlt)) ? $v_0 : this.get_$1_2().MenuAlt;
+        this.$7B_2 = $p0;
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            $v_0 = '';
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined($v_1)) {
+            $v_1 = '';
+        }
+        switch ($p0) {
+            case 'Large':
+                this.$F_2 = CUI.Control.createTwoAnchorControlDOMElementCore(this, this.$0_0, 'Large', this.get_$1_2().Id, this.get_$1_2().Image32by32, this.get_$1_2().Image32by32Class, this.get_$1_2().Image32by32Top, this.get_$1_2().Image32by32Left, this.get_$1_2().Image16by16, this.get_$1_2().Image16by16Class, this.get_$1_2().Image16by16Top, this.get_$1_2().Image16by16Left, this.get_$1_2().LabelText, this.get_$1_2().Alt, this.get_$1_2().ToolTipTitle, true);
+                this.$35('Large');
+                this.$O($p0);
+                return this.$F_2;
+            case 'Medium':
+                this.$8_2 = CUI.Control.createTwoAnchorControlDOMElementCore(this, this.$0_0, 'Medium', this.get_$1_2().Id, this.get_$1_2().Image32by32, this.get_$1_2().Image32by32Class, this.get_$1_2().Image32by32Top, this.get_$1_2().Image32by32Left, this.get_$1_2().Image16by16, this.get_$1_2().Image16by16Class, this.get_$1_2().Image16by16Top, this.get_$1_2().Image16by16Left, this.get_$1_2().LabelText, this.get_$1_2().Alt, this.get_$1_2().ToolTipTitle, true);
+                this.$35('Medium');
+                this.$O($p0);
+                return this.$8_2;
+            case 'Small':
+                this.$9_2 = CUI.Control.createTwoAnchorControlDOMElementCore(this, this.$0_0, 'Small', this.get_$1_2().Id, this.get_$1_2().Image32by32, this.get_$1_2().Image32by32Class, this.get_$1_2().Image32by32Top, this.get_$1_2().Image32by32Left, this.get_$1_2().Image16by16, this.get_$1_2().Image16by16Class, this.get_$1_2().Image16by16Top, this.get_$1_2().Image16by16Left, this.get_$1_2().LabelText, this.get_$1_2().Alt, this.get_$1_2().ToolTipTitle, true);
+                this.$35('Small');
+                this.$O($p0);
+                return this.$9_2;
+            default:
+                this.ensureValidDisplayMode($p0);
+                return null;
+        }
+    },
+    
+    $7B_2: null,
+    
+    $35: function($p0) {
+        var $v_0 = $get(this.$6_0 + '-' + $p0);
+        this.storeElementForDisplayMode($v_0, $p0);
+        this.$7B_2 = $p0;
+        switch ($p0) {
+            case 'Large':
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+                    this.$F_2 = $v_0;
+                }
+                this.$4N_2 = this.$F_2.childNodes[0];
+                this.$9I_2 = this.$4N_2.childNodes[0].childNodes[0];
+                this.$3Y_2 = this.$F_2.childNodes[1];
+                var $v_1 = this.$3Y_2.childNodes[0];
+                this.$1v_2 = null;
+                for (var $v_2 = 0; $v_2 < $v_1.childNodes.length; $v_2++) {
+                    var $v_3 = $v_1.childNodes[$v_2].tagName;
+                    if (!CUI.ScriptUtility.isNullOrUndefined($v_3) && $v_3.toLowerCase() === 'span') {
+                        this.$1v_2 = $v_1.childNodes[$v_2].childNodes[0];
+                        break;
+                    }
+                }
+                break;
+            case 'Medium':
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+                    this.$8_2 = $v_0;
+                }
+                this.$4O_2 = this.$8_2.childNodes[0];
+                this.$9K_2 = this.$4O_2.childNodes[0].childNodes[0];
+                this.$3Z_2 = this.$8_2.childNodes[1];
+                this.$2E_2 = this.$3Z_2.childNodes[0].childNodes[0].childNodes[0];
+                break;
+            case 'Small':
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+                    this.$9_2 = $v_0;
+                }
+                this.$4R_2 = this.$9_2.childNodes[0];
+                this.$9M_2 = this.$4R_2.childNodes[0].childNodes[0];
+                this.$3c_2 = this.$9_2.childNodes[1];
+                this.$2G_2 = this.$3c_2.childNodes[0].childNodes[0].childNodes[0];
+                break;
+        }
+    },
+    
+    $O: function($p0) {
+        this.$N_2($p0);
+    },
+    
+    $N_2: function($p0) {
+        var $v_0 = null;
+        var $v_1 = null;
+        switch ($p0) {
+            case 'Large':
+                $v_0 = this.$4N_2;
+                $v_1 = this.$3Y_2;
+                break;
+            case 'Medium':
+                $v_0 = this.$4O_2;
+                $v_1 = this.$3Z_2;
+                break;
+            case 'Small':
+                $v_0 = this.$4R_2;
+                $v_1 = this.$3c_2;
+                break;
+        }
+        $addHandler($v_0, 'click', this.$87);
+        $addHandler($v_0, 'dblclick', this.$3J);
+        $addHandler($v_0, 'mouseover', this.$8p);
+        $addHandler($v_0, 'mouseout', this.$8o);
+        $addHandler($v_0, 'mouseover', this.$88);
+        $addHandler($v_0, 'mouseout', this.$66);
+        $addHandler($v_0, 'focus', this.$89);
+        $addHandler($v_0, 'blur', this.$66);
+        $addHandler($v_1, 'click', this.$8Y);
+        $addHandler($v_1, 'mouseover', this.$8Z);
+        $addHandler($v_1, 'mouseout', this.$8X);
+        $addHandler($v_1, 'focus', this.$8a);
+        $addHandler($v_1, 'blur', this.$8W);
+        $addHandler($v_1, 'keypress', this.$8b);
+    },
+    
+    $4r_2: false,
+    
+    $7o: function() {ULSpEN:;
+        if (!this.get_enabled()) {
+            return false;
+        }
+        var $v_0 = this.get_displayedComponent().get_$2();
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            if (this.$4r_2 || !this.$1V_2) {
+                $v_0 = $v_0.childNodes[1];
+            }
+            else {
+                $v_0 = $v_0.childNodes[0];
+            }
+            $v_0.focus();
+            return true;
+        }
+        return false;
+    },
+    
+    onEnabledChanged: function($p0) {
+        this.onEnabledChangedForControl($p0);
+        this.onEnabledChangedForButton($p0);
+        this.onEnabledChangedForMenu($p0);
+    },
+    
+    get_$15: function() {ULSpEN:;
+        return 'SplitButton';
+    },
+    
+    onEnabledChangedForControl: function($p0) {
+        var $v_0 = 'ms-cui-disabled';
+        if ($p0) {
+            CUI.Utility.removeCSSClassFromElement(this.$F_2, $v_0);
+            CUI.Utility.removeCSSClassFromElement(this.$8_2, $v_0);
+            CUI.Utility.removeCSSClassFromElement(this.$9_2, $v_0);
+        }
+        else {
+            CUI.Utility.ensureCSSClassOnElement(this.$F_2, $v_0);
+            CUI.Utility.ensureCSSClassOnElement(this.$8_2, $v_0);
+            CUI.Utility.ensureCSSClassOnElement(this.$9_2, $v_0);
+        }
+    },
+    
+    $20_2: true,
+    
+    onEnabledChangedForMenu: function($p0) {
+        CUI.Utility.setEnabledOnElement(this.$3Y_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$3Z_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$3c_2, $p0);
+        this.$7f_2();
+        this.$20_2 = $p0;
+    },
+    
+    $E7_2: function($p0) {
+        CUI.Utility.setEnabledOnElement(this.$3Y_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$3Z_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$3c_2, $p0);
+    },
+    
+    $1V_2: false,
+    
+    onEnabledChangedForButton: function($p0) {
+        CUI.Utility.setEnabledOnElement(this.$4N_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$4O_2, $p0);
+        CUI.Utility.setEnabledOnElement(this.$4R_2, $p0);
+        this.$7e_2();
+        this.$1V_2 = $p0;
+    },
+    
+    onButtonClick: function($p0) {
+        $p0.preventDefault();
+        this.$X();
+        if (!this.get_enabled() || !this.$1V_2) {
+            return;
+        }
+        this.$0_0.set_$3z(this);
+        this.$4r_2 = false;
+        var $v_0 = this.get_stateProperties();
+        $v_0['CommandValueId'] = this.get_$1_2().CommandValueId;
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_2().Command, 1, $v_0);
+    },
+    
+    onDblClick: function($p0) {
+        $p0.preventDefault();
+        this.$X();
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.onButtonClick($p0);
+    },
+    
+    onMouseOver: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled() || !this.$1V_2) {
+            return;
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_2().CommandPreview)) {
+            return;
+        }
+        var $v_0 = this.get_stateProperties();
+        $v_0['CommandValueId'] = this.get_$1_2().CommandValueId;
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_2().CommandPreview, 5, $v_0);
+    },
+    
+    onButtonKeyboardFocus: function($p0) {
+        this.$0_0.set_$o(this);
+        this.$4r_2 = false;
+        this.onButtonFocus($p0);
+    },
+    
+    onButtonFocus: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled() || !this.$1V_2) {
+            return;
+        }
+        this.$D3_2();
+    },
+    
+    onMouseOut: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_2().CommandRevert)) {
+            return;
+        }
+        var $v_0 = this.get_stateProperties();
+        $v_0['CommandValueId'] = this.get_$1_2().CommandValueId;
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_2().CommandRevert, 6, $v_0);
+    },
+    
+    onButtonBlur: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled() || !this.$1V_2) {
+            return;
+        }
+        this.$7e_2();
+    },
+    
+    onMenuButtonClick: function($p0) {
+        $p0.preventDefault();
+        this.$X();
+        if (!this.get_enabled() || !this.$20_2) {
+            return;
+        }
+        this.$0_0.$2v_1 = false;
+        this.$0_0.set_$3z(this);
+        this.$4r_2 = true;
+        var $v_0 = $p0.target;
+        this.launchMenu($v_0);
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_2().CommandMenuOpen, 4, null);
+    },
+    
+    onMenuButtonKeyboardFocus: function($p0) {
+        this.onMenuButtonFocus($p0);
+        this.$4r_2 = true;
+        this.$0_0.set_$o(this);
+    },
+    
+    onMenuButtonFocus: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled() || !this.$20_2) {
+            return;
+        }
+        this.$D4_2();
+    },
+    
+    onMenuButtonBlur: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled() || this.$i_1 || !this.$20_2) {
+            return;
+        }
+        this.$7f_2();
+    },
+    
+    onMenuButtonABlur: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled() || !this.$20_2) {
+            return;
+        }
+        this.onMenuButtonBlur($p0);
+    },
+    
+    onMenuButtonKeyPress: function($p0) {
+        this.$X();
+        if (!this.get_enabled() || !this.$20_2) {
+            return;
+        }
+        if ($p0.rawEvent.keyCode === 13) {
+            this.$1E_1 = true;
+        }
+    },
+    
+    onLaunchedMenuClosed: function() {ULSpEN:;
+        this.$X();
+        this.$1U_2();
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_2().CommandMenuClose, 10, null);
+        CUI.Controls.SplitButton.callBaseMethod(this, 'onLaunchedMenuClosed');
+    },
+    
+    $1U_2: function() {ULSpEN:;
+        this.$7e_2();
+        this.$7f_2();
+    },
+    
+    $7e_2: function() {ULSpEN:;
+        var $v_0 = this.$5p();
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            return;
+        }
+        CUI.Utility.removeCSSClassFromElement($v_0.childNodes[1], 'ms-cui-ctl-split-hover');
+        CUI.Utility.removeCSSClassFromElement($v_0.childNodes[0], 'ms-cui-ctl-light-hoveredOver');
+    },
+    
+    $D3_2: function() {ULSpEN:;
+        var $v_0 = this.$5p();
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            return;
+        }
+        CUI.Utility.ensureCSSClassOnElement($v_0.childNodes[1], 'ms-cui-ctl-split-hover');
+        CUI.Utility.ensureCSSClassOnElement($v_0.childNodes[0], 'ms-cui-ctl-light-hoveredOver');
+    },
+    
+    $7f_2: function() {ULSpEN:;
+        var $v_0 = this.$5p();
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            return;
+        }
+        CUI.Utility.removeCSSClassFromElement($v_0.childNodes[0], 'ms-cui-ctl-split-hover');
+        CUI.Utility.removeCSSClassFromElement($v_0.childNodes[1], 'ms-cui-ctl-light-hoveredOver');
+    },
+    
+    $D4_2: function() {ULSpEN:;
+        var $v_0 = this.$5p();
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            return;
+        }
+        CUI.Utility.ensureCSSClassOnElement($v_0.childNodes[0], 'ms-cui-ctl-split-hover');
+        CUI.Utility.ensureCSSClassOnElement($v_0.childNodes[1], 'ms-cui-ctl-light-hoveredOver');
+    },
+    
+    $4y: function() {ULSpEN:;
+        var $v_0 = this.$0_0.$4w(this.get_$1_2().Command, null, null);
+        var $v_1 = true;
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.get_$1_2().CommandMenuOpen)) {
+            $v_1 = this.$0_0.$4w(this.get_$1_2().CommandMenuOpen, null, null);
+        }
+        else {
+            $v_1 = $v_0;
+        }
+        if ($v_1 !== this.$20_2 || $v_0 !== this.$1V_2) {
+            this.$1Q_0 = $v_1 || $v_0;
+            var $v_2 = this.$20_2 && this.$1V_2;
+            var $v_3 = $v_1 && $v_0;
+            if ($v_2 !== $v_3) {
+                this.onEnabledChangedForControl($v_3);
+            }
+            this.$E7_2(this.$1Q_0);
+            if ($v_0 !== this.$1V_2) {
+                this.onEnabledChangedForButton($v_0);
+            }
+            if ($v_1 !== this.$20_2) {
+                this.onEnabledChangedForMenu($v_1);
+            }
+            this.$20_2 = $v_1;
+            this.$1V_2 = $v_0;
+        }
+    },
+    
+    dispose: function() {ULSpEN:;
+        CUI.Controls.SplitButton.callBaseMethod(this, 'dispose');
+        this.$F_2 = null;
+        this.$9I_2 = null;
+        this.$4N_2 = null;
+        this.$3Y_2 = null;
+        this.$1v_2 = null;
+        this.$8_2 = null;
+        this.$9K_2 = null;
+        this.$4O_2 = null;
+        this.$3Z_2 = null;
+        this.$2E_2 = null;
+        this.$9_2 = null;
+        this.$9M_2 = null;
+        this.$4R_2 = null;
+        this.$3c_2 = null;
+        this.$2G_2 = null;
+    },
+    
+    get_$1_2: function() {ULSpEN:;
+        return this.$5_0;
+    }
+}
+
+
+CUI.Controls.TextBoxCommandProperties = function() {
+}
+
+
+CUI.Controls.TextBox = function(root, id, properties) {ULSpEN:;
+    this.$56 = Function.createDelegate(this, this.$Aq_1);
+    this.$57 = Function.createDelegate(this, this.$5w_1);
+    this.$58 = Function.createDelegate(this, this.$5x_1);
+    this.$2m = Function.createDelegate(this, this.$4u_1);
+    this.$3L = Function.createDelegate(this, this.$42_1);
+    this.$8B = Function.createDelegate(this, this.$7X_1);
+    CUI.Controls.TextBox.initializeBase(this, [ root, id, properties ]);
+    this.addDisplayMode('Medium');
+}
+CUI.Controls.TextBox.prototype = {
+    $C_1: null,
+    
+    get_value: function() {ULSpEN:;
+        this.$7F_1();
+        return this.$C_1.value;
+    },
+    set_value: function($p0) {
+        this.$7F_1();
+        if ($p0) {
+            this.$C_1.value = $p0;
+        }
+        else {
+            this.$C_1.value = '';
+        }
+        return $p0;
+    },
+    
+    $7F_1: function() {ULSpEN:;
+        if (!this.$C_1) {
+            this.$C_1 = CUI.Utility.$7A('input');
+            this.$C_1.type = 'text';
+            CUI.Utility.$7p(this.$C_1, (this.get_$1_1()).ImeEnabled);
+        }
+    },
+    
+    createDOMElementForDisplayMode: function($p0) {
+        switch ($p0) {
+            case 'Medium':
+                this.$7F_1();
+                this.$C_1.id = this.$6_0;
+                this.$C_1.setAttribute('mscui:controltype', this.get_$15());
+                this.$C_1.setAttribute('role', this.get_$1e());
+                CUI.Utility.$1i(this.get_$1_1(), this.$C_1);
+                this.$C_1.className = 'ms-cui-tb';
+                if (!CUI.ScriptUtility.isNullOrEmptyString(this.get_$1_1().MaxLength)) {
+                    var $v_0 = parseInt(this.get_$1_1().MaxLength);
+                    if ($v_0 !== Number.NaN) {
+                        this.$C_1.setAttribute('maxlength', $v_0);
+                    }
+                }
+                if (CUI.Utility.$v(this.get_$1_1().ShowAsLabel)) {
+                    CUI.Utility.ensureCSSClassOnElement(this.$C_1, 'ms-cui-tb-labelmode');
+                    this.$C_1.disabled = true;
+                }
+                if (!CUI.ScriptUtility.isNullOrUndefined(this.get_$1_1().Width)) {
+                    this.$C_1.style.width = this.get_$1_1().Width;
+                }
+                this.$N_1();
+                return this.$C_1;
+            default:
+                this.ensureValidDisplayMode($p0);
+                return null;
+        }
+    },
+    
+    $35: function($p0) {
+        var $v_0 = $get(this.$6_0);
+        this.storeElementForDisplayMode($v_0, $p0);
+        switch ($p0) {
+            case 'Medium':
+                this.$C_1 = $v_0;
+                break;
+        }
+    },
+    
+    $O: function($p0) {
+        this.$N_1();
+    },
+    
+    $N_1: function() {ULSpEN:;
+        $addHandler(this.$C_1, 'change', this.$8B);
+        $addHandler(this.$C_1, 'focus', this.$3L);
+        $addHandler(this.$C_1, 'blur', this.$2m);
+        $addHandler(this.$C_1, 'mouseup', CUI.Utility.get_returnFalseHandler());
+        $addHandler(this.$C_1, 'mouseover', this.$58);
+        $addHandler(this.$C_1, 'mouseout', this.$57);
+        $addHandler(this.$C_1, 'keypress', this.$56);
+    },
+    
+    onEnabledChanged: function($p0) {
+        if ($p0) {
+            CUI.Utility.enableElement(this.$C_1);
+        }
+        else {
+            CUI.Utility.disableElement(this.$C_1);
+        }
+    },
+    
+    get_$15: function() {ULSpEN:;
+        return 'TextBox';
+    },
+    
+    get_$1e: function() {ULSpEN:;
+        return 'textbox';
+    },
+    
+    $7X_1: function($p0) {
+        this.$X();
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.get_stateProperties()['Value'] = this.get_value();
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_1().Command, 1, this.get_stateProperties());
+        if (this.$0_0.get_$4x()) {
+            this.$4y();
+        }
+        else {
+            this.$51_1(null);
+        }
+    },
+    
+    $C7: function() {ULSpEN:;
+        this.$7X_1(null);
+    },
+    
+    $51_1: function($p0) {
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$C_1)) {
+            if (!CUI.ScriptUtility.isNullOrUndefined($p0)) {
+                this.set_value($p0);
+            }
+        }
+    },
+    
+    $7o: function() {ULSpEN:;
+        if (!this.get_enabled()) {
+            return false;
+        }
+        this.$C_1.focus();
+        return true;
+    },
+    
+    $42_1: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        CUI.Utility.$7i(this.$C_1);
+        this.$0_0.set_$o(this);
+    },
+    
+    $4u_1: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+    },
+    
+    $5x_1: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_1().CommandPreview)) {
+            return;
+        }
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_1().CommandPreview, 5, this.get_stateProperties());
+    },
+    
+    $5w_1: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_1().CommandRevert)) {
+            return;
+        }
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_1().CommandRevert, 6, this.get_stateProperties());
+    },
+    
+    $Aq_1: function($p0) {
+        if (!CUI.ScriptUtility.isNullOrUndefined($p0) && !CUI.ScriptUtility.isNullOrUndefined($p0.rawEvent)) {
+            if ($p0.rawEvent.keyCode === 13) {
+                this.$7X_1($p0);
+                $p0.preventDefault();
+            }
+        }
+    },
+    
+    $4y: function() {ULSpEN:;
+        var $v_0 = this.pollForStateAndUpdateInternal(this.get_$1_1().Command, this.get_$1_1().QueryCommand, this.get_stateProperties(), false);
+        if ($v_0) {
+            this.$51_1(this.get_stateProperties()['Value']);
+        }
+    },
+    
+    dispose: function() {ULSpEN:;
+        CUI.Controls.TextBox.callBaseMethod(this, 'dispose');
+        this.$C_1 = null;
+    },
+    
+    get_$1_1: function() {ULSpEN:;
+        return this.$5_0;
+    }
+}
+
+
+CUI.Controls.ToggleButtonCommandProperties = function() {
+}
+
+
+CUI.Controls.ToggleButton = function(root, id, properties) {ULSpEN:;
+    this.$8O = Function.createDelegate(this, this.$DG_1);
+    this.$57 = Function.createDelegate(this, this.$5w_1);
+    this.$58 = Function.createDelegate(this, this.$5x_1);
+    this.$1H = Function.createDelegate(this, this.onClick);
+    this.$2m = Function.createDelegate(this, this.$4u_1);
+    this.$3L = Function.createDelegate(this, this.$42_1);
+    CUI.Controls.ToggleButton.initializeBase(this, [ root, id, properties ]);
+    this._id = id;
+    this.addDisplayModes();
+    this.get_stateProperties()['On'] = false;
+}
+CUI.Controls.ToggleButton.prototype = {
+    _id: null,
+    $F_1: null,
+    $2J_1: null,
+    $16_1: null,
+    $9_1: null,
+    $8_1: null,
+    $h_1: null,
+    $1a_1: null,
+    $1w_1: null,
+    $1u_1: null,
+    $1X_1: null,
+    
+    get_on: function() {ULSpEN:;
+        return this.get_stateProperties()['On'];
+    },
+    set_on: function($p0) {
+        this.get_stateProperties()['On'] = $p0;
+        this.setState($p0);
+        return $p0;
+    },
+    
+    createComponentForDisplayModeInternal: function($p0) {
+        var $v_0;
+        if ($p0.startsWith('Menu')) {
+            $v_0 = this.$0_0.$3w(this.$6_0 + '-' + $p0 + this.$0_0.$27(), $p0, this);
+            this.$2J_1 = this.get_$1_1().MenuItemId;
+            this.$16_1 = this.get_$1_1().CommandValueId;
+            if (CUI.ScriptUtility.isNullOrEmptyString(this.$16_1)) {
+                this.$16_1 = this.$2J_1;
+            }
+        }
+        else {
+            $v_0 = CUI.Controls.ToggleButton.callBaseMethod(this, 'createComponentForDisplayModeInternal', [ $p0 ]);
+        }
+        return $v_0;
+    },
+    
+    createDOMElementForDisplayMode: function($p0) {
+        return this.$2g_1($p0, true);
+    },
+    
+    $2g_1: function($p0, $p1) {
+        switch ($p0) {
+            case 'Large':
+                this.$F_1 = CUI.Control.createStandardControlDOMElement(this, this.$0_0, 'Large', this.get_$1_1(), false, false);
+                this.$35('Large');
+                if ($p1) {
+                    this.$O('Large');
+                }
+                return this.$F_1;
+            case 'Medium':
+                this.$8_1 = CUI.Control.createStandardControlDOMElement(this, this.$0_0, 'Medium', this.get_$1_1(), false, false);
+                this.$35('Medium');
+                if ($p1) {
+                    this.$O('Medium');
+                }
+                return this.$8_1;
+            case 'Small':
+                this.$9_1 = CUI.Control.createStandardControlDOMElement(this, this.$0_0, 'Small', this.get_$1_1(), false, false);
+                this.$35('Small');
+                if ($p1) {
+                    this.$O('Small');
+                }
+                return this.$9_1;
+            case 'Menu':
+                this.$h_1 = CUI.Control.createStandardControlDOMElement(this, this.$0_0, 'Menu', this.get_$1_1(), true, false);
+                if ($p1) {
+                    this.$O('Menu');
+                }
+                return this.$h_1;
+            case 'Menu16':
+                this.$1a_1 = CUI.Control.createStandardControlDOMElement(this, this.$0_0, 'Menu16', this.get_$1_1(), true, false);
+                if ($p1) {
+                    this.$O('Menu16');
+                }
+                return this.$1a_1;
+            case 'Menu32':
+                this.$1w_1 = CUI.Control.createStandardControlDOMElement(this, this.$0_0, 'Menu32', this.get_$1_1(), true, false);
+                if ($p1) {
+                    this.$O('Menu32');
+                }
+                return this.$1w_1;
+            default:
+                this.ensureValidDisplayMode($p0);
+                return null;
+        }
+    },
+    
+    $7B_1: null,
+    
+    $35: function($p0) {
+        this.$7B_1 = $p0;
+        var $v_0 = $get(this.$6_0 + '-' + $p0);
+        this.storeElementForDisplayMode($v_0, $p0);
+        switch ($p0) {
+            case 'Large':
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+                    this.$F_1 = $v_0;
+                }
+                break;
+            case 'Medium':
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+                    this.$8_1 = $v_0;
+                }
+                break;
+            case 'Small':
+                if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+                    this.$9_1 = $v_0;
+                }
+                break;
+        }
+    },
+    
+    $O: function($p0) {
+        switch ($p0) {
+            case 'Large':
+                this.$N_1(this.$F_1, true);
+                break;
+            case 'Medium':
+                this.$N_1(this.$8_1, true);
+                break;
+            case 'Small':
+                this.$N_1(this.$9_1, true);
+                break;
+            case 'Menu32':
+                this.$N_1(this.$1w_1, false);
+                break;
+            case 'Menu16':
+                this.$N_1(this.$1a_1, false);
+                break;
+            case 'Menu':
+                this.$N_1(this.$h_1, false);
+                break;
+        }
+    },
+    
+    $N_1: function($p0, $p1) {
+        if ($p1) {
+            $addHandler($p0, 'mouseover', this.$3L);
+            $addHandler($p0, 'mouseout', this.$2m);
+        }
+        $addHandler($p0, 'click', this.$1H);
+        $addHandler($p0, 'mouseover', this.$58);
+        $addHandler($p0, 'mouseout', this.$57);
+        $addHandler($p0, 'focus', this.$8O);
+        $addHandler($p0, 'blur', this.$2m);
+    },
+    
+    $7o: function() {ULSpEN:;
+        if (!this.get_enabled()) {
+            return false;
+        }
+        var $v_0 = this.get_displayedComponent().get_$2();
+        $v_0.focus();
+        return true;
+    },
+    
+    onEnabledChanged: function($p0) {
+        CUI.Utility.setEnabledOnElement(this.$9_1, $p0);
+        CUI.Utility.setEnabledOnElement(this.$8_1, $p0);
+        CUI.Utility.setEnabledOnElement(this.$F_1, $p0);
+        CUI.Utility.setEnabledOnElement(this.$h_1, $p0);
+        CUI.Utility.setEnabledOnElement(this.$1a_1, $p0);
+        CUI.Utility.setEnabledOnElement(this.$1w_1, $p0);
+        if (this.get_on()) {
+            if ($p0) {
+                this.setState(true);
+            }
+            else {
+                this.setState(false);
+            }
+        }
+    },
+    
+    get_$15: function() {ULSpEN:;
+        return 'ToggleButton';
+    },
+    
+    onStateChanged: function() {ULSpEN:;
+        this.setState(this.get_stateProperties()['On']);
+    },
+    
+    getDropDownDOMElementForDisplayMode: function($p0) {
+        var $v_0;
+        switch ($p0) {
+            case 'Menu16':
+                $v_0 = this.$1u_1;
+                break;
+            case 'Text':
+                $v_0 = this.$1X_1;
+                break;
+            default:
+                $v_0 = CUI.Utility.$3('span');
+                break;
+        }
+        if ($v_0) {
+            return $v_0;
+        }
+        return this.$A2_1($p0);
+    },
+    
+    $A2_1: function($p0) {
+        switch ($p0) {
+            case 'Menu':
+                this.$1u_1 = this.$2g_1('Menu', false).cloneNode(true);
+                return this.$1u_1;
+            case 'Menu16':
+                this.$1u_1 = this.$2g_1('Menu16', false).cloneNode(true);
+                return this.$1u_1;
+            case 'Text':
+                var $v_0 = CUI.Utility.$3('a');
+                CUI.Utility.$1s($v_0);
+                this.$1X_1 = CUI.Utility.$3('span');
+                this.$1X_1.className = 'ms-cui-textmenuitem';
+                CUI.UIUtility.setInnerText($v_0, this.get_$1_1().LabelText);
+                this.$1X_1.appendChild($v_0);
+                return this.$1X_1;
+            default:
+                return CUI.Utility.$3('span');
+        }
+    },
+    
+    deselect: function() {
+    },
+    
+    getMenuItemId: function() {ULSpEN:;
+        return this.$2J_1;
+    },
+    
+    getCommandValueId: function() {ULSpEN:;
+        return this.$16_1;
+    },
+    
+    focusOnDisplayedComponent: function() {ULSpEN:;
+        this.receiveFocus();
+    },
+    
+    getTextValue: function() {ULSpEN:;
+        return this.get_$1_1().LabelText;
+    },
+    
+    receiveFocus: function() {ULSpEN:;
+        this.onBeginFocus();
+        var $v_0 = this.get_displayedComponent();
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            return;
+        }
+        ($v_0).set_$1G(true);
+        if (!(CUI.ScriptUtility.isNullOrUndefined(this.$h_1))) {
+            this.$h_1.focus();
+        }
+        if (!(CUI.ScriptUtility.isNullOrUndefined(this.$1a_1))) {
+            this.$1a_1.focus();
+        }
+    },
+    
+    onMenuClosed: function() {ULSpEN:;
+        this.$X();
+    },
+    
+    onClick: function($p0) {
+        if (!CUI.ScriptUtility.isNullOrUndefined(CUI.PMetrics)) {
+            CUI.PMetrics.perfMark(7704);
+        }
+        this.$X();
+        $p0.preventDefault();
+        if (!this.get_enabled()) {
+            return;
+        }
+        this.$0_0.set_$3z(this);
+        var $v_0 = 1;
+        var $v_1 = this.get_$1_1().CommandType;
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_1) && $v_1 === 'OptionSelection') {
+            $v_0 = 3;
+            this.get_stateProperties()['CommandValueId'] = this.$16_1;
+        }
+        this.get_stateProperties()['On'] = !this.get_stateProperties()['On'];
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_1().Command, $v_0, this.get_stateProperties());
+        if (this.$0_0.get_$4x()) {
+            this.$4y();
+        }
+        else {
+            this.setState(this.get_stateProperties()['On']);
+        }
+        if (!CUI.ScriptUtility.isNullOrUndefined(CUI.PMetrics)) {
+            CUI.PMetrics.perfMark(7705);
+        }
+    },
+    
+    setState: function($p0) {
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$9_1)) {
+            if ($p0) {
+                CUI.Utility.ensureCSSClassOnElement(this.$9_1, 'ms-cui-ctl-on');
+            }
+            else {
+                CUI.Utility.removeCSSClassFromElement(this.$9_1, 'ms-cui-ctl-on');
+            }
+        }
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$8_1)) {
+            if ($p0) {
+                CUI.Utility.ensureCSSClassOnElement(this.$8_1, 'ms-cui-ctl-on');
+            }
+            else {
+                CUI.Utility.removeCSSClassFromElement(this.$8_1, 'ms-cui-ctl-on');
+            }
+        }
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$F_1)) {
+            if ($p0) {
+                CUI.Utility.ensureCSSClassOnElement(this.$F_1, 'ms-cui-ctl-on');
+            }
+            else {
+                CUI.Utility.removeCSSClassFromElement(this.$F_1, 'ms-cui-ctl-on');
+            }
+        }
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$1w_1)) {
+            if ($p0) {
+                CUI.Utility.ensureCSSClassOnElement(this.$1w_1, 'ms-cui-ctl-on');
+            }
+            else {
+                CUI.Utility.removeCSSClassFromElement(this.$1w_1, 'ms-cui-ctl-on');
+            }
+        }
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$h_1)) {
+            if ($p0) {
+                CUI.Utility.ensureCSSClassOnElement(this.$h_1, 'ms-cui-ctl-on');
+            }
+            else {
+                CUI.Utility.removeCSSClassFromElement(this.$h_1, 'ms-cui-ctl-on');
+            }
+        }
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$1a_1)) {
+            if ($p0) {
+                CUI.Utility.ensureCSSClassOnElement(this.$1a_1, 'ms-cui-ctl-on');
+            }
+            else {
+                CUI.Utility.removeCSSClassFromElement(this.$1a_1, 'ms-cui-ctl-on');
+            }
+        }
+    },
+    
+    $39_1: function() {ULSpEN:;
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$1w_1)) {
+            CUI.Utility.removeCSSClassFromElement(this.$1w_1, 'ms-cui-ctl-disabledHoveredOver');
+        }
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$h_1)) {
+            CUI.Utility.removeCSSClassFromElement(this.$h_1, 'ms-cui-ctl-disabledHoveredOver');
+        }
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$1a_1)) {
+            CUI.Utility.removeCSSClassFromElement(this.$1a_1, 'ms-cui-ctl-disabledHoveredOver');
+        }
+    },
+    
+    $DG_1: function($p0) {
+        this.$0_0.set_$o(this);
+        this.$42_1($p0);
+    },
+    
+    $42_1: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled()) {
+            this.$39_1();
+            return;
+        }
+        var $v_0 = this.get_displayedComponent();
+        if (CUI.MenuItem.isInstanceOfType($v_0)) {
+            ($v_0).set_$1G(true);
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_1().CommandPreview)) {
+            return;
+        }
+        var $v_1 = 5;
+        var $v_2 = this.get_$1_1().CommandType;
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_2) && $v_2 === 'OptionSelection') {
+            $v_1 = 7;
+            this.get_stateProperties()['CommandValueId'] = this.$16_1;
+        }
+        $v_0.raiseCommandEvent(this.get_$1_1().CommandPreview, $v_1, this.get_stateProperties());
+    },
+    
+    $5x_1: function($p0) {
+        this.onBeginFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_1().CommandPreview)) {
+            return;
+        }
+        var $v_0 = 5;
+        var $v_1 = this.get_$1_1().CommandType;
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_1) && $v_1 === 'OptionSelection') {
+            $v_0 = 7;
+            this.get_stateProperties()['CommandValueId'] = this.$16_1;
+        }
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_1().CommandPreview, $v_0, this.get_stateProperties());
+    },
+    
+    $4u_1: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        var $v_0 = this.get_displayedComponent();
+        if (CUI.MenuItem.isInstanceOfType($v_0)) {
+            ($v_0).set_$1G(false);
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_1().CommandRevert)) {
+            return;
+        }
+        var $v_1 = 6;
+        var $v_2 = this.get_$1_1().CommandType;
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_2) && $v_2 === 'OptionSelection') {
+            $v_1 = 8;
+            this.get_stateProperties()['CommandValueId'] = this.$16_1;
+        }
+        $v_0.raiseCommandEvent(this.get_$1_1().CommandRevert, $v_1, this.get_stateProperties());
+    },
+    
+    $5w_1: function($p0) {
+        this.onEndFocus();
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined(this.get_$1_1().CommandRevert)) {
+            return;
+        }
+        var $v_0 = 6;
+        var $v_1 = this.get_$1_1().CommandType;
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_1) && $v_1 === 'OptionSelection') {
+            $v_0 = 8;
+            this.get_stateProperties()['CommandValueId'] = this.$16_1;
+        }
+        this.get_displayedComponent().raiseCommandEvent(this.get_$1_1().CommandRevert, $v_0, this.get_stateProperties());
+    },
+    
+    $4y: function() {ULSpEN:;
+        var $v_0 = this.pollForStateAndUpdateInternal(this.get_$1_1().Command, this.get_$1_1().QueryCommand, this.get_stateProperties(), false);
+        if ($v_0) {
+            this.setState(this.get_stateProperties()['On']);
+        }
+    },
+    
+    addDisplayModes: function() {ULSpEN:;
+        this.addDisplayMode('Small');
+        this.addDisplayMode('Medium');
+        this.addDisplayMode('Large');
+        this.addDisplayMode('Menu');
+        this.addDisplayMode('Menu16');
+        this.addDisplayMode('Menu32');
+    },
+    
+    dispose: function() {ULSpEN:;
+        CUI.Controls.ToggleButton.callBaseMethod(this, 'dispose');
+        this.$9_1 = null;
+        this.$8_1 = null;
+        this.$h_1 = null;
+        this.$1a_1 = null;
+        this.$1w_1 = null;
+        this.$1u_1 = null;
+        this.$1X_1 = null;
+    },
+    
+    get_$1_1: function() {ULSpEN:;
+        return this.$5_0;
+    }
+}
+
+
+CUI.Controls.JewelMenuLauncher = function(jewel, id, properties, menu) {ULSpEN:;
+    this.$8D = Function.createDelegate(this, this.onContextMenu);
+    this.$8S = Function.createDelegate(this, this.onKeyPress);
+    this.$1H = Function.createDelegate(this, this.onClick);
+    this.$3H = Function.createDelegate(this, this.onBlur);
+    this.$3K = Function.createDelegate(this, this.onFocus);
+    CUI.Controls.JewelMenuLauncher.initializeBase(this, [ jewel, id, properties, menu ]);
+    this.addDisplayMode('Default');
+}
+CUI.Controls.JewelMenuLauncher.prototype = {
+    $E_2: null,
+    $H_2: null,
+    $1t_2: null,
+    $5L_2: null,
+    $1J_2: null,
+    $1Z_2: null,
+    $1K_2: null,
+    $2r_2: null,
+    $2w_2: false,
+    
+    createDOMElementForDisplayMode: function($p0) {
+        if ($p0 !== 'Default') {
+            this.ensureValidDisplayMode($p0);
+            return null;
+        }
+        var $v_0 = (CUI.ScriptUtility.isNullOrUndefined(this.get_properties().Alt)) ? '' : this.get_properties().Alt;
+        this.$E_2 = CUI.Utility.$3('span');
+        this.$E_2.id = this.get_properties().Id + '-Default';
+        this.$E_2.className = 'ms-cui-jewel-jewelMenuLauncher';
+        this.$H_2 = CUI.Utility.$3('a');
+        CUI.Utility.$1s(this.$H_2);
+        this.$H_2.title = $v_0;
+        this.$2w_2 = !CUI.ScriptUtility.isNullOrEmptyString(this.get_properties().LabelText);
+        if (!this.$2w_2) {
+            this.$1t_2 = CUI.Utility.$3('img');
+            this.$5L_2 = CUI.Utility.$j(2, 10, this.get_properties().Image, this.get_properties().ImageClass, this.$1t_2, true, false, this.get_properties().ImageTop, this.get_properties().ImageLeft);
+            this.$1t_2.alt = $v_0;
+            this.$H_2.appendChild(this.$5L_2);
+        }
+        else {
+            var $v_1 = !CUI.ScriptUtility.isNullOrEmptyString(this.get_properties().ImageLeftSide);
+            var $v_2 = !CUI.ScriptUtility.isNullOrEmptyString(this.get_properties().ImageRightSide);
+            if ($v_1) {
+                this.$1J_2 = CUI.Utility.$3('span');
+                this.$1J_2.className = 'ms-cui-jewel-left';
+                this.$1J_2.id = this.get_properties().Id + '-Default-left';
+                CUI.Utility.$1h(this.$1J_2, this.get_properties().ImageLeftSide, this.get_properties().ImageLeftSideClass, this.get_properties().ImageLeftSideTop, this.get_properties().ImageLeftSideLeft, null, this.get_properties().Height);
+                this.$1J_2.style.width = this.get_properties().ImageLeftSideWidth + 'px';
+                this.$1J_2.style.height = this.get_properties().Height + 'px';
+                this.$H_2.appendChild(this.$1J_2);
+            }
+            this.$1Z_2 = CUI.Utility.$3('span');
+            this.$1Z_2.className = 'ms-cui-jewel-middle';
+            this.$1Z_2.id = this.get_properties().Id + '-Default-middle';
+            CUI.Utility.$1h(this.$1Z_2, this.get_properties().Image, this.get_properties().ImageClass, this.get_properties().ImageTop, this.get_properties().ImageLeft, null, this.get_properties().Height);
+            this.$2r_2 = CUI.Utility.$3('span');
+            if (!CUI.ScriptUtility.isNullOrUndefined(this.get_properties().LabelCss)) {
+                this.$2r_2.style.cssText = this.get_properties().LabelCss;
+            }
+            this.$2r_2.className = 'ms-cui-jewel-label';
+            if (!CUI.ScriptUtility.isNullOrEmptyString(this.get_properties().Height)) {
+                this.$2r_2.style.marginTop = (Math.floor(parseInt(this.get_properties().Height) - 14) / 2) + 'px';
+            }
+            CUI.UIUtility.setInnerText(this.$2r_2, this.get_properties().LabelText);
+            this.$1Z_2.appendChild(this.$2r_2);
+            this.$H_2.appendChild(this.$1Z_2);
+            if ($v_2) {
+                this.$1K_2 = CUI.Utility.$3('span');
+                this.$1K_2.className = 'ms-cui-jewel-right';
+                this.$1K_2.id = this.get_properties().Id + '-Default-right';
+                CUI.Utility.$1h(this.$1K_2, this.get_properties().ImageRightSide, this.get_properties().ImageRightSideClass, this.get_properties().ImageRightSideTop, this.get_properties().ImageRightSideLeft, null, this.get_properties().Height);
+                this.$1K_2.style.width = this.get_properties().ImageRightSideWidth + 'px';
+                this.$1K_2.style.height = this.get_properties().Height + 'px';
+                this.$H_2.appendChild(this.$1K_2);
+            }
+        }
+        this.$O($p0);
+        this.$E_2.appendChild(this.$H_2);
+        return this.$E_2;
+    },
+    
+    $35: function($p0) {
+        this.ensureValidDisplayMode($p0);
+        var $v_0 = $get(this.$6_0 + '-' + $p0);
+        this.storeElementForDisplayMode($v_0, $p0);
+        var $v_1 = $v_0.childNodes[0];
+        this.$E_2 = $v_0;
+        this.$H_2 = $v_1;
+        this.$2w_2 = !CUI.ScriptUtility.isNullOrEmptyString(this.get_properties().LabelText);
+        if (!this.$2w_2) {
+            this.$5L_2 = this.$H_2.childNodes[0];
+            this.$1t_2 = this.$5L_2.childNodes[0];
+        }
+        else {
+            this.$1J_2 = $get(this.$6_0 + '-' + $p0 + '-left');
+            this.$1Z_2 = $get(thi

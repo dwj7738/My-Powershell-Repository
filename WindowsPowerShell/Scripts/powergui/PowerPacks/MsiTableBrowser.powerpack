@@ -1,0 +1,4721 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration id="b8a36520-a314-45c5-ad97-b0ac50d2886d">
+  <container id="b1b1232d-bc56-461a-a3da-538e0b444623" name="SnapinInfo">
+    <items>
+      <container id="2a7a09ae-54f3-468b-a188-7c3b7c5eb6e3" name="welcome">
+        <items />
+      </container>
+      <container id="2c4e1b31-79c0-46ad-aa27-eaacf1c10b59" name="Required Snapins">
+        <items>
+          <container id="c91b908a-3b6c-4cb1-891a-329aeafb3202" name="InstallerSnapin">
+            <items />
+          </container>
+        </items>
+      </container>
+      <container id="7b082250-5a98-48f5-8a3f-6ab5f1e4d90e" name="PowerGUI Version">
+        <value>1.5.0.434</value>
+        <items />
+      </container>
+    </items>
+  </container>
+  <items>
+    <container id="b3b2283e-6f58-40c6-86b6-f01cd7f060fa" name="Navigation Tree">
+      <items>
+        <container id="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" parent="b3b2283e-6f58-40c6-86b6-f01cd7f060fa" name="MSI Table Browser" type="Folder">
+          <items>
+            <container id="bc20d5c7-740c-4ffd-9ead-62b58c2f2fe9" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Choose new MSI file" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[##################################
+#
+# Selecting this node will prompt the user to pick
+# a new MSI file to load
+#
+
+Function PromptUserForMsiFile($initialPath)
+{
+	$fileName = $initialPath
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	$fileBrowser.Filter = "MSI files (*.msi)|*.msi"
+	$fileBrowser.Filename = $initialPath
+	
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+$pathRoot = "HKCU:\Software\PowerGui"
+	
+# Check to see if the key already exists
+if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+{
+	$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+	$msiFilePath = $reg.MsiFilePath
+}
+
+# Prompt user for MSI path
+$msiFilePath = PromptUserForMsiFile $msiFilePath
+
+if( [String]::IsNullOrEmpty($msiFilePath) -ne $TRUE )
+{
+	# Make sure the registry key exists before we try and set the value.
+	if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+	if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+	# Set the TFS server address in the registry
+	$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $msiFilePath
+	
+	# Let the user know what the address has been set to
+	Write-Output ("MSI file set to : " + $msiFilePath)
+}
+else
+{
+	Write-Output ("MSI file not changed. Remains as : " + $msiFilePath)
+}]]></script>
+              <items />
+            </container>
+            <container id="41112a05-0309-406c-b7c1-db4a1b9d5620" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Action Text" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ActionText"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="febac580-bcc7-4ebb-bd2c-96326466f5b4" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="AdminExecuteSequence" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "AdminExecuteSequence"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="dabb12cb-d403-49b6-8b51-6d769b43b463" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="AdminUISequence" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "AdminUISequence"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="582dd480-5b1d-4509-9e34-f73edd1da07e" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="AdvtExecuteSequence" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "AdvtExecuteSequence"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="914258d1-0382-4ec1-9a1a-f02f5f75452e" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="AdvtUISequence" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "AdvtUISequence"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="46992d0f-4bf7-4570-ac63-9b46f70c51fd" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="AppSearch" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "AppSearch"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="0401fe73-cd77-4e05-98da-497ad85e0529" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="BBControl" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "BBControl"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="2f2aaeed-6967-4716-aec1-a10157699a51" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Billboard" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Billboard"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="98d15226-22de-48f0-9abb-34b020cee43b" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Binary" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Binary"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="30a4a711-3823-46bd-9f0d-9ec8bedb8a4d" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="BindImage" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "BindImage"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="64ea2c18-972c-4c5d-8fa4-c2d65d06139a" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="CCPSearch" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "CCPSearch"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="c0ae1413-bcae-4ca6-8f1c-33ea7d087b0f" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="CheckBox" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "CheckBox"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="ced509a7-882d-4729-964c-938b0b5fdbdf" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Class" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Class"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="f7881f9f-bbfa-474b-8178-323bc4f4a18b" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ComboBox" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ComboBox"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="8520216f-8ae8-4015-8808-0c9eb069496a" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="CompLocator" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "CompLocator"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="d21ce3f6-4930-40c9-aa3a-a3ae9999ae0f" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Complus" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Complus"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="8b604ab1-5d81-4b33-9234-c0712ed4c906" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Component" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Component"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="92ab7390-1754-445b-bb64-a94d0ac6ecdc" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Condition" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Condition"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="cefcc820-9ef5-4d5a-bbaf-ca097de5dbc3" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Control" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Control"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="80757168-ec5c-47b8-95e1-df2bb06857e9" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ControlCondition" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ControlCondition"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="328995d6-098a-432c-95a5-4f94486c02f6" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ControlEvent" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ControlEvent"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="19ac765b-9f37-4704-8a03-998857527c76" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="CreateFolder" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "CreateFolder"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="6a78a322-9120-4a99-ba0b-6749fb5085b8" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="CustomAction" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "CustomAction"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="a76516f3-3710-470d-b05f-627357ce8b4a" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Dialog" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Dialog"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="41c457b9-d043-43fd-b998-9d4de21c186d" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Directory" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Directory"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="5e152b0c-fabb-4075-ae05-58a5403ce843" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="DrLocator" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "DrLocator"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="4706711e-7932-4445-9c09-06e6d42ca8f1" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="DuplicateFile" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "DuplicateFile"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="02a5dd38-44ef-4823-8309-b1712df1a056" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Environment" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Environment"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="136156d2-f39a-462b-a56a-7376ad940a4e" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Error" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Error"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="be2700af-d011-4009-b6bf-4ef5ebe59041" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="EventMapping" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "EventMapping"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="f9ae6c5c-6444-4c44-8644-8d75d7f3b566" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Extension" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Extension"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="6316edf3-bd4b-4fd9-a57b-be861a0affe1" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Feature" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Feature"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="e50c10c8-6f09-4201-a903-dc75c736be9a" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="FeatureComponents" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "FeatureComponents"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="fd1f88e9-9df8-4790-a972-925af362f002" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="File" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "File"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="22936b4f-6302-4f76-901a-e4ea15ed3ca1" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="FileSFPCatalog" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "FileSFPCatalog"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="4da83d38-896d-4042-b443-6506884bbb9e" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Font" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Font"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="75e79211-33b0-4e40-b9c4-9e91a01f2d85" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Icon" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Icon"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="90c7d2d2-67f4-4d23-a624-801212f850be" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="IniFile" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "IniFile"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="2a07ea9b-c1e4-4fc5-b773-2182b1668b0f" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="IniLocator" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "IniLocator"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="46f7b257-f049-42ca-a347-3295d7a2079a" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="InstallExecuteSequence" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "InstallExecuteSequence"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="a6d3e575-25da-405e-8859-54cc40dc3b10" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="InstallUISequence" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "InstallUISequence"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="7ef455ae-06e6-4fb7-ab3f-2e3f85d284f8" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="IsolatedComponents" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "IsolatedComponents"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="ff2770ff-d907-4cb8-9ae1-7c7ed73b0b5e" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="LaunchCondition" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "LaunchCondition"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="d562db8f-a616-431a-8cc1-9b9ac9a7554f" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ListBox" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ListBox"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="d3388dac-d07c-421d-94d8-d40e864bd052" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ListView" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ListView"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="32b0fe93-8272-4f71-b570-0775c988de72" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="LockPermissions" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "LockPermissions"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="b2698415-a107-453a-8383-1acec4d75775" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Media" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Media"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="b679187b-6385-40e1-9513-9fdd8f55c9ed" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MIME" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MIME"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="ce26752a-191d-4a47-bb99-cd73e37be196" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MoveFile" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MoveFile"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="e0a8ceee-3596-4ce2-8bf8-7749af175658" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiAssembly" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiAssembly"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="0d1491ea-2b9b-4e99-947d-b94f52a6467e" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiAssemblyName" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiAssemblyName"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="14c35bd8-60b9-4c28-a454-b0fe80d707ef" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiDigitalCertificate" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiDigitalCertificate"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="0ccb8b3a-6e43-4e0a-acde-e1ba67d80263" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiDigitalSignature" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiDigitalSignature"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="469e1c04-ccfa-4ed2-ab20-2659daccae77" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiFileHash" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiFileHash"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="d14e13cd-d629-4c04-8e13-5bb22b3bfa13" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiPatchCertificate" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiPatchCertificate"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="924aa2fd-2ce6-4292-95b8-cb4c684ad78d" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiPatchHeaders" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiPatchHeaders"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="bc52fe98-cc7a-4d27-825c-6ec784f025bd" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiPatchMetadata" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiPatchMetadata"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="43881da3-35b8-439a-8b3b-66c6d38d6176" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiPatchOldAssemblyName" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiPatchOldAssemblyName"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="9d5be68f-4799-49ff-bf5d-e7d0872f5086" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiPatchOldAssemblyFile" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiPatchOldAssemblyFile"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="2f3b48db-6c87-4464-8bdb-cd83835f18aa" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiPatchSequence" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiPatchSequence"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="b9f9df69-50d3-4fc6-a18b-9db9bbfd5bcf" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="MsiSFCBypass" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "MsiSFCBypass"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="cbd37a7f-769e-44d3-b80e-b97fb5e5d55d" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ODBCAttribute" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ODBCAttribute"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="1c070124-8a85-49a4-a4b5-6a0efb1cbeda" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ODBCDataSource" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ODBCDataSource"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="390bf2ef-d968-4fde-a24d-b6744299defa" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ODBCDriver" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ODBCDriver"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="84277448-0512-43ac-8b44-40e944ca6e6e" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ODBCSourceAttribute" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ODBCSourceAttribute"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="234002b9-681e-4b5d-b537-001811aff1a3" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ODBCTranslator" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ODBCTranslator"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="08c44a72-073d-401c-ad83-96a53e54e396" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Patch" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Patch"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="d6aac8dd-c59f-4795-80c8-3095fb04abcd" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="PatchPackage" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "PatchPackage"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="d8cb0ed5-44dd-48bc-a530-17c324b953f3" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ProgId" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ProgId"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="73b5d61b-776b-44e8-85e6-060d8bf4b07e" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Property" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Property"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="fb8d482f-e3bc-46d7-9986-58b09b7d0882" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="PublishComponent" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "PublishComponent"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="2f0a088d-d1c4-47d6-8da7-a11a20a80d71" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="RadioButton" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "RadioButton"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="929663b7-808d-47a1-b88c-f9cae3dd9f28" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Registry" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Registry"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="5fc343be-f9c6-4203-81a1-7d6e9849e071" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="RegLocator" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "RegLocator"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="9d0a6b3c-1321-4576-b336-37def4934d1d" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="RemoveFile" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "RemoveFile"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="390ab037-1308-407f-ad31-bb8ee54c52fc" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="RemoveIniFile" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "RemoveIniFile"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="686d9a9d-4ac0-491a-80af-1bc001f1bdf9" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="RemoveRegistry" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "RemoveRegistry"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="8bef7e0f-4d43-49ae-857e-fbdb6d251bd2" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ReserveCost" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ReserveCost"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="69151886-248b-4305-a362-7a6fae8b714e" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="SelfReg" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "SelfReg"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="c054e96f-efd5-4cee-a390-7349847ab17b" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ServiceControl" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ServiceControl"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="f767d1b1-1e02-4a98-a470-317dd1d2daef" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="ServiceInstall" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "ServiceInstall"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="872ff2b0-14a4-430c-bbf5-2fc96c3a85cd" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="SFPCatalog" type="Script@System.String" returntype="System.String">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "SFPCatalog"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="ac9d69a0-1db8-4921-98e3-fc0a67ee4658" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Shortcut" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Shortcut"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="a60b962c-93b3-4485-9d8b-04d4d791d8f4" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Signature" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Signature"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="90367ed4-4c55-46d2-8284-f66ba0f4213e" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="TextStyle" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "TextStyle"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="67b3fe2d-8a4b-4b61-b7b9-f0d8ccbcf9a8" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="TypeLib" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "TypeLib"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="0da80b5f-6e9b-40f0-b9b2-b48cd083ecac" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="UIText" type="Script@System.Data.DataRow" returntype="System.Data.DataRow">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "UIText"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="6b0722d6-4962-4f9a-9330-73702857d782" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Verb" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Verb"
+$dataTable]]></script>
+              <items />
+            </container>
+            <container id="13d898df-eeab-4121-bf49-4b0390bd2cf6" parent="ce569754-4bdc-4bc7-bec6-7d9e18bf4c9e" name="Upgrade" type="Script">
+              <script><![CDATA[Function PromptUserForMsiFile()
+{
+	$fileName = $NULL
+	$fileBrowser = New-Object system.Windows.Forms.OpenFileDialog
+	if( $fileBrowser.ShowDialog() -eq "OK")
+	{
+		$fileName = $fileBrowser.Filename
+	}
+	
+	$fileName
+}
+
+Function GetMsiPath()
+{
+	$pathRoot = "HKCU:\Software\PowerGui"
+	
+	# Check to see if the key already exists
+	if( Test-Path ($pathRoot + "\MsiTableBrowser") )
+	{
+		$reg = Get-ItemProperty ($pathRoot + "\MsiTableBrowser")
+		$filePath = $reg.MsiFilePath
+		
+		# If the reg key exists but it contains an empty string prompt the user to provide a file path
+		if( [String]::IsNullOrEmpty( $filePath ) )
+		{
+			$filePath = PromptUserForMsiFile
+			$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		}
+		
+		$filePath
+	}
+	else
+	{
+		$filePath = PromptUserForMsiFile
+		
+		# Make sure the registry key exists before we try and set the value.
+		if( (Test-Path $pathRoot) -ne $TRUE ) {$a = New-Item -path $pathRoot}
+		if( (Test-Path ($pathRoot + "\MsiTableBrowser")) -ne $TRUE ) {$a = New-Item -path ($pathRoot + "\MsiTableBrowser")}
+		
+		# Set the MSI file path in the registry
+		$result = Set-ItemProperty -path ($pathRoot + "\MsiTableBrowser") -name "MsiFilePath" -Value $filePath
+		$filePath
+	}
+}
+
+$msiFilePath = GetMsiPath
+
+$dataTable = Get-MsiTableData $msiFilePath "Upgrade"
+$dataTable]]></script>
+              <items />
+            </container>
+          </items>
+        </container>
+      </items>
+    </container>
+    <container id="1ef02fe0-c6fc-4cdc-88bc-a9e4313bee18" name="Actions">
+      <items>
+        <container id="7826b2ed-8ae4-4ad0-bf29-1ff0a25e0ece" name="Actions" type="NonGet">
+          <items />
+        </container>
+        <container id="481eccc0-43f8-47b8-9660-f100dff38e14" name="Links" type="Get">
+          <items />
+        </container>
+      </items>
+    </container>
+  </items>
+</configuration>

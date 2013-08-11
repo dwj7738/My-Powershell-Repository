@@ -1,0 +1,521 @@
+unction($p0, $p1) {
+    var $v_0 = $p0.attrs;
+    return $v_0[$p1];
+}
+CUI.DataNodeWrapper.prototype = {
+    $a_0: null,
+    
+    get_node: function() {ULSpEN:;
+        return this.$a_0;
+    },
+    set_node: function($p0) {
+        this.$a_0 = $p0;
+        return $p0;
+    },
+    
+    get_name: function() {ULSpEN:;
+        return CUI.DataNodeWrapper.getNodeName(this.$a_0);
+    },
+    
+    get_children: function() {ULSpEN:;
+        return CUI.DataNodeWrapper.getNodeChildren(this.$a_0);
+    },
+    
+    get_attributes: function() {ULSpEN:;
+        return CUI.DataNodeWrapper.getNodeAttributes(this.$a_0);
+    },
+    
+    get_hasChildren: function() {ULSpEN:;
+        return CUI.DataNodeWrapper.getNodeChildren(this.$a_0).length > 0;
+    }
+}
+
+
+CUI.Builder = function(options, elmPlaceholder, rootBuildClient) {ULSpEN:;
+    this.$80 = Function.createDelegate(this, this.$CR_0);
+    this.$8s = Function.createDelegate(this, this.$7Z_0);
+    this.$s_0 = options;
+    if (CUI.ScriptUtility.isNullOrUndefined(this.$s_0.trimmedIds)) {
+        this.$s_0.trimmedIds = {};
+    }
+    this._elmPlaceholder = elmPlaceholder;
+    this.$1Q_0 = rootBuildClient;
+    this.$21_0 = this.$8s;
+    $addHandler(window, 'unload', this.$21_0);
+}
+CUI.Builder.$CA = function($p0) {
+    var $v_0 = CUI.NativeUtility.createXMLDocFromString($p0);
+    if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+        return null;
+    }
+    return CUI.Builder.$CB($v_0);
+}
+CUI.Builder.$CB = function($p0) {
+    return eval('(' + CUI.Builder.convertNodeToJSON($p0.documentElement) + ')');
+}
+CUI.Builder.convertNodeToJSON = function(node) {ULSpEN:;
+    var $v_0;
+    $v_0 = '{';
+    $v_0 += '\"name\" : \"';
+    $v_0 += CUI.NativeUtility.ecmaScriptStringLiteralEncode(node.nodeName);
+    $v_0 += '\",';
+    $v_0 += '\"attrs\": {';
+    var $v_1 = node.attributes;
+    if (!CUI.ScriptUtility.isNullOrUndefined(node.attributes)) {
+        var $v_3 = $v_1.length;
+        if ($v_3 > 0) {
+            var $v_4 = true;
+            for (var $v_5 = 0; $v_5 < $v_3; $v_5++) {
+                var $v_6 = $v_1.item($v_5);
+                if ($v_4) {
+                    $v_4 = false;
+                }
+                else {
+                    $v_0 += ',';
+                }
+                $v_0 += '\"';
+                $v_0 += CUI.NativeUtility.ecmaScriptStringLiteralEncode($v_6.name);
+                $v_0 += '\"';
+                $v_0 += ':\"';
+                $v_0 += CUI.NativeUtility.ecmaScriptStringLiteralEncode($v_6.value);
+                $v_0 += '\"';
+            }
+        }
+    }
+    $v_0 += '}';
+    var $v_2 = node.childNodes;
+    if ($v_2) {
+        var $v_7 = $v_2.length;
+        if ($v_7 > 0) {
+            $v_0 += ',';
+            $v_0 += 'children:[';
+            var $v_8 = true;
+            for (var $v_9 = 0; $v_9 < $v_7; $v_9++) {
+                var $v_A = $v_2[$v_9];
+                if ($v_A.nodeName === '#text') {
+                    continue;
+                }
+                if ($v_8) {
+                    $v_8 = false;
+                }
+                else {
+                    $v_0 += ',';
+                }
+                $v_0 += CUI.Builder.convertNodeToJSON($v_A);
+            }
+            $v_0 += ']';
+        }
+    }
+    $v_0 += '}';
+    return $v_0;
+}
+CUI.Builder.applyDataNodeExtensions = function(data, extensions) {ULSpEN:;
+    var $v_0 = data.attrs;
+    if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+        return data;
+    }
+    var $v_1 = $v_0['Id'];
+    var $v_2 = extensions[$v_1];
+    if (!CUI.ScriptUtility.isNullOrUndefined($v_2)) {
+        var $v_9 = null;
+        var $v_A = Number.MAX_VALUE;
+        var $v_B = $v_2.length;
+        for (var $v_C = 0; $v_C < $v_B; $v_C++) {
+            var $v_D = $v_2[$v_C];
+            if (!$v_D) {
+                return null;
+            }
+            var $v_E = CUI.DataNodeWrapper.getNodeAttribute($v_D, 'Sequence');
+            if (CUI.ScriptUtility.isNullOrUndefined($v_E)) {
+                if (CUI.ScriptUtility.isNullOrUndefined($v_9)) {
+                    $v_9 = $v_D;
+                }
+                continue;
+            }
+            var $v_F = parseInt($v_E);
+            if ($v_F < $v_A) {
+                $v_9 = $v_D;
+                $v_A = $v_F;
+            }
+        }
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_9)) {
+            data = $v_9;
+        }
+    }
+    var $v_3 = (data)['children'];
+    if (CUI.ScriptUtility.isNullOrUndefined($v_3)) {
+        $v_3 = [];
+        (data)['children'] = $v_3;
+    }
+    var $v_4 = [];
+    var $v_5 = $v_3.length;
+    for (var $v_G = 0; $v_G < $v_5; $v_G++) {
+        Array.add($v_4, $v_3[$v_G]);
+    }
+    var $v_6 = extensions[$v_1 + '._children'];
+    if (!CUI.ScriptUtility.isNullOrUndefined($v_6)) {
+        var $v_H = $v_6.length;
+        for (var $v_I = 0; $v_I < $v_H; $v_I++) {
+            Array.add($v_4, $v_6[$v_I]);
+        }
+        ($v_4).sort(CUI.Builder.$C8_0);
+    }
+    var $v_7 = [];
+    var $v_8 = $v_4.length;
+    for (var $v_J = 0; $v_J < $v_8; $v_J++) {
+        var $v_K = CUI.Builder.applyDataNodeExtensions($v_4[$v_J], extensions);
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_K)) {
+            Array.add($v_7, $v_K);
+        }
+    }
+    (data)['children'] = $v_7;
+    return data;
+}
+CUI.Builder.$C8_0 = function($p0, $p1) {
+    var $v_0 = CUI.DataNodeWrapper.getNodeAttribute($p0, 'Sequence');
+    var $v_1 = CUI.DataNodeWrapper.getNodeAttribute($p1, 'Sequence');
+    if (CUI.ScriptUtility.isNullOrUndefined($v_1) && (CUI.ScriptUtility.isNullOrUndefined($v_0))) {
+        return 0;
+    }
+    if (CUI.ScriptUtility.isNullOrUndefined($v_1)) {
+        return -1;
+    }
+    if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+        return 1;
+    }
+    var $v_2 = parseInt($v_0);
+    var $v_3 = parseInt($v_1);
+    if ($v_2 < $v_3) {
+        return -1;
+    }
+    else if ($v_2 > $v_3) {
+        return 1;
+    }
+    return 0;
+}
+CUI.Builder.prototype = {
+    $1Q_0: null,
+    $21_0: null,
+    
+    $7Z_0: function($p0) {
+        this.dispose();
+    },
+    
+    $7a: function($p0) {
+        $p0.$2v_1 = this.$s_0.fixedPositioningEnabled;
+    },
+    
+    dispose: function() {ULSpEN:;
+        this.$0_0 = null;
+        this.$s_0 = null;
+        this._elmPlaceholder = null;
+        this.$1Q_0 = null;
+        this.$12_0 = null;
+        $removeHandler(window, 'unload', this.$21_0);
+        this.$21_0 = null;
+    },
+    
+    $0_0: null,
+    
+    get_root: function() {ULSpEN:;
+        return this.$0_0;
+    },
+    set_root: function(value) {ULSpEN:;
+        this.$0_0 = value;
+        return value;
+    },
+    
+    $2Y_0: false,
+    
+    get_inQuery: function() {ULSpEN:;
+        return this.$2Y_0;
+    },
+    set_inQuery: function(value) {ULSpEN:;
+        this.$2Y_0 = value;
+        return value;
+    },
+    
+    $12_0: null,
+    
+    get_dataSource: function() {ULSpEN:;
+        return this.$12_0;
+    },
+    set_dataSource: function(value) {ULSpEN:;
+        this.$12_0 = value;
+        return value;
+    },
+    
+    _elmPlaceholder: null,
+    
+    get_placeholder: function() {ULSpEN:;
+        return this._elmPlaceholder;
+    },
+    
+    $s_0: null,
+    
+    isIdTrimmed: function(id) {ULSpEN:;
+        return this.$s_0.trimmedIds[id];
+    },
+    
+    isNodeTrimmed: function(dataNode) {ULSpEN:;
+        var $v_0 = CUI.DataNodeWrapper.getNodeAttribute(dataNode, 'Id');
+        return this.$s_0.trimmedIds[$v_0];
+    },
+    
+    $1d: function($p0, $p1) {
+        var $v_0 = null;
+        var $v_1 = $p0.name;
+        switch ($v_1) {
+            case 'ToggleButton':
+                $v_0 = this.$C2_0($p0, $p1);
+                break;
+            case 'ComboBox':
+                $v_0 = this.$Bj_0($p0, $p1);
+                break;
+            case 'DropDown':
+                $v_0 = this.$Bk_0($p0, $p1);
+                break;
+            case 'Button':
+                $v_0 = this.$Bf_0($p0, $p1);
+                break;
+            case 'SplitButton':
+                $v_0 = this.$Bz_0($p0, $p1);
+                break;
+            case 'FlyoutAnchor':
+                $v_0 = this.$Bl_0($p0, $p1);
+                break;
+            case 'GalleryButton':
+                $v_0 = this.$9x_0($p0, $p1, null);
+                break;
+            case 'InsertTable':
+                $v_0 = this.$Bo_0($p0, $p1);
+                break;
+            case 'Label':
+                $v_0 = this.$Bs_0($p0, $p1);
+                break;
+            case 'MRUSplitButton':
+                $v_0 = this.$Bu_0($p0, $p1);
+                break;
+            case 'Spinner':
+                $v_0 = this.$By_0($p0, $p1);
+                break;
+            case 'TextBox':
+                $v_0 = this.$C1_0($p0, $p1);
+                break;
+            case 'ColorPicker':
+                $v_0 = this.$Bi_0($p0, $p1);
+                break;
+            case 'CheckBox':
+                $v_0 = this.$Bh_0($p0, $p1);
+                break;
+            case 'Separator':
+                $v_0 = this.$Bx_0($p0, $p1);
+                break;
+            default:
+                var $v_2 = $p0.attrs;
+                var $v_3 = $v_2['Classname'];
+                if (CUI.ScriptUtility.isNullOrUndefined($v_3)) {
+                    throw Error.create('Unable to create Control with tagname: ' + $v_1);
+                }
+                break;
+        }
+        return $v_0;
+    },
+    
+    $37: function($p0, $p1, $p2) {
+        var $v_0 = $p0.attrs;
+        var $v_1 = this.$0_0.$A6($v_0['Id'], $v_0['Title'], $v_0['Description'], $v_0['MaxWidth']);
+        if (this.$s_0.lazyMenuInit && $p2) {
+            $v_1.$7k(this.$80, $p0, $p1);
+            return $v_1;
+        }
+        this.$AE_0($v_1, $p0, $p1);
+        return $v_1;
+    },
+    
+    $AE_0: function($p0, $p1, $p2) {
+        var $v_0 = CUI.DataNodeWrapper.getNodeChildren($p1);
+        var $v_1 = $v_0.length;
+        var $v_2 = null;
+        for (var $v_3 = 0; $v_3 < $v_1; $v_3++) {
+            $v_2 = $v_0[$v_3];
+            var $v_4 = $v_2.name;
+            if ($v_4 !== 'MenuSection') {
+                throw Error.create('Tags with the name: ' + $v_4 + ' cannot be children of Menu tags.');
+            }
+            if (this.isNodeTrimmed($v_2)) {
+                continue;
+            }
+            var $v_5 = this.$Bt_0($v_2, $p2);
+            $p0.addChild($v_5);
+        }
+    },
+    
+    $CR_0: function($p0, $p1, $p2) {
+        var $v_0 = $p0;
+        this.$AE_0($v_0, $p1, $p2);
+        $v_0.$4v(true);
+        return $v_0;
+    },
+    
+    $Bt_0: function($p0, $p1) {
+        var $v_0 = $p0.attrs;
+        var $v_1 = $v_0['DisplayMode'];
+        if (CUI.ScriptUtility.isNullOrUndefined($v_1)) {
+            $v_1 = 'Menu';
+        }
+        var $v_2 = this.$0_0.$A7($v_0['Id'], $v_0['Title'], $v_0['Description'], ($v_0['Scrollable']) === 'true', $v_0['MaxHeight'], $v_1);
+        var $v_3 = CUI.DataNodeWrapper.getNodeName((CUI.DataNodeWrapper.getNodeChildren($p0))[0]);
+        if ($v_3 === 'Controls') {
+            var $v_4 = CUI.DataNodeWrapper.getNodeChildren((CUI.DataNodeWrapper.getNodeChildren($p0))[0]);
+            var $v_5 = $v_4.length;
+            var $v_6 = null;
+            for (var $v_7 = 0; $v_7 < $v_5; $v_7++) {
+                $v_6 = $v_4[$v_7];
+                if (this.isNodeTrimmed($v_6)) {
+                    continue;
+                }
+                var $v_8 = this.$1d($v_6, $p1);
+                $v_2.addChild($v_8.createComponentForDisplayMode($v_1));
+            }
+        }
+        else if ($v_3 === 'Gallery') {
+            var $v_9 = this.$Bm_0((CUI.DataNodeWrapper.getNodeChildren($p0))[0], $p1, true);
+            $v_2.addChild($v_9);
+        }
+        return $v_2;
+    },
+    
+    $Bm_0: function($p0, $p1, $p2) {
+        var $v_0 = $p0.attrs;
+        var $v_1 = $p0.attrs;
+        var $v_2 = this.$0_0.$CI($v_1.Id, $v_0['Title'], $v_0['Description'], $v_1);
+        var $v_3 = ($p2) ? 'Menu' : 'Default';
+        var $v_4 = CUI.DataNodeWrapper.getNodeChildren($p0);
+        var $v_5 = $v_4.length;
+        var $v_6 = null;
+        for (var $v_7 = 0; $v_7 < $v_5; $v_7++) {
+            $v_6 = $v_4[$v_7];
+            if (this.isNodeTrimmed($v_6)) {
+                continue;
+            }
+            var $v_8;
+            switch (CUI.DataNodeWrapper.getNodeName($v_6)) {
+                case 'GalleryButton':
+                    $v_8 = this.$9x_0($v_6, $p1, $v_1.ElementDimensions);
+                    break;
+                default:
+                    $v_8 = this.$1d($v_6, $p1);
+                    break;
+            }
+            $v_2.addChild($v_8.createComponentForDisplayMode($v_3));
+        }
+        return $v_2;
+    },
+    
+    $9x_0: function($p0, $p1, $p2) {
+        var $v_0;
+        if (CUI.ScriptUtility.isNullOrEmptyString($p2)) {
+            var $v_3 = $p0.attrs;
+            $p2 = $v_3['ElementDimensions'];
+        }
+        if (CUI.ScriptUtility.isNullOrEmptyString($p2)) {
+            $v_0 = 2;
+        }
+        else {
+            $v_0 = CUI.Gallery.$A0($p2);
+        }
+        var $v_1 = $p0.attrs;
+        var $v_2 = new CUI.Controls.GalleryButton(this.$0_0, $v_1.Id, $v_1, $v_0);
+        return $v_2;
+    },
+    
+    $C2_0: function($p0, $p1) {
+        var $v_0 = $p0.attrs;
+        var $v_1 = new CUI.Controls.ToggleButton(this.$0_0, $v_0.Id, $v_0);
+        return $v_1;
+    },
+    
+    $Bh_0: function($p0, $p1) {
+        var $v_0 = $p0.attrs;
+        var $v_1 = new CUI.Controls.CheckBox(this.$0_0, $v_0.Id, $v_0);
+        return $v_1;
+    },
+    
+    $Bi_0: function($p0, $p1) {
+        var $v_0 = $p0.attrs;
+        var $v_1 = CUI.DataNodeWrapper.getNodeChildren(CUI.DataNodeWrapper.getFirstChildNodeWithName($p0, 'Colors'));
+        var $v_2 = new Array($v_1.length);
+        var $v_3 = $v_1.length;
+        for (var $v_5 = 0; $v_5 < $v_3; $v_5++) {
+            var $v_6 = new CUI.Controls.ColorStyle();
+            var $v_7 = CUI.DataNodeWrapper.getNodeAttributes($v_1[$v_5]);
+            var $v_8 = $v_7['Title'];
+            $v_6.Title = (CUI.ScriptUtility.isNullOrUndefined($v_8)) ? $v_7['Alt'] : $v_8;
+            $v_6.Color = $v_7['Color'];
+            $v_6.DisplayColor = $v_7['DisplayColor'];
+            $v_6.Style = $v_7['Style'];
+            $v_2[$v_5] = $v_6;
+        }
+        var $v_4 = new CUI.Controls.ColorPicker(this.$0_0, $v_0.Id, $v_0, $v_2);
+        return $v_4;
+    },
+    
+    $Bj_0: function($p0, $p1) {
+        var $v_0 = $p0.attrs;
+        var $v_1 = CUI.DataNodeWrapper.getNodeChildren($p0);
+        var $v_2 = null;
+        var $v_3 = $p0.attrs;
+        var $v_4 = null;
+        if (!CUI.Utility.$v($v_3.PopulateDynamically)) {
+            $v_2 = this.$37($v_1[0], $p1, false);
+            $v_4 = {};
+            var $v_6 = CUI.DataNodeWrapper.getNodeChildren($v_1[0]);
+            var $v_7 = $v_6.length;
+            for (var $v_8 = 0; $v_8 < $v_7; $v_8++) {
+                var $v_9 = CUI.DataNodeWrapper.getNodeChildren($v_6[$v_8]);
+                var $v_A = CUI.DataNodeWrapper.getNodeChildren($v_9[0]);
+                var $v_B = $v_A.length;
+                for (var $v_C = 0; $v_C < $v_B; $v_C++) {
+                    var $v_D = $v_A[$v_C].attrs;
+                    var $v_E = $v_D['LabelText'];
+                    var $v_F = $v_D['MenuItemId'];
+                    $v_4[$v_E] = $v_F;
+                }
+            }
+        }
+        var $v_5 = new CUI.Controls.ComboBox(this.$0_0, $v_0.Id, $v_0, $v_2);
+        $v_5.set_menuItems($v_4);
+        return $v_5;
+    },
+    
+    $Bk_0: function($p0, $p1) {
+        var $v_0 = $p0.attrs;
+        var $v_1 = CUI.DataNodeWrapper.getNodeChildren($p0);
+        var $v_2 = null;
+        var $v_3 = $p0.attrs;
+        if (!CUI.Utility.$v($v_3.PopulateDynamically)) {
+            $v_2 = this.$37($v_1[0], $p1, false);
+        }
+        var $v_4 = new CUI.Controls.DropDown(this.$0_0, $v_0.Id, $v_0, $v_2);
+        return $v_4;
+    },
+    
+    $Bf_0: function($p0, $p1) {
+        var $v_0 = $p0.attrs;
+        var $v_1 = new CUI.Controls.Button(this.$0_0, $v_0.Id, $v_0);
+        return $v_1;
+    },
+    
+    $Bz_0: function($p0, $p1) {
+        var $v_0 = $p0.attrs;
+        var $v_1 = CUI.DataNodeWrapper.getNodeChildren($p0);
+        var $v_2 = null;
+        if (!CUI.Utility.$v($v_0.PopulateDynamically)) {
+            $v_2 = this.$37($v_1[0], $p1, true);
+        }
+        var $v_3 = new CUI.Controls.SplitButton(this.$0_0, $v_0.Id, $v_0, $v_2);
+        return $v_3;
+    },
+    
+    $Bl_0: function($

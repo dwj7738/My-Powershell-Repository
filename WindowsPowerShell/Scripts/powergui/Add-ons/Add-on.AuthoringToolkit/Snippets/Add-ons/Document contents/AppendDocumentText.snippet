@@ -1,0 +1,39 @@
+
+                strOut.push("\\u0025");
+                break;
+            case '&':
+                strOut.push("\\u0026");
+                break;
+            case '\'':
+                strOut.push("\\u0027");
+                break;
+            case '(':
+                strOut.push("\\u0028");
+                break;
+            case ')':
+                strOut.push("\\u0029");
+                break;
+            case '+':
+                strOut.push("\\u002b");
+                break;
+            case '/':
+                strOut.push("\\u002f");
+                break;
+            case '<':
+                strOut.push("\\u003c");
+                break;
+            case '>':
+                strOut.push("\\u003e");
+                break;
+            case '\\':
+                strOut.push("\\\\");
+                break;
+            default:
+                strOut.push(c);
+            };
+        }
+    }
+    return strOut.join('');
+};
+
+CUI.NativeUtility.ffClick = 

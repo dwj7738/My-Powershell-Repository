@@ -1,0 +1,122 @@
+BusinessDataSecondaryFieldType" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsd:simpleType>
+					<xsl:call-template name="SimpleRestriction" />
+				</xsd:simpleType>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	<!--Business Data Primary Field Type-->
+	<xsl:template name="BusinessDataPrimaryFieldType">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension>
+					<xsl:call-template name="BaseType" />
+					<xsl:call-template name="BusinessDataPrimaryFieldTypeAttributes" />
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsl:template>
+	<xsl:template name="BusinessDataSecondaryFieldType">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension>
+					<xsl:call-template name="BaseType" />
+					<xsl:call-template name="BusinessDataSecondaryFieldTypeAttributes" />
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsl:template>
+	<!-- Business Data Attributes -->
+	<xsl:template name="BusinessDataPrimaryFieldTypeAttributes">
+		<xsd:attribute name="BdcField" type="xsd:string">
+			<xsl:attribute name="fixed">
+				<xsl:value-of select="@BdcField"/>
+			</xsl:attribute>
+		</xsd:attribute>
+		<xsd:attribute name="RelatedFieldWssStaticName" type="xsd:string">
+			<xsl:attribute name="fixed">
+				<xsl:value-of select="@RelatedFieldWssStaticName"/>
+			</xsl:attribute>
+		</xsd:attribute>
+		<xsd:attribute name="SecondaryFieldBdcNames" type="xsd:string">
+			<xsl:attribute name="fixed">
+				<xsl:value-of select="@SecondaryFieldBdcNames"/>
+			</xsl:attribute>
+		</xsd:attribute>
+		<xsd:attribute name="SecondaryFieldsWssStaticNames" type="xsd:string">
+			<xsl:attribute name="fixed">
+				<xsl:value-of select="@SecondaryFieldsWssStaticNames"/>
+			</xsl:attribute>
+		</xsd:attribute>
+		<xsd:attribute name="SystemInstance" type="xsd:string">
+			<xsl:attribute name="fixed">
+				<xsl:value-of select="@SystemInstance"/>
+			</xsl:attribute>
+		</xsd:attribute>
+		<xsd:attribute name="EntityNamespace" type="xsd:string">
+			<xsl:attribute name="fixed">
+				<xsl:value-of select="@EntityNamespace"/>
+			</xsl:attribute>
+		</xsd:attribute>
+		<xsd:attribute name="EntityName" type="xsd:string">
+			<xsl:attribute name="fixed">
+				<xsl:value-of select="@EntityName"/>
+			</xsl:attribute>
+		</xsd:attribute>
+		<xsd:attribute name="RelatedFieldBDCField" type="xsd:string">
+			<xsl:attribute name="fixed">
+				<xsl:value-of select="@RelatedFieldBDCField"/>
+			</xsl:attribute>
+		</xsd:attribute>
+		<xsd:attribute name="Resolved" type="xsd:string" fixed="true"/>
+	</xsl:template>
+	<xsl:template name="BusinessDataSecondaryFieldTypeAttributes">
+		<xsd:attribute name="BdcField" type="xsd:string">
+			<xsl:attribute name="fixed">
+				<xsl:value-of select="@BdcField"/>
+			</xsl:attribute>
+		</xsd:attribute>
+	</xsl:template>
+	<xsl:template name="MultiChoiceType">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension>
+					<xsl:call-template name="BaseType" />
+					<xsd:sequence>
+						<xsd:element name="Value" maxOccurs="unbounded">
+							<xsl:call-template name="MinOccurs" />
+							<xsl:call-template name="Nillable" />
+							<xsl:call-template name="ChoiceType" />
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsl:template>
+	<xsl:template name="ChoiceType">
+		<xsd:simpleType>
+			<xsl:choose>
+				<xsl:when test="@FillInChoice[. = 'TRUE']">
+					<xsd:union memberTypes="dms:Text">
+						 <xsd:simpleType>
+							<xsd:restriction base="dms:Choice">
+								<xsl:call-template name="Facets" />
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:union>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsd:restriction base="dms:Choice">
+						<xsl:call-template name="Facets" />
+					</xsd:restriction>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsd:simpleType>
+	</xsl:template>
+	<xsl:template name="MultiChoiceLookupType">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension>
+					<xsl:call-template name="BaseTyp

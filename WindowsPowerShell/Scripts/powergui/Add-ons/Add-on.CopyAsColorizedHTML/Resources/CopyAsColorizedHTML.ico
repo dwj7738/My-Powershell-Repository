@@ -1,0 +1,26 @@
+string>
+              <string name="viewFrame">112 86 357 18 </string>
+              <string name="bounds">138 152 156 509 </string>
+            </object>
+            <object class="IBCarbonCheckBox" id="6381">
+              <int name="controlID">10304</int>
+              <string name="title">Закладки</string>
+              <string name="viewFrame">112 108 197 18 </string>
+              <string name="bounds">160 152 178 349 </string>
+            </object>
+            <object class="IBCarbonCheckBox" id="6380">
+              <int name="controlID">10312</int>
+              <string name="title">Заметки</string>
+              <string name="viewFrame">112 130 197 18 </string>
+              <string name="bounds">182 152 200 349 </string>
+            </object>
+            <reference idRef="6377"/>
+          </array>
+          <string name="bounds">52 40 256 830 </string>
+        </object>
+      </array>
+      <string name="bounds">0 20 286 850 </string>
+    </object>
+    <object class="IBCarbonHIView" id="6370">
+      <int name="controlID">10310</int>
+  

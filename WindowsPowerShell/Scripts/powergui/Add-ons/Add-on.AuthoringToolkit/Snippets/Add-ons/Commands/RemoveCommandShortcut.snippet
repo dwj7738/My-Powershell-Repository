@@ -1,0 +1,69 @@
+
+        }
+        var $$enum_1_0 = this.$4_0.getEnumerator();
+        while ($$enum_1_0.moveNext()) {
+            var $v_0 = $$enum_1_0.get_current();
+            $v_0.$7l($p0);
+        }
+    },
+    
+    $w: function() {ULSpEN:;
+        if (this.$g_0 || this.$4X_0) {
+            return;
+        }
+        this.$g_0 = true;
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$K_0)) {
+            this.$K_0.$w();
+        }
+    },
+    
+    $4X_0: false,
+    
+    $L: function() {ULSpEN:;
+        this.$g_0 = false;
+    },
+    
+    $2O: function() {ULSpEN:;
+        if (this.$g_0) {
+            this.$L();
+        }
+    },
+    
+    $36: function($p0) {
+        this.$3v();
+        this.$N();
+        this.$g_0 = false;
+        if ($p0) {
+            if (!CUI.ScriptUtility.isNullOrUndefined(this.$4_0)) {
+                var $$enum_3_0 = this.$4_0.getEnumerator();
+                while ($$enum_3_0.moveNext()) {
+                    var $v_0 = $$enum_3_0.get_current();
+                    $v_0.$36($p0);
+                }
+            }
+        }
+    },
+    
+    $3v: function() {ULSpEN:;
+        var $v_0 = $get(this.$6_0);
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            this.set_$2($v_0);
+        }
+        else {
+            throw Error.create('Attempting to attach to Id: ' + this.$6_0 + ' but this id is not present in the DOM');
+        }
+    },
+    
+    $N: function() {
+    },
+    
+    $m: function() {ULSpEN:;
+        if (!this.$2q_0) {
+            this.$2q_0 = CUI.Utility.$3(this.get_domElementTagName());
+            this.$2q_0.className = this.get_cssClass();
+            this.$2q_0.id = this.$6_0;
+        }
+    },
+    
+    get_domElementTagName: function() {ULSpEN:;
+    

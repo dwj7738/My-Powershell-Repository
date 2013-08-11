@@ -1,0 +1,19 @@
+p="any" />
+  <xs:element name="source" substitutionGroup="any" />
+  <xs:element name="language" substitutionGroup="any" />
+  <xs:element name="relation" substitutionGroup="any" />
+  <xs:element name="coverage" substitutionGroup="any" />
+  <xs:element name="rights" substitutionGroup="any" />
+  <xs:group name="elementsGroup">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">This group is included as a convenience for schema authors who need to refer to all the elements in the http://purl.org/dc/elements/1.1/ namespace.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="any" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="elementContainer">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">This complexType is included as a convenience for schema authors who need to define a root or container element for all of the DC elements.</xs

@@ -1,0 +1,120 @@
+ first call child.Parent.RemoveChild(child)');
+        }
+        if ($p1 === -1) {
+            this.$4_0.add($p0);
+        }
+        else {
+            this.$4_0.insert($p1, $p0);
+        }
+        $p0.$K_0 = this;
+        this.$w();
+    },
+    
+    removeChild: function(id) {ULSpEN:;
+        var $v_0 = this.$AN(id);
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            throw Error.create('The child with id: ' + id + ' is not as child of this Component');
+        }
+        this.$4_0.remove($v_0);
+        $v_0.$K_0 = null;
+        this.$w();
+    },
+    
+    removeChildren: function() {ULSpEN:;
+        var $$enum_1_0 = this.$4_0.getEnumerator();
+        while ($$enum_1_0.moveNext()) {
+            var $v_0 = $$enum_1_0.get_current();
+            if ($v_0) {
+                $v_0.$K_0 = null;
+            }
+        }
+        this.$4_0.clear();
+        this.$w();
+    },
+    
+    ensureCorrectChildType: function(child) {ULSpEN:;
+        return;
+    },
+    
+    initRootMember: function(root) {ULSpEN:;
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$0_0)) {
+            throw Error.create('Root member has already been set for this Component.');
+        }
+        this.$0_0 = root;
+    },
+    
+    get_visible: function() {ULSpEN:;
+        return this.$5l_0;
+    },
+    set_visible: function(value) {ULSpEN:;
+        this.set_$64(value);
+        return value;
+    },
+    
+    get_$64: function() {ULSpEN:;
+        return this.get_visible();
+    },
+    set_$64: function($p0) {
+        var $v_0 = this.$5l_0;
+        this.$5l_0 = $p0;
+        if ($v_0 !== this.$5l_0) {
+            this.$w();
+        }
+        return $p0;
+    },
+    
+    get_enabled: function() {ULSpEN:;
+        return this.$1P_0;
+    },
+    set_enabled: function(value) {ULSpEN:;
+        if (this.$1P_0 === value && this.$5U_0) {
+            return;
+        }
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$K_0) && !this.$K_0.get_enabled() && value) {
+            throw Error.create('This Component with id: ' + this.$6_0 + ' cannot be Enabled because its parent is Disabled');
+        }
+        this.$1P_0 = value;
+        this.$5U_0 = true;
+        var $$enum_1_0 = this.$4_0.getEnumerator();
+        while ($$enum_1_0.moveNext()) {
+            var $v_0 = $$enum_1_0.get_current();
+            $v_0.set_enabled(value);
+        }
+        this.onEnabledChanged(value);
+        return value;
+    },
+    
+    onEnabledChanged: function(enabled) {
+    },
+    
+    $E4: function($p0) {
+        var $v_0 = this.$1P_0 !== $p0;
+        this.$1P_0 = $p0;
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$4_0)) {
+            var $$enum_2_0 = this.$4_0.getEnumerator();
+            while ($$enum_2_0.moveNext()) {
+                var $v_1 = $$enum_2_0.get_current();
+                $v_1.$E4($p0);
+            }
+        }
+        if ($v_0) {
+            this.onEnabledChanged($p0);
+        }
+    },
+    
+    get_title: function() {ULSpEN:;
+        return this.$1R_0;
+    },
+    set_title: function(value) {ULSpEN:;
+        this.$1R_0 = value;
+        this.$w();
+        return value;
+    },
+    
+    get_description: function() {ULSpEN:;
+        return this.$6H_0;
+    },
+    set_description: function(value) {ULSpEN:;
+        this.$6H_0 = value;
+        this.$w();
+        return value;

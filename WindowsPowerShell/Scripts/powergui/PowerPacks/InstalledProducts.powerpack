@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <items>
+    <container id="73be860f-0be3-4221-8e9f-dc9fd32e1d8d" name="Installed Products" type="Script">
+      <script><![CDATA[get-InstalledProducts | sort "ProductName"]]></script>
+      <items />
+    </container>
+  </items>
+</configuration>

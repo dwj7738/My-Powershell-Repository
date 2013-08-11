@@ -1,0 +1,129 @@
+$p0];
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            return $v_0;
+        }
+        this.$6D_0 = $p0;
+        $v_0 = this.createDOMElementForDisplayMode($p0);
+        this.$6D_0 = null;
+        if (CUI.ScriptUtility.isNullOrEmptyString($v_0.id)) {
+            $v_0.id = this.$6_0 + '-' + $p0;
+        }
+        this.storeElementForDisplayMode($v_0, $p0);
+        this.refreshDOMElements();
+        return $v_0;
+    },
+    
+    storeElementForDisplayMode: function($p0, $p1) {
+        this.$2n_0[$p1] = $p0;
+    },
+    
+    $35: function($p0) {
+        var $v_0 = $get(this.$6_0 + '-' + $p0);
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            this.storeElementForDisplayMode($v_0, $p0);
+        }
+    },
+    
+    $O: function($p0) {
+    },
+    
+    createComponentForDisplayMode: function($p0) {
+        var $v_0 = this.createComponentForDisplayModeInternal($p0);
+        Array.add(this.$k_0, $v_0);
+        return $v_0;
+    },
+    
+    get_components: function() {ULSpEN:;
+        return this.$k_0;
+    },
+    
+    createComponentForDisplayModeInternal: function($p0) {
+        var $v_0 = this.$0_0.$CH(this.$6_0 + '-' + $p0 + this.$0_0.$27(), $p0, this);
+        return $v_0;
+    },
+    
+    dispose: function() {ULSpEN:;
+        this.releaseEventHandlers();
+        this.$0_0 = null;
+        this.$k_0 = null;
+        this.$4F_0 = null;
+        var $$dict_1_0 = this.$2n_0;
+        for (var $$key_1_1 in $$dict_1_0) {
+            var $v_0 = { key: $$key_1_1, value: $$dict_1_0[$$key_1_1] };
+            delete this.$2n_0[$v_0.key];
+        }
+        this.$2n_0 = null;
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$1S_0)) {
+            this.$1S_0.dispose();
+        }
+    },
+    
+    releaseEventHandlers: function() {ULSpEN:;
+        var $$dict_1_0 = this.$2n_0;
+        for (var $$key_1_1 in $$dict_1_0) {
+            var $v_0 = { key: $$key_1_1, value: $$dict_1_0[$$key_1_1] };
+            CUI.Utility.$7d($v_0.value);
+        }
+    },
+    
+    get_id: function() {ULSpEN:;
+        return this.$6_0;
+    },
+    
+    get_root: function() {ULSpEN:;
+        return this.$0_0;
+    },
+    
+    addDisplayMode: function($p0) {
+        if (this.$4F_0.indexOf(',' + $p0 + ',') !== -1) {
+            return;
+        }
+        this.$4F_0 += $p0 + ',';
+    },
+    
+    ensureCorrectChildType: function($p0) {
+        if (!(CUI.ToolTip.isInstanceOfType($p0))) {
+            throw Error.create('Child Components may not be added to this type of ControlComponent.');
+        }
+    },
+    
+    get_displayedComponent: function() {ULSpEN:;
+        var $v_0 = this.$k_0.length;
+        for (var $v_1 = 0; $v_1 < $v_0; $v_1++) {
+            var $v_2 = this.$k_0[$v_1];
+            if ($v_2.get_visibleInDOM()) {
+                return $v_2;
+            }
+        }
+        return null;
+    },
+    
+    $1e: function($p0) {
+        return true;
+    },
+    
+    $Av: function($p0) {
+    },
+    
+    onMenuClosed: function() {
+    },
+    
+    onClick: function($p0) {
+        $p0.preventDefault();
+    },
+    
+    onDblClick: function($p0) {
+        $p0.preventDefault();
+        if (!this.get_enabled()) {
+            return;
+        }
+        if (Sys.Browser.agent === Sys.Browser.InternetExplorer) {
+            this.onClick($p0);
+        }
+    },
+    
+    onBeginFocus: function() {ULSpEN:;
+        window.clearInterval(this.$0_0.$2d_1);
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$0_0.$33_1)) {
+            if (this.$0_0.$33_1.$6_0 === this.$6_0) {
+         

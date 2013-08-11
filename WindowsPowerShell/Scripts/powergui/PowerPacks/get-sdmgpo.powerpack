@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <items>
+    <container id="94036430-c98f-4eec-9815-07cdb79bfa6a" name="Retreive GPO Information from my Domain" type="CmdLet">
+      <command id="6ec2224a-16f2-496f-bedc-41bfa7d96669" name="Get-SDMgpo">
+        <parameters>
+          <parameter id="be4e171a-76cc-4b27-9d0b-dfeaf6578b68" name="Name" value="*" />
+        </parameters>
+      </command>
+      <items />
+    </container>
+  </items>
+</configuration>

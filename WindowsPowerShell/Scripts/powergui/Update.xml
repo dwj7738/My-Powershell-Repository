@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <items>
+        <container id="3a908f4a-c672-4883-8b26-18bb3aac1638" name="version">
+            <value>3.2.0.2237</value>
+            <items>
+                <item id="7600fdf1-ca11-4145-87fa-f3bc6b49d0f2" name="update">
+                    <value>http://community-downloads.quest.com/powergui/Release/3.2/PowerGUI.3.2.0.2237.msi</value>
+                </item>
+            </items>
+        </container>
+    </items>
+</configuration>

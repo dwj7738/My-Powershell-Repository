@@ -1,0 +1,1 @@
+This file causes Snipman to create a new settings file. It should be deleted automatically on first run.

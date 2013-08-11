@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Redirections>
+
+<!--
+    <Lockdown>c:\lockdown.xml</Lockdown>
+-->
+
+<!--
+    <PowerPackFolders>
+        <Folder>\\compname\share\PowerPacks</Folder>
+        <Folder>c:\PowerPacks</Folder>
+    </PowerPackFolders>
+-->
+
+<!--
+    <WelcomePagePath>c:\MyWelcomePage.mht</WelcomePagePath>
+-->
+
+</Redirections>

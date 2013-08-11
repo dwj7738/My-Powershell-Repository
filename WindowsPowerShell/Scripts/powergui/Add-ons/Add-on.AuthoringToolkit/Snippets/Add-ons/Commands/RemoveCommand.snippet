@@ -1,0 +1,48 @@
+ull,
+    $5J_0: null,
+    
+    $7k: function($p0, $p1, $p2) {
+        this.$3U_0 = $p0;
+        this.$5I_0 = $p1;
+        this.$5J_0 = $p2;
+    },
+    
+    $6G_0: false,
+    
+    doDelayedInit: function() {ULSpEN:;
+        if (this.$6G_0) {
+            return;
+        }
+        if (CUI.ScriptUtility.isNullOrUndefined(this.$3U_0)) {
+            throw Error.create('No delayedinit handler present in this component: ' + this.$6_0);
+        }
+        this.$6G_0 = true;
+        this.$3U_0(this, this.$5I_0, this.$5J_0);
+    },
+    
+    $4v: function($p0) {
+        if ($p0) {
+            this.$3U_0 = null;
+            this.$5I_0 = null;
+            this.$5J_0 = null;
+            this.$w();
+        }
+        this.$6G_0 = false;
+    },
+    
+    get_needsDelayIniting: function() {ULSpEN:;
+        return !CUI.ScriptUtility.isNullOrUndefined(this.$3U_0);
+    },
+    
+    $2P: function() {ULSpEN:;
+        var $$enum_1_0 = this.$4_0.getEnumerator();
+        while ($$enum_1_0.moveNext()) {
+            var $v_0 = $$enum_1_0.get_current();
+            $v_0.$2P();
+        }
+    },
+    
+    $4Z_0: null,
+    
+    get_$40: function() {ULSpEN:;
+        if (CUI.ScriptUtility.isNullOrUndefi

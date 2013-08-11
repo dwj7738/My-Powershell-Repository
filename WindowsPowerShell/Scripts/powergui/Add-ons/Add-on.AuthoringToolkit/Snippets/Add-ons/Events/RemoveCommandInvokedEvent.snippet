@@ -1,0 +1,33 @@
+name = 'contentStatus')">
+					<xsl:attribute name="ma:index" namespace="{$maNSUri}">
+						<xsl:value-of select="count($ct-field/preceding-sibling::Field)" />
+					</xsl:attribute>
+				</xsl:if>
+				<!-- add "ma:displayName" attribute -->
+				<xsl:if test="$ct-field/@DisplayName">
+					<xsl:attribute name="ma:displayName" namespace="{$maNSUri}">
+						<xsl:value-of select="$ct-field/@DisplayName" />
+					</xsl:attribute>
+				</xsl:if>
+				<!-- add "ma:readOnly" attribute -->
+				<xsl:if test="$ct-field/@ReadOnly = 'TRUE'">
+					<xsl:attribute name="ma:readOnly" namespace="{$maNSUri}">true</xsl:attribute>
+				</xsl:if>
+				<!-- insert minLength restriction for xsd:string -->
+				<xsl:if test="$ct-field/@Required = 'TRUE' and @type = 'xsd:string'">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1" />
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsl:if>
+			</xsl:copy>
+		</xsl:if>
+	</xsl:template>
+	<!-- InfoPath partner controls schema -->
+	<xsl:template name="PartnerControls">
+		<xsl:apply-templates select="$partner-xsd/xs:schema" mode="partner-xsd" />
+	</xsl:template>
+	<xsl:template match="/xs:schema | @* | node()" mode="partner-xsd">
+		<xsl:copy>
+			<xsl:apply-templates select="@* | node()" mode="partner-xsd" 

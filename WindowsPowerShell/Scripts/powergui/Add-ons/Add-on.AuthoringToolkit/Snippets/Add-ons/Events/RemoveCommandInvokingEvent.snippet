@@ -1,0 +1,20 @@
+xsl:when test="@Type = 'MultiChoice' and @FillInChoice = 'TRUE'">dms:MultiChoiceFillIn</xsl:when>
+				<xsl:when test="@Type = 'MultiChoice'">dms:MultiChoice</xsl:when>
+				<xsl:when test="@Type = 'Note'">dms:Note</xsl:when>
+				<xsl:when test="(@Type = 'Number') or (@Type = 'AverageRating') or (@Type = 'RatingCount')">dms:Number</xsl:when>
+				<xsl:when test="@Type = 'Text'">dms:Text</xsl:when>
+				<xsl:when test="@Type = 'URL'">dms:URL</xsl:when>
+				<xsl:when test="@Type = 'User'">dms:User</xsl:when>
+				<xsl:when test="@Type = 'UserMulti'">dms:UserMulti</xsl:when>
+				<!--Starts Business Data Type Checks-->
+				<xsl:when test="@Type = 'BusinessData'">dms:BusinessDataPrimaryField</xsl:when>
+				<!--End Business Data Type Checks-->
+				<xsl:otherwise>
+					<xsl:choose>
+						<!-- check BaseRenderingType -->
+						<xsl:when test="@BaseRenderingType = 'Boolean'">dms:Boolean</xsl:when>
+						<xsl:when test="@BaseRenderingType = 'Choice' and @FillInChoice = 'TRUE'">dms:FillInChoice</xsl:when>
+						<xsl:when test="@BaseRenderingType = 'Choice'">dms:Choice</xsl:when>
+						<xsl:when test="@BaseRenderingType = 'Currency'">dms:Currency</xsl:when>
+						<xsl:when test="@BaseRenderingType = 'DateTime'">dms:DateTime</xsl:when>
+						<xsl:when test="@BaseRenderingType = 'LookupMulti'">dms:Mul

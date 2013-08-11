@@ -1,0 +1,173 @@
+
+    $6B_1: null,
+    
+    get_id: function() {ULSpEN:;
+        return this.$6_1;
+    },
+    
+    get_parameters: function() {ULSpEN:;
+        return this.$2z_1;
+    },
+    
+    get_sequenceNumber: function() {ULSpEN:;
+        return this.$6s_1;
+    },
+    set_sequenceNumber: function($p0) {
+        this.$6s_1 = $p0;
+        return $p0;
+    },
+    
+    get_source: function() {ULSpEN:;
+        return this.$31_1;
+    },
+    
+    get_sourceControl: function() {ULSpEN:;
+        if (!CUI.ScriptUtility.isNullOrUndefined(this.$31_1) && CUI.ControlComponent.isInstanceOfType(this.$31_1)) {
+            return (this.$31_1).$M_1;
+        }
+        return null;
+    },
+    
+    get_type: function() {ULSpEN:;
+        return this.$G_1;
+    },
+    
+    get_properties: function() {ULSpEN:;
+        return this.$2z_1;
+    },
+    
+    get_commandInfo: function() {ULSpEN:;
+        if (CUI.ScriptUtility.isNullOrUndefined(this.$6B_1)) {
+            this.$6B_1 = new CUI.CommandInformation();
+        }
+        return this.$6B_1;
+    }
+}
+
+
+CUI.Component = function(root, id, title, description) {ULSpEN:;
+    this._componentWidth = -1;
+    this._componentHeight = -1;
+    this._componentTopPosition = -1;
+    this._componentLeftPosition = -1;
+    this.$6_0 = id;
+    this.$0_0 = root;
+    this.$1R_0 = title;
+    this.$6H_0 = description;
+    this.createChildArray();
+}
+CUI.Component.prototype = {
+    $6_0: null,
+    $2q_0: null,
+    $K_0: null,
+    $0_0: null,
+    $4_0: null,
+    $g_0: true,
+    $5l_0: true,
+    $1P_0: true,
+    $5U_0: false,
+    $6H_0: null,
+    $1R_0: null,
+    
+    createChildArray: function() {ULSpEN:;
+        this.$7D();
+    },
+    
+    $7D: function() {ULSpEN:;
+        if (CUI.ScriptUtility.isNullOrUndefined(this.$4_0)) {
+            this.$4_0 = new CUI.List();
+        }
+    },
+    
+    get_id: function() {ULSpEN:;
+        return this.$6_0;
+    },
+    set_id: function(value) {ULSpEN:;
+        this.$6_0 = value;
+        return value;
+    },
+    
+    get_$2: function() {ULSpEN:;
+        return this.$2q_0;
+    },
+    set_$2: function($p0) {
+        this.$2q_0 = $p0;
+        return $p0;
+    },
+    
+    get_root: function() {ULSpEN:;
+        return this.$0_0;
+    },
+    
+    get_parent: function() {ULSpEN:;
+        return this.$K_0;
+    },
+    set_parent: function(value) {ULSpEN:;
+        this.$K_0 = value;
+        return value;
+    },
+    
+    $x: function() {
+    },
+    
+    $2j: function() {ULSpEN:;
+        return false;
+    },
+    
+    $2i: function() {ULSpEN:;
+        return false;
+    },
+    
+    $1p: function() {
+    },
+    
+    $3x: function() {
+    },
+    
+    $5n: function($p0) {
+        return false;
+    },
+    
+    $AN: function($p0) {
+        var $$enum_1_0 = this.$4_0.getEnumerator();
+        while ($$enum_1_0.moveNext()) {
+            var $v_0 = $$enum_1_0.get_current();
+            if ($v_0.$6_0 === $p0) {
+                return $v_0;
+            }
+        }
+        return null;
+    },
+    
+    getChild: function(id) {ULSpEN:;
+        return this.$AN(id);
+    },
+    
+    getChildByTitle: function(title) {ULSpEN:;
+        var $$enum_1_0 = this.$4_0.getEnumerator();
+        while ($$enum_1_0.moveNext()) {
+            var $v_0 = $$enum_1_0.get_current();
+            if ($v_0.get_title() === title) {
+                return $v_0;
+            }
+        }
+        return null;
+    },
+    
+    addChild: function(child) {ULSpEN:;
+        this.$34(child, true);
+    },
+    
+    $34: function($p0, $p1) {
+        this.$9p($p0, -1, $p1);
+    },
+    
+    addChildAtIndex: function(child, index) {ULSpEN:;
+        this.$9p(child, index, true);
+    },
+    
+    $9p: function($p0, $p1, $p2) {
+        if ($p2) {
+            this.ensureCorrectChildType($p0);
+        }
+        if 

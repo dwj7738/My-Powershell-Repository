@@ -1,0 +1,113 @@
+r $v_A = 0;
+    $v_5.alt = '';
+    if (CUI.ScriptUtility.isNullOrEmptyString($p14)) {
+        $v_2.title = $p13;
+        $v_3.title = $p13;
+        $v_5.alt = $p13;
+        $v_0 = false;
+    }
+    if ($p2 === 'Large' || $p2 === 'Menu32') {
+        $v_6 = $p4;
+        $v_7 = $p5;
+        $v_8 = $p6;
+        $v_9 = $p7;
+        $v_A = 4;
+    }
+    else {
+        $v_6 = $p8;
+        $v_7 = $p9;
+        $v_8 = $p10;
+        $v_9 = $p11;
+        $v_A = 3;
+    }
+    var $v_B = CUI.Utility.$j(2, $v_A, $v_6, $v_7, $v_5, true, false, $v_8, $v_9);
+    var $v_C = null;
+    var $v_D = null;
+    if ($v_0) {
+        $v_C = CUI.Utility.$2h($p13);
+        $v_D = CUI.Utility.$2h($p13);
+    }
+    var $v_E = null;
+    if ($p2 !== 'Small' || $p15) {
+        $v_E = CUI.Utility.$3('span');
+        if ($p2 !== 'Small') {
+            if ($p2 === 'Large') {
+                CUI.Utility.ensureCSSClassOnElement($v_E, 'ms-cui-ctl-largelabel');
+                $v_E.innerHTML = CUI.Utility.$AH($p12, $p15);
+            }
+            else if ($p2 === 'Medium') {
+                CUI.Utility.ensureCSSClassOnElement($v_E, 'ms-cui-ctl-mediumlabel');
+                CUI.UIUtility.setInnerText($v_E, $p12);
+            }
+        }
+    }
+    var $v_F = null;
+    if ($p15) {
+        var $v_G = CUI.Utility.$3('img');
+        if (CUI.ScriptUtility.isNullOrEmptyString($p14)) {
+            $v_G.alt = $p13;
+        }
+        $v_F = CUI.Utility.$j(2, 1, $p1.$5_1.ImageDownArrow, $p1.$5_1.ImageDownArrowClass, $v_G, true, false, $p1.$5_1.ImageDownArrowTop, $p1.$5_1.ImageDownArrowLeft);
+    }
+    $v_1.appendChild($v_2);
+    $v_1.appendChild($v_3);
+    $v_2.appendChild($v_4);
+    $v_4.appendChild($v_B);
+    if (!CUI.ScriptUtility.isNullOrUndefined($v_E)) {
+        if ($p2 === 'Large') {
+            $v_3.appendChild($v_E);
+            if ($v_0) {
+                $v_2.appendChild($v_C);
+            }
+        }
+        else {
+            $v_4.appendChild($v_E);
+            if ($v_0) {
+                $v_3.appendChild($v_D);
+            }
+        }
+        if ($p2 === 'Small' && $v_0) {
+            $v_2.appendChild($v_C);
+        }
+    }
+    if (!CUI.ScriptUtility.isNullOrUndefined($v_F)) {
+        if ($p2 === 'Large') {
+            $v_E.appendChild($v_F);
+        }
+        else {
+            $v_3.appendChild($v_F);
+        }
+    }
+    return $v_1;
+}
+CUI.Control.prototype = {
+    $0_0: null,
+    $6_0: null,
+    $k_0: null,
+    $5_0: null,
+    $4F_0: null,
+    $2n_0: null,
+    $1S_0: null,
+    $5j_0: false,
+    $70_0: null,
+    $6z_0: null,
+    $1P_0: false,
+    $5U_0: false,
+    
+    get_controlProperties: function() {ULSpEN:;
+        return this.$5_0;
+    },
+    
+    $6w_0: null,
+    
+    get_stateProperties: function() {ULSpEN:;
+        if (CUI.ScriptUtility.isNullOrUndefined(this.$6w_0)) {
+            this.$6w_0 = {};
+        }
+        return this.$6w_0;
+    },
+    
+    $6C_0: null,
+    
+    get_commandProperties: function() {ULSpEN:;
+        if (CUI

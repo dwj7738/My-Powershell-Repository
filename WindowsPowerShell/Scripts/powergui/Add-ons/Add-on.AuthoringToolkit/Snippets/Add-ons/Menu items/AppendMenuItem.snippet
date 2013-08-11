@@ -1,0 +1,79 @@
+ceID = preceding-sibling::Field/@SourceID)]) + 1" />
+				<xsl:attribute name="ref">
+					<xsl:text>ns</xsl:text>
+					<xsl:value-of select="$nsIndex" />
+					<xsl:text>:</xsl:text>
+					<xsl:value-of select="@StaticName" />
+				</xsl:attribute>
+				<xsl:call-template name="MinOccurs" />
+			</xsl:element>
+		</xsl:for-each>
+	</xsl:template>
+	<!-- element definition xsd:schema nodes -->
+	<xsl:template name="ElementDefinitions">
+		<!-- iterate over unique IDs -->
+		<xsl:for-each select="$namespaces">	
+			<xsl:variable name="nsFields" select="$fields[@SourceID = current()]" />
+			<xsl:variable name="namespace">
+				<xsl:call-template name="RemoveBraces">
+					<xsl:with-param name="strNS" select="." />
+				</xsl:call-template>
+			</xsl:variable>
+			<xsl:if test="$nsFields">
+				<xsd:schema
+					xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+					xmlns:dms="http://schemas.microsoft.com/office/2006/documentManagement/types"
+					xmlns:pc="http://schemas.microsoft.com/office/infopath/2007/PartnerControls"
+					xmlns:ma="http://schemas.microsoft.com/office/2006/metadata/properties/metaAttributes"
+					targetNamespace="{$namespace}"
+					elementFormDefault="qualified">
+					<!-- import wss base types schema -->
+					<xsd:import namespace="{$wssNSUri}" />
+					<!-- import partner controls schema -->
+					<xsd:import namespace="{$partnerNSUri}" />
+					<xsl:apply-templates select="$nsFields" />
+				</xsd:schema>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:template>
+	<!-- removes surrounding braces from string -->
+	<xsl:template name="RemoveBraces">
+		<xsl:param name="strNS" />
+		<xsl:variable name="cchNS" select="string-length($strNS)" />
+		<xsl:choose>
+			<xsl:when test="starts-with($strNS, '{') and substring($strNS, $cchNS) = '}'">
+				<xsl:value-of select="substring($strNS, 2, $cchNS - 2)" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$strNS" />
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	<xsl:template match="Field">
+		<xsl:element name="xsd:element">
+			<xsl:attribute name="name">
+				<xsl:value-of select="@StaticName" />
+			</xsl:attribute>
+			<xsl:attribute name="ma:index" namespace="{$maNSUri}">
+				<xsl:value-of select="count(preceding-sibling::Field)" />
+			</xsl:attribute>
+			<!-- Do a case-insensitive comparison of the GUID identifying this field with the TextField attribute of a taxonomy field to see if this field is used to store taxonomy data -->
+			<xsl:variable name="taxonomyField" select="/ContentType/Fields/Field[translate(Customization/ArrayOfProperty/Property[Name='TextField']/Value, $uppercase, $lowercase) = translate(current()/@ID, $uppercase, $lowercase)]" />
+			<xsl:call-template name="Nillable">
+				<xsl:with-param name="taxonomyField" select="$taxonomyField" />
+			</xsl:call-template>
+			<xsl:call-template name="MetaAttributes">
+				<xsl:with-param name="taxonomyField" select="$taxonomyField" />
+			</xsl:call-template>
+			<xsl:call-template name="Content">
+				<xsl:with-param name="taxonomyField" select="$taxonomyField" />
+			</xsl:call-template>
+		</xsl:element>
+	</xsl:template>
+	<xsl:template name="Content">
+		<xsl:param name="taxonomyField" />
+		<xsl:choose>
+			<xsl:when test="@Type[. = 'MultiChoice']">
+				<xsl:call-template name="MultiChoiceType" />
+			</xsl:when>
+			<xsl:when test="@Type[. 

@@ -1,0 +1,28 @@
+		<!-- dummy attributes to produce "xmlns" output -->
+			<xsl:attribute name="ct:_" namespace="{$ctNSUri}" />
+			<xsl:attribute name="ma:_" namespace="{$maNSUri}" />
+			<!-- add contentTypeName attribute -->
+			<xsl:attribute name="ma:contentTypeName" namespace="{$maNSUri}">
+				<xsl:value-of select="/ContentType/@Name" />
+			</xsl:attribute>
+			<!-- add contentTypeID attribute -->
+			<xsl:attribute name="ma:contentTypeID" namespace="{$maNSUri}">
+				<xsl:value-of select="/ContentType/@ID" />
+			</xsl:attribute>
+			<!-- add contentTypeVersion attribute -->
+			<xsl:attribute name="ma:contentTypeVersion" namespace="{$maNSUri}">
+				<xsl:value-of select="/ContentType/@Version" />
+			</xsl:attribute>
+			<!-- add contentTypeDescription attribute -->
+			<xsl:attribute name="ma:contentTypeDescription" namespace="{$maNSUri}">
+				<xsl:value-of select="/ContentType/@Description" />
+			</xsl:attribute>
+      <!-- add contentTypeScope attribute -->
+      <xsl:attribute name="ma:contentTypeScope" namespace="{$maNSUri}">
+        <xsl:value-of select="/ContentType/@Scope" />
+      </xsl:attribute>
+      <!-- add versionID attribute -->
+			<xsl:attribute name="ma:versionID" namespace="{$maNSUri}">
+				<xsl:value-of select="$versionID" />
+			</xsl:attribute>
+			<!-

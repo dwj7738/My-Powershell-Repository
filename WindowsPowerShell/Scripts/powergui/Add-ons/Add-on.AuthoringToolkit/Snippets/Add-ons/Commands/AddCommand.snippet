@@ -1,0 +1,73 @@
+v_D = CUI.Utility.$2h($p14);
+    }
+    if ($p2 !== 'Small' || $p18) {
+        $v_C = CUI.Utility.$3('span');
+        if ($p2 !== 'Small') {
+            if ($p2 === 'Large') {
+                CUI.Utility.ensureCSSClassOnElement($v_C, 'ms-cui-ctl-largelabel');
+                $v_C.innerHTML = CUI.Utility.$AH($p12, $p18);
+            }
+            else {
+                var $v_I = $p12;
+                if ($p18) {
+                    $v_I = $v_I + ' ';
+                }
+                CUI.Utility.ensureCSSClassOnElement($v_C, 'ms-cui-ctl-mediumlabel');
+                CUI.UIUtility.setInnerText($v_C, $v_I);
+            }
+            if (!CUI.ScriptUtility.isNullOrEmptyString($p13)) {
+                $v_C.style.cssText = $p13;
+            }
+        }
+        else {
+            CUI.Utility.ensureCSSClassOnElement($v_C, 'ms-cui-ctl-smalllabel');
+            CUI.UIUtility.setInnerText($v_C, ' ');
+        }
+    }
+    else if ($v_1) {
+        $v_C = CUI.Utility.$2h($p14);
+    }
+    var $v_E = null;
+    if ($p18) {
+        var $v_J = CUI.Utility.$3('img');
+        $v_J.alt = '';
+        if (CUI.ScriptUtility.isNullOrEmptyString($p16)) {
+            $v_J.alt = $p14;
+        }
+        $v_E = CUI.Utility.$j(2, 1, $p1.$5_1.ImageDownArrow, $p1.$5_1.ImageDownArrowClass, $v_J, true, false, $p1.$5_1.ImageDownArrowTop, $p1.$5_1.ImageDownArrowLeft);
+    }
+    var $v_F = null;
+    var $v_G = null;
+    var $v_H = null;
+    if ($p2 === 'Menu32') {
+        $v_F = CUI.Utility.$3('span');
+        $v_F.className = 'ms-cui-ctl-menulabel';
+        CUI.Utility.ensureCSSClassOnElement($v_C, 'ms-cui-btn-title');
+        $v_F.appendChild($v_C);
+        if (!CUI.ScriptUtility.isNullOrUndefined($p15)) {
+            $v_G = CUI.Utility.$3('span');
+            CUI.Utility.ensureCSSClassOnElement($v_G, 'ms-cui-btn-menu-description');
+            CUI.Utility.$2k($v_G, $p15);
+            $v_G.style.display = 'block';
+            $v_F.appendChild($v_G);
+        }
+        $v_H = CUI.Utility.$3('span');
+        $v_H.className = 'ms-cui-ctl-menu32clear';
+        $v_H.innerHTML = '&nbsp;';
+    }
+    $v_2.appendChild($v_B);
+    if (!CUI.ScriptUtility.isNullOrUndefined($v_C)) {
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_F)) {
+            $v_2.appendChild($v_F);
+            $v_2.appendChild($v_H);
+        }
+        else {
+            $v_2.appendChild($v_C);
+            if ($p2 === 'Small' && $p18 && $v_1) {
+                $v_2.appendChild($v_D);
+            }
+        }
+        if (!CUI.ScriptUtility.isNullOrUndefined($v_E)) {
+            $v_C.appendChild($v_E);
+        }
+    }

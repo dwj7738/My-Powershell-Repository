@@ -1,0 +1,29 @@
+function ULSpEN(){var o=new Object;o.ULSTeamName="Windows SharePoint Services 4";o.ULSFileName="CUI.debug.js";return o;}
+if (typeof(IEnumerator) == "undefined") {
+  var IEnumerator = function() {};
+  IEnumerator.prototype = {get_current: null, moveNext: null, reset: null};
+  IEnumerator.registerInterface("IEnumerator");
+}
+
+if (typeof(IEnumerable) == "undefined") {
+  var IEnumerable = function() {};
+  IEnumerable.prototype = {getEnumerator: null};
+  IEnumerable.registerInterface("IEnumerable");
+}
+
+Type.registerNamespace('CUI');
+Type.registerNamespace('CUI.Page');
+if (typeof(CUI.Page.PageComponent) == "undefined")
+{
+  CUI.Page.ICommandHandler=function(){};
+  CUI.Page.ICommandHandler.registerInterface('CUI.Page.ICommandHandler');
+  CUI.Page.PageComponent=function(){};
+  CUI.Page.PageComponent.prototype={init:function(){},getGlobalCommands:function(){ULSpEN:;return null;},getFocusedCommands:function(){ULSpEN:;return null;},handleCommand:function(commandId,properties,sequence){ULSpEN:;return false;},canHandleCommand:function(commandId){ULSpEN:;return false;},isFocusable:function(){ULSpEN:;return false;},receiveFocus:function(){ULSpEN:;return false;},yieldFocus:function(){ULSpEN:;return true;},getId:function(){ULSpEN:;return'PageComponent';}};
+  CUI.Page.PageComponent.registerClass('CUI.Page.PageComponent',null,CUI.Page.ICommandHandler);
+}
+
+
+Type.registerNamespace('CUI');
+
+CUI.IRootBuildClient = function() {}
+CUI.IRootBuildClient.regist

@@ -1,0 +1,1111 @@
+terpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.RestrictionType.Item">
+      <summary>
+                    Gets or sets the substituted element within a restriction.
+                </summary>
+      <returns>
+                    An object that represents the substituted element.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchExpressionType">
+      <summary>
+                    Defines the core behavior for classes that represent the substituted element within a restriction, and provides a base for derived classes.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchExpressionType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchExpressionType" /> class.
+                </summary>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchFolderTraversalType">
+      <summary>
+                    Identifies the options for searching a folder hierarchy.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchFolderTraversalType.Shallow">
+      <summary>
+                    A shallow search is used to traverse the folder hierarchy. That is, only the identified folder is searched.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchFolderTraversalType.Deep">
+      <summary>
+                    A deep search is used to traverse the folder hierarchy. That is, all subfolders of the identified folder are searched.
+                </summary>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchFolderType">
+      <summary>
+                    Represents a search folder that is contained in a mailbox.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchFolderType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchFolderType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchFolderType.SearchParameters">
+      <summary>
+                    Gets or sets the parameters that define a search folder.
+                </summary>
+      <returns>
+                    An object that represents the parameters that define a search folder.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchParametersType">
+      <summary>
+                    Represents the parameters that define a search folder.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchParametersType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchParametersType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchParametersType.BaseFolderIds">
+      <summary>
+                    Gets or sets the collection of folders that will be mined to determine the contents of a search folder.
+                </summary>
+      <returns>
+                    The collection of folders that will be mined.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchParametersType.Restriction">
+      <summary>
+                    Gets or sets the restriction or query that is used to filter items or folders in FindItem, FindFolder, and other search folder operations.
+                </summary>
+      <returns>
+                    An object that represents the restriction.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchParametersType.Traversal">
+      <summary>
+                    Gets or sets a value that describes how a search folder traverses the folder hierarchy.
+                </summary>
+      <returns>
+                    An enumeration value that describes how a search folder traverses the folder hierarchy.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchParametersType.TraversalSpecified">
+      <summary>
+                    Gets or sets a value that specifies whether the <see cref="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SearchParametersType.TraversalSpecified" /> property is serialized into the SOAP request.
+                </summary>
+      <returns>true if the property is serialized into the SOAP request; otherwise, false.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendItemResponseType">
+      <summary>
+                    Defines a response to a SendItem request.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendItemResponseType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendItemResponseType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendItemType">
+      <summary>
+                    Reresents the root element in a request to send an item in the Exchange store.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendItemType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendItemType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendItemType.ItemIds">
+      <summary>
+                    Gets or sets the unique identities of items, occurrence items, and recurring master items that are used to delete, send, get, move, or copy items in the Exchange store.
+                </summary>
+      <returns>
+                    A collection that contains the unique identities.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendItemType.SavedItemFolderId">
+      <summary>
+                    Gets or sets the target folder for operations that update, send, and create items in the Exchange store.
+                </summary>
+      <returns>
+                    An object that represents the target folder.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendItemType.SaveItemToFolder">
+      <summary>
+                    Gets or sets a value that indicates whether a copy of the sent item is saved.
+                </summary>
+      <returns>true if a copy of the sent item is saved; otherwise, false.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendNotificationResponseMessageType">
+      <summary>
+                    Contains the status and result of a single SendNotification request.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendNotificationResponseMessageType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendNotificationResponseMessageType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SendNotificationResponseMessageType.Notification">
+      <summary>
+                    Gets or sets information about the subscription and the events that have occurred since the last notification.
+                </summary>
+      <returns>
+                    An object that represents information about the subscription and the events.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SensitivityChoicesType">
+      <summary>
+                    Specifies the sensitivity level types that are available for an item.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SensitivityChoicesType.Normal">
+      <summary>
+                    The item is normal.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SensitivityChoicesType.Personal">
+      <summary>
+                    The item is personal.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SensitivityChoicesType.Private">
+      <summary>
+                    The item is private.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SensitivityChoicesType.Confidential">
+      <summary>
+                    The item is confidential.
+                </summary>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SerializedSecurityContextType">
+      <summary>
+                    Represents a class that is used in the SOAP header for token serialization in server-to-server authentication. 
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SerializedSecurityContextType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SerializedSecurityContextType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SerializedSecurityContextType.GroupSids">
+      <summary>
+                    Gets or sets a collection of group object security identifiers for the Active Directory directory service.
+                </summary>
+      <returns>
+                    A collection of group object security identifiers.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SerializedSecurityContextType.PrimarySmtpAddress">
+      <summary>
+                    Gets or sets the primary Simple Mail Transfer Protocol (SMTP) address of an account to be used for server-to-server authorization.
+                </summary>
+      <returns>
+                    The SMTP address of the account.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SerializedSecurityContextType.RestrictedGroupSids">
+      <summary>
+                    Gets or sets the group security identifier and attributes for a restricted group.
+                </summary>
+      <returns>
+                    The collection of group security identifiers and attributes.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SerializedSecurityContextType.UserSid">
+      <summary>
+                    Gets or sets the security descriptor definition language (SDDL) form of the user security identifier in a serialized security context SOAP header.
+                </summary>
+      <returns>
+                    The SDDL form of the user security identifier.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo">
+      <summary>
+                    Represents the Exchange Server 2007 version number.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MajorBuildNumber">
+      <summary>
+                    Gets or sets a description of the major build number for the Exchange Server.
+                </summary>
+      <returns>
+                    The major build number.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MajorBuildNumberSpecified">
+      <summary>
+                    Gets or sets a value that specifies whether the <see cref="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MajorBuildNumber" /> property is serialized in the Exchange Web Services response message.
+                </summary>
+      <returns>true if the property is serialized in the response; otherwise, false.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MajorVersion">
+      <summary>
+                    Gets or sets a description of the major version number for the Exchange Server.
+                </summary>
+      <returns>
+                    The major version number.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MajorVersionSpecified">
+      <summary>
+                    Gets or sets a value that specifies whether the <see cref="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MajorVersion" /> property is serialized in the Exchange Web Services response message.
+                </summary>
+      <returns>true if the property is serialized in the response; otherwise, false.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MinorBuildNumber">
+      <summary>
+                    Gets or sets a description of the minor build number for Exchange Server 2007.
+                </summary>
+      <returns>
+                    The minor build number.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MinorBuildNumberSpecified">
+      <summary>
+                    Gets or sets a value that specifies whether the <see cref="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MinorBuildNumber" /> property is serialized in the Exchange Web Services response message.
+                </summary>
+      <returns>true if the property is serialized in the response; otherwise, false.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MinorVersion">
+      <summary>
+                    Gets or sets a description of the minor version number for Exchange Server 2007.
+                </summary>
+      <returns>
+                    The minor version number.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MinorVersionSpecified">
+      <summary>
+                    Gets or sets a value that specifies whether the <see cref="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.ServerVersionInfo.MinorVersion" /> property is serialized in the Exchange Web Services response message.
+                </summary>
+      <returns>true if the property is serialized in the response; otherwise, false.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SidAndAttributesType">
+      <summary>
+                    Represents a single security identifier and attribute for an Active Directory directory service object group of which the account is a member.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SidAndAttributesType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SidAndAttributesType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SidAndAttributesType.Attributes">
+      <summary>
+                    Gets or sets the group attributes for an Active Directory directory service object group of which the account is a member.
+                </summary>
+      <returns>
+                    The group attributes.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SidAndAttributesType.SecurityIdentifier">
+      <summary>
+                    Gets or sets the security descriptor definition language (SDDL) form of a security identifier (SID) that represents the group.
+                </summary>
+      <returns>
+                    The SDDL form of the SID that represents the group.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SingleRecipientType">
+      <summary>
+                    Identifies the sender of an item in the Exchange store. 
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SingleRecipientType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SingleRecipientType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SingleRecipientType.Item">
+      <summary>
+                    Gets or sets a mail-enabled Active Directory object that identifies the sender.
+                </summary>
+      <returns>
+                    The Active Directory object that identifies the sender.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SmartResponseBaseType">
+      <summary>
+                    Defines the behavior of classes that represent a response to an item in the Exchange store, and provides a base for derived classes.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SmartResponseBaseType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SmartResponseBaseType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SmartResponseType">
+      <summary>
+                    Defines the behavior of classes that represent a response to an item in the Exchange store, and provides a base for derived classes.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SmartResponseType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SmartResponseType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SmartResponseType.NewBodyContent">
+      <summary>
+                    Gets or sets the new body content of a message.
+                </summary>
+      <returns>
+                    An object that represents the new body content of a message.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SortDirectionType">
+      <summary>
+                    Identifies the ordering options for the groups in the grouped item array that is returned in the response.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SortDirectionType.Ascending">
+      <summary>
+                    The groups are returned in ascending order.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SortDirectionType.Descending">
+      <summary>
+                    The groups are returned in descending order.
+                </summary>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeResponseMessageType">
+      <summary>
+                    Contains the status and result of a single Subscribe request.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeResponseMessageType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeResponseMessageType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeResponseMessageType.SubscriptionId">
+      <summary>
+                    Gets or sets the identifier for a subscription.
+                </summary>
+      <returns>
+                    A GUID that identifies the subscription.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeResponseMessageType.Watermark">
+      <summary>
+                    Gets or sets an event bookmark in the mailbox event queue.
+                </summary>
+      <returns>
+                    The event bookmark in the mailbox event queue.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeResponseType">
+      <summary>
+                    Defines a response to a Subscribe request.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeResponseType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeResponseType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeType">
+      <summary>
+                    Contains the properties used to create subscriptions.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.SubscribeType.Item">
+      <summary>
+                    Gets or sets a subscription to an event notification.
+                </summary>
+      <returns>
+                    An object that represents an event notification subscription.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.TargetFolderIdType">
+      <summary>
+                    Represents a target folder for operations that create, save, copy, move, or synchronize items or folders.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.TargetFolderIdType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.TargetFolderIdType" /> class.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.TargetFolderIdType.Item">
+      <summary>
+                    Gets or sets the identifier of the target folder.
+                </summary>
+      <returns>
+                    An object that represents the identifier.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.TwoOperandExpressionType">
+      <summary>
+                    Defines the core behavior for classes that represent the substituted element within a restriction, and provides a base for derived classes.
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="M:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.TwoOperandExpressionType.#ctor">
+      <summary>
+                    Initializes a new instance of the <see cref="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.TwoOperandExpressionType" /> class.
+                </summary>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.TwoOperandExpressionType.FieldURIOrConstant">
+      <summary>
+                    Gets or sets either a property or a constant value to compare with another property.
+                </summary>
+      <returns>
+                    An object that represents the value to be used in the comparison with another property.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="P:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.TwoOperandExpressionType.Item">
+      <summary>
+                    Gets or sets a Uniform Resource Identifier (URI) to a property that is used in the comparison.
+                </summary>
+      <returns>
+                    An object that represents the URI to the property.
+                </returns>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="T:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType">
+      <summary>
+                    Identifies frequently referenced, unindexed properties by Uniform Resource Identifier (URI).
+                </summary>
+      <filterpriority>3</filterpriority>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.folderFolderId">
+      <summary>
+                    The FolderId property for a folder.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.folderParentFolderId">
+      <summary>
+                    The ParentFolderId property for a folder.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.folderDisplayName">
+      <summary>
+                    The DisplayName property for a folder.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.folderUnreadCount">
+      <summary>
+                    The UnreadCount property for a folder.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.folderTotalCount">
+      <summary>
+                    The TotalCount property for a folder.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.folderChildFolderCount">
+      <summary>
+                    The ChildFolderCount property for a folder.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.folderFolderClass">
+      <summary>
+                    The FolderClass property for a folder.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.folderSearchParameters">
+      <summary>
+                    The SearchParameters property for a folder.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.folderManagedFolderInformation">
+      <summary>
+                    The ManagedFolderInformation property for a folder.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemItemId">
+      <summary>
+                    The ItemId property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemParentFolderId">
+      <summary>
+                    The ParentFolderId property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemItemClass">
+      <summary>
+                    The ItemClass property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemMimeContent">
+      <summary>
+                    The MimeContent property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemAttachments">
+      <summary>
+                    The Attachments property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemSubject">
+      <summary>
+                    The Subject property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemDateTimeReceived">
+      <summary>
+                    The DateTimeReceived property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemSize">
+      <summary>
+                    The Size property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemCategories">
+      <summary>
+                    The Categories property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemHasAttachments">
+      <summary>
+                    The HasAttachments property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemImportance">
+      <summary>
+                    The Importance property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemInReplyTo">
+      <summary>
+                    The InReplyTo property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemInternetMessageHeaders">
+      <summary>
+                    The InternetMessageHeaders property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemIsDraft">
+      <summary>
+                    The IsDraft property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemIsFromMe">
+      <summary>
+                    The IsFromMe property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemIsResend">
+      <summary>
+                    The IsResend property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemIsSubmitted">
+      <summary>
+                    The IsSubmitted property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemIsUnmodified">
+      <summary>
+                    The IsUnmodified property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemDateTimeSent">
+      <summary>
+                    The DateTimeSent property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemDateTimeCreated">
+      <summary>
+                    The DateTimeCreated property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemBody">
+      <summary>
+                    The Body property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemResponseObjects">
+      <summary>
+                    The ResponseObjects property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemSensitivity">
+      <summary>
+                    The Sensitivity property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemReminderDueBy">
+      <summary>
+                    The ReminderDueBy property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemReminderIsSet">
+      <summary>
+                    The ReminderIsSet property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemReminderMinutesBeforeStart">
+      <summary>
+                    The ReminderMinutesBeforeStart property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemDisplayTo">
+      <summary>
+                    The DisplayTo property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemDisplayCc">
+      <summary>
+                    The DisplayCc property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.itemCulture">
+      <summary>
+                    The Culture property for an item.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageConversationIndex">
+      <summary>
+                    The ConversationIndex property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageConversationTopic">
+      <summary>
+                    The ConversationTopic property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageInternetMessageId">
+      <summary>
+                    The InternetMessageId property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageIsRead">
+      <summary>
+                    The IsRead property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageIsResponseRequested">
+      <summary>
+                    The IsResponseRequested property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageIsReadReceiptRequested">
+      <summary>
+                    The IsReadReceiptRequested property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageIsDeliveryReceiptRequested">
+      <summary>
+                    The IsDeliveryReceiptRequested property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageReferences">
+      <summary>
+                    The References property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageReplyTo">
+      <summary>
+                    The ReplyTo property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageFrom">
+      <summary>
+                    The From property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageSender">
+      <summary>
+                    The Sender property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageToRecipients">
+      <summary>
+                    The ToRecipients property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageCcRecipients">
+      <summary>
+                    The CcRecipients property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.messageBccRecipients">
+      <summary>
+                    The BccRecipients property for a message.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.meetingAssociatedCalendarItemId">
+      <summary>
+                    The AssociatedCalendarItemId property for a meeting.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.meetingIsDelegated">
+      <summary>
+                    The IsDelegated property for a meeting.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.meetingIsOutOfDate">
+      <summary>
+                    The IsOutOfDate property for a meeting.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.meetingHasBeenProcessed">
+      <summary>
+                    The HasBeenProcessed property for a meeting.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.meetingResponseType">
+      <summary>
+                    The ResponseType property for a meeting.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.meetingRequestMeetingRequestType">
+      <summary>
+                    The RequestMeetingRequestType property for a meeting.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.meetingRequestIntendedFreeBusyStatus">
+      <summary>
+                    The RequestIntendedFreeBusyStatus property for a meeting.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarStart">
+      <summary>
+                    The Start property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarEnd">
+      <summary>
+                    The End property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarOriginalStart">
+      <summary>
+                    The OriginalStart property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarIsAllDayEvent">
+      <summary>
+                    The IsAllDayEvent property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarLegacyFreeBusyStatus">
+      <summary>
+                    The LegacyFreeBusyStatus property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarLocation">
+      <summary>
+                    The Location property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarWhen">
+      <summary>
+                    The When property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarIsMeeting">
+      <summary>
+                    The IsMeeting property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarIsCancelled">
+      <summary>
+                    The IsCancelled property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarIsRecurring">
+      <summary>
+                    The IsRecurring property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarMeetingRequestWasSent">
+      <summary>
+                    The MeetingRequestWasSent property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarIsResponseRequested">
+      <summary>
+                    The IsResponseRequested property for the calendar. 
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarCalendarItemType">
+      <summary>
+                    The CalendarItemType property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarMyResponseType">
+      <summary>
+                    The MyResponseType property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarOrganizer">
+      <summary>
+                    The Organizer property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarRequiredAttendees">
+      <summary>
+                    The RequiredAttendees property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarOptionalAttendees">
+      <summary>
+                    The OptionalAttendees property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarResources">
+      <summary>
+                    The Resources property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarConflictingMeetingCount">
+      <summary>
+                    The ConflictingMeetingCount property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarAdjacentMeetingCount">
+      <summary>
+                    The AdjacentMeetingCount property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarConflictingMeetings">
+      <summary>
+                    The ConflictingMeetings property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarAdjacentMeetings">
+      <summary>
+                    The AdjacentMeetings property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarDuration">
+      <summary>
+                    The Duration property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarTimeZone">
+      <summary>
+                    The TimeZone property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarAppointmentReplyTime">
+      <summary>
+                    The AppointmentReplyTime property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarAppointmentSequenceNumber">
+      <summary>
+                    The AppointmentSequenceNumber property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarAppointmentState">
+      <summary>
+                    The AppointmentState property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarRecurrence">
+      <summary>
+                    The Recurrence property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarFirstOccurrence">
+      <summary>
+                    The FirstOccurrence property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarLastOccurrence">
+      <summary>
+                    The LastOccurrence property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarModifiedOccurrences">
+      <summary>
+                    The ModifiedOccurrences property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarDeletedOccurrences">
+      <summary>
+                    The DeletedOccurrences property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarMeetingTimeZone">
+      <summary>
+                    The MeetingTimeZone property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarConferenceType">
+      <summary>
+                    The ConferenceType property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarAllowNewTimeProposal">
+      <summary>
+                    The AllowNewTimeProposal property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarIsOnlineMeeting">
+      <summary>
+                    The IsOnlineMeeting property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarMeetingWorkspaceUrl">
+      <summary>
+                    The MeetingWorkspaceUrl property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.calendarNetShowUrl">
+      <summary>
+                    The NetShowUrl property for the calendar.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskActualWork">
+      <summary>
+                    The ActualWork property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskAssignedTime">
+      <summary>
+                    The AssignedTime property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskBillingInformation">
+      <summary>
+                    The BillingInformation property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskChangeCount">
+      <summary>
+                    The ChangeCount property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskCompanies">
+      <summary>
+                    The Companies property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskCompleteDate">
+      <summary>
+                    The CompleteDate property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskContacts">
+      <summary>
+                    The Contacts property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskDelegationState">
+      <summary>
+                    The DelegationState property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskDelegator">
+      <summary>
+                    The Delegator property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskDueDate">
+      <summary>
+                    The DueDate property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskIsAssignmentEditable">
+      <summary>
+                    The IsAssignmentEditable property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskIsComplete">
+      <summary>
+                    The IsComplete property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskIsRecurring">
+      <summary>
+                    The IsRecurring property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskIsTeamTask">
+      <summary>
+                    The IsTeamTask property for a task.
+                </summary>
+    </member>
+    <member name="F:Microsoft.ServiceModel.Channels.Mail.ExchangeWebService.Exchange2007.UnindexedFieldURIType.taskMileage">
+      <summary>
+                    The Mileage property for a task.
+                </summary>
+    </member>
+    <m

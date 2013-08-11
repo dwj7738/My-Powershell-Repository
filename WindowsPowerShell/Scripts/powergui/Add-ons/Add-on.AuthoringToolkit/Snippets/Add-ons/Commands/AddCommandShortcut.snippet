@@ -1,0 +1,50 @@
+id + '\" does not exist');
+        }
+        $v_0.$Ah(triggeringEvent, focusedElement);
+    },
+    
+    showContextMenuAt: function(id, elmHadFocus, x, y) {ULSpEN:;
+        var $v_0 = this.$5H_2[id];
+        if (CUI.ScriptUtility.isNullOrUndefined($v_0)) {
+            throw Error.create('The context menu \"' + id + '\" does not exist');
+        }
+        $v_0.launchContextMenuAt(elmHadFocus, x, y);
+    }
+}
+
+
+CUI.ControlProperties = function() {
+}
+CUI.ControlProperties.prototype = {
+    Command: null,
+    Id: null,
+    TemplateAlias: null,
+    ToolTipDescription: null,
+    ToolTipHelpKeyWord: null,
+    ToolTipImage32by32: null,
+    ToolTipImage32by32Class: null,
+    ToolTipImage32by32Top: null,
+    ToolTipImage32by32Left: null,
+    ToolTipSelectedItemTitle: null,
+    ToolTipShortcutKey: null,
+    ToolTipTitle: null,
+    LabelCss: null
+}
+
+
+CUI.Control = function(root, id, properties) {ULSpEN:;
+    this.$3J = Function.createDelegate(this, this.onDblClick);
+    this.$8H = Function.createDelegate(this, this.onHelpKeyPress);
+    this.$7y = Function.createDelegate(this, this.$X);
+    this.$65 = Function.createDelegate(this, this.launchToolTip);
+    this.$0_0 = root;
+    this.$6_0 = id;
+    this.$5_0 = properties;
+    this.$k_0 = [];
+    this.$4F_0 = ',';
+    this.$2n_0 = {};
+    root.$Du(this);
+}
+CUI.Control.createStandardControlDOMElement = function($p0, $p1, $p2, $p3, $p4, $p5) {
+    var $v_0 = $p3;
+    return CUI.Control.createStandardControlDOMElementCore($p0, $p1, $p2, $v_0.Id, $v_0.Image32by32, $v_0.Image32by32Class, $v_0.Image32by32Top, $v_0.Image32by32Left, $v_0.Image16by16

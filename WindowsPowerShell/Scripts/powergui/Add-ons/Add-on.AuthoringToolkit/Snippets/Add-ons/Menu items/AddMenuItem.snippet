@@ -1,0 +1,98 @@
+ce>
+						<xsd:element name="Value" type="dms:Lookup" maxOccurs="unbounded">
+							<xsl:call-template name="MinOccurs" />
+							<xsl:call-template name="Nillable" />
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsl:template>
+	<xsl:template name="UrlType">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension>
+					<xsl:call-template name="BaseType" />
+					<xsd:sequence>
+						<xsd:element name="Url" type="dms:ValidUrl">
+							<xsl:call-template name="MinOccurs" />
+							<xsl:call-template name="Nillable" />
+						</xsd:element>
+						<xsd:element name="Description" type="xsd:string">
+							<xsl:call-template name="Nillable" />
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsl:template>
+	<xsl:template name="UserType">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension>
+					<xsl:call-template name="BaseType" />
+					<xsd:sequence>
+						<xsd:element name="UserInfo" minOccurs="0" maxOccurs="unbounded">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="DisplayName" type="xsd:string" minOccurs="0" />
+									<xsd:element name="AccountId" type="dms:UserId" minOccurs="0">
+										<xsl:call-template name="Nillable" />
+									</xsd:element>
+									<xsd:element name="AccountType" type="xsd:string" minOccurs="0" />
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsl:template>
+	<xsl:template name="TaxonomyType">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="pc:Terms" minOccurs="0" maxOccurs="1">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsl:template>
+	<xsl:template name="SimpleRestriction">
+		<xsd:restriction>
+			<xsl:call-template name="BaseType" />
+			<xsl:call-template name="Facets" />
+		</xsd:restriction>
+	</xsl:template>
+	<xsl:template name="Facets">
+		<xsl:if test="@Type != 'ModStat'">
+			<xsl:apply-templates select="CHOICES" />
+		</xsl:if>
+		<xsl:if test="@Type = 'Number' or @Type='Currency'">
+			<xsl:apply-templates select="@Max" />
+			<xsl:apply-templates select="@Min" />
+		</xsl:if>
+		<xsl:choose>
+			<xsl:when test="@MaxLength">
+				<xsl:apply-templates select="@MaxLength" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:if test="@Type = 'Note' and not(@Hidden = 'TRUE') and not(@UnlimitedLengthInDocumentLibrary = 'TRUE')">
+					<xsl:element name="xsd:maxLength">
+						<xsl:attribute name="value">
+							<xsl:text>255</xsl:text>
+						</xsl:attribute>
+					</xsl:element>
+				</xsl:if>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	<xsl:template name="MetaAttributes">
+		<xsl:param name="taxonomyField" />
+		<xsl:choose>
+			<xsl:when test="$taxonomyField">
+				<xsl:attribute name="ma:taxonomy" namespace="{$maNSUri}">
+					<xsl:text>true</xsl:text>
+				</xsl:attribute>
+				<xsl:if test="@Name">
+					<xsl:attribute name="ma:internalName" namespace="{$maNSUri}">
+						<xsl:value-of select="@Name" />
+					</xs
