@@ -7171,7 +7171,7 @@ Mode                LastWriteTime     Length Name
     Directory: E:\Documents\GitHub\My-Powershell-Repository\WindowsPowerShell\Windows PowerShell 3.0 SDK Sample 
     Pack\Transacted Comment Sample\description
 
-
+ 
 Mode                LastWriteTime     Length Name                                                                      
 ----                -------------     ------ ----                                                                      
 -a---       19-Jun-2013   9:20 PM          0 2f95808e-ca34-4249-88ff-44fabe33cdc0Combined.css                          
