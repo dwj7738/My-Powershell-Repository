@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Custom object (from dynamic module)</Title>
+      <Shortcut>moduleobj</Shortcut>
+      <Description>Code snippet for creating a custom object from a dynamically defined module. Exported module functions and variables are object methods and properties, respectively.</Description>
+      <Author>Quest Software, Inc.</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations />
+      <Code Language="powershell">
+        <![CDATA[$end$<#
+	Create a new custom object using a dynamically defined module. Exported module
+	functions and variables are object methods (ScriptMethod) and properties
+	(NoteProperty), respectively. Use Export-ModuleMember to make methods or
+	properties public.
+
+	See also the "function (module...)" and "variable (module...)" snippets to add
+	additional methods and properties to your object.
+
+	For more information see:
+		Get-Help New-Module -full
+		Get-Help Export-ModuleMember -full
+		Get-Help about_modules
+#>
+$windows7Clock = New-Module -AsCustomObject -ScriptBlock {
+
+	# Add a public GetDateDifference method to the custom object. This
+	# will not be visible to Get-Member.
+	function GetDateDifference {
+		param(
+			[DateTime]$Date
+		)
+		
+		($Date - (Get-Date))
+	}
+
+	# Add a public GetWindows7LaunchCountdown method to the custom object. This
+	# will not be visible to Get-Member.
+	function GetWindows7LaunchCountdown {
+		GetDateDifference -Date $Windows7Launch
+	}
+
+	# Add a public ToString method to the custom object. This will define what
+	# the object shows when it is converted to a string. This will be visible
+	# to Get-Member.
+	function ToString {
+		$timer = GetWindows7LaunchCountdown
+		"{0} days, {1} hours, {2} minutes and {3} seconds" `
+			-f $timer.Days,$timer.Hours,$timer.Minutes,$timer.Seconds
+	}
+	Export-ModuleMember -Function ToString
+
+	# Add a private Windows7Launch property to the custom object. This will be
+	# visible to Get-Member.
+	[DateTime]$Windows7Launch = '10/22/2009'
+	Export-ModuleMember -Variable Windows7Launch
+}
+
+# Optionally set a custom type for your object
+$windows7Clock.PSTypeNames.Clear()
+$windows7Clock.PSTypeNames.Add('Windows7Clock')
+
+# Optionally add a script property to your object
+$windows7Clock | Add-Member -Name TimeRemaining -MemberType ScriptProperty -Value {[string]$this}
+
+# Show the object with the default output
+$windows7Clock
+
+# Show the object as a string
+[string]$windows7Clock]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

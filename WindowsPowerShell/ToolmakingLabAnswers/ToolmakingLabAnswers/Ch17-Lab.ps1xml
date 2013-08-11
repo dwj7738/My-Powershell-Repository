@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <Type>
+    <Name>MOL.ComputerSystemInfo</Name>
+    <Members>
+        <ScriptMethod>
+        <Name>CanPing</Name>
+        <Script>
+        Test-Connection -ComputerName $this.ComputerName -Quiet
+        </Script>
+    </ScriptMethod> 
+    </Members>
+  </Type>
+</Types>

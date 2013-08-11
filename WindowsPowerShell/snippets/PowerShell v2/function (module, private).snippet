@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>function (module, private)</Title>
+      <Shortcut>fxmodint</Shortcut>
+      <Description>Code snippet for adding a private (internal) function to a module</Description>
+      <Author>Quest Software, Inc.</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+        <SnippetType>SurroundsWith</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>Name</ID>
+          <Default>DoSomething</Default>
+          <ToolTip>The name of the function</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>ParameterA</ID>
+          <Default>ParameterA</Default>
+          <ToolTip>The name of the first parameter</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>ParameterB</ID>
+          <Default>ParameterB</Default>
+          <ToolTip>The name of the second parameter</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="powershell">
+        <![CDATA[function $Name$ {
+	param(
+		[System.String] $$ParameterA$,
+		[System.Int32] $$ParameterB$
+	)
+	$selected$$end$
+}]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

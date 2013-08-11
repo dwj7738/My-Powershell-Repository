@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>function (module, public, advanced)</Title>
+      <Shortcut>fxmodextadv</Shortcut>
+      <Description>Code snippet for adding a public (exported) advanced function to a module</Description>
+      <Author>Quest Software, Inc.</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+        <SnippetType>SurroundsWith</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>Name</ID>
+          <Default>Get-Something</Default>
+          <ToolTip>The name of the function</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>ParameterA</ID>
+          <Default>ParameterA</Default>
+          <ToolTip>The name of the first parameter</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>ParameterB</ID>
+          <Default>ParameterB</Default>
+          <ToolTip>The name of the second parameter</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>Alias</ID>
+          <Default>gs</Default>
+          <ToolTip>The alias associated with the function</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="powershell">
+        <![CDATA[<#
+	.SYNOPSIS
+		A brief description of the $Name$ function.
+
+	.DESCRIPTION
+		A detailed description of the $Name$ function.
+
+	.PARAMETER  $ParameterA$
+		The description of a the $ParameterA$ parameter.
+
+	.PARAMETER  $ParameterB$
+		The description of a the $ParameterB$ parameter.
+
+	.EXAMPLE
+		PS C:\> $Name$ -$ParameterA$ 'One value' -$ParameterB$ 32
+		'This is the output'
+		This example shows how to call the $Name$ function with named parameters.
+
+	.EXAMPLE
+		PS C:\> $Name$ 'One value' 32
+		'This is the output'
+		This example shows how to call the $Name$ function with positional parameters.
+
+	.INPUTS
+		System.String,System.Int32
+
+	.OUTPUTS
+		System.String
+
+	.NOTES
+		For more information about advanced functions, call Get-Help with any
+		of the topics in the links listed below.
+
+	.LINK
+		about_modules
+
+	.LINK
+		about_functions_advanced
+
+	.LINK
+		about_comment_based_help
+
+	.LINK
+		about_functions_advanced_parameters
+
+	.LINK
+		about_functions_advanced_methods
+#>
+function $Name$ {
+	[CmdletBinding()]
+	param(
+		[Parameter(Position=0, Mandatory=$true)]
+		[System.String]
+		$$ParameterA$,
+		[Parameter(Position=1)]
+		[System.Int32]
+		$$ParameterB$
+	)
+	begin {
+		try {
+		}
+		catch {
+		}
+	}
+	process {
+		try {
+			$selected$$end$
+		}
+		catch {
+		}
+	}
+	end {
+		try {
+		}
+		catch {
+		}
+	}
+}
+Export-ModuleMember -Function $Name$
+
+# Optional commands to create a public alias for the function
+New-Alias -Name $Alias$ -Value $Name$
+Export-ModuleMember -Alias $Alias$]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

@@ -1,0 +1,196 @@
+﻿
+  <FileID>5bbc8da5-e6e1-476f-9f9b-be9149a2cefb</FileID>
+  <FileVersion>1.2</FileVersion>
+  <Object type="System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="formDriveReport" children="Controls">
+    <Property name="ClientSize">367, 202</Property>
+    <Property name="Name">formDriveReport</Property>
+    <Property name="Text">Drive Report</Property>
+    <Event name="Load">formDriveReport_Load</Event>
+    <Object type="System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="RichResults" children="Controls">
+      <Property name="BorderStyle">None</Property>
+      <Property name="Font">Courier New, 8.25pt</Property>
+      <Property name="Location">24, 39</Property>
+      <Property name="Name">RichResults</Property>
+      <Property name="Size">319, 119</Property>
+      <Property name="TabIndex">7</Property>
+      <Property name="Text">
+      </Property>
+    </Object>
+    <Object type="System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="Computername" children="Controls">
+      <Property name="Location">87, 12</Property>
+      <Property name="Name">Computername</Property>
+      <Property name="Size">100, 20</Property>
+      <Property name="TabIndex">6</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="labelComputer" children="Controls">
+      <Property name="Location">24, 13</Property>
+      <Property name="Name">labelComputer</Property>
+      <Property name="Size">57, 23</Property>
+      <Property name="TabIndex">1</Property>
+      <Property name="Text">Computer</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="buttonOK" children="Controls">
+      <Property name="Location">24, 164</Property>
+      <Property name="Name">buttonOK</Property>
+      <Property name="Size">75, 23</Property>
+      <Property name="TabIndex">0</Property>
+      <Property name="Text">OK</Property>
+      <Property name="UseVisualStyleBackColor">True</Property>
+      <Event name="Click">buttonOK_Click</Event>
+    </Object>
+  </Object>
+  <Code><![CDATA[
+
+function OnApplicationLoad {
+	#Note: This function is not called in Projects
+	#Note: This function runs before the form is created
+	#Note: To get the script directory in the Packager use: Split-Path $hostinvocation.MyCommand.path
+	#Note: To get the console output in the Packager (Windows Mode) use: $ConsoleOutput (Type: System.Collections.ArrayList)
+	#Important: Form controls cannot be accessed in this function
+	#TODO: Add snapins and custom code to validate the application load
+
+	return $true #return true for success or false for failure
+}
+
+
+function OnApplicationExit {
+	#Note: This function is not called in Projects
+	#Note: This function runs after the form is closed
+	#TODO: Add custom code to clean up and unload snapins when the application exits
+	
+	$script:ExitCode = 0 #Set the exit code for the Packager
+}
+
+$formDriveReport_Load={
+	#TODO: Initialize Form Controls here
+	$Computername.Text=$env:Computername
+}
+
+$buttonOK_Click={
+	
+	#clear the rich text box
+	$RichResults.Clear()
+	#get data
+	$data=Get-WmiObject Win32_LogicalDisk -Filter "drivetype=3" -ComputerName $Computername.Text | 
+	Select "DeviceID",@{Name="SizeGB";Expression={"{0:N2}" -f ($_.Size/1GB)}},
+	@{Name="FreeGB";Expression={"{0:N2}" -f ($_.Freespace/1GB)}},"VolumeName"
+	#add the data to the control
+ 	$RichResults.Text=$data | Format-Table -AutoSize | out-String
+	
+}
+
+#region Control Helper Functions
+function Load-DataGridView
+{
+	<#
+	.SYNOPSIS
+		This functions helps you load items into a DataGridView.
+
+	.DESCRIPTION
+		Use this function to dynamically load items into the DataGridView control.
+
+	.PARAMETER  DataGridView
+		The ComboBox control you want to add items to.
+
+	.PARAMETER  Item
+		The object or objects you wish to load into the ComboBox's items collection.
+	
+	.PARAMETER  DataMember
+		Sets the name of the list or table in the data source for which the DataGridView is displaying data.
+
+	#>
+	Param (
+		[ValidateNotNull()]
+		[Parameter(Mandatory=$true)]
+		[System.Windows.Forms.DataGridView]$DataGridView,
+		[ValidateNotNull()]
+		[Parameter(Mandatory=$true)]
+		$Item,
+	    [Parameter(Mandatory=$false)]
+		[string]$DataMember
+	)
+	$DataGridView.SuspendLayout()
+	$DataGridView.DataMember = $DataMember
+	
+	if ($Item -is [System.ComponentModel.IListSource]`
+	-or $Item -is [System.ComponentModel.IBindingList] -or $Item -is [System.ComponentModel.IBindingListView] )
+	{
+		$DataGridView.DataSource = $Item
+	}
+	else
+	{
+		$array = New-Object System.Collections.ArrayList
+		
+		if ($Item -is [System.Collections.IList])
+		{
+			$array.AddRange($Item)
+		}
+		else
+		{	
+			$array.Add($Item)	
+		}
+		$DataGridView.DataSource = $array
+	}
+	
+	$DataGridView.ResumeLayout()
+}
+#endregion
+
+
+
+
+]]></Code>
+  <Mode>0</Mode>
+  <Assemblies>
+    <Assembly>System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</Assembly>
+    <Assembly>mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</Assembly>
+    <Assembly>System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll</Assembly>
+    <Assembly>System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Windows.Forms.dll</Assembly>
+    <Assembly>System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll</Assembly>
+    <Assembly>System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Drawing.dll</Assembly>
+    <Assembly>System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.XML.dll</Assembly>
+    <Assembly>System.DirectoryServices, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.DirectoryServices.dll</Assembly>
+    <Assembly>System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll</Assembly>
+  </Assemblies>
+  <Packager>
+    <General>
+      <PackageName>
+      </PackageName>
+      <PackageIcon>
+      </PackageIcon>
+      <ManifestCreation>1</ManifestCreation>
+      <CustomManifest>
+      </CustomManifest>
+      <Platform>-1</Platform>
+      <RunSTA>0</RunSTA>
+    </General>
+    <Security>
+      <Username>
+      </Username>
+      <Password>
+      </Password>
+      <SignPackage>False</SignPackage>
+      <Certificate>
+      </Certificate>
+      <CertificatePassword>
+      </CertificatePassword>
+      <RunAs>0</RunAs>
+    </Security>
+    <Version>
+      <FileVersion>1.0.0.0</FileVersion>
+      <ProductVersion>1.0.0.0</ProductVersion>
+      <ProductName>
+      </ProductName>
+      <Description>
+      </Description>
+      <Company> http://jdhitsolutions.com/blog</Company>
+      <Copyright>
+      </Copyright>
+      <InternalName>
+      </InternalName>
+      <OriginalFileName>
+      </OriginalFileName>
+      <Comment>
+      </Comment>
+    </Version>
+  </Packager>

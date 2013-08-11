@@ -1,0 +1,283 @@
+﻿
+  <FileID>5bbc8da5-e6e1-476f-9f9b-be9149a2cefb</FileID>
+  <FileVersion>1.2</FileVersion>
+  <Object type="System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="formDriveReport" children="Controls">
+    <Property name="ClientSize">277, 202</Property>
+    <Property name="Name">formDriveReport</Property>
+    <Property name="Text">Drive Report</Property>
+    <Event name="Load">formDriveReport_Load</Event>
+    <Object type="System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="radiobuttonE" children="Controls">
+      <Property name="Location">217, 56</Property>
+      <Property name="Name">radiobuttonE</Property>
+      <Property name="Size">48, 24</Property>
+      <Property name="TabIndex">16</Property>
+      <Property name="Text">E:</Property>
+      <Property name="UseVisualStyleBackColor">True</Property>
+    </Object>
+    <Object type="System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="radiobuttonD" children="Controls">
+      <Property name="Location">217, 37</Property>
+      <Property name="Name">radiobuttonD</Property>
+      <Property name="Size">48, 24</Property>
+      <Property name="TabIndex">15</Property>
+      <Property name="Text">D:</Property>
+      <Property name="UseVisualStyleBackColor">True</Property>
+    </Object>
+    <Object type="System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="radiobuttonC" children="Controls">
+      <Property name="Checked">True</Property>
+      <Property name="Location">217, 13</Property>
+      <Property name="Name">radiobuttonC</Property>
+      <Property name="Size">48, 24</Property>
+      <Property name="TabIndex">14</Property>
+      <Property name="TabStop">True</Property>
+      <Property name="Text">C:</Property>
+      <Property name="UseVisualStyleBackColor">True</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="labelFreeGB" children="Controls">
+      <Property name="Location">24, 112</Property>
+      <Property name="Name">labelFreeGB</Property>
+      <Property name="Size">57, 23</Property>
+      <Property name="TabIndex">13</Property>
+      <Property name="Text">FreeGB:</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="labelSizeGB" children="Controls">
+      <Property name="Location">24, 89</Property>
+      <Property name="Name">labelSizeGB</Property>
+      <Property name="Size">57, 23</Property>
+      <Property name="TabIndex">12</Property>
+      <Property name="Text">SizeGB:</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="labelLabel" children="Controls">
+      <Property name="Location">24, 66</Property>
+      <Property name="Name">labelLabel</Property>
+      <Property name="Size">57, 24</Property>
+      <Property name="TabIndex">11</Property>
+      <Property name="Text">Label:</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="labelDrive" children="Controls">
+      <Property name="Location">24, 43</Property>
+      <Property name="Name">labelDrive</Property>
+      <Property name="Size">57, 23</Property>
+      <Property name="TabIndex">10</Property>
+      <Property name="Text">Drive:</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="labelFreespace" children="Controls">
+      <Property name="Location">87, 112</Property>
+      <Property name="Name">labelFreespace</Property>
+      <Property name="Size">100, 23</Property>
+      <Property name="TabIndex">9</Property>
+      <Property name="Text">Freespace</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="labelSize" children="Controls">
+      <Property name="Location">87, 89</Property>
+      <Property name="Name">labelSize</Property>
+      <Property name="Size">100, 23</Property>
+      <Property name="TabIndex">8</Property>
+      <Property name="Text">Size</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="labelVolume" children="Controls">
+      <Property name="Location">87, 66</Property>
+      <Property name="Name">labelVolume</Property>
+      <Property name="Size">100, 23</Property>
+      <Property name="TabIndex">0</Property>
+      <Property name="Text">Volume</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="labelDeviceID" children="Controls">
+      <Property name="Location">87, 43</Property>
+      <Property name="Name">labelDeviceID</Property>
+      <Property name="Size">100, 23</Property>
+      <Property name="TabIndex">7</Property>
+      <Property name="Text">DeviceID</Property>
+    </Object>
+    <Object type="System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="Computername" children="Controls">
+      <Property name="Location">87, 12</Property>
+      <Property name="Name">Computername</Property>
+      <Property name="Size">113, 20</Property>
+      <Property name="TabIndex">6</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="labelComputer" children="Controls">
+      <Property name="Location">24, 13</Property>
+      <Property name="Name">labelComputer</Property>
+      <Property name="Size">57, 23</Property>
+      <Property name="TabIndex">1</Property>
+      <Property name="Text">Computer</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="buttonOK" children="Controls">
+      <Property name="Location">24, 164</Property>
+      <Property name="Name">buttonOK</Property>
+      <Property name="Size">75, 23</Property>
+      <Property name="TabIndex">0</Property>
+      <Property name="Text">OK</Property>
+      <Property name="UseVisualStyleBackColor">True</Property>
+      <Event name="Click">buttonOK_Click</Event>
+    </Object>
+  </Object>
+  <Code><![CDATA[
+
+function OnApplicationLoad {
+	#Note: This function is not called in Projects
+	#Note: This function runs before the form is created
+	#Note: To get the script directory in the Packager use: Split-Path $hostinvocation.MyCommand.path
+	#Note: To get the console output in the Packager (Windows Mode) use: $ConsoleOutput (Type: System.Collections.ArrayList)
+	#Important: Form controls cannot be accessed in this function
+	#TODO: Add snapins and custom code to validate the application load
+
+	return $true #return true for success or false for failure
+}
+
+
+function OnApplicationExit {
+	#Note: This function is not called in Projects
+	#Note: This function runs after the form is closed
+	#TODO: Add custom code to clean up and unload snapins when the application exits
+	
+	$script:ExitCode = 0 #Set the exit code for the Packager
+}
+
+$formDriveReport_Load={
+	#TODO: Initialize Form Controls here
+	$Computername.Text=$env:Computername
+	&$clearLabels
+}
+
+$clearLabels={
+	#clear all text labels
+	$labelDeviceID.Text=""
+	$labelVolume.Text=""
+	$labelSize.Text=""
+	$labelFreespace.Text=""
+}
+$buttonOK_Click={
+	#clear labels
+	&$ClearLabels
+	#get the 3 radio buttons and filter to get the one that is checked
+	$radiochecked=$radiobuttonC,$radiobuttonD,$radiobuttonE | where {$_.Checked}
+	#set the drive variable to the Text property of the checked radio button
+	Write-Host $radiochecked.text
+	$drive=$radiochecked.Text
+	#get data
+	$data=Get-WmiObject Win32_LogicalDisk -Filter "deviceid='$drive'" -ComputerName $Computername.Text | 
+	Select "DeviceID",@{Name="SizeGB";Expression={"{0:N2}" -f ($_.Size/1GB)}},
+	@{Name="FreeGB";Expression={"{0:N2}" -f ($_.Freespace/1GB)}},"VolumeName"
+	#add the data to the control
+ 	$labelDeviceID.Text=$data.deviceID
+	$labelFreespace.Text=$data.FreeGB
+	$labelSize.Text=$data.SizeGB 
+	$labelVolume.Text=$data.Volumename
+	
+}
+
+#region Control Helper Functions
+function Load-DataGridView
+{
+	<#
+	.SYNOPSIS
+		This functions helps you load items into a DataGridView.
+
+	.DESCRIPTION
+		Use this function to dynamically load items into the DataGridView control.
+
+	.PARAMETER  DataGridView
+		The ComboBox control you want to add items to.
+
+	.PARAMETER  Item
+		The object or objects you wish to load into the ComboBox's items collection.
+	
+	.PARAMETER  DataMember
+		Sets the name of the list or table in the data source for which the DataGridView is displaying data.
+
+	#>
+	Param (
+		[ValidateNotNull()]
+		[Parameter(Mandatory=$true)]
+		[System.Windows.Forms.DataGridView]$DataGridView,
+		[ValidateNotNull()]
+		[Parameter(Mandatory=$true)]
+		$Item,
+	    [Parameter(Mandatory=$false)]
+		[string]$DataMember
+	)
+	$DataGridView.SuspendLayout()
+	$DataGridView.DataMember = $DataMember
+	
+	if ($Item -is [System.ComponentModel.IListSource]`
+	-or $Item -is [System.ComponentModel.IBindingList] -or $Item -is [System.ComponentModel.IBindingListView] )
+	{
+		$DataGridView.DataSource = $Item
+	}
+	else
+	{
+		$array = New-Object System.Collections.ArrayList
+		
+		if ($Item -is [System.Collections.IList])
+		{
+			$array.AddRange($Item)
+		}
+		else
+		{	
+			$array.Add($Item)	
+		}
+		$DataGridView.DataSource = $array
+	}
+	
+	$DataGridView.ResumeLayout()
+}
+#endregion
+
+
+
+
+]]></Code>
+  <Mode>1</Mode>
+  <Assemblies>
+    <Assembly>System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</Assembly>
+    <Assembly>mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</Assembly>
+    <Assembly>System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll</Assembly>
+    <Assembly>System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Windows.Forms.dll</Assembly>
+    <Assembly>System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll</Assembly>
+    <Assembly>System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Drawing.dll</Assembly>
+    <Assembly>System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.XML.dll</Assembly>
+    <Assembly>System.DirectoryServices, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.DirectoryServices.dll</Assembly>
+    <Assembly>System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll</Assembly>
+  </Assemblies>
+  <Packager>
+    <General>
+      <PackageName>
+      </PackageName>
+      <PackageIcon>
+      </PackageIcon>
+      <ManifestCreation>1</ManifestCreation>
+      <CustomManifest>
+      </CustomManifest>
+      <Platform>-1</Platform>
+      <RunSTA>0</RunSTA>
+    </General>
+    <Security>
+      <Username>
+      </Username>
+      <Password>
+      </Password>
+      <SignPackage>False</SignPackage>
+      <Certificate>
+      </Certificate>
+      <CertificatePassword>
+      </CertificatePassword>
+      <RunAs>0</RunAs>
+    </Security>
+    <Version>
+      <FileVersion>1.0.0.0</FileVersion>
+      <ProductVersion>1.0.0.0</ProductVersion>
+      <ProductName>
+      </ProductName>
+      <Description>
+      </Description>
+      <Company> http://jdhitsolutions.com/blog</Company>
+      <Copyright>
+      </Copyright>
+      <InternalName>
+      </InternalName>
+      <OriginalFileName>
+      </OriginalFileName>
+      <Comment>
+      </Comment>
+    </Version>
+  </Packager>

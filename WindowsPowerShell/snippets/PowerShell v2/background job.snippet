@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Background job</Title>
+      <Shortcut>bgjob</Shortcut>
+      <Description>Code snippet for running a background job</Description>
+      <Author>Quest Software, Inc.</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+        <SnippetType>SurroundsWith</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>name</ID>
+          <Default>JobName</Default>
+          <ToolTip>[Optional] The name to give to the background job</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>initializationScript</ID>
+          <Default>{Add-PSSnapin Quest.ActiveRoles.ADManagement}</Default>
+          <ToolTip>[Optional] The script to run before the job starts</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="powershell">
+        <![CDATA[Start-Job -Name $name$ -InitializationScript $initializationScript$ -ScriptBlock {
+	$selected$$end$
+}]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

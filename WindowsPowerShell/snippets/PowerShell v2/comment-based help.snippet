@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Comment-based help</Title>
+      <Shortcut>#help</Shortcut>
+      <Description>Code snippet for creating new comment-based help</Description>
+      <Author>Quest Software, Inc.</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>synopsis</ID>
+          <Default>A brief description of the function.</Default>
+          <ToolTip>A brief description of the function.</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>description</ID>
+          <Default>A detailed description of the function.</Default>
+          <ToolTip>A detailed description of the function.</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>parameterADescription</ID>
+          <Default>The description of the ParameterA parameter.</Default>
+          <ToolTip>The description of a parameter.</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>parameterBDescription</ID>
+          <Default>The description of the ParameterB parameter.</Default>
+          <ToolTip>The description of a parameter.</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>firstExample</ID>
+          <Default>PS C:\> Get-Something -ParameterA 'One value' -ParameterB 32</Default>
+          <ToolTip>A an example with an optional description.</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>secondExample</ID>
+          <Default>PS C:\> Get-Something 'One value' 32</Default>
+          <ToolTip>An example with an optional description.</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>inputs</ID>
+          <Default>System.String,System.Int32</Default>
+          <ToolTip>A comma-delimited list of input types.</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>outputs</ID>
+          <Default>System.String</Default>
+          <ToolTip>A comma-delimited list of output types.</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>notes</ID>
+          <Default>Additional information about the function go here.</Default>
+          <ToolTip>Notes about the function.</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>firstLink</ID>
+          <Default>about_functions_advanced</Default>
+          <ToolTip>A link to a related help topic or command.</ToolTip>
+        </Literal>
+        <Literal>
+          <ID>secondLink</ID>
+          <Default>about_comment_based_help</Default>
+          <ToolTip>A link to a related help topic or command.</ToolTip>
+        </Literal>
+      </Declarations>
+      <Code Language="powershell">
+        <![CDATA[<#
+	.SYNOPSIS
+		$synopsis$
+
+	.DESCRIPTION
+		$description$
+
+	.PARAMETER  ParameterA
+		$parameterADescription$
+
+	.PARAMETER  ParameterB
+		$parameterBDescription$
+
+	.EXAMPLE
+		$firstExample$
+
+	.EXAMPLE
+		$secondExample$
+
+	.INPUTS
+		$inputs$
+
+	.OUTPUTS
+		$outputs$
+
+	.NOTES
+		$notes$
+
+	.LINK
+		$firstLink$
+
+	.LINK
+		$secondLink$
+
+#>
+$end$]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
