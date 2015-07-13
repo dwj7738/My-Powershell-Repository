@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Remove Target Nodes from WSUS Group</title>        
+        <meta name="description" content="Removing systems from WSUS groups using the Update Services console is not very intuitive when making changes to multiple systems at once. &#160;Often, I need to dump a large list of systems out of a specific group - this becomes a problem when systems have
+ other unique group member" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>Removing systems from WSUS groups using the Update Services console is not very intuitive when making changes to multiple systems at once. &nbsp;Often, I need to dump a large list of systems out of a specific group - this becomes a problem when systems have
+ other unique group memberships.</p>
+<p>This simple script requires that you define the WSUS server name and group for which to take action against.</p>
+<p>Logging is included.</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&lt;#
+.SYNOPSIS Remove all servers from specified WSUS group.
+.NOTES Please define WSUS server and WSUS Group for which to remove nodes.
+#&gt;
+
+Clear-Host
+
+$varWSUSServer = &quot;WSUSServer&quot;
+$varWSUSGroup = &quot;Patch Group Week 1&quot;
+$varLogFile = &quot;LOG-Remove-SystemsByWSUSGroup-$($env:computername).log&quot;
+
+Function LogWrite
+{
+  Param ([string]$logstring)
+  Add-Content $varLogFile -value $logstring
+  Write-Host $logstring
+}
+
+LogWrite &quot;`n$(get-date -f u)`t--- START ---&quot;
+LogWrite &quot;$(get-date -f u)`tExecuting Remove-SystemsByWSUSGroup.ps1 on $($env:computername) by user $($env:USERNAME)&quot;
+
+LogWrite &quot;$(get-date -f u)`tConnecting to WSUS system $($varWSUSServer).&quot;
+[void][reflection.assembly]::LoadWithPartialName(&quot;Microsoft.UpdateServices.Administration&quot;)
+$varWSUS = [Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer($varWSUSServer,$False)
+
+LogWrite &quot;$(get-date -f u)`tSearching WSUS for systems in $($varWSUSGroup) group.&quot;
+$varNodeTargets = ($varWSUS.GetComputerTargetGroups() | Where { $_.Name -eq $varWSUSGroup }).GetComputerTargets()
+
+LogWrite &quot;$(get-date -f u)`tConnecting to appropiate WSUS groups.&quot;
+$varWSUSTargetGroup = $varWSUS.GetComputerTargetGroups() | ? {$_.Name -eq $varWSUSGroup }
+
+LogWrite &quot;$(get-date -f u)`t Begining to work through discovered array of target nodes...&quot;
+$varNodeTargets | foreach-object {
+    LogWrite &quot;$(get-date -f u)`t &gt; Removing $($_.FullDomainName) from $($varWSUSGroup) group.&quot;
+    $varWSUSTargetGroup.RemoveComputerTarget($_)
+    # Alternatively you could add the nodes instead...
+    #$varWSUSTargetGroup.AddComputerTarget($_)
+}
+
+LogWrite &quot;$(get-date -f u)`t--- END ---&quot;</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__mlcom">&lt;#&nbsp;
+.SYNOPSIS&nbsp;Remove&nbsp;all&nbsp;servers&nbsp;from&nbsp;specified&nbsp;WSUS&nbsp;group.&nbsp;
+.NOTES&nbsp;Please&nbsp;define&nbsp;WSUS&nbsp;server&nbsp;and&nbsp;WSUS&nbsp;Group&nbsp;for&nbsp;which&nbsp;to&nbsp;remove&nbsp;nodes.&nbsp;
+#&gt;</span>&nbsp;
+&nbsp;
+Clear<span class="powerShell__operator">-</span>Host&nbsp;
+&nbsp;
+<span class="powerShell__variable">$varWSUSServer</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;WSUSServer&quot;</span>&nbsp;
+<span class="powerShell__variable">$varWSUSGroup</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Patch&nbsp;Group&nbsp;Week&nbsp;1&quot;</span>&nbsp;
+<span class="powerShell__variable">$varLogFile</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;LOG-Remove-SystemsByWSUSGroup-$($env:computername).log&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;LogWrite&nbsp;
+{&nbsp;
+&nbsp;&nbsp;<span class="powerShell__keyword">Param</span>&nbsp;([string]<span class="powerShell__variable">$logstring</span>)&nbsp;
+&nbsp;&nbsp;<span class="powerShell__cmdlets">Add-Content</span>&nbsp;<span class="powerShell__variable">$varLogFile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__variable">$logstring</span>&nbsp;
+&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__variable">$logstring</span>&nbsp;
+}&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;`n$(get-date&nbsp;-f&nbsp;u)`t---&nbsp;START&nbsp;---&quot;</span>&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tExecuting&nbsp;Remove-SystemsByWSUSGroup.ps1&nbsp;on&nbsp;$($env:computername)&nbsp;by&nbsp;user&nbsp;$($env:USERNAME)&quot;</span>&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tConnecting&nbsp;to&nbsp;WSUS&nbsp;system&nbsp;$($varWSUSServer).&quot;</span>&nbsp;
+[void][reflection.assembly]::LoadWithPartialName(<span class="powerShell__string">&quot;Microsoft.UpdateServices.Administration&quot;</span>)&nbsp;
+<span class="powerShell__variable">$varWSUS</span>&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer(<span class="powerShell__variable">$varWSUSServer</span>,<span class="powerShell__variable">$False</span>)&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tSearching&nbsp;WSUS&nbsp;for&nbsp;systems&nbsp;in&nbsp;$($varWSUSGroup)&nbsp;group.&quot;</span>&nbsp;
+<span class="powerShell__variable">$varNodeTargets</span>&nbsp;=&nbsp;(<span class="powerShell__variable">$varWSUS</span>.GetComputerTargetGroups()&nbsp;<span class="powerShell__operator">|</span>&nbsp;Where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.Name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$varWSUSGroup</span>&nbsp;}).GetComputerTargets()&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tConnecting&nbsp;to&nbsp;appropiate&nbsp;WSUS&nbsp;groups.&quot;</span>&nbsp;
+<span class="powerShell__variable">$varWSUSTargetGroup</span>&nbsp;=&nbsp;<span class="powerShell__variable">$varWSUS</span>.GetComputerTargetGroups()&nbsp;<span class="powerShell__operator">|</span>&nbsp;?&nbsp;{<span class="powerShell__variable">$_</span>.Name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$varWSUSGroup</span>&nbsp;}&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`t&nbsp;Begining&nbsp;to&nbsp;work&nbsp;through&nbsp;discovered&nbsp;array&nbsp;of&nbsp;target&nbsp;nodes...&quot;</span>&nbsp;
+<span class="powerShell__variable">$varNodeTargets</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span><span class="powerShell__operator">-</span>object&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`t&nbsp;&gt;&nbsp;Removing&nbsp;$($_.FullDomainName)&nbsp;from&nbsp;$($varWSUSGroup)&nbsp;group.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$varWSUSTargetGroup</span>.RemoveComputerTarget(<span class="powerShell__variable">$_</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Alternatively&nbsp;you&nbsp;could&nbsp;add&nbsp;the&nbsp;nodes&nbsp;instead...</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$varWSUSTargetGroup.AddComputerTarget($_)</span>&nbsp;
+}&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`t---&nbsp;END&nbsp;---&quot;</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+
+        </div>
+    </body>
+</html>

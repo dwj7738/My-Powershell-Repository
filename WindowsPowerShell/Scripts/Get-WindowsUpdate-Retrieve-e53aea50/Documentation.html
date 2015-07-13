@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Get-WindowsUpdate - Retrieve All Windows Updates from a Local Computer</title>        
+        <meta name="description" content="This script contains a function (Get-WindowsUpdate) which is used to retrieve all Windows updates from a local computer.&#160; Specifically, this includes updates to both native components of the OS, and non-native (e.g. Microsoft Office)." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>This script contains a function (Get-WindowsUpdate) which is used to retrieve all Windows updates from a local computer.&nbsp; Specifically, this includes updates to both native components of the OS, and non-native (e.g. Microsoft Office).&nbsp; Each update
+ is viewable by an associated array index, with property values viewable via dot syntax.</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">#Retrieve all Windows updates from the local computer, and save the output as a variable.
+$updates = Get-WindowsUpdate
+ 
+#View all properties of the first returned update.
+$updates[0]
+ 
+#View the titles of all returned updates.
+$updates.Title 
+ 
+#Invoke Get-WindowsUpdate on a Remote Computer 
+$scriptBlock = { 
+    function Get-WindowsUpdate
+    { 
+        ... 
+    } 
+ 
+    Get-WindowsUpdate
+} 
+ 
+Invoke-Command -ComputerName &quot;375-37&quot; -ScriptBlock $scriptBlock </pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__com">#Retrieve&nbsp;all&nbsp;Windows&nbsp;updates&nbsp;from&nbsp;the&nbsp;local&nbsp;computer,&nbsp;and&nbsp;save&nbsp;the&nbsp;output&nbsp;as&nbsp;a&nbsp;variable.</span>&nbsp;
+<span class="powerShell__variable">$updates</span>&nbsp;=&nbsp;Get<span class="powerShell__operator">-</span>WindowsUpdate&nbsp;
+&nbsp;&nbsp;
+<span class="powerShell__com">#View&nbsp;all&nbsp;properties&nbsp;of&nbsp;the&nbsp;first&nbsp;returned&nbsp;update.</span>&nbsp;
+<span class="powerShell__variable">$updates</span>[0]&nbsp;
+&nbsp;&nbsp;
+<span class="powerShell__com">#View&nbsp;the&nbsp;titles&nbsp;of&nbsp;all&nbsp;returned&nbsp;updates.</span>&nbsp;
+<span class="powerShell__variable">$updates</span>.Title&nbsp;&nbsp;
+&nbsp;&nbsp;
+<span class="powerShell__com">#Invoke&nbsp;Get-WindowsUpdate&nbsp;on&nbsp;a&nbsp;Remote&nbsp;Computer&nbsp;</span>&nbsp;
+<span class="powerShell__variable">$scriptBlock</span>&nbsp;=&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">function</span>&nbsp;Get<span class="powerShell__operator">-</span>WindowsUpdate&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Get<span class="powerShell__operator">-</span>WindowsUpdate&nbsp;
+}&nbsp;&nbsp;
+&nbsp;&nbsp;
+Invoke<span class="powerShell__operator">-</span>Command&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__string">&quot;375-37&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ScriptBlock&nbsp;<span class="powerShell__variable">$scriptBlock</span>&nbsp;</pre>
+</div>
+</div>
+</div>
+
+        </div>
+    </body>
+</html>

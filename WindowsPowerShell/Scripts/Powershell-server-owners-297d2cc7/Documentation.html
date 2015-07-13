@@ -1,0 +1,600 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Powershell - server owners email notification automation for scheduled reboot</title>        
+        <meta name="description" content="Automatically send a HTML formatted email (with custom message) 
+to each server/VM owner with following informations :
+&gt; Server name 
+&gt; What patches are needed that are requiring reboot
+&gt; Scheduled reboot time 
+" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<div>Dear all,<br>
+ever had/needed to send an informational email to each one of your respective server/VM owners
+<br>
+to notify them about a scheduled reboot and the list of Microsoft patches that are involved ?<br>
+<br>
+As we all know Microsoft releases new security and update patches during it's monthly patching cycle.<br>
+<br>
+The IT Fellow in charge of the deployment of the update packages and the followup of the overall<br>
+server security compliancy levels during the patching cycle can quickly become exceeded<br>
+when dealing with <strong>a high number of servers/VMs to patch</strong><em> </em>
+especially when the actual <br>
+corporate IT policy/process dictates following :</div>
+<div><br>
+&gt; WU agent on servers is configured so that no automatic reboot is performed after patch installation
+<br>
+&gt; If a server has to be restarted, it's BU owner, or Technical owner or both...
+<span style="text-decoration:underline">have to be notified first </span><br>
+&nbsp;&nbsp;&nbsp; <em>so that they would have the time to get back to IT to request a postpone in case the scheduled reboot<br>
+&nbsp;&nbsp;&nbsp; would interrupt running jobs etc ...<br>
+</em><br>
+<strong>Script purpose :<br>
+</strong>&gt; automate a manual email notification task that is monthly</div>
+<div>redundant... and painful into a one click few seconds action :) <br>
+<br>
+<strong>Script functionning </strong>:<br>
+&nbsp; &gt; retrieve the servers list requiring reboots into a powershell variable
+<br>
+&nbsp; &gt; go through a csv plain text server Inventory file that have four columns
+<em>like shown below</em><br>
+&nbsp; &gt; for each line of that csv file, if that current server requires a reboot, it will build up a HTML email
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; with the needed informations<span>*&nbsp; </span>and will send it to the specific server owners plus copy who ever needed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>(additional contacts to be copied can be hardcoded into the script)</em><br>
+<br>
+<strong>The respective server owners will then know about :</strong><br>
+&gt; what patches will be installed on their servers ?<br>
+&gt; when will the reboot be done ?<br>
+<br>
+<strong>Each resulting email would look like :<br>
+</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://social.technet.microsoft.com/wiki/cfs-file.ashx/__key/communityserver-wikis-components-files/00-00-00-00-05/2843.Email.png">
+</a><img id="113627" src="E:\Documents\WindowsPowerShell\Scripts\Powershell-server-owners-297d2cc7\Documentation_files\tmp6636Resources.png" alt="" width="605" height="577"><br>
+<br>
+<br>
+<br>
+<strong>1)</strong> <strong>Inventory file column template :</strong><br>
+&nbsp;&nbsp;&nbsp; <span>(Servername,BUOwnerEmail,TechnicalOwnerEmail,changeLink)<br>
+<strong></strong></span></div>
+<div><span><strong>2) Powershell script&nbsp;:<br>
+</strong>&nbsp;&nbsp;&nbsp;&nbsp; Copy/Paste the below or download the attached .ps1 file
+<br>
+<br>
+<strong>3) Code that need to be customised <br>
+</strong>&nbsp;&nbsp;&nbsp;&nbsp; Variables content on line 15, 16, 17&nbsp;&nbsp;<br>
+<br>
+4) Script -as it is coded - has to run on the wsus server itself.<br>
+<br>
+Download the .ps1 ready code attached to this article and try it out.<br>
+Don't forget to rate the article and leave a comment.<br>
+<br>
+Thanks.<br>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">cls 
+#region &quot;R&agrave;Z&quot; 
+ $HTMLHeader  =&quot;&quot;
+ $HTMLMiddle  =&quot;&quot; 
+ $HTMLEnd     =&quot;&quot;
+ $HTMLmessage =&quot;&quot;
+ $CurrentSystemHTML =&quot;&quot;
+ $ListOfAttachments =&quot;&quot;
+ $body  =&quot;&quot;
+ $pendingRebootList=&quot;0&quot;
+#endregion  &quot;R&agrave;Z&quot; 
+
+#region &quot;Variables and Arguments&quot;
+ $ListOfAttachments = @() 
+ $Emailfrom                    = &quot;you.yourfamilyName@contoso.com&quot; 
+ $EmailServer                  = &quot;mailGateway.XYZ.ABC.Contoso.com&quot; 
+ $path = &quot;C:\windows\Scripts_for_wsus\Reporting\ServerOwners.csv&quot;
+ $csv = Import-csv -path $path
+ $CurrentMonth = Get-Date -format MMMM
+#endregion &quot;Variables and Arguments&quot;
+
+#region &quot;Get Servers requiring reboot&quot; 
+ [reflection.assembly]::LoadWithPartialName(&quot;Microsoft.UpdateServices.Administration&quot;) | out-null 
+ if (!$wsus) { 
+              $wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::GetUpdateServer();
+ } 
+ $computerScope = new-object Microsoft.UpdateServices.Administration.ComputerTargetScope; 
+ $computerScope.IncludedInstallationStates = [Microsoft.UpdateServices.Administration.UpdateInstallationStates]::InstalledPendingReboot;
+ $updateScope = new-object Microsoft.UpdateServices.Administration.UpdateScope;
+ $updateScope.IncludedInstallationStates = [Microsoft.UpdateServices.Administration.UpdateInstallationStates]::InstalledPendingReboot; 
+ $computers = $wsus.GetComputerTargets($computerScope); 
+#endregion &quot;Get Servers requiring reboot&quot; 
+
+Write-Host &quot;Servers requiring reboot :&quot;
+
+#region &quot;Loop through the servers requiring reboot list&quot;
+ $computers | foreach-object {
+                              #region &quot;R&agrave;Z&quot;
+                               $HTMLHeader  =&quot;&quot;
+                               $HTMLMiddle  =&quot;&quot; 
+                               $HTMLEnd     =&quot;&quot;
+                               $HTMLmessage =&quot;&quot;
+                               $HTMLEnd     =&quot;&quot;
+                               $CurrentSystemHTML =&quot;&quot;
+                               $ListOfAttachments =&quot;&quot;
+                               $ListOfPatches=&quot;&quot;
+                               $body  =&quot;&quot;
+                               $pendingRebootList =  &quot;&quot;
+                               $neededUpdate = &quot;&quot;
+                               $pendingRebootList=&quot;0&quot;
+                              #endregion &quot;R&agrave;Z&quot;
+
+                              #region &quot;Assemble the HTML Header and CSS for our Report&quot;
+                               $HTMLHeader = @&quot;
+                               &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Frameset//EN&quot; &quot;http://www.w3.org/TR/html4/frameset.dtd&quot;&gt;
+                               &lt;html&gt;&lt;head&gt;&lt;title&gt;My Systems Report&lt;/title&gt;
+                               &lt;!--
+                               body {
+                               font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+                               }
+                               #report { width: 835px; }
+                               table{ 
+                                  border-collapse: collapse;
+                                  border: none;
+                                  font: 10pt Verdana, Geneva, Arial, Helvetica, sans-serif;
+                                  color: black;
+                                  margin-bottom: 10px;
+                               }
+                               table td{
+                                  font-size: 12px; 
+                                  padding-left: 0px;
+                                  padding-right: 20px;
+                                  text-align: left;
+                               }
+                               table th {
+                                  font-size: 12px;
+                                  font-weight: bold;
+                                  padding-left: 0px;
+                                  padding-right: 20px;
+                                  text-align: left;
+                               }
+                                  h2{ clear: both; font-size: 130%; }
+                                 h3{
+                                    clear: both;
+                                    font-size: 115%;
+                                    margin-left: 20px;
+                                    margin-top: 30px;
+                               }
+                               p{ margin-left: 20px; font-size: 12px; }
+                               table.list{ float: left; }
+                               table.list td:nth-child(1){
+                                  font-weight: bold;
+                                  border-right: 1px grey solid;
+                                  text-align: right;
+                               }
+                               table.list td:nth-child(2){ padding-left: 7px; }
+                               table tr:nth-child(even) td:nth-child(even){ background: #CCCCCC; }
+                               table tr:nth-child(odd) td:nth-child(odd){ background: #F2F2F2; }
+                               table tr:nth-child(even) td:nth-child(odd){ background: #DDDDDD; }
+                               table tr:nth-child(odd) td:nth-child(even){ background: #E5E5E5; }
+                               div.column { width: 320px; float: left; }
+                               div.first{ padding-right: 20px; border-right: 1px  grey solid; }
+                               div.second{ margin-left: 30px; }
+                               table{ margin-left: 20px; }
+--&gt;
+                               &lt;/head&gt;
+                               &lt;body&gt; 
+&quot;@                                    
+                              #endregion &quot;Assemble the HTML Header and CSS for our Report&quot;
+
+
+                              #If current ComputerName in csv == current Server in the for loop 
+                              #--&gt; send email to owners ;) 
+                              
+                              #I'm doing the following to get the short server name or netbios name...  
+                              $_ServerName = $_.FullDomainName.Split('.').ToUpper().Trim() |select -first 1
+                              #for later Html use 
+                              write-host  $_ServerName
+                              #$pendingRebootList = $pendingRebootList &#43; $_.FullDomainName &#43; &quot;&lt;br&gt;&quot; ;
+                              #Show which updates are causing the reboot required for the computer.  Remove the next 5 lines to only generate a list of computers. 
+                              $updatesForReboot = $_.GetUpdateInstallationInfoPerUpdate($updateScope);
+                              $updatesForReboot | foreach-object { 
+                                                                 $neededUpdate = $wsus.GetUpdate($_.UpdateId);
+                                                                 &quot;   &quot;&#43;$neededUpdate.Title | write-host;
+                                                                  #$pendingRebootList = $pendingRebootList &#43; &quot;&gt;&quot;&#43; $neededUpdate.Title &#43; &quot;&lt;br&gt;&quot;;                                                            
+                                                                  #Remove previous lines to only show computers that need updates
+                                                                 $ListOfPatches =  $ListOfPatches &#43; &quot;&amp;nbsp; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot; &#43; $neededUpdate.Title &#43; &quot;&lt;br&gt;&quot;; #for later Html use 
+                                                                }
+                              #HTML Email Message Body for Servers Requiring reboot
+                              $CurrentSystemHTML = @&quot;
+                              &lt;div id=&quot;report&quot;&gt;
+                              &lt;font color=&quot;#0404B4&quot;&gt;
+                              Dears,&lt;br&gt;&lt;br&gt;
+                              as part of the $CurrentMonth Microsoft Windows monthly security patching cycle, &lt;br&gt; new updates were applied on $_ServerName.&lt;br&gt;                                      
+                              &lt;br&gt;To complete the installation process, &lt;b&gt; $_ServerName will be restarted - tonight by 11PM&lt;/b&gt;.&lt;br&gt;
+                              &lt;br&gt;
+                              Patch List : &lt;br&gt;
+                              $ListOfPatches 
+                              &lt;br&gt;  &lt;br&gt;  
+                              If you don't agree about the restart time &lt;br&gt; or if you are not the current owner of this server  as mentioned below,  &lt;br&gt; please let us know by replying to this email.
+                              &lt;br&gt;  &lt;br&gt;                                             
+&quot;@ 
+ 
+                              # Add the current System HTML Report into the final HTML Report body
+                              $HTMLMiddle &#43;= $CurrentSystemHTML
+
+                             
+                              #1 loop through csv file
+                              #2 determine Server Owners 
+                              #3 complete building the email html body 
+                              #4 send the email to owners
+                               foreach($line in $csv)
+                               { 
+                                if ($line.Servername.ToLower().Trim() -eq $_ServerName.ToLower().Trim() )
+                                {
+                                 $BUOwnerEmail            = $line.BUOwnerEmail.ToLower().Trim()
+                                 $TechnicalOwnerEmail     = $line.TechnicalOwnerEmail.ToLower().Trim()
+                                 ##################################################################################################
+                                 # Actually, as I don't want to specify any Change Management Link so I'm setting it to empty value..
+                                 &lt;#$ChangeLink = $line.ChangeLink 
+                                 $HTMLEnd = @&quot;
+                                 &lt;br&gt;BUOwner : $BUOwnerEmail
+                                 &lt;br&gt;TechnicalOwner :  $TechnicalOwnerEmail    
+                                 &lt;br&gt;Change Management Ticket link : $ChangeLink
+                                 &lt;br&gt;&lt;br&gt;Best Regards.&lt;br&gt;&lt;table class=&quot;list&quot;&gt;&lt;tr&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;
+&quot;@#&gt; 
+                                 ##################################################################################################
+                                 $HTMLEnd = @&quot;
+                                 &lt;br&gt;BUOwner : $BUOwnerEmail 
+                                 &lt;br&gt;TechnicalOwner :  $TechnicalOwnerEmail    
+                                 &lt;br&gt;&lt;br&gt;Best Regards.&lt;br&gt;&lt;table class=&quot;list&quot;&gt;&lt;tr&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;
+&quot;@                                                                        
+                                 #Assemble the final report from all our HTML sections
+                                 $HTMLmessage = $HTMLHeader &#43; $HTMLMiddle &#43; $HTMLEnd
+                                 # Save the report out to a file in the current path
+                                 $HTMLmessage | Out-File ((Get-Location).Path &#43; &quot;\Notification_&quot; &#43; $line.Servername.ToUpper().Trim() &#43; &quot;_.html&quot;)
+                                                                              
+                                 ####### proceed to tests using your adress by commenting the BUOwner and TechOwner email lines and uncommenting your line
+                                 #$Emailto                  = 'myemailaddresshere@contoso.com'
+                                 $Emailto                       = $BUOwnerEmail &#43; &quot;,&quot; &#43;  $TechnicalOwnerEmail &#43; &quot;,&quot; &#43; &quot;myemailaddress@contoso.com&quot;
+                                 $EmailSubject                  = $line.Servername.ToUpper().Trim() &#43; &quot;  - server security patching&quot;
+                                 Write-Host   &quot;Emailto     : &quot; $BUOwnerEmail &#43; &quot;   &quot; &#43;  $TechnicalOwnerEmail 
+                                 #Write-Host   &quot;Change Link : &quot; $ChangeLink
+                                 $HTMLmessage           = $HTMLmessage &#43; &quot;&lt;br&gt;&lt;br&gt;&lt;br&gt;&quot; &#43; $line.BUOwnerEmail.ToLower().Trim() &#43; &quot;,&quot; &#43; $line.TechnicalOwnerEmail.ToLower().Trim()
+                                 ##### comment the following if you want to !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                 send-mailmessage    -from $Emailfrom -to $Emailto -subject $EmailSubject -BodyAsHTML -body $HTMLmessage -priority Normal -smtpServer $EmailServer
+                                 ##### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                }
+                               }
+                             } 
+#endregion &quot;Loop through the servers requiring reboot list&quot;</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__alias">cls</span>&nbsp;&nbsp;
+<span class="powerShell__com">#region&nbsp;&quot;R&agrave;Z&quot;&nbsp;</span>&nbsp;
+&nbsp;<span class="powerShell__variable">$HTMLHeader</span>&nbsp;&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;<span class="powerShell__variable">$HTMLMiddle</span>&nbsp;&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;&nbsp;
+&nbsp;<span class="powerShell__variable">$HTMLEnd</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;<span class="powerShell__variable">$HTMLmessage</span>&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;<span class="powerShell__variable">$CurrentSystemHTML</span>&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;<span class="powerShell__variable">$ListOfAttachments</span>&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;<span class="powerShell__variable">$body</span>&nbsp;&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;<span class="powerShell__variable">$pendingRebootList</span>=<span class="powerShell__string">&quot;0&quot;</span>&nbsp;
+<span class="powerShell__com">#endregion&nbsp;&nbsp;&quot;R&agrave;Z&quot;&nbsp;</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#region&nbsp;&quot;Variables&nbsp;and&nbsp;Arguments&quot;</span>&nbsp;
+&nbsp;<span class="powerShell__variable">$ListOfAttachments</span>&nbsp;=&nbsp;@()&nbsp;&nbsp;
+&nbsp;<span class="powerShell__variable">$Emailfrom</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;you.yourfamilyName@contoso.com&quot;</span>&nbsp;&nbsp;
+&nbsp;<span class="powerShell__variable">$EmailServer</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;mailGateway.XYZ.ABC.Contoso.com&quot;</span>&nbsp;&nbsp;
+&nbsp;<span class="powerShell__variable">$path</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;C:\windows\Scripts_for_wsus\Reporting\ServerOwners.csv&quot;</span>&nbsp;
+&nbsp;<span class="powerShell__variable">$csv</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Import-csv</span>&nbsp;<span class="powerShell__operator">-</span>path&nbsp;<span class="powerShell__variable">$path</span>&nbsp;
+&nbsp;<span class="powerShell__variable">$CurrentMonth</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-Date</span>&nbsp;<span class="powerShell__operator">-</span>format&nbsp;MMMM&nbsp;
+<span class="powerShell__com">#endregion&nbsp;&quot;Variables&nbsp;and&nbsp;Arguments&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#region&nbsp;&quot;Get&nbsp;Servers&nbsp;requiring&nbsp;reboot&quot;&nbsp;</span>&nbsp;
+&nbsp;[reflection.assembly]::LoadWithPartialName(<span class="powerShell__string">&quot;Microsoft.UpdateServices.Administration&quot;</span>)&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">out-null</span>&nbsp;&nbsp;
+&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__operator">!</span><span class="powerShell__variable">$wsus</span>)&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$wsus</span>&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.AdminProxy]::GetUpdateServer();&nbsp;
+&nbsp;}&nbsp;&nbsp;
+&nbsp;<span class="powerShell__variable">$computerScope</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">new-object</span>&nbsp;Microsoft.UpdateServices.Administration.ComputerTargetScope;&nbsp;&nbsp;
+&nbsp;<span class="powerShell__variable">$computerScope</span>.IncludedInstallationStates&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.UpdateInstallationStates]::InstalledPendingReboot;&nbsp;
+&nbsp;<span class="powerShell__variable">$updateScope</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">new-object</span>&nbsp;Microsoft.UpdateServices.Administration.UpdateScope;&nbsp;
+&nbsp;<span class="powerShell__variable">$updateScope</span>.IncludedInstallationStates&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.UpdateInstallationStates]::InstalledPendingReboot;&nbsp;&nbsp;
+&nbsp;<span class="powerShell__variable">$computers</span>&nbsp;=&nbsp;<span class="powerShell__variable">$wsus</span>.GetComputerTargets(<span class="powerShell__variable">$computerScope</span>);&nbsp;&nbsp;
+<span class="powerShell__com">#endregion&nbsp;&quot;Get&nbsp;Servers&nbsp;requiring&nbsp;reboot&quot;&nbsp;</span>&nbsp;
+&nbsp;
+Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Servers&nbsp;requiring&nbsp;reboot&nbsp;:&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#region&nbsp;&quot;Loop&nbsp;through&nbsp;the&nbsp;servers&nbsp;requiring&nbsp;reboot&nbsp;list&quot;</span>&nbsp;
+&nbsp;<span class="powerShell__variable">$computers</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span><span class="powerShell__operator">-</span>object&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#region&nbsp;&quot;R&agrave;Z&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTMLHeader</span>&nbsp;&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTMLMiddle</span>&nbsp;&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTMLEnd</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTMLmessage</span>&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTMLEnd</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentSystemHTML</span>&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ListOfAttachments</span>&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ListOfPatches</span>=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$body</span>&nbsp;&nbsp;=<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$pendingRebootList</span>&nbsp;=&nbsp;&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$neededUpdate</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$pendingRebootList</span>=<span class="powerShell__string">&quot;0&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#endregion&nbsp;&quot;R&agrave;Z&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#region&nbsp;&quot;Assemble&nbsp;the&nbsp;HTML&nbsp;Header&nbsp;and&nbsp;CSS&nbsp;for&nbsp;our&nbsp;Report&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTMLHeader</span>&nbsp;=&nbsp;@&quot;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="powerShell__operator">!</span>DOCTYPE&nbsp;HTML&nbsp;PUBLIC&nbsp;<span class="powerShell__string">&quot;-//W3C//DTD&nbsp;HTML&nbsp;4.01&nbsp;Frameset//EN&quot;</span>&nbsp;<span class="powerShell__string">&quot;http://www.w3.org/TR/html4/frameset.dtd&quot;</span>&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;html&gt;&lt;head&gt;&lt;title&gt;My&nbsp;Systems&nbsp;Report&lt;<span class="powerShell__operator">/</span>title&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="powerShell__operator">!</span><span class="powerShell__operator">-</span><span class="powerShell__operator">-</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font<span class="powerShell__operator">-</span>family:&nbsp;Verdana,&nbsp;Geneva,&nbsp;Arial,&nbsp;Helvetica,&nbsp;sans<span class="powerShell__operator">-</span>serif;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#report&nbsp;{&nbsp;width:&nbsp;835px;&nbsp;}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border<span class="powerShell__operator">-</span>collapse:&nbsp;collapse;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border:&nbsp;none;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font:&nbsp;10pt&nbsp;Verdana,&nbsp;Geneva,&nbsp;Arial,&nbsp;Helvetica,&nbsp;sans<span class="powerShell__operator">-</span>serif;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color:&nbsp;black;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;margin<span class="powerShell__operator">-</span>bottom:&nbsp;10px;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table&nbsp;td{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font<span class="powerShell__operator">-</span>size:&nbsp;12px;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;padding<span class="powerShell__operator">-</span>left:&nbsp;0px;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;padding<span class="powerShell__operator">-</span>right:&nbsp;20px;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<span class="powerShell__operator">-</span>align:&nbsp;left;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table&nbsp;th&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font<span class="powerShell__operator">-</span>size:&nbsp;12px;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font<span class="powerShell__operator">-</span>weight:&nbsp;bold;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;padding<span class="powerShell__operator">-</span>left:&nbsp;0px;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;padding<span class="powerShell__operator">-</span>right:&nbsp;20px;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<span class="powerShell__operator">-</span>align:&nbsp;left;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h2{&nbsp;clear:&nbsp;both;&nbsp;font<span class="powerShell__operator">-</span>size:&nbsp;130%;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h3{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear:&nbsp;both;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font<span class="powerShell__operator">-</span>size:&nbsp;115%;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;margin<span class="powerShell__operator">-</span>left:&nbsp;20px;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;margin<span class="powerShell__operator">-</span>top:&nbsp;30px;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p{&nbsp;margin<span class="powerShell__operator">-</span>left:&nbsp;20px;&nbsp;font<span class="powerShell__operator">-</span>size:&nbsp;12px;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table.list{&nbsp;float:&nbsp;left;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table.list&nbsp;td:nth<span class="powerShell__operator">-</span>child(1){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font<span class="powerShell__operator">-</span>weight:&nbsp;bold;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border<span class="powerShell__operator">-</span>right:&nbsp;1px&nbsp;grey&nbsp;solid;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<span class="powerShell__operator">-</span>align:&nbsp;right;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table.list&nbsp;td:nth<span class="powerShell__operator">-</span>child(2){&nbsp;padding<span class="powerShell__operator">-</span>left:&nbsp;7px;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table&nbsp;tr:nth<span class="powerShell__operator">-</span>child(even)&nbsp;td:nth<span class="powerShell__operator">-</span>child(even){&nbsp;background:&nbsp;<span class="powerShell__com">#CCCCCC;&nbsp;}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table&nbsp;tr:nth<span class="powerShell__operator">-</span>child(odd)&nbsp;td:nth<span class="powerShell__operator">-</span>child(odd){&nbsp;background:&nbsp;<span class="powerShell__com">#F2F2F2;&nbsp;}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table&nbsp;tr:nth<span class="powerShell__operator">-</span>child(even)&nbsp;td:nth<span class="powerShell__operator">-</span>child(odd){&nbsp;background:&nbsp;<span class="powerShell__com">#DDDDDD;&nbsp;}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table&nbsp;tr:nth<span class="powerShell__operator">-</span>child(odd)&nbsp;td:nth<span class="powerShell__operator">-</span>child(even){&nbsp;background:&nbsp;<span class="powerShell__com">#E5E5E5;&nbsp;}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;div.column&nbsp;{&nbsp;width:&nbsp;320px;&nbsp;float:&nbsp;left;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;div.first{&nbsp;padding<span class="powerShell__operator">-</span>right:&nbsp;20px;&nbsp;border<span class="powerShell__operator">-</span>right:&nbsp;1px&nbsp;&nbsp;grey&nbsp;solid;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;div.second{&nbsp;margin<span class="powerShell__operator">-</span>left:&nbsp;30px;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table{&nbsp;margin<span class="powerShell__operator">-</span>left:&nbsp;20px;&nbsp;}&nbsp;
+<span class="powerShell__operator">-</span><span class="powerShell__operator">-</span>&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="powerShell__operator">/</span>head&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;body&gt;&nbsp;&nbsp;
+&quot;@&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#endregion&nbsp;&quot;Assemble&nbsp;the&nbsp;HTML&nbsp;Header&nbsp;and&nbsp;CSS&nbsp;for&nbsp;our&nbsp;Report&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#If&nbsp;current&nbsp;ComputerName&nbsp;in&nbsp;csv&nbsp;==&nbsp;current&nbsp;Server&nbsp;in&nbsp;the&nbsp;for&nbsp;loop&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#--&gt;&nbsp;send&nbsp;email&nbsp;to&nbsp;owners&nbsp;;)&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#I'm&nbsp;doing&nbsp;the&nbsp;following&nbsp;to&nbsp;get&nbsp;the&nbsp;short&nbsp;server&nbsp;name&nbsp;or&nbsp;netbios&nbsp;name...&nbsp;&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$_ServerName</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>.FullDomainName.Split(<span class="powerShell__string">'.'</span>).ToUpper().Trim()&nbsp;<span class="powerShell__operator">|</span><span class="powerShell__alias">select</span>&nbsp;<span class="powerShell__operator">-</span>first&nbsp;1&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#for&nbsp;later&nbsp;Html&nbsp;use&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;&nbsp;<span class="powerShell__variable">$_ServerName</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$pendingRebootList&nbsp;=&nbsp;$pendingRebootList&nbsp;&#43;&nbsp;$_.FullDomainName&nbsp;&#43;&nbsp;&quot;&lt;br&gt;&quot;&nbsp;;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Show&nbsp;which&nbsp;updates&nbsp;are&nbsp;causing&nbsp;the&nbsp;reboot&nbsp;required&nbsp;for&nbsp;the&nbsp;computer.&nbsp;&nbsp;Remove&nbsp;the&nbsp;next&nbsp;5&nbsp;lines&nbsp;to&nbsp;only&nbsp;generate&nbsp;a&nbsp;list&nbsp;of&nbsp;computers.&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$updatesForReboot</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>.GetUpdateInstallationInfoPerUpdate(<span class="powerShell__variable">$updateScope</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$updatesForReboot</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span><span class="powerShell__operator">-</span>object&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$neededUpdate</span>&nbsp;=&nbsp;<span class="powerShell__variable">$wsus</span>.GetUpdate(<span class="powerShell__variable">$_</span>.UpdateId);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$neededUpdate</span>.Title&nbsp;<span class="powerShell__operator">|</span>&nbsp;write<span class="powerShell__operator">-</span>host;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$pendingRebootList&nbsp;=&nbsp;$pendingRebootList&nbsp;&#43;&nbsp;&quot;&gt;&quot;&#43;&nbsp;$neededUpdate.Title&nbsp;&#43;&nbsp;&quot;&lt;br&gt;&quot;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Remove&nbsp;previous&nbsp;lines&nbsp;to&nbsp;only&nbsp;show&nbsp;computers&nbsp;that&nbsp;need&nbsp;updates</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ListOfPatches</span>&nbsp;=&nbsp;&nbsp;<span class="powerShell__variable">$ListOfPatches</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&amp;nbsp;&nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$neededUpdate</span>.Title&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&lt;br&gt;&quot;</span>;&nbsp;<span class="powerShell__com">#for&nbsp;later&nbsp;Html&nbsp;use&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#HTML&nbsp;Email&nbsp;Message&nbsp;Body&nbsp;for&nbsp;Servers&nbsp;Requiring&nbsp;reboot</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentSystemHTML</span>&nbsp;=&nbsp;@&quot;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&nbsp;id=<span class="powerShell__string">&quot;report&quot;</span>&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;font&nbsp;color=<span class="powerShell__string">&quot;#0404B4&quot;</span>&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dears,&lt;br&gt;&lt;br&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as&nbsp;part&nbsp;of&nbsp;the&nbsp;<span class="powerShell__variable">$CurrentMonth</span>&nbsp;Microsoft&nbsp;Windows&nbsp;monthly&nbsp;security&nbsp;patching&nbsp;cycle,&nbsp;&lt;br&gt;&nbsp;new&nbsp;updates&nbsp;were&nbsp;applied&nbsp;on&nbsp;<span class="powerShell__variable">$_ServerName</span>.&lt;br&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&gt;To&nbsp;complete&nbsp;the&nbsp;installation&nbsp;<span class="powerShell__keyword">process</span>,&nbsp;&lt;b&gt;&nbsp;<span class="powerShell__variable">$_ServerName</span>&nbsp;will&nbsp;be&nbsp;restarted&nbsp;<span class="powerShell__operator">-</span>&nbsp;tonight&nbsp;by&nbsp;11PM&lt;<span class="powerShell__operator">/</span>b&gt;.&lt;br&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Patch&nbsp;List&nbsp;:&nbsp;&lt;br&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ListOfPatches</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&gt;&nbsp;&nbsp;&lt;br&gt;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;you&nbsp;don't&nbsp;agree&nbsp;about&nbsp;the&nbsp;restart&nbsp;time&nbsp;&lt;br&gt;&nbsp;or&nbsp;<span class="powerShell__keyword">if</span>&nbsp;you&nbsp;are&nbsp;not&nbsp;the&nbsp;current&nbsp;owner&nbsp;of&nbsp;this&nbsp;server&nbsp;&nbsp;as&nbsp;mentioned&nbsp;below,&nbsp;&nbsp;&lt;br&gt;&nbsp;please&nbsp;let&nbsp;us&nbsp;know&nbsp;by&nbsp;replying&nbsp;to&nbsp;this&nbsp;email.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&gt;&nbsp;&nbsp;&lt;br&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&quot;@&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Add&nbsp;the&nbsp;current&nbsp;System&nbsp;HTML&nbsp;Report&nbsp;into&nbsp;the&nbsp;final&nbsp;HTML&nbsp;Report&nbsp;body</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTMLMiddle</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__variable">$CurrentSystemHTML</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#1&nbsp;loop&nbsp;through&nbsp;csv&nbsp;file</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#2&nbsp;determine&nbsp;Server&nbsp;Owners&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#3&nbsp;complete&nbsp;building&nbsp;the&nbsp;email&nbsp;html&nbsp;body&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#4&nbsp;send&nbsp;the&nbsp;email&nbsp;to&nbsp;owners</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">foreach</span>(<span class="powerShell__variable">$line</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$csv</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$line</span>.Servername.ToLower().Trim()&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$_ServerName</span>.ToLower().Trim()&nbsp;)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$BUOwnerEmail</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$line</span>.BUOwnerEmail.ToLower().Trim()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$TechnicalOwnerEmail</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$line</span>.TechnicalOwnerEmail.ToLower().Trim()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">##################################################################################################</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Actually,&nbsp;as&nbsp;I&nbsp;don't&nbsp;want&nbsp;to&nbsp;specify&nbsp;any&nbsp;Change&nbsp;Management&nbsp;Link&nbsp;so&nbsp;I'm&nbsp;setting&nbsp;it&nbsp;to&nbsp;empty&nbsp;value..</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__mlcom">&lt;#$ChangeLink&nbsp;=&nbsp;$line.ChangeLink&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$HTMLEnd&nbsp;=&nbsp;@&quot;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&gt;BUOwner&nbsp;:&nbsp;$BUOwnerEmail&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&gt;TechnicalOwner&nbsp;:&nbsp;&nbsp;$TechnicalOwnerEmail&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&gt;Change&nbsp;Management&nbsp;Ticket&nbsp;link&nbsp;:&nbsp;$ChangeLink&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&gt;&lt;br&gt;Best&nbsp;Regards.&lt;br&gt;&lt;table&nbsp;class=&quot;list&quot;&gt;&lt;tr&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;&nbsp;
+&quot;@#&gt;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">##################################################################################################</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTMLEnd</span>&nbsp;=&nbsp;@&quot;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&gt;BUOwner&nbsp;:&nbsp;<span class="powerShell__variable">$BUOwnerEmail</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&gt;TechnicalOwner&nbsp;:&nbsp;&nbsp;<span class="powerShell__variable">$TechnicalOwnerEmail</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br&gt;&lt;br&gt;Best&nbsp;Regards.&lt;br&gt;&lt;table&nbsp;class=<span class="powerShell__string">&quot;list&quot;</span>&gt;&lt;tr&gt;&lt;<span class="powerShell__operator">/</span>tr&gt;&lt;<span class="powerShell__operator">/</span>table&gt;&lt;<span class="powerShell__operator">/</span>div&gt;&lt;<span class="powerShell__operator">/</span>body&gt;&lt;<span class="powerShell__operator">/</span>html&gt;&nbsp;
+&quot;@&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Assemble&nbsp;the&nbsp;final&nbsp;report&nbsp;from&nbsp;all&nbsp;our&nbsp;HTML&nbsp;sections</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTMLmessage</span>&nbsp;=&nbsp;<span class="powerShell__variable">$HTMLHeader</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$HTMLMiddle</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$HTMLEnd</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Save&nbsp;the&nbsp;report&nbsp;out&nbsp;to&nbsp;a&nbsp;file&nbsp;in&nbsp;the&nbsp;current&nbsp;path</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTMLmessage</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Out<span class="powerShell__operator">-</span>File&nbsp;((<span class="powerShell__cmdlets">Get-Location</span>).Path&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;\Notification_&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$line</span>.Servername.ToUpper().Trim()&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;_.html&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#######&nbsp;proceed&nbsp;to&nbsp;tests&nbsp;using&nbsp;your&nbsp;adress&nbsp;by&nbsp;commenting&nbsp;the&nbsp;BUOwner&nbsp;and&nbsp;TechOwner&nbsp;email&nbsp;lines&nbsp;and&nbsp;uncommenting&nbsp;your&nbsp;line</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$Emailto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'myemailaddresshere@contoso.com'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Emailto</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$BUOwnerEmail</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;,&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;&nbsp;<span class="powerShell__variable">$TechnicalOwnerEmail</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;,&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;myemailaddress@contoso.com&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$EmailSubject</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$line</span>.Servername.ToUpper().Trim()&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;-&nbsp;server&nbsp;security&nbsp;patching&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;Emailto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&quot;</span>&nbsp;<span class="powerShell__variable">$BUOwnerEmail</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;&nbsp;<span class="powerShell__variable">$TechnicalOwnerEmail</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Write-Host&nbsp;&nbsp;&nbsp;&quot;Change&nbsp;Link&nbsp;:&nbsp;&quot;&nbsp;$ChangeLink</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTMLmessage</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$HTMLmessage</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&lt;br&gt;&lt;br&gt;&lt;br&gt;&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$line</span>.BUOwnerEmail.ToLower().Trim()&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;,&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$line</span>.TechnicalOwnerEmail.ToLower().Trim()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#####&nbsp;comment&nbsp;the&nbsp;following&nbsp;if&nbsp;you&nbsp;want&nbsp;to&nbsp;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send<span class="powerShell__operator">-</span>mailmessage&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__keyword">from</span>&nbsp;<span class="powerShell__variable">$Emailfrom</span>&nbsp;<span class="powerShell__operator">-</span>to&nbsp;<span class="powerShell__variable">$Emailto</span>&nbsp;<span class="powerShell__operator">-</span>subject&nbsp;<span class="powerShell__variable">$EmailSubject</span>&nbsp;<span class="powerShell__operator">-</span>BodyAsHTML&nbsp;<span class="powerShell__operator">-</span>body&nbsp;<span class="powerShell__variable">$HTMLmessage</span>&nbsp;<span class="powerShell__operator">-</span>priority&nbsp;Normal&nbsp;<span class="powerShell__operator">-</span>smtpServer&nbsp;<span class="powerShell__variable">$EmailServer</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#####&nbsp;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+<span class="powerShell__com">#endregion&nbsp;&quot;Loop&nbsp;through&nbsp;the&nbsp;servers&nbsp;requiring&nbsp;reboot&nbsp;list&quot;</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<br>
+</span></div>
+
+        </div>
+    </body>
+</html>

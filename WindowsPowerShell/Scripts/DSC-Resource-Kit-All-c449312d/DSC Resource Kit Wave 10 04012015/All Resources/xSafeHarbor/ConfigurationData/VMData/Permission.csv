@@ -1,0 +1,3 @@
+Computer,Share,User
+CimSession: SHFileServer.safeharbor.contoso.com,Share1,corporate\user1
+CimSession: SHFileServer.safeharbor.contoso.com,Share2,corporate\user1

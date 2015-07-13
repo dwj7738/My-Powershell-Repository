@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Test-RebootRequired</title>        
+        <meta name="description" content="Hello and Welcome,So this script isn&#39;t particularly fancy but I use it all the time in line with other scripts.&#160; It returns a simple boolean true or false to indicate if a server requires a reboot.  Thanks for stopping by!" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>Hello and Welcome,</p>
+<p>So this script isn't particularly fancy but I use it all the time in line with other scripts.&nbsp; It returns a simple boolean true or false to indicate if a server requires a reboot.&nbsp; I get a lot of value out of it and I hope you do too.&nbsp; As
+ usual if you like it please take the time to rate it, it helps me know if I'm on the right track and it helps let other people know about good tools.&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">Function Test-RebootRequired
+{
+&lt;#
+.SYNOPSIS
+Determines if a reboot is required on a particular computer
+
+.DESCRIPTION
+Uses a registry query to determine if a system has pending file writes
+
+.EXAMPLE
+Test-RebootRequired -computername Target1
+
+Returns Boolean true or false
+
+.NOTES
+Written by Jason Morgan
+Last modified 7/15/2013
+
+#&gt;
+[CmdletBinding()]
+param
+    (
+        [Parameter(Mandatory=$false,
+        ValueFromPipeline=$True,
+        ValueFromPipelineByPropertyName=$True) ]
+        [string[]]$ComputerName	= $env:COMPUTERNAME
+    )
+process 
+    {
+        Write-Verbose &quot;Testing $ComputerName&quot;
+            Invoke-Command -ComputerName $ComputerName -ScriptBlock {
+                    Test-Path &quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired&quot; 
+                }
+    }
+}</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__keyword">Function</span>&nbsp;Test<span class="powerShell__operator">-</span>RebootRequired&nbsp;
+{&nbsp;
+<span class="powerShell__mlcom">&lt;#&nbsp;
+.SYNOPSIS&nbsp;
+Determines&nbsp;if&nbsp;a&nbsp;reboot&nbsp;is&nbsp;required&nbsp;on&nbsp;a&nbsp;particular&nbsp;computer&nbsp;
+&nbsp;
+.DESCRIPTION&nbsp;
+Uses&nbsp;a&nbsp;registry&nbsp;query&nbsp;to&nbsp;determine&nbsp;if&nbsp;a&nbsp;system&nbsp;has&nbsp;pending&nbsp;file&nbsp;writes&nbsp;
+&nbsp;
+.EXAMPLE&nbsp;
+Test-RebootRequired&nbsp;-computername&nbsp;Target1&nbsp;
+&nbsp;
+Returns&nbsp;Boolean&nbsp;true&nbsp;or&nbsp;false&nbsp;
+&nbsp;
+.NOTES&nbsp;
+Written&nbsp;by&nbsp;Jason&nbsp;Morgan&nbsp;
+Last&nbsp;modified&nbsp;7/15/2013&nbsp;
+&nbsp;
+#&gt;</span>&nbsp;
+[CmdletBinding()]&nbsp;
+<span class="powerShell__keyword">param</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory=<span class="powerShell__variable">$false</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ValueFromPipeline=<span class="powerShell__variable">$True</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ValueFromPipelineByPropertyName=<span class="powerShell__variable">$True</span>)&nbsp;]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string[]]<span class="powerShell__variable">$ComputerName</span>&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$env</span>:COMPUTERNAME&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;
+<span class="powerShell__keyword">process</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Testing&nbsp;$ComputerName&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invoke<span class="powerShell__operator">-</span>Command&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>ScriptBlock&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Test-Path</span>&nbsp;<span class="powerShell__string">&quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto&nbsp;Update\RebootRequired&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+}</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<p>&nbsp;</p>
+
+        </div>
+    </body>
+</html>

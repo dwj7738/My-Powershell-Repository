@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Download and Install SharePoint 2013 Prerequisites on Windows Server 2012</title>        
+        <meta name="description" content="These PowerShell scripts will automate downloading and installing the SharePoint 2013 Prerequisites on Windows Server 2012. The scripts will assist those who need to install SharePoint 2013 &#39;offline&#39; or wish to manually install its Prerequisites on Windows Server 2012." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<div><strong>June 6, 2014 Update:</strong></div>
+<div>
+<ul>
+<li>Published a small fix to Download-SP2013PreReqFiles.ps1 on line 51. Removed a space causing Test-Path to always evaluate to $false. The issue caused the Download script to always download target files even if they already existed in the local destination
+ path. This had no impact related to the installation of Windows Roles/Features or SharePoint Prerequisites. Thank you to Dan Holme for bringing this oversight to my attention.
+</li><li><strong>SharePoint 2013 SP1 and Windows Server 2012 R2 support coming soon<br>
+</strong>I will be updating this script with support for SharePoint 2013 Service Pack 1 installations along with support for Windows Server 2012 R2 in the near future. Thank you to everyone for the interest in my scripts - it is much appreciated!
+</li></ul>
+<hr>
+<p>The intent of these scripts is to assist those who are required to perform an 'offline' Prerequisite Installation of SharePoint 2013 on Windows Server 2012. It is also for those who wish to learn more about the Prerequisite installation process and/or perform
+ the Prerequisite installation manually. It is intended that you execute each script in order. The reasons for breaking up the scripts into three different scripts are explained in each section below.</p>
+</div>
+<div>There are three scripts within the .zip file download:</div>
+<ol>
+<li>Install-SP2013RolesFeatures.ps1 </li><li>Download-SP2013PreReqFiles.ps1 </li><li>Install-SP2013PreReqFiles.ps1 </li></ol>
+<div><span style="text-decoration:underline"><strong>Please read this documentation completely prior to using my scripts. There is a lot of insight into the PrerequisiteInstaller.exe process that you should know in these instructions.</strong></span></div>
+<div><br>
+NOTE THAT THESE SCRIPTS APPLY ONLY TO WINDOWS SERVER 2012. DO NOT USE THEM ON A WINDOWS SERVER 2008 R2 SP1 SERVER.</div>
+<div>&nbsp;</div>
+<div>
+<hr>
+For complete insight into the potential issues and&nbsp;solutions addressed&nbsp;by these scripts related to installing the SharePoint 2013 Prerequisites on&nbsp;Windows Server 2012 in an offline environment see&nbsp;<strong><a href="http://social.technet.microsoft.com/wiki/contents/articles/14582.install-sharepoint-2013-prerequisites-offline-or-manually-on-windows-server-2012-a-comprehensive-guide.aspx" target="_blank">Install
+ SharePoint 2013 Prerequisites Offline or Manually on Windows Server 2012 - A Comprehensive Guide</a></strong> on the TechNet Wiki
+<hr>
+<br>
+&nbsp;<span style="font-size:small"><strong>1. Install-SP2013RolesFeatures.ps1</strong></span></div>
+<div>This script installs all of the nesessary Windows Server 2012 Roles/Features to prepare for a SharePoint 2013 installation. This script was tested and executed on a freshly installed Windows 2012 server after the adding it to my domain and configuring
+ the network adapter with a static IP address. Note that the Roles/Features installed are exactly the same ones Microsoft uses in their Prerequisite install app (in fact, in the same order they execute the Add-WindowsFeatue cmdlet). This scripts supports installing
+ the Roles/Features 'Online' with an Internet connection and 'Offline' without an Internet connection.</div>
+<div><br>
+<span style="text-decoration:underline">Windows Server 2012 Environment Assumptions:</span></div>
+<div>This script assumes (and does not check) that the following Windows Server 2012 Features are installed (they should installed be by default in Windows Server 2012):</div>
+<ul>
+<li>.NET Framework 4.5 Features (NET-Framework-45-Features) </li><li>.NET Framework 4.5 Features &gt; .NET Framework 4.5 (NET-Framework-45-Core) </li><li>Windows PowerShell (PowerShellRoot)-Windows PowerShell &gt; Windows PowerShell 3.0 (PowerShell)
+</li></ul>
+<div><br>
+Please be sure that the RTM versions (i.e. no CTP versions) are installed in your environment prior to running this script.</div>
+<div><span style="text-decoration:underline">Are you installing the Roles/Features 'Online' or 'Offline'?</span></div>
+<ul>
+<li>If your server is 'Online' and you use the PrerequisiteInstaller.exe (i.e. out of the box), it will execute a PowerShell script to install the necessary Roles/Features to configure Windows Server 2012 for SharePoint 2013. Part of the (PowerShell) Add-WindowsFeature
+ installation installs the NET-Framework-Core feature which is .NET 3.5. This installation requires binaries and other files that are not included by default in Windows Server 2012. This requires Windows Update to download/install these files and an Internet
+ connection. There is no way (that I have found - please correct me if I am wrong) around this. You must be 'Online' for the &quot;Configuring Application Server Role, Web Server &nbsp;(IIS Role)&quot; phase of the PrerequisiteInstaller.exe to successfully work.
+</li><li>If your server is 'Offline' the&nbsp;&quot;Configuring Application Server Role, Web Server &nbsp;(IIS Role)&quot; phase of the PrerequisiteInstaller.exe will not work - this also means that manually installing the Roles/Features will not work (without the Windows
+ Server 2012 installation media - keep reading). You'll need to do this manually. Even if you are 'Online', installing the Windows Server 2012 Roles/Features for SharePoint 2013 is faster if you install them 'Offline' as you bypass the Windows Update download
+ part of the process.&nbsp;
+<ul>
+<li>If you intend on using this script to install the Windows 2012 Roles/Features for SharePoint 2013 'Offline', you need to have downloaded the Windows Server 2012 installation media from MSDN, TechNet or Volume Licensing/Software Assurance etc. and have it
+ available locally (either mounted, locally copied, or accessible via a UNC path) for this script to work.
+</li></ul>
+</li></ul>
+<div><span style="text-decoration:underline">Why did I write this script?</span></div>
+<ul>
+<li>To document and share the specific Roles/Features required by SharePoint 2013 and to demonstrate how to install them via PowerShell using the Add-WindowsFeature cmdlet.
+</li><li>To isolate the installation of the required Windows Server 2012 Roles/Features for SharePoint 2013. After you install the Roles/Features, your server will require a reboot. This script will prompt you to reboot.&nbsp;
+</li><li>To enable individuals to install the&nbsp;specific Roles/Features required by SharePoint 2013 'Offline'.
+</li></ul>
+<div><span style="text-decoration:underline">Procedure:</span></div>
+<ol>
+<li>Download .zip file containing my scripts and extract the .ps1 files to c:\powershellscripts (or another directory of your choosing)
+</li><li>Run PowerShell as Administrator (you can do this from the Start Screen - right click PowrShell and select &quot;Run as Administrator&quot;
+</li><li>Ensure you have set your PowerShell execution policy to Remote-Signed (you can change it later if you need to)
+</li><li>Run this script:&nbsp;<br>
+<br>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">c:\powershellscripts\Install-SP2013RolesFeatures.ps1
+</pre>
+<div class="preview">
+<pre class="powershell">c:\powershellscripts\Install<span class="powerShell__operator">-</span>SP2013RolesFeatures.ps1&nbsp;
+</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode"></div>
+<ol>
+<li>When you run the script, it will prompt you to decide if you are installing the Roles/Features 'Online' or 'Offline'. If you select 'Online' your server must have an Internet Connection. In this case, Windows Update will be used to download then install
+ binaries and other files related to the installation of .NET 3.5. If you select 'Offline', the script will prompt you for the location of your Windows Server 2012 installation media. The binaries and other files required are included in this media. Enter the
+ path (without a trailing slash) to the 'sources\sxs' folder (for example D:\sources\sxs) of your Windows Server 2012 installation media. This can be a mounted ISO, a local drive or a UNC path. Using the 'Offline' method will install the Roles/Features faster
+ than the 'Online' method.&nbsp; </li><li>The script will prompt you to Reboot your server after the Roles/Features have installed. You can opt in or out, but I recommend that you opt in and reboot your server as you need to in order for the Windows Features to be configured correctly.
+</li></ol>
+</li></ol>
+<div><br>
+<br>
+<strong><span style="font-size:small">2. Download-SP2013PreReqFiles.ps1</span></strong></div>
+<div>This script downloads the ENGLISH versions of the required Prerequisite files for SharePoint 2013 on Windows Server 2012. It stores them in a directory of your choosing.</div>
+<div><span style="text-decoration:underline">Why did I write this script?</span></div>
+<ul>
+<li>To download the prerequisite files required by the SharePoint 2013 installer </li><li>So those who need to install SharePoint 2013 on an 'offline' server that does not have an Internet connection can use the script to download the prerequisite files on a computer that does have an Internet connection. The files can then be copied to the
+ 'offline' server to proceed with the SharePoint 2013 installation.&nbsp; </li></ul>
+<div><br>
+<span style="text-decoration:underline">Procedure:</span></div>
+<ol>
+<li>Create a local directory where the script can save the SharePoint 2013 Pre-requisite downloads. For example, c:\sp2013downloads.
+</li><li>Run PowerShell as Administrator (you can do this from the Start Screen - right click PowerShell and select &quot;Run as Administrator&quot;
+</li><li>Run this script:&nbsp;<br>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">c:\powershellscripts\Download-SP2013PreReqFiles.ps1</pre>
+<div class="preview">
+<pre class="powershell">c:\powershellscripts\Download<span class="powerShell__operator">-</span>SP2013PreReqFiles.ps1</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;<br>
+You will be required to define a path where the script can save the downloaded files. (e.g. c:\sp2013downloads)</div>
+</li><li>Sit back and let the files download. </li></ol>
+<div>&nbsp;</div>
+<div><span style="font-size:small"><strong>3. Install-SP2013PreReqFiles.ps1</strong></span></div>
+<div>This script utilizes the PrerequisiteInstaller.exe included in the SharePoint 2013 installation media to install the necessary prerequisites for SharePoint 2013 on Windows Server 2012.</div>
+<div><br>
+<span style="text-decoration:underline">Assumptions:</span></div>
+<div>You have downloaded the SharePoint 2013 installation media from MSDN, TechNet or Volume Licensing/Software Assurance etc.</div>
+<div><br>
+<span style="text-decoration:underline">Notes:</span></div>
+<ul>
+<li>If you did not run my Install-SP2013RolesFeatures.ps1 script, this script will install the Windows Server 2012 Roles/Features necessary for SharePoint 2013. Just be aware that you'll need to run the script twice. The first run will install the Roles/Features
+ then you'll reboot. The second run is required to install the Prerequisites. </li><li>I intentionally am NOT running the PrerequisiteInstaller in unattended mode. This way, you'll see the Prerequisite installer screen and see what it is doing. I know there are other ways this can be launched and monitored, however this is the way I prefer
+ to do it so there is an on-screen indication of what is going on with the installer.
+</li></ul>
+<div><span style="text-decoration:underline">Why did I write this script?</span></div>
+<ul>
+<li>To assist those who wish to install the SharePoint 2013 Prerequisites 'offline'
+</li><li>To demonstrate how you can install the SharePoint 2013 Prerequisites via PowerShell
+</li></ul>
+<div><em>There are two different scenarios for how you can use this script</em></div>
+<div><br>
+<span style="text-decoration:underline">Procedure - Scenario 1:</span></div>
+<ul>
+<li>You have already executed Install-SP2013RolesFeatures.ps1 and rebooted your server
+</li><li>You have already executed Download-SP2013PreReqFiles.ps1 </li></ul>
+<ol>
+<li>Copy the SharePoint 2013 installation media files into a local directory on you Windows Server 2012 server. For example, c:\sp2013.
+</li><li>Copy the Prerequisite files into the c:\sp2013\prerequisiteinstallerfiles directory.
+</li><li>Run PowerShell as Administrator (you can do this from the Start Screen - right click PowerShell and select &quot;Run as Administrator&quot;
+</li><li>Run this script: <br>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">c:\powershellscripts\Install-SP2013PreReqFiles.ps1</pre>
+<div class="preview">
+<pre class="powershell">c:\powershellscripts\Install<span class="powerShell__operator">-</span>SP2013PreReqFiles.ps1</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">You will be required to define a path where to your SharePoint 2013 installation media. (e.g. c:\sp2013). Watch the Prerequisite installer tool install all of the prerequisites.
+<br>
+<br>
+</div>
+</li><li>When the installer is complete, reboot your server prior to installing SharePoint 2013. You should now be able to run the SharePoint 2013 installer, bypassing the Pre-requisite step.
+</li></ol>
+<div><br>
+<br>
+<span style="text-decoration:underline">Procedure - Scenario 2:</span></div>
+<ul>
+<li>You have NOT executed Install-SP2013RolesFeatures.ps1 and rebooted your server
+</li><li>You have already executed Download-SP2013PreReqFiles.ps1 </li></ul>
+<ol>
+<li>Copy the SharePoint 2013 installation media files into a local directory on you Windows Server 2012 server. For example, c:\sp2013.
+</li><li>Copy the Prerequisite files into the c:\sp2013\prerequisiteinstallerfiles directory.
+</li><li>Run PowerShell as Administrator (you can do this from the Start Screen - right click PowerShell and select &quot;Run as Administrator&quot;
+</li><li>Run this script: <br>
+<br>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">c:\powershellscripts\Install-SP2013PreReqFiles.ps1
+</pre>
+<div class="preview">
+<pre class="powershell">c:\powershellscripts\Install<span class="powerShell__operator">-</span>SP2013PreReqFiles.ps1&nbsp;
+</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;<br>
+You will be required to define a path where to your SharePoint 2013 installation media. (e.g. c:\sp2013). On this run, defining the path isn't technically required as it will add the Windows Server 2012 Roles/Features for SharePoint 2013. When the Roles/Features
+ are installed, click Finish and your server will reboot. <br>
+<br>
+</div>
+</li><li>After the reboot, when you login, if the PrerequisiteInstaller launches, close the installer.Prerequisite installer tool install all of the prerequisites.
+</li><li>Run this script:&nbsp;<br>
+<br>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">c:\powershellscripts\Install-SP2013PreReqFiles.ps1</pre>
+<div class="preview">
+<pre class="powershell">c:\powershellscripts\Install<span class="powerShell__operator">-</span>SP2013PreReqFiles.ps1</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;<br>
+You will be required to define a path where to your SharePoint 2013 installation media. (e.g. c:\sp2013). Watch the Prerequisite installer tool install all of the prerequisites.</div>
+</li><li>When the installer is complete, reboot your server prior to installing SharePoint 2013. You should now be able to run the SharePoint 2013 installer, bypassing the Pre-requisite step.
+</li></ol>
+<div>&nbsp;</div>
+<div>If you have any questions or feedback start a Gallery Discussion!</div>
+<div><br>
+Cheers,</div>
+<div><br>
+Craig<br>
+<br>
+</div>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content="&#xD;&#xA;[reflection.assembly]::LoadWithPartialName(&quot;Microsoft.UpdateServices.Administration&quot;) | out-null&#xD;&#xA;$wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::GetUpdateServer();&#xD;&#xA;$wsus.GetSubscription().StartSynchronization();&#xD;&#xA;" />
+</CodeSnippets>

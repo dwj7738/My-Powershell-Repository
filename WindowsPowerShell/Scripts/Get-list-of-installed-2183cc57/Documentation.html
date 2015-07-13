@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Get list of installed hotfixes on remote servers and mail the output files</title>        
+        <meta name="description" content="Get list of installed hotfixes on remote servers and mail the output to a specified mail addresses. 
+
+" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p><strong><span style="font-size:medium">Script:</span></strong></p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">##############################################################################################
+# - GetRemoteInstalledHotfixMailReport.ps1
+# - Script by Tim Buntrock
+# - Run this script on a server that can access the specified servers.
+# - Create the folder strcuture &quot;C:\admin\Scripts\ServerUpdates\updatefiles&quot;
+# - Add your servers to the servers textfile &quot;C:\admin\Scripts\ServerUpdates\Servers.txt&quot;
+# - Change the &quot;#Set E-mail variables&quot; section -&gt; line 23-27
+##############################################################################################
+
+
+#Set date variable
+$date = get-date -UFormat &quot;%d%m%Y&quot;
+
+#Create folder structure
+#New-Item -ItemType directory -Path C:\admin\Scripts\ServerUpdates\updatefiles
+
+#Query server and save it to a csv file
+get-content &quot;C:\admin\Scripts\ServerUpdates\Servers.txt&quot; | Where {$_ -AND (Test-Connection $_ -Quiet)} | foreach { Get-Hotfix -computername $_ | Select CSName,Description,HotFixID,InstalledBy,InstalledOn | convertto-csv | out-file &quot;C:\admin\Scripts\ServerUpdates\updatefiles\$_-$date.csv&quot; } 
+
+
+
+#Set E-mail variables !!! Enter your settings!!!
+$EmailFrom = &quot;server@my.domain.com&quot;
+$EmailTo = &quot;Admins@my.domain.com&quot;
+$Subject = &quot;Server Update Report $date&quot;
+$Body = &quot;Find attached the Update reports.&quot;
+$SMTPServer = &quot;smtpserver1.my.domain.com&quot;
+ 
+
+#Files location
+$UpdateDir = &ldquo;C:\admin\Scripts\ServerUpdates\updatefiles&rdquo;
+
+ 
+#Send Email with reports
+Get-ChildItem $UpdateDir | Where {-NOT $_.PSIsContainer} | foreach {$_.fullname} | Send-MailMessage -Subject $Subject -Body $Body -SmtpServer $SMTPServer -Priority High -To $EmailTo -From $EmailFrom
+
+#Remove csv files located in updatefiles
+remove-item -path C:\admin\Scripts\ServerUpdates\updatefiles\*.*</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__com">##############################################################################################</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;GetRemoteInstalledHotfixMailReport.ps1</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Script&nbsp;by&nbsp;Tim&nbsp;Buntrock</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Run&nbsp;this&nbsp;script&nbsp;on&nbsp;a&nbsp;server&nbsp;that&nbsp;can&nbsp;access&nbsp;the&nbsp;specified&nbsp;servers.</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Create&nbsp;the&nbsp;folder&nbsp;strcuture&nbsp;&quot;C:\admin\Scripts\ServerUpdates\updatefiles&quot;</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Add&nbsp;your&nbsp;servers&nbsp;to&nbsp;the&nbsp;servers&nbsp;textfile&nbsp;&quot;C:\admin\Scripts\ServerUpdates\Servers.txt&quot;</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Change&nbsp;the&nbsp;&quot;#Set&nbsp;E-mail&nbsp;variables&quot;&nbsp;section&nbsp;-&gt;&nbsp;line&nbsp;23-27</span>&nbsp;
+<span class="powerShell__com">##############################################################################################</span>&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#Set&nbsp;date&nbsp;variable</span>&nbsp;
+<span class="powerShell__variable">$date</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">get-date</span>&nbsp;<span class="powerShell__operator">-</span>UFormat&nbsp;<span class="powerShell__string">&quot;%d%m%Y&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#Create&nbsp;folder&nbsp;structure</span>&nbsp;
+<span class="powerShell__com">#New-Item&nbsp;-ItemType&nbsp;directory&nbsp;-Path&nbsp;C:\admin\Scripts\ServerUpdates\updatefiles</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#Query&nbsp;server&nbsp;and&nbsp;save&nbsp;it&nbsp;to&nbsp;a&nbsp;csv&nbsp;file</span>&nbsp;
+<span class="powerShell__cmdlets">get-content</span>&nbsp;<span class="powerShell__string">&quot;C:\admin\Scripts\ServerUpdates\Servers.txt&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Where&nbsp;{<span class="powerShell__variable">$_</span>&nbsp;<span class="powerShell__operator">-</span>AND&nbsp;(Test<span class="powerShell__operator">-</span>Connection&nbsp;<span class="powerShell__variable">$_</span>&nbsp;<span class="powerShell__operator">-</span>Quiet)}&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;Get<span class="powerShell__operator">-</span>Hotfix&nbsp;<span class="powerShell__operator">-</span>computername&nbsp;<span class="powerShell__variable">$_</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">Select</span>&nbsp;CSName,Description,HotFixID,InstalledBy,InstalledOn&nbsp;<span class="powerShell__operator">|</span>&nbsp;convertto<span class="powerShell__operator">-</span>csv&nbsp;<span class="powerShell__operator">|</span>&nbsp;out<span class="powerShell__operator">-</span>file&nbsp;<span class="powerShell__string">&quot;C:\admin\Scripts\ServerUpdates\updatefiles\$_-$date.csv&quot;</span>&nbsp;}&nbsp;&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#Set&nbsp;E-mail&nbsp;variables&nbsp;!!!&nbsp;Enter&nbsp;your&nbsp;settings!!!</span>&nbsp;
+<span class="powerShell__variable">$EmailFrom</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;server@my.domain.com&quot;</span>&nbsp;
+<span class="powerShell__variable">$EmailTo</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Admins@my.domain.com&quot;</span>&nbsp;
+<span class="powerShell__variable">$Subject</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Server&nbsp;Update&nbsp;Report&nbsp;$date&quot;</span>&nbsp;
+<span class="powerShell__variable">$Body</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Find&nbsp;attached&nbsp;the&nbsp;Update&nbsp;reports.&quot;</span>&nbsp;
+<span class="powerShell__variable">$SMTPServer</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;smtpserver1.my.domain.com&quot;</span>&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__com">#Files&nbsp;location</span>&nbsp;
+<span class="powerShell__variable">$UpdateDir</span>&nbsp;=&nbsp;&ldquo;C:\admin\Scripts\ServerUpdates\updatefiles&rdquo;&nbsp;
+&nbsp;
+&nbsp;&nbsp;
+<span class="powerShell__com">#Send&nbsp;Email&nbsp;with&nbsp;reports</span>&nbsp;
+<span class="powerShell__cmdlets">Get-ChildItem</span>&nbsp;<span class="powerShell__variable">$UpdateDir</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Where&nbsp;{<span class="powerShell__operator">-</span>NOT&nbsp;<span class="powerShell__variable">$_</span>.PSIsContainer}&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{<span class="powerShell__variable">$_</span>.fullname}&nbsp;<span class="powerShell__operator">|</span>&nbsp;Send<span class="powerShell__operator">-</span>MailMessage&nbsp;<span class="powerShell__operator">-</span>Subject&nbsp;<span class="powerShell__variable">$Subject</span>&nbsp;<span class="powerShell__operator">-</span>Body&nbsp;<span class="powerShell__variable">$Body</span>&nbsp;<span class="powerShell__operator">-</span>SmtpServer&nbsp;<span class="powerShell__variable">$SMTPServer</span>&nbsp;<span class="powerShell__operator">-</span>Priority&nbsp;High&nbsp;<span class="powerShell__operator">-</span>To&nbsp;<span class="powerShell__variable">$EmailTo</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__keyword">From</span>&nbsp;<span class="powerShell__variable">$EmailFrom</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#Remove&nbsp;csv&nbsp;files&nbsp;located&nbsp;in&nbsp;updatefiles</span>&nbsp;
+<span class="powerShell__cmdlets">remove-item</span>&nbsp;<span class="powerShell__operator">-</span>path&nbsp;C:\admin\Scripts\ServerUpdates\updatefiles\<span class="powerShell__operator">*</span>.<span class="powerShell__operator">*</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode"><span style="font-size:medium"><strong>&nbsp;</strong></span></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"><span style="font-size:medium"><strong>How to use:</strong></span></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode">- You can run this script manually or on a schedule task. If you want to run this script on a schedule task make sure you set the following options on the creation:</div>
+<div class="endscriptcode">
+<div class="endscriptcode"></div>
+<div class="endscriptcode">On the &quot;<span style="background-color:#ffff00">Action</span>&quot; section you have to select &quot;<span style="background-color:#ffff00">Start a Program</span>&quot; and enter the following options.</div>
+<div class="endscriptcode">
+<div class="endscriptcode">Program/script: <span style="background-color:#ffff00">
+powershell</span></div>
+<div class="endscriptcode">Add arguments (optional): <span style="background-color:#ffff00">
+-file &quot;C:\admin\Scripts\ServerUpdates\GetRemoteInstalledHotfixMailReport.ps1&quot;</span></div>
+</div>
+</div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode">- Create a servers.txt file in &quot;C:\admin\Scripts\ServerUpdates&quot; which looks like this:</div>
+<div class="endscriptcode"><img id="135660" src="https://i1.gallery.technet.s-msft.com/get-list-of-installed-2183cc57/image/file/135660/1/2015-03-31%2012_13_33-program%20manager.png" alt="" width="244" height="177"></div>
+<div class="endscriptcode"><img alt=""></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"><img alt=""></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode">- Your folder structure should be looks like the following screenshot:</div>
+<div class="endscriptcode"><img id="135661" src="E:\Documents\WindowsPowerShell\Scripts\Get-list-of-installed-2183cc57\Documentation_files\tmp246DResources.png" alt="" width="411" height="194"></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"><img alt=""></div>
+<div class="endscriptcode"></div>
+<p><img alt=""></p>
+
+        </div>
+    </body>
+</html>

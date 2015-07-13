@@ -1,0 +1,256 @@
+﻿<body>
+<div id="longDesc">
+<span style="font-family:Calibri; font-size:medium">
+<h1 style="font-family:Calibri Light; color:#2e74b5; font-size:large">Introduction</h1>
+<p>The<strong> xBitlocker</strong> module is a part of the Windows PowerShell Desired State Configuration (DSC) Resource Kit, which is 
+a collection of DSC Resources produced by the PowerShell Team. This module contains the <strong>xBLAutoBitlocker, xBLBitlocker, xBLTpm</strong> resources. This DSC 
+Module allows you to configure Bitlocker on a single disk, configure a TPM chip, or automatically enable Bitlocker on multiple disks.</p>
+<p><strong>All of the resources in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program 
+or service. The ""x" in xBitlocker stands for experimental</strong>, which means that these resources will be <strong>fix forward</strong> 
+and monitored by the module owner(s).</p>
+<p>Please leave comments, feature requests, and bug reports in the Q &amp; A tab for this module.</p>
+<p>If you would like to modify <strong>xBitlocker</strong> module, feel free. When modifying, please update the module name, resource friendly name, 
+and MOF class name (instructions below). As specified in the license, you may copy or modify this resource as long as they are used on the Windows Platform.</p>
+<p>For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+<a href="http://blogs.msdn.com/b/powershell/"><span style="color:#0000ff">PowerShell Blog</span></a> (</span><a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx"><span style="color:#0000ff">this</span></a> is a good starting point). There are 
+also great community resources, such as <a href="http://powershell.org/wp/tag/dsc/"><span style="color:#0000ff">PowerShell.org</span></a>, or
+<a href="http://www.powershellmagazine.com/tag/dsc/"><span style="color:#0000ff">PowerShell Magazine</span></a>. For more information on the DSC Resource Kit, check out 
+<a href="http://go.microsoft.com/fwlink/?LinkID=389546"><span style="color:#0000ff">this blog post</span></a>.<br /></p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Installation</h1>
+<p>To install <strong >xBitlocker</strong> module </p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>Unzip the content under $env:ProgramFiles\WindowsPowerShell\Modules folder</li>
+</ul>
+<p>To confirm installation:<br /></p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>Run <strong>Get-DSCResource</strong> to see that <strong>xBLAutoBitlocker, xBLBitlocker, xBLTpm</strong> are among the DSC Resources listed<br /></li>
+</ul>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Requirements</h1>
+<p>This module requires that both the 'Bitlocker' and 'RSAT-Feature-Tools-Bitlocker' features are installed. It also requires the latest version of PowerShell (v4.0, which ships in Windows 8.1 or Windows Server 2012R2). To easily use PowerShell 4.0 on older operating systems,
+<a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855"><span style="color:#0000ff">install WMF 4.0</span></a>. Please read the installation instructions 
+that are present on both the download page and the release notes for WMF 4.0.</p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Description</h1>
+<p>The <strong >xBitlocker </strong> module contains the <strong >xBLAutoBitlocker, xBLBitlocker, xBLTpm</strong> DSC Resources. This DSC 
+Module allows you to configure Bitlocker on a single disk, configure a TPM chip, or automatically enable Bitlocker on multiple disks.</p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Details</h1>
+<p><strong>xBLAutoBitlocker</strong> is used to automatically enable Bitlocker on drives of type Fixed or Removable. It does not work on Operating System drives. <strong>xBLAutoBitlocker</strong> has the following properties. Where no description is listed, properties correspond directly to <a href="http://technet.microsoft.com/en-us/library/jj649837.aspx">Enable-Bitlocker</a> parameters.</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">*DriveType:</span>The type of volume, as reported by Get-Volume, to auto apply Bitlocker to
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">*PrimaryProtector:</span>The primary protector type to be used for AutoBitlocker. Valid values are: &quot;PasswordProtector&quot;,&quot;RecoveryPasswordProtector&quot;,&quot;StartupKeyProtector&quot;,&quot;TpmProtector&quot;
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">MinDiskCapacityGB:</span>If specified, only disks this size or greater will auto apply Bitlocker
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">AutoUnlock:</span>Whether volumes should be enabled for auto unlock using Enable-BitlockerAutoUnlock
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">AdAccountOrGroup</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">AdAccountOrGroupProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">EncryptionMethod</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">HardwareEncryption</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">Password</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">PasswordProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">Pin</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">RecoveryKeyPath</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">RecoveryKeyProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">RecoveryPasswordProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">Service</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">SkipHardwareTest</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">StartupKeyPath</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">StartupKeyProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">TpmProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">UsedSpaceOnly</span>
+</li>
+</ul>
+
+<p><strong>xBLBitlocker</strong> has the following properties. Where no description is listed, properties correspond directly to <a href="http://technet.microsoft.com/en-us/library/jj649837.aspx">Enable-Bitlocker</a> parameters.</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">*MountPoint:</span>The MountPoint name as reported in Get-BitLockerVolume
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">*PrimaryProtector:</span>The primary protector type to be used for AutoBitlocker. Valid values are: &quot;PasswordProtector&quot;,&quot;RecoveryPasswordProtector&quot;,&quot;StartupKeyProtector&quot;,&quot;TpmProtector&quot;
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">AutoUnlock:</span>Whether volumes should be enabled for auto unlock using Enable-BitlockerAutoUnlock
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">AllowImmediateReboot:</span>Whether the computer can be immediately rebooted after enabling Bitlocker on an OS drive. Defaults to false.
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">AdAccountOrGroup</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">AdAccountOrGroupProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">EncryptionMethod</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">HardwareEncryption</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">Password</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">PasswordProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">Pin</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">RecoveryKeyPath</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">RecoveryKeyProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">RecoveryPasswordProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">Service</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">SkipHardwareTest</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">StartupKeyPath</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">StartupKeyProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">TpmProtector</span>
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">UsedSpaceOnly</span>
+</li>
+</ul>
+
+<p><strong>xBLTpm</strong> is used to initialize a TPM chip using <a href="http://technet.microsoft.com/en-us/library/jj603112.aspx">Initialize-TPM</a>. <strong>xBLTpm</strong> has the following properties.</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">*Identity:</span>Not actually used, so could be anything
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">AllowClear:</span>Indicates that the provisioning process clears the TPM, if necessary, to move the TPM closer to complying with Windows Server® 2012 standards
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">AllowPhysicalPresence:</span>Indicates that the provisioning process may send physical presence commands that require a user to be present in order to continue. 
+</li>
+<li>
+	<span style="width: 250px; float: left; font-weight: bold;">AllowImmediateReboot:</span>Whether the computer can rebooted immediately after initializing the TPM
+</li>
+</ul>
+
+
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Renaming Requirements</h1>
+<p>When making changes to these resources, we suggest the following practice:</p>
+<ol style="list-style-type:decimal; direction:ltr">
+<li>
+    Update the following names by replacing MSFT with your company/community name and replacing the <strong>"x"</strong> with <strong>"c"</strong> (short for "Community") or another prefix of your choice:
+<ul>
+<li>
+    <strong>Module name (ex: xBitlocker</strong> becomes <strong>cBitlocker</strong>)
+</li>
+<li>
+    <strong>Resource folder (ex: MSFT_xBLBitlocker</strong> becomes <strong>Contoso_cBLBitlocker</strong>)
+</li>
+<li>
+    <strong>Resource Name (ex: MSFT_xBLBitlocker</strong> becomes <strong>Contoso_cBLBitlocker</strong>)
+</li>
+<li>
+    <strong>Resource Friendly Name (ex: xBLBitlocker</strong> becomes <strong>cBLBitlocker</strong>)
+</li>
+<li>
+    <strong>MOF class name (ex: MSFT_xBLBitlocker</strong> becomes <strong>Contoso_cBLBitlocker</strong>)
+</li>
+<li>
+    <strong>Filename for the &lt;resource&gt;.schema.mof (ex: MSFT_xBLBitlocker</strong>.schema.mof becomes <strong>Contoso_cBLBitlocker</strong>.schema.mof)
+</li>
+</ul>
+</li>
+<li>
+    Update module and metadata information in the module manifest
+</li>
+<li>
+    Update any configuration that use these resources
+</li>
+</ol>
+<p><em>We reserve resource and module names without prefixes ("x" or "c") for future use (e.g. "MSFT_BLAutoBitlocker, MSFT_BLBitlocker, MSFT_BLTpm" or "BLAutoBitlocker, BLBitlocker, BLTpm"). If the next version of Windows Server ships with "MSFT_BLAutoBitlocker, MSFT_BLBitlocker, MSFT_BLTpm" resources, we don't want to break any configurations that use any community modifications. Please keep a prefix such as "c" on all community modifications.</em></p>
+
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Versions</h1>
+<p>1.0.1.1</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>Reduced the number of acceptable values for <strong>PrimaryProtector</strong> in <strong>xBLAutoBitlocker</strong> and <strong>xBLBitlocker</strong></li>
+<li>Changed the properties that are returned by <strong>Get-TargetResource</strong> in <strong>xBLAutoBitlocker</strong>, <strong>xBLBitlocker</strong>, and <strong>xBLTpm</strong></li>
+<li>Fixed issue which caused protectors to be continually re-added</li>
+</ul>
+
+<p>1.0.0.0</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>
+    Initial release with the following resources
+<ul style="list-style-type:circle">
+<li>
+    xBLAutoBitlocker
+</li>
+<li>
+    xBLBitlocker
+</li>
+<li>
+    xBLTpm
+</li>
+</ul>
+</li>
+</ul>
+
+<h1 style="margin-bottom:0pt; font-family:Calibri Light; color:#2e74b5; font-size:large">Example: ConfigureBitlockerOnOSDrive</h1>
+This example enables Bitlocker on an Operating System drive. The example code for ConfigureBitlockerOnOSDrive is located in "ConfigureBitlockerOnOSDrive.ps1" in the module folder under ...\xExchange\Examples\ConfigureBitlockerOnOSDrive. <p></p>
+
+<h1 style="margin-bottom:0pt; font-family:Calibri Light; color:#2e74b5; font-size:large">Example: ConfigureBitlockerAndAutoBitlocker</h1>
+Enables Bitlocker on an Operating System drive, and automatically enables Bitlocker on all drives of type 'Fixed'. The example code for ConfigureBitlockerAndAutoBitlocker is located in "ConfigureBitlockerAndAutoBitlocker.ps1" in the module folder under ...\xExchange\Examples\ConfigureBitlockerAndAutoBitlocker. <p></p></br>
+
+</span>
+</div>
+</body>

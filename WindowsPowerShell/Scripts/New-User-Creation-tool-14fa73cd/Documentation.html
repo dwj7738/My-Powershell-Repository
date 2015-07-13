@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Active Directory User Creation tool 1.2</title>        
+        <meta name="description" content="One task that every systems administrator has to go through at some point is the creation of new user accounts.  Powershell makes this process simple and adds additional functionality, such as the ability to set defaults and import users from CSV." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p><strong>Blog Post:&nbsp; </strong><a href="http://blog.richprescott.com/2011/10/arposh-new-user-creation-anuc.html">Arposh New User Creation (ANUC)</a></p>
+<p><strong>New in 1.2:</strong></p>
+<ul>
+<li>Added check for XML Options file - Will now prompt to create one if not found
+</li><li>Added XML Options file version check </li><li>Fixed bug where Display Name, sAMAccountName, and UPN were not being generated correctly for CSV files
+</li><li>Title and Description should be set correctly when creating users from CSV </li></ul>
+<p><strong>New in 1.1: </strong></p>
+<ul>
+<li>Added ability to select custom format for sAMAccountName, UPN, and Display Name
+</li><li>Minor bug fixes </li></ul>
+<p><strong>New in 1.0:</strong></p>
+<ul>
+<li>Updated to be compatible with PowerShell v3 Beta </li><li>Enter custom sAMAccountName, Display Name, and userPrincipalName in single-user and CSV modes
+</li><li>Turn off auto-generation of sAMAccountName, Display Name, and userPrincipalName in single-user mode
+</li><li>Better error-handling during user creation </li><li>Set new accounts as enabled or disabled </li><li>Set 'Password must change at logon' to enabled or disabled </li></ul>
+<p>&nbsp;</p>
+<p>One task that every systems administrator has to go through at some point is the creation of new user accounts.&nbsp; Powershell makes this process simple and adds additional functionality.&nbsp; The included XML file allows you to set default entries for
+ fields and pre-populate dropdown lists.&nbsp; The GUI takes the information that you type in for First Name and Last Name to auto-generate the Display Name, sAMAccountName and userPrincipalName (or you can change them manually).&nbsp; And because the GUI uses
+ the Microsoft-provided ActiveDirectory module, there is no extra software to download or syntax to learn.</p>
+<p>You also have the ability of bulk-adding users via CSV.&nbsp; To create users from a CSV, click on File &gt; CSV Mode.&nbsp; You can then import the CSV and browse through the users in the CSV.&nbsp; Once the CSV is imported, you can create one user at a
+ time or all at once.&nbsp; If you want a CSV template created for you, click on File &gt; Create CSV Template.</p>
+<p>&nbsp;</p>
+<p>*Please submit any feature requests via the Q/A tab.</p>
+<p><strong>ANUC Requirements:</strong><br>
+- Powershell v2 /v3<br>
+- ActiveDirectory module<br>
+<br>
+<strong>Usage:</strong> Download the ANUC.ps1 file from the TechNet ScriptCenter. &nbsp;Right-click on ANUC.ps1 and select 'Run with PowerShell'.&nbsp; To modify the available options for drop-down lists and default entries, edit the ANUC.Options.XML file (if
+ you do not have one, you will be prompted to create one). To create users from a CSV, click on File &gt; CSV Mode.&nbsp; You can then import the CSV and browse through the users in the CSV.&nbsp; Once the CSV is imported, you can create one user at a time
+ or all at once.<br>
+<br>
+<strong>Features:</strong></p>
+<ul>
+<li>Allows user creation with oft-used Active Directory attributes </li><li>Bulk creation of users from CSV </li><li>Optional Auto-generation of account attributes based on other attributes (Customizable in ANUC.Options.XML)
+<ul>
+<li>Display Name </li><li>samAccountName </li><li>userPrincipalName </li></ul>
+</li><li>Default entries
+<ul>
+<li>Domain </li><li>OU </li><li>Phone Number (can use full number or company prefix '212-555-') </li><li>Department </li><li>Company </li><li>Description </li><li>Password (Accounts are set to change at first logon) </li><li>Site (HQ, Branch Office 1, etc) </li><li>Street Address </li><li>City </li><li>State </li><li>Postal Code </li></ul>
+</li><li>Pre-populated fields for easy selection
+<ul>
+<li>Address information </li><li>Domains </li><li>OUs </li><li>Descriptions </li><li>Departments </li></ul>
+</li></ul>
+<p><span style="font-size:small">This PowerShell GUI was built with <a href="http://www.sapien.com/software/primalforms">
+Sapien's PrimalForms 2011</a>.</span></p>
+<p><img src="E:\Documents\WindowsPowerShell\Scripts\New-User-Creation-tool-14fa73cd\Documentation_files\tmp1A97Resources.png" alt="" width="320" height="635" style="display:block; margin-left:auto; margin-right:auto"></p>
+<p><a href="http://2.bp.blogspot.com/-sQOJw2LgV80/TokIccZVoQI/AAAAAAAAAEU/_5bXouqs4bY/s1600/ANUCv0.2CSV.png"></a></p>
+<p><a href="http://2.bp.blogspot.com/-TO15VYf9UqQ/TodnwZt75SI/AAAAAAAAAEI/KpPFT9ylgmI/s1600/ANUC.png"><img src="E:\Documents\WindowsPowerShell\Scripts\New-User-Creation-tool-14fa73cd\Documentation_files\tmp1A98Resources.png" alt="" width="813" height="397" style="display:block; margin-left:auto; margin-right:auto"><br>
+</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">Get-ANUC | Invoke-Efficiency</pre>
+<div class="preview">
+<pre id="codePreview" class="powershell">Get<span class="powerShell__operator">-</span>ANUC&nbsp;<span class="powerShell__operator">|</span>&nbsp;Invoke<span class="powerShell__operator">-</span>cy</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+
+        </div>
+    </body>
+</html>

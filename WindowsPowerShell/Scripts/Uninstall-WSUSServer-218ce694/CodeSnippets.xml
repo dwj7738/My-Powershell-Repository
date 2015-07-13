@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content=". .\Uninstall-WSUSServer.ps1 -Computername Server1" />
+  <Code Content=". .\Uninstall-WSUSServer.ps1 -Computername Server1 -DeleteDatabase -DeleteLogs -DeleteContent" />
+  <Code Content=". .\Uninstall-WSUSServer.ps1 -Computername Server1" />
+  <Code Content=". .\Uninstall-WSUSServer.ps1 -Computername Server1 -DeleteDatabase -DeleteLogs -DeleteContent" />
+</CodeSnippets>

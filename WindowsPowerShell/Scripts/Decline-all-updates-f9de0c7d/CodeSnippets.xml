@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content="$UpdateGUID = &quot;e5077be1-da82-4c15-82d1-e4e8ff0a1264&quot;" />
+  <Code Content="$Updates = $Wsus.SearchUpdates(‘Windows XP Service Pack 2’)&#xD;&#xA;$Updates | Select Title, KnowledgebaseArticles, @{n=&quot;Guid&quot;;e={$_.ID.UpdateId.Guid}}" />
+  <Code Content="$UpdateGUID = &quot;&lt;UpdateGUID&gt;&quot;&#xD;&#xA;&#xD;&#xA;$WsusServer = &quot;wsus.company.com&quot;&#xD;&#xA;$UseSSL = $false&#xD;&#xA;$PortNumber = 80&#xD;&#xA;$TrialRun = $True&#xD;&#xA;$ShowDeclinedUpdates = $True&#xD;&#xA;$Recursive = $True&#xD;&#xA;&#xD;&#xA;#E-mail Configuration&#xD;&#xA;$SMTPServer = &quot;smtp.company.com&quot;&#xD;&#xA;$FromAddress = &quot;wsus@company.com&quot;&#xD;&#xA;$Recipients = &quot;wsusadmins@company.com&quot;" />
+  <Code Content="$UpdateGUID = &quot;e5077be1-da82-4c15-82d1-e4e8ff0a1264&quot;" />
+  <Code Content="$Updates = $Wsus.SearchUpdates(‘Windows XP Service Pack 2’)&#xD;&#xA;$Updates | Select Title, KnowledgebaseArticles, @{n=&quot;Guid&quot;;e={$_.ID.UpdateId.Guid}}" />
+  <Code Content="$UpdateGUID = &quot;&lt;UpdateGUID&gt;&quot;&#xD;&#xA;&#xD;&#xA;$WsusServer = &quot;wsus.company.com&quot;&#xD;&#xA;$UseSSL = $false&#xD;&#xA;$PortNumber = 80&#xD;&#xA;$TrialRun = $True&#xD;&#xA;$ShowDeclinedUpdates = $True&#xD;&#xA;$Recursive = $True&#xD;&#xA;&#xD;&#xA;#E-mail Configuration&#xD;&#xA;$SMTPServer = &quot;smtp.company.com&quot;&#xD;&#xA;$FromAddress = &quot;wsus@company.com&quot;&#xD;&#xA;$Recipients = &quot;wsusadmins@company.com&quot;" />
+</CodeSnippets>

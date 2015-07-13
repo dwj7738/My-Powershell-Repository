@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Hotfix inventory or Find AD comps with or without a certian hotfix</title>        
+        <meta name="description" content="This scripts connects to AD and outputs a hotfix (updates) inventory including updateID,OS andservicepack and osversion or can be used to search for comps having or missing a certian hotfix" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>This scripts connects to an Active Directory LDAP path , retreives all the computers in the path , then gets computer object information like
+<br>
+(name , Operatingsystem , OSversion , OSService pack, Hotfix (update) list)&nbsp; , exporting them to CSV file which can be
+<br>
+easily viewed in excel , all information are retreived from active directory , except for the HotFix list , which is retreived from WMI class Win32_QuickFxEngineering invoked by the pscommand get-hotfix and except for the lastbootuptime which is retreived from
+ WMI class Win32_OperatingSystem</p>
+<p><br>
+you can also use this script to search for computers that does not have a certian HOTFIX installed , the output is also<br>
+a csv file</p>
+<p>you can also use this script to search for computers that does have a certian HOTFIX installed ,&nbsp;the output is also<br>
+a csv file with when was the lastbootuptime , this can be handy to know the effectiveness of some installed updates if they require a restart</p>
+<p>you can always toggle at the end between export-csv ,&nbsp;out-gridview , converto-html ...... etc , since the output of all the functions are psobjects</p>
+<div class="scriptcode"><div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div><span class="hidden">powershell</span>
+<pre class="hidden"># ==============================================================================================
+# NAME: HotFix invetory
+# 
+# AUTHOR: Mohamed Garrana
+# DATE  : 4/3/2010
+# 
+# COMMENT: 
+# RED on screen alerts are oriented for Active Directory connection events
+# Yellow on screen Alerts are oriented for WMI connection events
+#This scripts connects to Active Directory LDAP path and gets computer object information like 
+#(name , Operatingsystem , OSversion , OSService pack, Hotfix (update) list , lastbootuptime) exporting them to CSV file which can be 
+#easily viewed in excel
+#you can also use this script to search for computers that did or did not have a certian HOTFIX installed , the output is also
+#a csv file with a nice screen output 
+# ==============================================================================================
+
+
+function get-adcomputerinfo {
+	#connects to AD and gets computer objects in the $ADpath variable , and then running get-ADinfoOS function for each computer object
+	Trap { Write-Host -ForegroundColor Red &quot;   &lt;&lt;&lt; Error &gt;&gt;&gt;  could not connect to Active directory, please make sure that ADpath var is correctly SET !&quot;
+		Break
+	
+	}
+	
+	$searcher = New-Object DirectoryServices.DirectorySearcher
+	$RootSearch = New-Object directoryservices.directoryentry $ADpath
+	$searcher.searchroot = $RootSearch
+	$searcher.filter = &quot;(objectClass=computer)&quot;
+	$allcomps = $searcher.findall() 
+	foreach ($comp in $allcomps) { get-ADinfoOS }	
+	$objs = $allcomps | Measure-Object
+	$objcount = $objs.Count
+	Write-Host -BackgroundColor green -ForegroundColor blue &quot; Script succesfully Completed on $objcount Active Directory computer objects&quot;
+	}
+
+function get-ADinfoOS {
+	#this function outputs a computer object with some properties (name , Operatingsystem , OSversion , OSService pack)
+	#these properties are retreived from Active Directory Computer objects attributes
+	BEGIN { }
+	PROCESS  {
+	#Write-Host $comp.Properties.name
+	try {
+	$name = $comp.Properties.name[0] 
+	$os= $comp.Properties.operatingsystem[0] 
+	$osver= $comp.Properties.operatingsystemversion[0] 
+	$ossp=$comp.Properties.operatingsystemservicepack[0]
+	}
+	Catch {
+	Write-Host -ForegroundColor Red &quot;   &lt;&lt; WHoops ... &gt;&gt;     $name    : Error reading a required property from the AD computer object, this might be a cluster resource name or the property has a null value . execution will continue anyway ;)&quot;
+		continue
+		}
+	finally {
+
+	$computer = New-Object psobject 
+	$Computer | Add-Member NoteProperty Name ($name)
+	$computer | Add-Member NoteProperty OperatingSystem ($os)
+	$Computer | Add-Member NoteProperty OSVersion ($osver)
+	$computer | Add-Member Noteproperty OSServicePack ($ossp)
+	
+	}
+	try {
+	$hotfixobj = Get-HotFix -ComputerName $name
+	#getting lastbootup time property from WMI class Win32_operatingsystem
+	$Timeinfo = Get-WmiObject -Query &quot;select LastBootUpTime from Win32_OperatingSystem&quot; -ComputerName $name
+	$LastBootup = $Timeinfo.ConvertToDateTime($Timeinfo.LastBootUpTime)
+	
+	}
+	Catch {
+	Write-Host -ForegroundColor yellow &quot;   &lt;&lt; WHoops ... &gt;&gt;     $name    : Error reading the required WMI Class , Please make sure that you have appropriate permissions on $name and that the computer is online . execution will continue anyway ;)&quot;
+		continue
+	}
+	Finally {
+	$hotfixlist = &quot;&quot;
+	$hotfixobj | ForEach-Object { 
+	if ($_.HotFixID -ne &quot;File 1&quot; ) 
+	{ $hotfixlist = $hotfixlist &#43; $_.HotFixID &#43; &quot;,&quot; } 
+	 }
+	$computer | Add-Member NoteProperty HotFixList ($hotfixlist)
+	$computer | Add-Member NoteProperty LastBootUpTime ($LastBootup)
+	Write-Output $computer
+	}
+	} 
+	END{}
+}
+
+function filter-hotfixnotinstalled {
+	#filter-hotfixnotinstalled gets psobject pipelined from get-ADinfoOS and filters these objects only outputing the computer object 
+	#missing the hotfix specified in $updateid
+	Begin {Write-Host -BackgroundColor green -ForegroundColor blue &quot; the following Computer does not have the hot fix $updateid installed &quot; }
+	Process {
+	if (-not $_.HotFixList.Contains($updateID))
+		{ 
+		write-output $_
+		Write-Host -BackgroundColor green -ForegroundColor blue $_.Name
+						}
+	}
+	End{}
+	}
+	
+function filter-hotfixinstalled {
+	#filter-hotfixinstalled gets psobject pipelined from get-ADinfoOS and filters these objects only outputing the computer object 
+	#having the hotfix specified in $updateid installed .
+	Begin {write-host -BackgroundColor green -ForegroundColor blue &quot; the following Computer does have the hot fix $updateid installed &quot; }
+	Process {
+	if ( $_.HotFixList.Contains($updateID))
+		{
+		write-output $_
+		Write-Host -BackgroundColor green -ForegroundColor blue $_.Name				
+						}
+	}
+	End{}
+	}
+
+
+	
+#-1-------------------------------------------------------------------
+#Hot fix inventory
+#you can use the script like this to export AD computers into a csv file with information like
+#name , Operatingsystem , OSversion , OSService pack and hotfix list
+#$ADpath = &quot;LDAP://OU=Marketing,DC=Microsoft,DC=dom&quot; #this will grap all the AD computer objects in the marketing OU in the microsoft domain
+#$outfile = &quot;c:\test\ADHotFivinv.csv&quot; #sets the location of the out csv file if you'r going to use Export-Csv
+#get-adcomputerinfo | Export-Csv $outfile
+
+#-2--------------------------------------------------------------------------------------------
+#Looking for computers with a certian hot fix not installed
+#you can use the script this way to search for AD computers not having a certian HotFix installed
+#you specify the hotfix KB ID in the variable $updateid
+#$ADpath = &quot;LDAP://OU=Marketing,DC=Microsoft,DC=dom&quot; #this will grap all the AD computer objects in the marketing OU in the microsoft domain
+#$outfile = &quot;c:\test\KBnotinstalled.csv&quot; #sets the location of the out csv file if you'r going to use Export-Csv
+#$updateid  = &quot;KB979306&quot;
+#get-adcomputerinfo | filter-hotfixnotinstalled | select Name , OperatingSystem , OSVersion, OSServicePack ,LastBootUpTime  | Export-Csv $outfile
+
+#-3-------------------------------------------------------------------------------------------------
+#looking for computers with a certian hotfix installed
+#you can use the script this way to search for AD computers not having a certian HotFix installed
+#you specify the hotfix KB ID in the variable $updateid
+#you can also select LastBootUpTime property to be attached to the object , because some hotfixes are useless unless you restart the system
+#so you get to know how effective the installed updates are
+#$ADpath = &quot;LDAP://OU=Marketing,DC=Microsoft,DC=dom&quot; #this will grap all the AD computer objects in the marketing OU in the microsoft domain
+#$outfile = &quot;c:\test\KBinstalled.csv&quot;
+#$updateid  = &quot;KB967723&quot;
+#get-adcomputerinfo | filter-hotfixinstalled | select Name , OperatingSystem , OSVersion, OSServicePack ,LastBootUpTime  | Export-Csv $outfile
+
+#you can always use out-gridview instead of export-csv since all these function outputs psobjects
+
+</pre>
+<div class="preview"><pre class="powershell"># ==============================================================================================
+# NAME: HotFix invetory
+# 
+# AUTHOR: Mohamed Garrana
+# DATE  : 4/3/2010
+# 
+# COMMENT: 
+# RED on screen alerts are oriented for Active Directory connection events
+# Yellow on screen Alerts are oriented for WMI connection events
+#This scripts connects to Active Directory LDAP path and gets computer object information like 
+#(name , Operatingsystem , OSversion , OSService pack, Hotfix (update) list , lastbootuptime) exporting them to CSV file which can be 
+#easily viewed in excel
+#you can also use this script to search for computers that did or did not have a certian HOTFIX installed , the output is also
+#a csv file with a nice screen output 
+# ==============================================================================================
+
+
+function get-adcomputerinfo {
+	#connects to AD and gets computer objects in the $ADpath variable , and then running get-ADinfoOS function for each computer object
+	Trap { Write-Host -ForegroundColor Red &quot;   &lt;&lt;&lt; Error &gt;&gt;&gt;  could not connect to Active directory, please make sure that ADpath var is correctly SET !&quot;
+		Break
+	
+	}
+	
+	$searcher = New-Object DirectoryServices.DirectorySearcher
+	$RootSearch = New-Object directoryservices.directoryentry $ADpath
+	$searcher.searchroot = $RootSearch
+	$searcher.filter = &quot;(objectClass=computer)&quot;
+	$allcomps = $searcher.findall() 
+	foreach ($comp in $allcomps) { get-ADinfoOS }	
+	$objs = $allcomps | Measure-Object
+	$objcount = $objs.Count
+	Write-Host -BackgroundColor green -ForegroundColor blue &quot; Script succesfully Completed on $objcount Active Directory computer objects&quot;
+	}
+
+function get-ADinfoOS {
+	#this function outputs a computer object with some properties (name , Operatingsystem , OSversion , OSService pack)
+	#these properties are retreived from Active Directory Computer objects attributes
+	BEGIN { }
+	PROCESS  {
+	#Write-Host $comp.Properties.name
+	try {
+	$name = $comp.Properties.name[0] 
+	$os= $comp.Properties.operatingsystem[0] 
+	$osver= $comp.Properties.operatingsystemversion[0] 
+	$ossp=$comp.Properties.operatingsystemservicepack[0]
+	}
+	Catch {
+	Write-Host -ForegroundColor Red &quot;   &lt;&lt; WHoops ... &gt;&gt;     $name    : Error reading a required property from the AD computer object, this might be a cluster resource name or the property has a null value . execution will continue anyway ;)&quot;
+		continue
+		}
+	finally {
+
+	$computer = New-Object psobject 
+	$Computer | Add-Member NoteProperty Name ($name)
+	$computer | Add-Member NoteProperty OperatingSystem ($os)
+	$Computer | Add-Member NoteProperty OSVersion ($osver)
+	$computer | Add-Member Noteproperty OSServicePack ($ossp)
+	
+	}
+	try {
+	$hotfixobj = Get-HotFix -ComputerName $name
+	#getting lastbootup time property from WMI class Win32_operatingsystem
+	$Timeinfo = Get-WmiObject -Query &quot;select LastBootUpTime from Win32_OperatingSystem&quot; -ComputerName $name
+	$LastBootup = $Timeinfo.ConvertToDateTime($Timeinfo.LastBootUpTime)
+	
+	}
+	Catch {
+	Write-Host -ForegroundColor yellow &quot;   &lt;&lt; WHoops ... &gt;&gt;     $name    : Error reading the required WMI Class , Please make sure that you have appropriate permissions on $name and that the computer is online . execution will continue anyway ;)&quot;
+		continue
+	}
+	Finally {
+	$hotfixlist = &quot;&quot;
+	$hotfixobj | ForEach-Object { 
+	if ($_.HotFixID -ne &quot;File 1&quot; ) 
+	{ $hotfixlist = $hotfixlist &#43; $_.HotFixID &#43; &quot;,&quot; } 
+	 }
+	$computer | Add-Member NoteProperty HotFixList ($hotfixlist)
+	$computer | Add-Member NoteProperty LastBootUpTime ($LastBootup)
+	Write-Output $computer
+	}
+	} 
+	END{}
+}
+
+function filter-hotfixnotinstalled {
+	#filter-hotfixnotinstalled gets psobject pipelined from get-ADinfoOS and filters these objects only outputing the computer object 
+	#missing the hotfix specified in $updateid
+	Begin {Write-Host -BackgroundColor green -ForegroundColor blue &quot; the following Computer does not have the hot fix $updateid installed &quot; }
+	Process {
+	if (-not $_.HotFixList.Contains($updateID))
+		{ 
+		write-output $_
+		Write-Host -BackgroundColor green -ForegroundColor blue $_.Name
+						}
+	}
+	End{}
+	}
+	
+function filter-hotfixinstalled {
+	#filter-hotfixinstalled gets psobject pipelined from get-ADinfoOS and filters these objects only outputing the computer object 
+	#having the hotfix specified in $updateid installed .
+	Begin {write-host -BackgroundColor green -ForegroundColor blue &quot; the following Computer does have the hot fix $updateid installed &quot; }
+	Process {
+	if ( $_.HotFixList.Contains($updateID))
+		{
+		write-output $_
+		Write-Host -BackgroundColor green -ForegroundColor blue $_.Name				
+						}
+	}
+	End{}
+	}
+
+
+	
+#-1-------------------------------------------------------------------
+#Hot fix inventory
+#you can use the script like this to export AD computers into a csv file with information like
+#name , Operatingsystem , OSversion , OSService pack and hotfix list
+#$ADpath = &quot;LDAP://OU=Marketing,DC=Microsoft,DC=dom&quot; #this will grap all the AD computer objects in the marketing OU in the microsoft domain
+#$outfile = &quot;c:\test\ADHotFivinv.csv&quot; #sets the location of the out csv file if you'r going to use Export-Csv
+#get-adcomputerinfo | Export-Csv $outfile
+
+#-2--------------------------------------------------------------------------------------------
+#Looking for computers with a certian hot fix not installed
+#you can use the script this way to search for AD computers not having a certian HotFix installed
+#you specify the hotfix KB ID in the variable $updateid
+#$ADpath = &quot;LDAP://OU=Marketing,DC=Microsoft,DC=dom&quot; #this will grap all the AD computer objects in the marketing OU in the microsoft domain
+#$outfile = &quot;c:\test\KBnotinstalled.csv&quot; #sets the location of the out csv file if you'r going to use Export-Csv
+#$updateid  = &quot;KB979306&quot;
+#get-adcomputerinfo | filter-hotfixnotinstalled | select Name , OperatingSystem , OSVersion, OSServicePack ,LastBootUpTime  | Export-Csv $outfile
+
+#-3-------------------------------------------------------------------------------------------------
+#looking for computers with a certian hotfix installed
+#you can use the script this way to search for AD computers not having a certian HotFix installed
+#you specify the hotfix KB ID in the variable $updateid
+#you can also select LastBootUpTime property to be attached to the object , because some hotfixes are useless unless you restart the system
+#so you get to know how effective the installed updates are
+#$ADpath = &quot;LDAP://OU=Marketing,DC=Microsoft,DC=dom&quot; #this will grap all the AD computer objects in the marketing OU in the microsoft domain
+#$outfile = &quot;c:\test\KBinstalled.csv&quot;
+#$updateid  = &quot;KB967723&quot;
+#get-adcomputerinfo | filter-hotfixinstalled | select Name , OperatingSystem , OSVersion, OSServicePack ,LastBootUpTime  | Export-Csv $outfile
+
+#you can always use out-gridview instead of export-csv since all these function outputs psobjects
+
+</pre>
+</div>
+</div></div><div class="endscriptcode">&nbsp;</div>
+
+        </div>
+    </body>
+</html>

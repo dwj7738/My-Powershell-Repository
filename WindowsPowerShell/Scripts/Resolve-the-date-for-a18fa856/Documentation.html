@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Resolve the date for Patching Calendar</title>        
+        <meta name="description" content="Hi All,The below script is capable of resolving dates based on Patching calendar,Eg.&#160;2nd saturday&#160;of October-2014 is 10/11/2014.Will be helpful for windows Admins to prepare pathcing dates:&#160;&#160;#Weekdays= Starts sunday=0,mon=1,tue=2....sat=6Eg. Get-WeekDayInMonth 10 2014 2 610/11/20" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>Hi All,</p>
+<p>The&nbsp;below module of small script is capable of resolving dates based on Patching calendar,This is a basic need for most of windows admins to have the dates prepared in the pathcing calendar based on nth week's&nbsp;Weekday&nbsp;,Month and year.</p>
+<p>This module can also be dynamically binded with the inventory and the schedules&nbsp;can&nbsp;be&nbsp;Exported&nbsp;.&nbsp;</p>
+<p>Eg.&nbsp;2nd saturday&nbsp;of October-2014 is 10/11/2014.</p>
+<p>Will be helpful for windows Admins to prepare pathcing dates:</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">Function Get-WeekDayInMonth ([int]$Month, [int]$year, [int]$WeekNumber, [int]$WeekDay) 
+{  
+$FirstDayOfMonth = Get-Date -Year $year -Month $Month -Day 1 -Hour 0 -Minute 0 -Second 0 
+[int]$FirstDayofMonthDay = $FirstDayOfMonth.DayOfWeek
+$Difference = $WeekDay - $FirstDayofMonthDay 
+If ($Difference -lt 0) 
+{ 
+$DaysToAdd = 7 - ($FirstDayofMonthDay - $WeekDay) 
+} 
+elseif ($difference -eq 0 ) 
+{ 
+$DaysToAdd = 0 
+}
+else 
+{ 
+$DaysToAdd = $Difference
+} 
+$FirstWeekDayofMonth = $FirstDayOfMonth.AddDays($DaysToAdd)   
+$DaysToAdd = ($WeekNumber -1)*7 
+$TheDay = $FirstWeekDayofMonth.AddDays($DaysToAdd) 
+If (!($TheDay.Month -eq $Month -and $TheDay.Year -eq $Year)) 
+{ $TheDay = $null} 
+$TheDay
+}</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__keyword">Function</span>&nbsp;Get<span class="powerShell__operator">-</span>WeekDayInMonth&nbsp;([int]<span class="powerShell__variable">$Month</span>,&nbsp;[int]<span class="powerShell__variable">$year</span>,&nbsp;[int]<span class="powerShell__variable">$WeekNumber</span>,&nbsp;[int]<span class="powerShell__variable">$WeekDay</span>)&nbsp;&nbsp;
+{&nbsp;&nbsp;&nbsp;
+<span class="powerShell__variable">$FirstDayOfMonth</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-Date</span>&nbsp;<span class="powerShell__operator">-</span>Year&nbsp;<span class="powerShell__variable">$year</span>&nbsp;<span class="powerShell__operator">-</span>Month&nbsp;<span class="powerShell__variable">$Month</span>&nbsp;<span class="powerShell__operator">-</span>Day&nbsp;1&nbsp;<span class="powerShell__operator">-</span>Hour&nbsp;0&nbsp;<span class="powerShell__operator">-</span>Minute&nbsp;0&nbsp;<span class="powerShell__operator">-</span>Second&nbsp;0&nbsp;&nbsp;
+[int]<span class="powerShell__variable">$FirstDayofMonthDay</span>&nbsp;=&nbsp;<span class="powerShell__variable">$FirstDayOfMonth</span>.DayOfWeek&nbsp;
+<span class="powerShell__variable">$Difference</span>&nbsp;=&nbsp;<span class="powerShell__variable">$WeekDay</span>&nbsp;<span class="powerShell__operator">-</span>&nbsp;<span class="powerShell__variable">$FirstDayofMonthDay</span>&nbsp;&nbsp;
+<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$Difference</span>&nbsp;<span class="powerShell__operator">-</span>lt&nbsp;0)&nbsp;&nbsp;
+{&nbsp;&nbsp;
+<span class="powerShell__variable">$DaysToAdd</span>&nbsp;=&nbsp;7&nbsp;<span class="powerShell__operator">-</span>&nbsp;(<span class="powerShell__variable">$FirstDayofMonthDay</span>&nbsp;<span class="powerShell__operator">-</span>&nbsp;<span class="powerShell__variable">$WeekDay</span>)&nbsp;&nbsp;
+}&nbsp;&nbsp;
+<span class="powerShell__keyword">elseif</span>&nbsp;(<span class="powerShell__variable">$difference</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;0&nbsp;)&nbsp;&nbsp;
+{&nbsp;&nbsp;
+<span class="powerShell__variable">$DaysToAdd</span>&nbsp;=&nbsp;0&nbsp;&nbsp;
+}&nbsp;
+<span class="powerShell__keyword">else</span>&nbsp;&nbsp;
+{&nbsp;&nbsp;
+<span class="powerShell__variable">$DaysToAdd</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Difference</span>&nbsp;
+}&nbsp;&nbsp;
+<span class="powerShell__variable">$FirstWeekDayofMonth</span>&nbsp;=&nbsp;<span class="powerShell__variable">$FirstDayOfMonth</span>.AddDays(<span class="powerShell__variable">$DaysToAdd</span>)&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="powerShell__variable">$DaysToAdd</span>&nbsp;=&nbsp;(<span class="powerShell__variable">$WeekNumber</span>&nbsp;<span class="powerShell__operator">-</span>1)<span class="powerShell__operator">*</span>7&nbsp;&nbsp;
+<span class="powerShell__variable">$TheDay</span>&nbsp;=&nbsp;<span class="powerShell__variable">$FirstWeekDayofMonth</span>.AddDays(<span class="powerShell__variable">$DaysToAdd</span>)&nbsp;&nbsp;
+<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__operator">!</span>(<span class="powerShell__variable">$TheDay</span>.Month&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$Month</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$TheDay</span>.Year&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$Year</span>))&nbsp;&nbsp;
+{&nbsp;<span class="powerShell__variable">$TheDay</span>&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>}&nbsp;&nbsp;
+<span class="powerShell__variable">$TheDay</span>&nbsp;
+}</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<p>&nbsp;</p>
+<p>#Weekdays= Starts sunday=0,mon=1,tue=2....sat=6</p>
+<p>Eg. Get-WeekDayInMonth 10 2014 2 6</p>
+<p>10/11/2014</p>
+
+        </div>
+    </body>
+</html>

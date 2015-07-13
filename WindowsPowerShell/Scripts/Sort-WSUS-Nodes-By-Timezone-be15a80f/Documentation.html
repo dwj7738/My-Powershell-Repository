@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Sort WSUS Nodes By Timezone into WSUS Groups</title>        
+        <meta name="description" content="This script can be used to move and/or organize WSUS nodes into WSUS groups based on local timezone of node." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>For many groups of systems in my environment, we are given a specific time window for system downtime, therefore creating an approved window to apply patches.</p>
+<p>This script simply queries the nodes local timezone and organizes each into specified groups in WSUS - all you need to specify in which group holds the nodes to be filtered, and which groups (already created in WSUS) will contain the systems once timezones
+ are determined.</p>
+<p>Obviously, the logic could be changed to sort on an unlimited amount of node information, especially if using WMI.</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&lt;#
+.SYNOPSIS Move nodes to specified WSUS group based on the systems local Timezone.
+.NOTES All groups need to exist prior to using this script.  Specify $varWSUSServer as your WSUS server and $varFilterGroup as the WSUS group you would like to sort through.  Next determine which groups you will be sorting into by timezone.
+#&gt;
+
+Clear-Host
+$VerbosePreference = &quot;Continue&quot;
+
+$varWSUSServer = &quot;WSUSServer1&quot;
+$varLogFile = &quot;LOG_Move-SystemsByTimezone-$($env:computername).log&quot;
+$varFilterGroup = &quot;Unassigned Computers&quot;
+$varGroupEST = &quot;EST Servers&quot;
+$varGroupCST = &quot;CST Servers&quot;
+$varGroupMST = &quot;MST Servers&quot;
+$varGroupPST = &quot;PST Servers&quot;
+$varGroupOther = &quot;Other Timezone Servers&quot;
+
+Function LogWrite
+{
+  Param ([string]$logstring)
+  Add-Content $varLogFile -value $logstring
+  Write-Host $logstring
+}
+
+LogWrite &quot;`n$(get-date -f u)`t--- START ---&quot;
+LogWrite &quot;$(get-date -f u)`tExecuting Move-SystemsByTimezone.ps1 on $($env:computername) by user $($env:USERNAME)&quot;
+
+LogWrite &quot;$(get-date -f u)`tConnecting to WSUS...&quot;
+[void][reflection.assembly]::LoadWithPartialName(&quot;Microsoft.UpdateServices.Administration&quot;)
+$varWSUS = [Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer($varWSUSServer,$False)
+
+LogWrite &quot;$(get-date -f u)`tSearching WSUS for systems to sort through...&quot;
+$varFilterClients = ($varWSUS.GetComputerTargetGroups() | Where { $_.Name -eq $varFilterGroup }).GetComputerTargets()
+
+LogWrite &quot;$(get-date -f u)`tConnecting to appropiate WSUS groups.&quot;
+$varWSUSGroupEST = $varWSUS.GetComputerTargetGroups() | ? {$_.Name -eq $varGroupEST }
+$varWSUSGroupCST = $varWSUS.GetComputerTargetGroups() | ? {$_.Name -eq $varGroupCST }
+$varWSUSGroupMST = $varWSUS.GetComputerTargetGroups() | ? {$_.Name -eq $varGroupMST }
+$varWSUSGroupPST = $varWSUS.GetComputerTargetGroups() | ? {$_.Name -eq $varGroupPST }
+$varWSUSGroupOTHER = $varWSUS.GetComputerTargetGroups() | ? {$_.Name -eq $varGroupOther }
+
+LogWrite &quot;$(get-date -f u)`t * Begining to work through array of systems&quot;
+$varFilterClients | foreach-object {
+	LogWrite &quot;$(get-date -f u)`t &gt; Connecting to $($_.FullDomainName)&quot;
+    $varLocalHour = gwmi Win32_LocalTime -cn $_.FullDomainName | Select-Object -Property Hour
+	if (((get-date).hour)-$varLocalHour.Hour -eq &quot;0&quot;) {
+        LogWrite &quot;$(get-date -f u)`tLocal time on $($_.FullDomainName) is EST, adding to EST group.&quot;
+        $varWSUSGroupEST.AddComputerTarget($_)
+        # If you needed to remove the node from the group you sort thru, since we used a default WSUS group this can be skipped.
+        #$OriginalGroup.RemoveComputerTarget($_)
+	} elseif (((get-date).hour)-$varLocalHour.Hour -eq &quot;1&quot;) {
+        LogWrite &quot;$(get-date -f u)`tLocal time on $($_.FullDomainName) is CST, adding to CST group.&quot;
+        $varWSUSGroupCST.AddComputerTarget($_)
+        #$OriginalGroup.RemoveComputerTarget($_)
+	} elseif (((get-date).hour)-$varLocalHour.Hour -eq &quot;2&quot;) {
+        LogWrite &quot;$(get-date -f u)`tLocal time on $($_.FullDomainName) is MST, adding to MST group.&quot;
+        $varWSUSGroupMST.AddComputerTarget($_)
+        #$OriginalGroup.RemoveComputerTarget($_)
+	} elseif (((get-date).hour)-$varLocalHour.Hour -eq &quot;3&quot;) {
+        LogWrite &quot;$(get-date -f u)`tLocal time on $($_.FullDomainName) is PST, adding to PST group.&quot;
+        $varWSUSGroupPST.AddComputerTarget($_)
+        #$OriginalGroup.RemoveComputerTarget($_)
+	} elseif (((get-date).hour)-$varLocalHour.Hour -gt &quot;3&quot;) {
+        LogWrite &quot;$(get-date -f u)`tLocal time on $($_.FullDomainName) may have invalid Timezone setting or is other than continental US.&quot;
+        $varWSUSGroupOther.AddComputerTarget($_)
+        #$OriginalGroup.RemoveComputerTarget($_)
+	}
+}
+
+LogWrite &quot;`n$(get-date -f u)`t--- END ---&quot;</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__mlcom">&lt;#&nbsp;
+.SYNOPSIS&nbsp;Move&nbsp;nodes&nbsp;to&nbsp;specified&nbsp;WSUS&nbsp;group&nbsp;based&nbsp;on&nbsp;the&nbsp;systems&nbsp;local&nbsp;Timezone.&nbsp;
+.NOTES&nbsp;All&nbsp;groups&nbsp;need&nbsp;to&nbsp;exist&nbsp;prior&nbsp;to&nbsp;using&nbsp;this&nbsp;script.&nbsp;&nbsp;Specify&nbsp;$varWSUSServer&nbsp;as&nbsp;your&nbsp;WSUS&nbsp;server&nbsp;and&nbsp;$varFilterGroup&nbsp;as&nbsp;the&nbsp;WSUS&nbsp;group&nbsp;you&nbsp;would&nbsp;like&nbsp;to&nbsp;sort&nbsp;through.&nbsp;&nbsp;Next&nbsp;determine&nbsp;which&nbsp;groups&nbsp;you&nbsp;will&nbsp;be&nbsp;sorting&nbsp;into&nbsp;by&nbsp;timezone.&nbsp;
+#&gt;</span>&nbsp;
+&nbsp;
+Clear<span class="powerShell__operator">-</span>Host&nbsp;
+<span class="powerShell__variable">$VerbosePreference</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Continue&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$varWSUSServer</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;WSUSServer1&quot;</span>&nbsp;
+<span class="powerShell__variable">$varLogFile</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;LOG_Move-SystemsByTimezone-$($env:computername).log&quot;</span>&nbsp;
+<span class="powerShell__variable">$varFilterGroup</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Unassigned&nbsp;Computers&quot;</span>&nbsp;
+<span class="powerShell__variable">$varGroupEST</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;EST&nbsp;Servers&quot;</span>&nbsp;
+<span class="powerShell__variable">$varGroupCST</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;CST&nbsp;Servers&quot;</span>&nbsp;
+<span class="powerShell__variable">$varGroupMST</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;MST&nbsp;Servers&quot;</span>&nbsp;
+<span class="powerShell__variable">$varGroupPST</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;PST&nbsp;Servers&quot;</span>&nbsp;
+<span class="powerShell__variable">$varGroupOther</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Other&nbsp;Timezone&nbsp;Servers&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;LogWrite&nbsp;
+{&nbsp;
+&nbsp;&nbsp;<span class="powerShell__keyword">Param</span>&nbsp;([string]<span class="powerShell__variable">$logstring</span>)&nbsp;
+&nbsp;&nbsp;<span class="powerShell__cmdlets">Add-Content</span>&nbsp;<span class="powerShell__variable">$varLogFile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__variable">$logstring</span>&nbsp;
+&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__variable">$logstring</span>&nbsp;
+}&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;`n$(get-date&nbsp;-f&nbsp;u)`t---&nbsp;START&nbsp;---&quot;</span>&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tExecuting&nbsp;Move-SystemsByTimezone.ps1&nbsp;on&nbsp;$($env:computername)&nbsp;by&nbsp;user&nbsp;$($env:USERNAME)&quot;</span>&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tConnecting&nbsp;to&nbsp;WSUS...&quot;</span>&nbsp;
+[void][reflection.assembly]::LoadWithPartialName(<span class="powerShell__string">&quot;Microsoft.UpdateServices.Administration&quot;</span>)&nbsp;
+<span class="powerShell__variable">$varWSUS</span>&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer(<span class="powerShell__variable">$varWSUSServer</span>,<span class="powerShell__variable">$False</span>)&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tSearching&nbsp;WSUS&nbsp;for&nbsp;systems&nbsp;to&nbsp;sort&nbsp;through...&quot;</span>&nbsp;
+<span class="powerShell__variable">$varFilterClients</span>&nbsp;=&nbsp;(<span class="powerShell__variable">$varWSUS</span>.GetComputerTargetGroups()&nbsp;<span class="powerShell__operator">|</span>&nbsp;Where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.Name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$varFilterGroup</span>&nbsp;}).GetComputerTargets()&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tConnecting&nbsp;to&nbsp;appropiate&nbsp;WSUS&nbsp;groups.&quot;</span>&nbsp;
+<span class="powerShell__variable">$varWSUSGroupEST</span>&nbsp;=&nbsp;<span class="powerShell__variable">$varWSUS</span>.GetComputerTargetGroups()&nbsp;<span class="powerShell__operator">|</span>&nbsp;?&nbsp;{<span class="powerShell__variable">$_</span>.Name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$varGroupEST</span>&nbsp;}&nbsp;
+<span class="powerShell__variable">$varWSUSGroupCST</span>&nbsp;=&nbsp;<span class="powerShell__variable">$varWSUS</span>.GetComputerTargetGroups()&nbsp;<span class="powerShell__operator">|</span>&nbsp;?&nbsp;{<span class="powerShell__variable">$_</span>.Name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$varGroupCST</span>&nbsp;}&nbsp;
+<span class="powerShell__variable">$varWSUSGroupMST</span>&nbsp;=&nbsp;<span class="powerShell__variable">$varWSUS</span>.GetComputerTargetGroups()&nbsp;<span class="powerShell__operator">|</span>&nbsp;?&nbsp;{<span class="powerShell__variable">$_</span>.Name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$varGroupMST</span>&nbsp;}&nbsp;
+<span class="powerShell__variable">$varWSUSGroupPST</span>&nbsp;=&nbsp;<span class="powerShell__variable">$varWSUS</span>.GetComputerTargetGroups()&nbsp;<span class="powerShell__operator">|</span>&nbsp;?&nbsp;{<span class="powerShell__variable">$_</span>.Name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$varGroupPST</span>&nbsp;}&nbsp;
+<span class="powerShell__variable">$varWSUSGroupOTHER</span>&nbsp;=&nbsp;<span class="powerShell__variable">$varWSUS</span>.GetComputerTargetGroups()&nbsp;<span class="powerShell__operator">|</span>&nbsp;?&nbsp;{<span class="powerShell__variable">$_</span>.Name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$varGroupOther</span>&nbsp;}&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`t&nbsp;*&nbsp;Begining&nbsp;to&nbsp;work&nbsp;through&nbsp;array&nbsp;of&nbsp;systems&quot;</span>&nbsp;
+<span class="powerShell__variable">$varFilterClients</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span><span class="powerShell__operator">-</span>object&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`t&nbsp;&gt;&nbsp;Connecting&nbsp;to&nbsp;$($_.FullDomainName)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$varLocalHour</span>&nbsp;=&nbsp;<span class="powerShell__alias">gwmi</span>&nbsp;Win32_LocalTime&nbsp;<span class="powerShell__operator">-</span>cn&nbsp;<span class="powerShell__variable">$_</span>.FullDomainName&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Select-Object</span>&nbsp;<span class="powerShell__operator">-</span>Property&nbsp;Hour&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(((<span class="powerShell__cmdlets">get-date</span>).hour)<span class="powerShell__operator">-</span><span class="powerShell__variable">$varLocalHour</span>.Hour&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;0&quot;</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tLocal&nbsp;time&nbsp;on&nbsp;$($_.FullDomainName)&nbsp;is&nbsp;EST,&nbsp;adding&nbsp;to&nbsp;EST&nbsp;group.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$varWSUSGroupEST</span>.AddComputerTarget(<span class="powerShell__variable">$_</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;If&nbsp;you&nbsp;needed&nbsp;to&nbsp;remove&nbsp;the&nbsp;node&nbsp;from&nbsp;the&nbsp;group&nbsp;you&nbsp;sort&nbsp;thru,&nbsp;since&nbsp;we&nbsp;used&nbsp;a&nbsp;default&nbsp;WSUS&nbsp;group&nbsp;this&nbsp;can&nbsp;be&nbsp;skipped.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$OriginalGroup.RemoveComputerTarget($_)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">elseif</span>&nbsp;(((<span class="powerShell__cmdlets">get-date</span>).hour)<span class="powerShell__operator">-</span><span class="powerShell__variable">$varLocalHour</span>.Hour&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;1&quot;</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tLocal&nbsp;time&nbsp;on&nbsp;$($_.FullDomainName)&nbsp;is&nbsp;CST,&nbsp;adding&nbsp;to&nbsp;CST&nbsp;group.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$varWSUSGroupCST</span>.AddComputerTarget(<span class="powerShell__variable">$_</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$OriginalGroup.RemoveComputerTarget($_)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">elseif</span>&nbsp;(((<span class="powerShell__cmdlets">get-date</span>).hour)<span class="powerShell__operator">-</span><span class="powerShell__variable">$varLocalHour</span>.Hour&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;2&quot;</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tLocal&nbsp;time&nbsp;on&nbsp;$($_.FullDomainName)&nbsp;is&nbsp;MST,&nbsp;adding&nbsp;to&nbsp;MST&nbsp;group.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$varWSUSGroupMST</span>.AddComputerTarget(<span class="powerShell__variable">$_</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$OriginalGroup.RemoveComputerTarget($_)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">elseif</span>&nbsp;(((<span class="powerShell__cmdlets">get-date</span>).hour)<span class="powerShell__operator">-</span><span class="powerShell__variable">$varLocalHour</span>.Hour&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;3&quot;</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tLocal&nbsp;time&nbsp;on&nbsp;$($_.FullDomainName)&nbsp;is&nbsp;PST,&nbsp;adding&nbsp;to&nbsp;PST&nbsp;group.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$varWSUSGroupPST</span>.AddComputerTarget(<span class="powerShell__variable">$_</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$OriginalGroup.RemoveComputerTarget($_)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">elseif</span>&nbsp;(((<span class="powerShell__cmdlets">get-date</span>).hour)<span class="powerShell__operator">-</span><span class="powerShell__variable">$varLocalHour</span>.Hour&nbsp;<span class="powerShell__operator">-</span>gt&nbsp;<span class="powerShell__string">&quot;3&quot;</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogWrite&nbsp;<span class="powerShell__string">&quot;$(get-date&nbsp;-f&nbsp;u)`tLocal&nbsp;time&nbsp;on&nbsp;$($_.FullDomainName)&nbsp;may&nbsp;have&nbsp;invalid&nbsp;Timezone&nbsp;setting&nbsp;or&nbsp;is&nbsp;other&nbsp;than&nbsp;continental&nbsp;US.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$varWSUSGroupOther</span>.AddComputerTarget(<span class="powerShell__variable">$_</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$OriginalGroup.RemoveComputerTarget($_)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+}&nbsp;
+&nbsp;
+LogWrite&nbsp;<span class="powerShell__string">&quot;`n$(get-date&nbsp;-f&nbsp;u)`t---&nbsp;END&nbsp;---&quot;</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+
+        </div>
+    </body>
+</html>

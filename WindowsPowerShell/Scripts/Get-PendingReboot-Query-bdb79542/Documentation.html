@@ -1,0 +1,610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Get-PendingReboot - Query Computer(s) For Pending Reboot State</title>        
+        <meta name="description" content="This function gets the pending reboot status on a local or remote computer.  Now supports SCCM 2012 Clients." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>Updated!&nbsp; This function now supports SCCM 2012 clients.&nbsp; This function will query the registry on a local or remote computer and determine if the system is pending a reboot, from either Microsoft Patching or a Software Installation. For Windows
+ 2008 &amp; above the function will query the CBS registry key as another factor in determining pending reboot state.&nbsp; &quot;PendingFileRenameOperations&quot; and &quot;Auto Update\RebootRequired&quot; are observed as being consistant across Windows Server 2003 &amp; 2008.&nbsp;</p>
+<p><span>This function was featured on the Hey, Scripting Guy! Blog on June 10th/11th, 2013:
+</span></p>
+<p><a href="http://blogs.technet.com/b/heyscriptingguy/archive/2013/06/10/determine-pending-reboot-status-powershell-style-part-1.aspx">http://blogs.technet.com/b/heyscriptingguy/archive/2013/06/10/determine-pending-reboot-status-powershell-style-part-1.aspx</a></p>
+<p><a href="http://blogs.technet.com/b/heyscriptingguy/archive/2013/06/11/determine-pending-reboot-status-powershell-style-part-2.aspx">http://blogs.technet.com/b/heyscriptingguy/archive/2013/06/11/determine-pending-reboot-status-powershell-style-part-2.aspx</a></p>
+<p>You must load this &quot;script&quot; as a &quot;function&quot; by &quot;dot sourcing&quot; the .ps1 file, as in the following example:<br>
+<strong>PS C:\&gt; . .\Get-PendingReboot.ps1</strong><br>
+This example assumes the path to the Get-PendingReboot.ps1 file is relative to the current directory.</p>
+<p>Then the Function can be run:<br>
+<strong>PS C:\&gt; Get-PendingReboot -ComputerName WKS01, WKS02, SVR01, SVR02 </strong>
+</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">Function Get-PendingReboot
+{
+&lt;#
+.SYNOPSIS
+    Gets the pending reboot status on a local or remote computer.
+
+.DESCRIPTION
+    This function will query the registry on a local or remote computer and determine if the
+    system is pending a reboot, from either Microsoft Patching or a Software Installation.
+    For Windows 2008&#43; the function will query the CBS registry key as another factor in determining
+    pending reboot state.  &quot;PendingFileRenameOperations&quot; and &quot;Auto Update\RebootRequired&quot; are observed
+    as being consistant across Windows Server 2003 &amp; 2008.
+  
+    CBServicing = Component Based Servicing (Windows 2008)
+    WindowsUpdate = Windows Update / Auto Update (Windows 2003 / 2008)
+    CCMClientSDK = SCCM 2012 Clients only (DetermineIfRebootPending method) otherwise $null value
+    PendFileRename = PendingFileRenameOperations (Windows 2003 / 2008)
+
+.PARAMETER ComputerName
+    A single Computer or an array of computer names.  The default is localhost ($env:COMPUTERNAME).
+
+.PARAMETER ErrorLog
+    A single path to send error data to a log file.
+
+.EXAMPLE
+    PS C:\&gt; Get-PendingReboot -ComputerName (Get-Content C:\ServerList.txt) | Format-Table -AutoSize
+  
+    Computer CBServicing WindowsUpdate CCMClientSDK PendFileRename PendFileRenVal RebootPending
+    -------- ----------- ------------- ------------ -------------- -------------- -------------
+    DC01           False         False                       False                        False
+    DC02           False         False                       False                        False
+    FS01           False         False                       False                        False
+
+    This example will capture the contents of C:\ServerList.txt and query the pending reboot
+    information from the systems contained in the file and display the output in a table. The
+    null values are by design, since these systems do not have the SCCM 2012 client installed,
+    nor was the PendingFileRenameOperations value populated.
+
+.EXAMPLE
+    PS C:\&gt; Get-PendingReboot
+  
+    Computer       : WKS01
+    CBServicing    : False
+    WindowsUpdate  : True
+    CCMClient      : False
+    PendFileRename : False
+    PendFileRenVal : 
+    RebootPending  : True
+  
+    This example will query the local machine for pending reboot information.
+  
+.EXAMPLE
+    PS C:\&gt; $Servers = Get-Content C:\Servers.txt
+    PS C:\&gt; Get-PendingReboot -Computer $Servers | Export-Csv C:\PendingRebootReport.csv -NoTypeInformation
+  
+    This example will create a report that contains pending reboot information.
+
+.LINK
+    Component-Based Servicing:
+    http://technet.microsoft.com/en-us/library/cc756291(v=WS.10).aspx
+  
+    PendingFileRename/Auto Update:
+    http://support.microsoft.com/kb/2723674
+    http://technet.microsoft.com/en-us/library/cc960241.aspx
+    http://blogs.msdn.com/b/hansr/archive/2006/02/17/patchreboot.aspx
+
+    SCCM 2012/CCM_ClientSDK:
+    http://msdn.microsoft.com/en-us/library/jj902723.aspx
+
+.NOTES
+    Author:  Brian Wilhite
+    Email:   bwilhite1@carolina.rr.com
+    Date:    08/29/2012
+    PSVer:   2.0/3.0
+    Updated: 05/30/2013
+    UpdNote: Added CCMClient property - Used with SCCM 2012 Clients only
+             Added ValueFromPipelineByPropertyName=$true to the ComputerName Parameter
+             Removed $Data variable from the PSObject - it is not needed
+             Bug with the way CCMClientSDK returned null value if it was false
+             Removed unneeded variables
+             Added PendFileRenVal - Contents of the PendingFileRenameOperations Reg Entry
+#&gt;
+
+[CmdletBinding()]
+param(
+  [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+  [Alias(&quot;CN&quot;,&quot;Computer&quot;)]
+  [String[]]$ComputerName=&quot;$env:COMPUTERNAME&quot;,
+  [String]$ErrorLog
+  )
+
+Begin
+  {
+    # Adjusting ErrorActionPreference to stop on all errors, since using [Microsoft.Win32.RegistryKey]
+        # does not have a native ErrorAction Parameter, this may need to be changed if used within another
+        # function.
+    $TempErrAct = $ErrorActionPreference
+    $ErrorActionPreference = &quot;Stop&quot;
+  }#End Begin Script Block
+Process
+  {
+    Foreach ($Computer in $ComputerName)
+      {
+        Try
+          {
+            # Setting pending values to false to cut down on the number of else statements
+            $PendFileRename,$Pending,$SCCM = $false,$false,$false
+                        
+                        # Setting CBSRebootPend to null since not all versions of Windows has this value
+                        $CBSRebootPend = $null
+            
+            # Querying WMI for build version
+            $WMI_OS = Get-WmiObject -Class Win32_OperatingSystem -Property BuildNumber, CSName -ComputerName $Computer
+
+            # Making registry connection to the local/remote computer
+            $RegCon = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey([Microsoft.Win32.RegistryHive]&quot;LocalMachine&quot;,$Computer)
+            
+            # If Vista/2008 &amp; Above query the CBS Reg Key
+            If ($WMI_OS.BuildNumber -ge 6001)
+              {
+                $RegSubKeysCBS = $RegCon.OpenSubKey(&quot;SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\&quot;).GetSubKeyNames()
+                $CBSRebootPend = $RegSubKeysCBS -contains &quot;RebootPending&quot;
+                  
+              }#End If ($WMI_OS.BuildNumber -ge 6001)
+              
+            # Query WUAU from the registry
+            $RegWUAU = $RegCon.OpenSubKey(&quot;SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\&quot;)
+            $RegWUAURebootReq = $RegWUAU.GetSubKeyNames()
+            $WUAURebootReq = $RegWUAURebootReq -contains &quot;RebootRequired&quot;
+            
+            # Query PendingFileRenameOperations from the registry
+            $RegSubKeySM = $RegCon.OpenSubKey(&quot;SYSTEM\CurrentControlSet\Control\Session Manager\&quot;)
+            $RegValuePFRO = $RegSubKeySM.GetValue(&quot;PendingFileRenameOperations&quot;,$null)
+            
+            # Closing registry connection
+            $RegCon.Close()
+            
+            # If PendingFileRenameOperations has a value set $RegValuePFRO variable to $true
+            If ($RegValuePFRO)
+              {
+                $PendFileRename = $true
+
+              }#End If ($RegValuePFRO)
+
+            # Determine SCCM 2012 Client Reboot Pending Status
+            # To avoid nested 'if' statements and unneeded WMI calls to determine if the CCM_ClientUtilities class exist, setting EA = 0
+            $CCMClientSDK = $null
+                        $CCMSplat = @{
+                            NameSpace='ROOT\ccm\ClientSDK'
+                            Class='CCM_ClientUtilities'
+                            Name='DetermineIfRebootPending'
+                            ComputerName=$Computer
+                            ErrorAction='SilentlyContinue'
+                            }
+                        $CCMClientSDK = Invoke-WmiMethod @CCMSplat
+            If ($CCMClientSDK)
+                            {
+                                If ($CCMClientSDK.ReturnValue -ne 0)
+                      {
+                        Write-Warning &quot;Error: DetermineIfRebootPending returned error code $($CCMClientSDK.ReturnValue)&quot;
+                            
+                      }#End If ($CCMClientSDK -and $CCMClientSDK.ReturnValue -ne 0)
+
+                    If ($CCMClientSDK.IsHardRebootPending -or $CCMClientSDK.RebootPending)
+                      {
+                        $SCCM = $true
+
+                      }#End If ($CCMClientSDK.IsHardRebootPending -or $CCMClientSDK.RebootPending)
+
+                            }#End If ($CCMClientSDK)
+                        Else
+                            {
+                                $SCCM = $null
+
+                            }                        
+                        
+                        # If any of the variables are true, set $Pending variable to $true
+            If ($CBSRebootPend -or $WUAURebootReq -or $SCCM -or $PendFileRename)
+              {
+                $Pending = $true
+
+              }#End If ($CBS -or $WUAU -or $PendFileRename)
+              
+            # Creating Custom PSObject and Select-Object Splat
+                        $SelectSplat = @{
+                            Property=('Computer','CBServicing','WindowsUpdate','CCMClientSDK','PendFileRename','PendFileRenVal','RebootPending')
+                            }
+            New-Object -TypeName PSObject -Property @{
+                Computer=$WMI_OS.CSName
+                CBServicing=$CBSRebootPend
+                WindowsUpdate=$WUAURebootReq
+                CCMClientSDK=$SCCM
+                PendFileRename=$PendFileRename
+                                PendFileRenVal=$RegValuePFRO
+                RebootPending=$Pending
+                } | Select-Object @SelectSplat
+
+          }#End Try
+
+        Catch
+          {
+            Write-Warning &quot;$Computer`: $_&quot;
+            
+            # If $ErrorLog, log the file to a user specified location/path
+            If ($ErrorLog)
+              {
+                Out-File -InputObject &quot;$Computer`,$_&quot; -FilePath $ErrorLog -Append
+
+              }#End If ($ErrorLog)
+              
+          }#End Catch
+          
+      }#End Foreach ($Computer in $ComputerName)
+      
+  }#End Process
+  
+End
+  {
+    # Resetting ErrorActionPref
+    $ErrorActionPreference = $TempErrAct
+  }#End End
+  
+}#End Function</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__keyword">Function</span>&nbsp;Get<span class="powerShell__operator">-</span>PendingReboot&nbsp;
+{&nbsp;
+<span class="powerShell__mlcom">&lt;#&nbsp;
+.SYNOPSIS&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Gets&nbsp;the&nbsp;pending&nbsp;reboot&nbsp;status&nbsp;on&nbsp;a&nbsp;local&nbsp;or&nbsp;remote&nbsp;computer.&nbsp;
+&nbsp;
+.DESCRIPTION&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;function&nbsp;will&nbsp;query&nbsp;the&nbsp;registry&nbsp;on&nbsp;a&nbsp;local&nbsp;or&nbsp;remote&nbsp;computer&nbsp;and&nbsp;determine&nbsp;if&nbsp;the&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;system&nbsp;is&nbsp;pending&nbsp;a&nbsp;reboot,&nbsp;from&nbsp;either&nbsp;Microsoft&nbsp;Patching&nbsp;or&nbsp;a&nbsp;Software&nbsp;Installation.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;For&nbsp;Windows&nbsp;2008&#43;&nbsp;the&nbsp;function&nbsp;will&nbsp;query&nbsp;the&nbsp;CBS&nbsp;registry&nbsp;key&nbsp;as&nbsp;another&nbsp;factor&nbsp;in&nbsp;determining&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;pending&nbsp;reboot&nbsp;state.&nbsp;&nbsp;&quot;PendingFileRenameOperations&quot;&nbsp;and&nbsp;&quot;Auto&nbsp;Update\RebootRequired&quot;&nbsp;are&nbsp;observed&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;as&nbsp;being&nbsp;consistant&nbsp;across&nbsp;Windows&nbsp;Server&nbsp;2003&nbsp;&amp;&nbsp;2008.&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;CBServicing&nbsp;=&nbsp;Component&nbsp;Based&nbsp;Servicing&nbsp;(Windows&nbsp;2008)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;WindowsUpdate&nbsp;=&nbsp;Windows&nbsp;Update&nbsp;/&nbsp;Auto&nbsp;Update&nbsp;(Windows&nbsp;2003&nbsp;/&nbsp;2008)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;CCMClientSDK&nbsp;=&nbsp;SCCM&nbsp;2012&nbsp;Clients&nbsp;only&nbsp;(DetermineIfRebootPending&nbsp;method)&nbsp;otherwise&nbsp;$null&nbsp;value&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;PendFileRename&nbsp;=&nbsp;PendingFileRenameOperations&nbsp;(Windows&nbsp;2003&nbsp;/&nbsp;2008)&nbsp;
+&nbsp;
+.PARAMETER&nbsp;ComputerName&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;single&nbsp;Computer&nbsp;or&nbsp;an&nbsp;array&nbsp;of&nbsp;computer&nbsp;names.&nbsp;&nbsp;The&nbsp;default&nbsp;is&nbsp;localhost&nbsp;($env:COMPUTERNAME).&nbsp;
+&nbsp;
+.PARAMETER&nbsp;ErrorLog&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;single&nbsp;path&nbsp;to&nbsp;send&nbsp;error&nbsp;data&nbsp;to&nbsp;a&nbsp;log&nbsp;file.&nbsp;
+&nbsp;
+.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;Get-PendingReboot&nbsp;-ComputerName&nbsp;(Get-Content&nbsp;C:\ServerList.txt)&nbsp;|&nbsp;Format-Table&nbsp;-AutoSize&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Computer&nbsp;CBServicing&nbsp;WindowsUpdate&nbsp;CCMClientSDK&nbsp;PendFileRename&nbsp;PendFileRenVal&nbsp;RebootPending&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;--------&nbsp;-----------&nbsp;-------------&nbsp;------------&nbsp;--------------&nbsp;--------------&nbsp;-------------&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;DC01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;DC02&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;FS01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;example&nbsp;will&nbsp;capture&nbsp;the&nbsp;contents&nbsp;of&nbsp;C:\ServerList.txt&nbsp;and&nbsp;query&nbsp;the&nbsp;pending&nbsp;reboot&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;information&nbsp;from&nbsp;the&nbsp;systems&nbsp;contained&nbsp;in&nbsp;the&nbsp;file&nbsp;and&nbsp;display&nbsp;the&nbsp;output&nbsp;in&nbsp;a&nbsp;table.&nbsp;The&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;null&nbsp;values&nbsp;are&nbsp;by&nbsp;design,&nbsp;since&nbsp;these&nbsp;systems&nbsp;do&nbsp;not&nbsp;have&nbsp;the&nbsp;SCCM&nbsp;2012&nbsp;client&nbsp;installed,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;nor&nbsp;was&nbsp;the&nbsp;PendingFileRenameOperations&nbsp;value&nbsp;populated.&nbsp;
+&nbsp;
+.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;Get-PendingReboot&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Computer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;WKS01&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;CBServicing&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;False&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;WindowsUpdate&nbsp;&nbsp;:&nbsp;True&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;CCMClient&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;False&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;PendFileRename&nbsp;:&nbsp;False&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;PendFileRenVal&nbsp;:&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;RebootPending&nbsp;&nbsp;:&nbsp;True&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;example&nbsp;will&nbsp;query&nbsp;the&nbsp;local&nbsp;machine&nbsp;for&nbsp;pending&nbsp;reboot&nbsp;information.&nbsp;
+&nbsp;&nbsp;&nbsp;
+.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;$Servers&nbsp;=&nbsp;Get-Content&nbsp;C:\Servers.txt&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;Get-PendingReboot&nbsp;-Computer&nbsp;$Servers&nbsp;|&nbsp;Export-Csv&nbsp;C:\PendingRebootReport.csv&nbsp;-NoTypeInformation&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;example&nbsp;will&nbsp;create&nbsp;a&nbsp;report&nbsp;that&nbsp;contains&nbsp;pending&nbsp;reboot&nbsp;information.&nbsp;
+&nbsp;
+.LINK&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Component-Based&nbsp;Servicing:&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;http://technet.microsoft.com/en-us/library/cc756291(v=WS.10).aspx&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;PendingFileRename/Auto&nbsp;Update:&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;http://support.microsoft.com/kb/2723674&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;http://technet.microsoft.com/en-us/library/cc960241.aspx&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;http://blogs.msdn.com/b/hansr/archive/2006/02/17/patchreboot.aspx&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;SCCM&nbsp;2012/CCM_ClientSDK:&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;http://msdn.microsoft.com/en-us/library/jj902723.aspx&nbsp;
+&nbsp;
+.NOTES&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Author:&nbsp;&nbsp;Brian&nbsp;Wilhite&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Email:&nbsp;&nbsp;&nbsp;bwilhite1@carolina.rr.com&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Date:&nbsp;&nbsp;&nbsp;&nbsp;08/29/2012&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;PSVer:&nbsp;&nbsp;&nbsp;2.0/3.0&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Updated:&nbsp;05/30/2013&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;UpdNote:&nbsp;Added&nbsp;CCMClient&nbsp;property&nbsp;-&nbsp;Used&nbsp;with&nbsp;SCCM&nbsp;2012&nbsp;Clients&nbsp;only&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Added&nbsp;ValueFromPipelineByPropertyName=$true&nbsp;to&nbsp;the&nbsp;ComputerName&nbsp;Parameter&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removed&nbsp;$Data&nbsp;variable&nbsp;from&nbsp;the&nbsp;PSObject&nbsp;-&nbsp;it&nbsp;is&nbsp;not&nbsp;needed&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bug&nbsp;with&nbsp;the&nbsp;way&nbsp;CCMClientSDK&nbsp;returned&nbsp;null&nbsp;value&nbsp;if&nbsp;it&nbsp;was&nbsp;false&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removed&nbsp;unneeded&nbsp;variables&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Added&nbsp;PendFileRenVal&nbsp;-&nbsp;Contents&nbsp;of&nbsp;the&nbsp;PendingFileRenameOperations&nbsp;Reg&nbsp;Entry&nbsp;
+#&gt;</span>&nbsp;
+&nbsp;
+[CmdletBinding()]&nbsp;
+<span class="powerShell__keyword">param</span>(&nbsp;
+&nbsp;&nbsp;[Parameter(Position=0,ValueFromPipeline=<span class="powerShell__variable">$true</span>,ValueFromPipelineByPropertyName=<span class="powerShell__variable">$true</span>)]&nbsp;
+&nbsp;&nbsp;[Alias(<span class="powerShell__string">&quot;CN&quot;</span>,<span class="powerShell__string">&quot;Computer&quot;</span>)]&nbsp;
+&nbsp;&nbsp;[String[]]<span class="powerShell__variable">$ComputerName</span>=<span class="powerShell__string">&quot;$env:COMPUTERNAME&quot;</span>,&nbsp;
+&nbsp;&nbsp;[String]<span class="powerShell__variable">$ErrorLog</span>&nbsp;
+&nbsp;&nbsp;)&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Begin</span>&nbsp;
+&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Adjusting&nbsp;ErrorActionPreference&nbsp;to&nbsp;stop&nbsp;on&nbsp;all&nbsp;errors,&nbsp;since&nbsp;using&nbsp;[Microsoft.Win32.RegistryKey]</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;does&nbsp;not&nbsp;have&nbsp;a&nbsp;native&nbsp;ErrorAction&nbsp;Parameter,&nbsp;this&nbsp;may&nbsp;need&nbsp;to&nbsp;be&nbsp;changed&nbsp;if&nbsp;used&nbsp;within&nbsp;another</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;function.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$TempErrAct</span>&nbsp;=&nbsp;<span class="powerShell__variable">$ErrorActionPreference</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ErrorActionPreference</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Stop&quot;</span>&nbsp;
+&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;Begin&nbsp;Script&nbsp;Block</span>&nbsp;
+<span class="powerShell__keyword">Process</span>&nbsp;
+&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Foreach</span>&nbsp;(<span class="powerShell__variable">$Computer</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$ComputerName</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Try</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Setting&nbsp;pending&nbsp;values&nbsp;to&nbsp;false&nbsp;to&nbsp;cut&nbsp;down&nbsp;on&nbsp;the&nbsp;number&nbsp;of&nbsp;else&nbsp;statements</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$PendFileRename</span>,<span class="powerShell__variable">$Pending</span>,<span class="powerShell__variable">$SCCM</span>&nbsp;=&nbsp;<span class="powerShell__variable">$false</span>,<span class="powerShell__variable">$false</span>,<span class="powerShell__variable">$false</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Setting&nbsp;CBSRebootPend&nbsp;to&nbsp;null&nbsp;since&nbsp;not&nbsp;all&nbsp;versions&nbsp;of&nbsp;Windows&nbsp;has&nbsp;this&nbsp;value</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CBSRebootPend</span>&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Querying&nbsp;WMI&nbsp;for&nbsp;build&nbsp;version</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$WMI_OS</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-WmiObject</span>&nbsp;<span class="powerShell__operator">-</span>Class&nbsp;Win32_OperatingSystem&nbsp;<span class="powerShell__operator">-</span>Property&nbsp;BuildNumber,&nbsp;CSName&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$Computer</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Making&nbsp;registry&nbsp;connection&nbsp;to&nbsp;the&nbsp;local/remote&nbsp;computer</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RegCon</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey([Microsoft.Win32.RegistryHive]<span class="powerShell__string">&quot;LocalMachine&quot;</span>,<span class="powerShell__variable">$Computer</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;If&nbsp;Vista/2008&nbsp;&amp;&nbsp;Above&nbsp;query&nbsp;the&nbsp;CBS&nbsp;Reg&nbsp;Key</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$WMI_OS</span>.BuildNumber&nbsp;<span class="powerShell__operator">-</span>ge&nbsp;6001)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RegSubKeysCBS</span>&nbsp;=&nbsp;<span class="powerShell__variable">$RegCon</span>.OpenSubKey(&quot;SOFTWARE\Microsoft\Windows\CurrentVersion\Component&nbsp;Based&nbsp;Servicing\&quot;).GetSubKeyNames()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CBSRebootPend</span>&nbsp;=&nbsp;<span class="powerShell__variable">$RegSubKeysCBS</span>&nbsp;<span class="powerShell__operator">-</span>contains&nbsp;<span class="powerShell__string">&quot;RebootPending&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;If&nbsp;($WMI_OS.BuildNumber&nbsp;-ge&nbsp;6001)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Query&nbsp;WUAU&nbsp;from&nbsp;the&nbsp;registry</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RegWUAU</span>&nbsp;=&nbsp;<span class="powerShell__variable">$RegCon</span>.OpenSubKey(&quot;SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto&nbsp;Update\&quot;)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RegWUAURebootReq</span>&nbsp;=&nbsp;<span class="powerShell__variable">$RegWUAU</span>.GetSubKeyNames()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$WUAURebootReq</span>&nbsp;=&nbsp;<span class="powerShell__variable">$RegWUAURebootReq</span>&nbsp;<span class="powerShell__operator">-</span>contains&nbsp;<span class="powerShell__string">&quot;RebootRequired&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Query&nbsp;PendingFileRenameOperations&nbsp;from&nbsp;the&nbsp;registry</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RegSubKeySM</span>&nbsp;=&nbsp;<span class="powerShell__variable">$RegCon</span>.OpenSubKey(&quot;SYSTEM\CurrentControlSet\Control\Session&nbsp;Manager\&quot;)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RegValuePFRO</span>&nbsp;=&nbsp;<span class="powerShell__variable">$RegSubKeySM</span>.GetValue(<span class="powerShell__string">&quot;PendingFileRenameOperations&quot;</span>,<span class="powerShell__variable">$null</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Closing&nbsp;registry&nbsp;connection</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RegCon</span>.Close()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;If&nbsp;PendingFileRenameOperations&nbsp;has&nbsp;a&nbsp;value&nbsp;set&nbsp;$RegValuePFRO&nbsp;variable&nbsp;to&nbsp;$true</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$RegValuePFRO</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$PendFileRename</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;If&nbsp;($RegValuePFRO)</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Determine&nbsp;SCCM&nbsp;2012&nbsp;Client&nbsp;Reboot&nbsp;Pending&nbsp;Status</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;To&nbsp;avoid&nbsp;nested&nbsp;'if'&nbsp;statements&nbsp;and&nbsp;unneeded&nbsp;WMI&nbsp;calls&nbsp;to&nbsp;determine&nbsp;if&nbsp;the&nbsp;CCM_ClientUtilities&nbsp;class&nbsp;exist,&nbsp;setting&nbsp;EA&nbsp;=&nbsp;0</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CCMClientSDK</span>&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CCMSplat</span>&nbsp;=&nbsp;@{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NameSpace=<span class="powerShell__string">'ROOT\ccm\ClientSDK'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class=<span class="powerShell__string">'CCM_ClientUtilities'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name=<span class="powerShell__string">'DetermineIfRebootPending'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ComputerName=<span class="powerShell__variable">$Computer</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ErrorAction=<span class="powerShell__string">'SilentlyContinue'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CCMClientSDK</span>&nbsp;=&nbsp;Invoke<span class="powerShell__operator">-</span>WmiMethod&nbsp;@CCMSplat&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$CCMClientSDK</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$CCMClientSDK</span>.ReturnValue&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;0)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Warning</span>&nbsp;<span class="powerShell__string">&quot;Error:&nbsp;DetermineIfRebootPending&nbsp;returned&nbsp;error&nbsp;code&nbsp;$($CCMClientSDK.ReturnValue)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;If&nbsp;($CCMClientSDK&nbsp;-and&nbsp;$CCMClientSDK.ReturnValue&nbsp;-ne&nbsp;0)</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$CCMClientSDK</span>.IsHardRebootPending&nbsp;<span class="powerShell__operator">-</span>or&nbsp;<span class="powerShell__variable">$CCMClientSDK</span>.RebootPending)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SCCM</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;If&nbsp;($CCMClientSDK.IsHardRebootPending&nbsp;-or&nbsp;$CCMClientSDK.RebootPending)</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;If&nbsp;($CCMClientSDK)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SCCM</span>&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;If&nbsp;any&nbsp;of&nbsp;the&nbsp;variables&nbsp;are&nbsp;true,&nbsp;set&nbsp;$Pending&nbsp;variable&nbsp;to&nbsp;$true</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$CBSRebootPend</span>&nbsp;<span class="powerShell__operator">-</span>or&nbsp;<span class="powerShell__variable">$WUAURebootReq</span>&nbsp;<span class="powerShell__operator">-</span>or&nbsp;<span class="powerShell__variable">$SCCM</span>&nbsp;<span class="powerShell__operator">-</span>or&nbsp;<span class="powerShell__variable">$PendFileRename</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Pending</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;If&nbsp;($CBS&nbsp;-or&nbsp;$WUAU&nbsp;-or&nbsp;$PendFileRename)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Creating&nbsp;Custom&nbsp;PSObject&nbsp;and&nbsp;Select-Object&nbsp;Splat</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SelectSplat</span>&nbsp;=&nbsp;@{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Property=(<span class="powerShell__string">'Computer'</span>,<span class="powerShell__string">'CBServicing'</span>,<span class="powerShell__string">'WindowsUpdate'</span>,<span class="powerShell__string">'CCMClientSDK'</span>,<span class="powerShell__string">'PendFileRename'</span>,<span class="powerShell__string">'PendFileRenVal'</span>,<span class="powerShell__string">'RebootPending'</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>TypeName&nbsp;PSObject&nbsp;<span class="powerShell__operator">-</span>Property&nbsp;@{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Computer=<span class="powerShell__variable">$WMI_OS</span>.CSName&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CBServicing=<span class="powerShell__variable">$CBSRebootPend</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WindowsUpdate=<span class="powerShell__variable">$WUAURebootReq</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CCMClientSDK=<span class="powerShell__variable">$SCCM</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PendFileRename=<span class="powerShell__variable">$PendFileRename</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PendFileRenVal=<span class="powerShell__variable">$RegValuePFRO</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RebootPending=<span class="powerShell__variable">$Pending</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Select-Object</span>&nbsp;@SelectSplat&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;Try</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Catch</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Warning</span>&nbsp;<span class="powerShell__string">&quot;$Computer`:&nbsp;$_&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;If&nbsp;$ErrorLog,&nbsp;log&nbsp;the&nbsp;file&nbsp;to&nbsp;a&nbsp;user&nbsp;specified&nbsp;location/path</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$ErrorLog</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Out<span class="powerShell__operator">-</span>File&nbsp;<span class="powerShell__operator">-</span>InputObject&nbsp;<span class="powerShell__string">&quot;$Computer`,$_&quot;</span>&nbsp;<span class="powerShell__operator">-</span>FilePath&nbsp;<span class="powerShell__variable">$ErrorLog</span>&nbsp;<span class="powerShell__operator">-</span>Append&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;If&nbsp;($ErrorLog)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;Catch</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;Foreach&nbsp;($Computer&nbsp;in&nbsp;$ComputerName)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;Process</span>&nbsp;
+&nbsp;&nbsp;&nbsp;
+<span class="powerShell__keyword">End</span>&nbsp;
+&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Resetting&nbsp;ErrorActionPref</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ErrorActionPreference</span>&nbsp;=&nbsp;<span class="powerShell__variable">$TempErrAct</span>&nbsp;
+&nbsp;&nbsp;}<span class="powerShell__com">#End&nbsp;End</span>&nbsp;
+&nbsp;&nbsp;&nbsp;
+}<span class="powerShell__com">#End&nbsp;Function</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<div class="endscriptcode">&nbsp;</div>
+<div class="endscriptcode">&nbsp;</div>
+
+        </div>
+    </body>
+</html>

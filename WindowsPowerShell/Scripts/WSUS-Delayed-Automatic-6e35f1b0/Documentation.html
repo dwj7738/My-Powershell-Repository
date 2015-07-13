@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>WSUS Delayed Automatic Approval</title>        
+        <meta name="description" content="Execute the WSUS build-in &quot;automatic approvals&quot; with a delay." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>&nbsp;</p>
+<div class="endscriptcode">
+<div class="endscriptcode" style="text-align:left">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">Param(
+	[string]$WsusServer = (([system.net.dns]::GetHostByName('localhost')).hostname),
+	[int]$PortNumber = 8530,
+	[bool]$UseSSL = $False,
+	[bool]$TrialRun = $False
+)
+
+[bool]$Debug = $False
+
+#Connect to the WSUS 3.0 interface.
+[reflection.assembly]::LoadWithPartialName(&quot;Microsoft.UpdateServices.Administration&quot;) | out-null
+$UpdateServer = [Microsoft.UpdateServices.Administration.AdminProxy]::GetUpdateServer($WsusServer,$UseSSL,$PortNumber);
+If($? -eq $False) {
+	$ErrorActionPreference = $script:CurrentErrorActionPreference
+	Return
+} Else {
+	$UpdateServer
+}
+
+$InstallApprovalRules = $UpdateServer.GetInstallApprovalRules() | Where { $_.Name -like &quot;Delayed*&quot;} 
+If($InstallApprovalRules) {
+	$InstallApprovalRules | ForEach {
+		[int]$Count = 0
+		[bool]$Warning = $False
+		$_
+		[String]::Format(&quot;Name: {0}&quot;, $_.Name)
+		If ($_.Enabled) {
+			[String]::Format(&quot;Enabled: {0} WARNING&quot;, $_.Enabled)
+			$Warning = $True
+		} Else {
+			[String]::Format(&quot;Enabled: {0}&quot;, $_.Enabled)
+		}
+		If ($_.Deadline) {
+			[String]::Format(&quot;Deadline: {0} days and {1} Minutes after Midnight (UTC)&quot;, $_.Deadline.DayOffSet, $_.Deadline.MinutesAfterMidnight)
+		} Else {
+			[String]::Format(&quot;Deadline: {0}&quot;,&quot;No set&quot;)
+		}
+
+		If ([int]$_.Name.Split(&quot; &quot;)[1] -gt 0) {
+			[String]::Format(&quot;Delayed: {0} days&quot;, [int]$_.Name.Split(&quot; &quot;)[1])
+		} Else {
+			[String]::Format(&quot;Delayed: Not set WARNING&quot;)
+			$Warning = $True
+		}
+
+		[String]::Format(&quot;Categories: {0}&quot;, $_.GetCategories().Count)
+		[String]::Format(&quot;Classifications: {0}&quot;, $_.GetUpdateClassifications().Count)
+		[String]::Format(&quot;Computer target groups: {0}&quot;,$_.GetComputerTargetGroups().Count)
+		If (!$Warning) {
+			$UpdateScope = New-Object Microsoft.UpdateServices.Administration.UpdateScope
+			$UpdateApprovalScope = New-Object Microsoft.UpdateServices.Administration.UpdateApprovalScope
+
+			$UpdateScope.Categories.AddRange($_.GetCategories())
+			$UpdateScope.Classifications.AddRange($_.GetUpdateClassifications())
+			$updateScope.toArrivalDate = [DateTime]::UtcNow.Adddays(-1 * [int]$_.Name.Split(&quot; &quot;)[1])
+
+			$DelayedUpdates =  ($UpdateServer.GetUpdates($UpdateScope) | Where {!$_.IsDeclined})
+			
+			ForEach ($DelayedUpdate in $DelayedUpdates ) {
+				[bool]$Approved = $False
+				If ($Debug) {$DelayedUpdate.Title}
+				If ($DelayedUpdate.isApproved) {
+					ForEach ($GroupApproval in $DelayedUpdate.GetUpdateApprovals()) {
+						ForEach ($TargetGroup in $_.GetComputerTargetGroups()) {
+							If ($GroupApproval.ComputerTargetGroupId -eq $TargetGroup.Id) {
+								$Approved = $True
+								If ($Debug) {&quot;Approved for &quot; &#43; $TargetGroup.Name}
+								break
+							}
+						}
+						If ($GroupApproval.ComputerTargetGroupId -eq [Microsoft.UpdateServices.Administration.ComputerTargetGroupId]::AllComputers) {
+							$Approved = $True
+							If ($Debug) {&quot;Approved for &quot; &#43; $UpdateServer.GetComputerTargetGroup([Microsoft.UpdateServices.Administration.ComputerTargetGroupId]::AllComputers).Name}
+							break
+						}
+						If ($Approved) { break }
+					}
+				}
+				If (!$Approved) {
+					$Count &#43;&#43;
+					If ($Debug) {&quot;Not Approved&quot;}
+					If (!$Trialrun) {
+						If (!$Debug) {$DelayedUpdate.Title}
+						ForEach ($ComputerGroup in $_.GetComputerTargetGroups()) {
+							
+							If ($_.Deadline) {
+								[dateTime]$Deadline = [datetime]::UtcNow.Date.Adddays($_.Deadline.DayOffSet).AddMinutes($_.Deadline.MinutesAfterMidnight)
+								If ($DelayedUpdate.Approve(&quot;Install&quot;, $ComputerGroup, $Deadline)) {
+									[String]::Format(&quot;Approved for targetgroup {0} with deadline {1}&quot;, $ComputerGroup.Name, $Deadline)
+								}
+							} Else {
+								If ($DelayedUpdate.Approve(&quot;Install&quot;, $ComputerGroup)) {
+									[String]::Format(&quot;Approved for targetgroup {0}&quot;, $ComputerGroup.Name)
+								}
+
+							}
+						}
+					}
+				}
+
+			} 
+			[String]::Format(&quot;Affected updates: {0}&quot;, $Count)
+		} Else {
+			[String]::Format(&quot;Affected updates: {0}&quot;, &quot;Skipped Warning&quot;)
+		}
+		&quot;&quot;
+	} 
+} Else {	
+	&quot;No Delayed Install Approval Rules found&quot;
+}</pre>
+<div class="preview">
+<pre class="js">Param(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[string]$WsusServer&nbsp;=&nbsp;(([system.net.dns]::GetHostByName(<span class="js__string">'localhost'</span>)).hostname),&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[int]$PortNumber&nbsp;=&nbsp;<span class="js__num">8530</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[bool]$UseSSL&nbsp;=&nbsp;$False,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[bool]$TrialRun&nbsp;=&nbsp;$False&nbsp;
+)&nbsp;
+&nbsp;
+[bool]$Debug&nbsp;=&nbsp;$False&nbsp;
+&nbsp;
+#Connect&nbsp;to&nbsp;the&nbsp;WSUS&nbsp;<span class="js__num">3.0</span>&nbsp;interface.&nbsp;
+[reflection.assembly]::LoadWithPartialName(<span class="js__string">&quot;Microsoft.UpdateServices.Administration&quot;</span>)&nbsp;|&nbsp;out-null&nbsp;
+$UpdateServer&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.AdminProxy]::GetUpdateServer($WsusServer,$UseSSL,$PortNumber);&nbsp;
+If($?&nbsp;-eq&nbsp;$False)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;$ErrorActionPreference&nbsp;=&nbsp;$script:CurrentErrorActionPreference&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Return&nbsp;
+<span class="js__brace">}</span>&nbsp;Else&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;$UpdateServer&nbsp;
+<span class="js__brace">}</span>&nbsp;
+&nbsp;
+$InstallApprovalRules&nbsp;=&nbsp;$UpdateServer.GetInstallApprovalRules()&nbsp;|&nbsp;Where&nbsp;<span class="js__brace">{</span>&nbsp;$_.Name&nbsp;-like&nbsp;<span class="js__string">&quot;Delayed*&quot;</span><span class="js__brace">}</span>&nbsp;&nbsp;
+If($InstallApprovalRules)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;$InstallApprovalRules&nbsp;|&nbsp;ForEach&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]$Count&nbsp;=&nbsp;<span class="js__num">0</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[bool]$Warning&nbsp;=&nbsp;$False&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$_&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Name:&nbsp;{0}&quot;</span>,&nbsp;$_.Name)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($_.Enabled)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Enabled:&nbsp;{0}&nbsp;WARNING&quot;</span>,&nbsp;$_.Enabled)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Warning&nbsp;=&nbsp;$True&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;Else&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Enabled:&nbsp;{0}&quot;</span>,&nbsp;$_.Enabled)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($_.Deadline)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Deadline:&nbsp;{0}&nbsp;days&nbsp;and&nbsp;{1}&nbsp;Minutes&nbsp;after&nbsp;Midnight&nbsp;(UTC)&quot;</span>,&nbsp;$_.Deadline.DayOffSet,&nbsp;$_.Deadline.MinutesAfterMidnight)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;Else&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Deadline:&nbsp;{0}&quot;</span>,<span class="js__string">&quot;No&nbsp;set&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;([int]$_.Name.Split(<span class="js__string">&quot;&nbsp;&quot;</span>)[<span class="js__num">1</span>]&nbsp;-gt&nbsp;<span class="js__num">0</span>)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Delayed:&nbsp;{0}&nbsp;days&quot;</span>,&nbsp;[int]$_.Name.Split(<span class="js__string">&quot;&nbsp;&quot;</span>)[<span class="js__num">1</span>])&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;Else&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Delayed:&nbsp;Not&nbsp;set&nbsp;WARNING&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Warning&nbsp;=&nbsp;$True&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Categories:&nbsp;{0}&quot;</span>,&nbsp;$_.GetCategories().Count)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Classifications:&nbsp;{0}&quot;</span>,&nbsp;$_.GetUpdateClassifications().Count)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Computer&nbsp;target&nbsp;groups:&nbsp;{0}&quot;</span>,$_.GetComputerTargetGroups().Count)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;(!$Warning)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$UpdateScope&nbsp;=&nbsp;New-<span class="js__object">Object</span>&nbsp;Microsoft.UpdateServices.Administration.UpdateScope&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$UpdateApprovalScope&nbsp;=&nbsp;New-<span class="js__object">Object</span>&nbsp;Microsoft.UpdateServices.Administration.UpdateApprovalScope&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$UpdateScope.Categories.AddRange($_.GetCategories())&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$UpdateScope.Classifications.AddRange($_.GetUpdateClassifications())&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$updateScope.toArrivalDate&nbsp;=&nbsp;[DateTime]::UtcNow.Adddays(-<span class="js__num">1</span>&nbsp;*&nbsp;[int]$_.Name.Split(<span class="js__string">&quot;&nbsp;&quot;</span>)[<span class="js__num">1</span>])&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$DelayedUpdates&nbsp;=&nbsp;&nbsp;($UpdateServer.GetUpdates($UpdateScope)&nbsp;|&nbsp;Where&nbsp;<span class="js__brace">{</span>!$_.IsDeclined<span class="js__brace">}</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ForEach&nbsp;($DelayedUpdate&nbsp;<span class="js__operator">in</span>&nbsp;$DelayedUpdates&nbsp;)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[bool]$Approved&nbsp;=&nbsp;$False&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($Debug)&nbsp;<span class="js__brace">{</span>$DelayedUpdate.Title<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($DelayedUpdate.isApproved)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ForEach&nbsp;($GroupApproval&nbsp;<span class="js__operator">in</span>&nbsp;$DelayedUpdate.GetUpdateApprovals())&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ForEach&nbsp;($TargetGroup&nbsp;<span class="js__operator">in</span>&nbsp;$_.GetComputerTargetGroups())&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($GroupApproval.ComputerTargetGroupId&nbsp;-eq&nbsp;$TargetGroup.Id)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Approved&nbsp;=&nbsp;$True&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($Debug)&nbsp;<span class="js__brace">{</span><span class="js__string">&quot;Approved&nbsp;for&nbsp;&quot;</span>&nbsp;&#43;&nbsp;$TargetGroup.Name<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__statement">break</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($GroupApproval.ComputerTargetGroupId&nbsp;-eq&nbsp;[Microsoft.UpdateServices.Administration.ComputerTargetGroupId]::AllComputers)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Approved&nbsp;=&nbsp;$True&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($Debug)&nbsp;<span class="js__brace">{</span><span class="js__string">&quot;Approved&nbsp;for&nbsp;&quot;</span>&nbsp;&#43;&nbsp;$UpdateServer.GetComputerTargetGroup([Microsoft.UpdateServices.Administration.ComputerTargetGroupId]::AllComputers).Name<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__statement">break</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($Approved)&nbsp;<span class="js__brace">{</span>&nbsp;<span class="js__statement">break</span>&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;(!$Approved)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Count&nbsp;&#43;&#43;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($Debug)&nbsp;<span class="js__brace">{</span><span class="js__string">&quot;Not&nbsp;Approved&quot;</span><span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;(!$Trialrun)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;(!$Debug)&nbsp;<span class="js__brace">{</span>$DelayedUpdate.Title<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ForEach&nbsp;($ComputerGroup&nbsp;<span class="js__operator">in</span>&nbsp;$_.GetComputerTargetGroups())&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($_.Deadline)&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[dateTime]$Deadline&nbsp;=&nbsp;[datetime]::UtcNow.<span class="js__object">Date</span>.Adddays($_.Deadline.DayOffSet).AddMinutes($_.Deadline.MinutesAfterMidnight)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($DelayedUpdate.Approve(<span class="js__string">&quot;Install&quot;</span>,&nbsp;$ComputerGroup,&nbsp;$Deadline))&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Approved&nbsp;for&nbsp;targetgroup&nbsp;{0}&nbsp;with&nbsp;deadline&nbsp;{1}&quot;</span>,&nbsp;$ComputerGroup.Name,&nbsp;$Deadline)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;Else&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;($DelayedUpdate.Approve(<span class="js__string">&quot;Install&quot;</span>,&nbsp;$ComputerGroup))&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Approved&nbsp;for&nbsp;targetgroup&nbsp;{0}&quot;</span>,&nbsp;$ComputerGroup.Name)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Affected&nbsp;updates:&nbsp;{0}&quot;</span>,&nbsp;$Count)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;Else&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="js__object">String</span>]::Format(<span class="js__string">&quot;Affected&nbsp;updates:&nbsp;{0}&quot;</span>,&nbsp;<span class="js__string">&quot;Skipped&nbsp;Warning&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;&nbsp;
+<span class="js__brace">}</span>&nbsp;Else&nbsp;<span class="js__brace">{</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__string">&quot;No&nbsp;Delayed&nbsp;Install&nbsp;Approval&nbsp;Rules&nbsp;found&quot;</span>&nbsp;
+<span class="js__brace">}</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+&nbsp;</div>
+Execute the WSUS build-on &quot;automatic approvals&quot; with a delay. In order to let it work:</div>
+<div class="endscriptcode"><br>
+1. Create a normal but disabled &quot;automatic approval&quot; within the WSUS interface and let de name start with &quot;Delayed # &quot;. Replace # with the delay in days.</div>
+<div class="endscriptcode">2. Test the correct work of the script.</div>
+<div class="endscriptcode">3. Change the $Trailrun variable to $False and Schedule this script to run every day.</div>
+<div class="endscriptcode"><br>
+Note: Is an update already approved for &quot;all computers&quot; the approval is skipped (unlike the normal automatic approval action).</div>
+<div class="endscriptcode"><br>
+<br>
+</div>
+
+        </div>
+    </body>
+</html>

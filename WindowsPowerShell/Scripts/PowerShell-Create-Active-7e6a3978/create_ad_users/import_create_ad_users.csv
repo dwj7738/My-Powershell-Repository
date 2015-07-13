@@ -1,0 +1,2 @@
+Implement,GivenName,LastName,Initials,OfficeName,Description,Mail,StreetAddress,City,PostalCode,State,Country,Company,Department,EmployeeID,ExtensionAttribute1,Title,Phone,Manager,ProfilePath,ScriptPath,HomeDirectory,HomeDrive,Password,PasswordNeverExpires,Enabled,TargetOU,ProxyAddresses
+Yes,Hican,TehPwn,H.,Hican Building,Hican Net,your@email.com,Hicanstreet 1,Hicancity,1337,TheStateOfHican,Netherlands,Hican.nl,*,HIC1337,,CEO,+0000000000,Hican,\\profile\path,\\script\path,\\home\\dir,H:,IDDQD_1337#,False,True,"OU=Users,OU=Lab","SMTP:CHECK;SMTP:CHECK2"

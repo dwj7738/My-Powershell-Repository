@@ -1,0 +1,1479 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>CleanMgr.exe Automation for Servers</title>        
+        <meta name="description" content="Invoke Disk cleanup on local or remote Windows Server 2008R2. Run Disk Cleanup Manager (Cleanmgr.exe) on Servers without the need to Install the Desktop Experience feature. No reboot required." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p><strong>Invoke Disk cleanup on local or remote Windows Server 2008R2.</strong></p>
+<p>Run Disk Cleanup Manager (Cleanmgr.exe) on Servers without the need to Install the Desktop Experience feature.</p>
+<p>&nbsp;</p>
+<p>The script will perform the following:</p>
+<ul>
+<li>Test if script runs elevated </li><li>Test connection to the remote Server </li><li>Check OS Version and language </li><li>Verify the kb2852386 is installed </li><li>Copy required Clenmgr files </li><li>Update registry keys for cleanmgr.exe to run. </li><li>Run cleanmgr.exe </li></ul>
+<p>&nbsp;</p>
+<p><strong>Controll what cleanmgr.exe should clean by modifying the Hash-Table in #region Settings&nbsp; .</strong></p>
+<p>If an Option is set to $false it will be disabled/skipped, default to all enabled.</p>
+<p>&nbsp;&nbsp;&nbsp; #Folders Names for Win 2008R2 which will been cleaned. Veryfied in Registry (EN/GER)<br>
+&nbsp;&nbsp;&nbsp; $TempFolders = @{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Active Setup Temp Folders' = $true; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Downloaded Program Files' = $true; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Internet Cache Files' = $true;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Offline Pages Files' = $true;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Previous Installations' = $true;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Recycle Bin' = $true; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Service Pack Cleanup' = $true;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'System error memory dump files' = $true;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'System error minidump files' = $true;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Temporary Setup Files' = $true; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Thumbnail Cache' = $true; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Update Cleanup' = $true;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Upgrade Discarded Files' = $true;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Windows Error Reporting Archive Files' = $true;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Windows Error Reporting Queue Files' = $true;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Windows Error Reporting System Archive Files' = $true;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Windows Error Reporting System Queue Files' = $true;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Windows Upgrade Log Files' = $true;&nbsp;
+<br>
+&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;</p>
+<p><strong>USAGE:</strong></p>
+<p>#Dot source the script file:</p>
+<p>. .\Invoke-LHSDiskCleanup.ps1</p>
+<p>PS C:\&gt; Invoke-LHSDiskCleanup -ComputerName Server1 -Verbose<br>
+AUSF&Uuml;HRLICH: Windows Server 2008R2 detected<br>
+AUSF&Uuml;HRLICH: OS = English_US<br>
+AUSF&Uuml;HRLICH: <br>
+Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Value&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+----&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -----&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Active Setup Temp Folders&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Downloaded Program Files&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Internet Cache Files&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Offline Pages Files&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Previous Installations&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Recycle Bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Service Pack Cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+System error memory dump files True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+System error minidump files&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Temporary Setup Files&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Thumbnail Cache&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Update Cleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Upgrade Discarded Files&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Windows Error Reporting Arc... True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Windows Error Reporting Que... True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Windows Error Reporting Sys... True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Windows Error Reporting Sys... True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+Windows Upgrade Log Files&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br>
+<br>
+<br>
+<br>
+AUSF&Uuml;HRLICH: Creating RegKey \\Server1\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6} ...<br>
+True<br>
+AUSF&Uuml;HRLICH: Creating RegKey \\Server1\HKEY_CLASSES_ROOT\CLSID\{C1060E7E-7939-44A5-99C3-A6DCCD92AED0}\InProcServe<br>
+r32 ...<br>
+True<br>
+AUSF&Uuml;HRLICH: Creating Default RegValue at \\Server1\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6<br>
+} ...<br>
+True<br>
+AUSF&Uuml;HRLICH: Creating Default RegValue at \\Server1\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6<br>
+}\InProcServer32 ...<br>
+True<br>
+AUSF&Uuml;HRLICH: Creating 'Apartment' RegValue at \\Server1\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B<br>
+2AE6}\InProcServer32 ...<br>
+True<br>
+<br>
+waiting for cleanmgr to complete. . .<br>
+waiting for cleanmgr to complete. . .<br>
+waiting for cleanmgr to complete. . .<br>
+waiting for cleanmgr to complete. . .<br>
+waiting for cleanmgr to complete. . .<br>
+waiting for cleanmgr to complete. . .<br>
+&nbsp;<br>
+Free Space in GB Before: 4,954<br>
+Free Space in GB After : 5,794<br>
+Disk Cleanup was successfully<br>
+AUSF&Uuml;HRLICH: Function Invoke-LHSDiskCleanup finished.</p>
+<p>####################################################################################</p>
+<p>&nbsp;</p>
+<p><strong>More Info</strong></p>
+<p>This Version of Script will quit if the OS is not Win 2008R2 English or German, but can be easily extended to support other languages.</p>
+<p>Just add in the switch statement additional OS Language Code Number, the Copy files actions depend on the OS Version and language</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (($OS.Version -like '6.1*') -and ($OS.ProductType -eq 3))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write-Verbose &quot;Windows Server 2008R2 detected&quot; -Verbose<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Try{Get-HotFix -ComputerName $ComputerName -Id kb2852386 -ErrorAction Stop | Out-Null}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Catch {Write-Warning &quot;KB2852386 is required. Please install hotfix and re-run.&quot;;return}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Switch ($OS.OSLanguage)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '1031' { Write-Verbose &quot;OS = German&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copy-Item ..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '1033' { Write-Verbose &quot;OS = English_US&quot;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Copy-Item ..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Default { Write-Warning &quot;OS Language [$($OS.OSLanguage)] not Supported for this Script&quot;; return }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write-Warning &quot;This script is for Windows Server 2008R2 only&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;</p>
+<p>To make cleanmgr.exe to work in addition to copy the files explained in</p>
+<p>&nbsp;&nbsp;&nbsp; Disk Cleanup option on drive&rsquo;s general properties and cleanmgr.exe is not present in
+<br>
+&nbsp;&nbsp;&nbsp; Windows Server 2008 or Windows Server 2008 R2 by default<br>
+&nbsp;&nbsp;&nbsp; https://technet.microsoft.com/en-us/library/ff630161%28v=ws.10%29.aspx</p>
+<p>The required Registry Key structure needs to be created: HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}</p>
+<p>and Copy file of dataclen.dll,dataclen.dll.mui the same as cleanmgr.exe and cleanmgr.exe.mui</p>
+<p>When missing then many options like 'System error memory dump files' are not cleaned up.</p>
+<p>The following site brought me to the solution:</p>
+<p>&nbsp;&nbsp;&nbsp; Creating a Disk Cleanup Handler<br>
+&nbsp;&nbsp;&nbsp; http://msdn.microsoft.com/en-us/library/bb776782.aspx</p>
+<p>&nbsp;</p>
+<p><strong>Importand Links</strong></p>
+<p>&nbsp;</p>
+<p>.LINK<br>
+&nbsp;&nbsp;&nbsp; Disk Cleanup option on drive&rsquo;s general properties and cleanmgr.exe is not present in
+<br>
+&nbsp;&nbsp;&nbsp; Windows Server 2008 or Windows Server 2008 R2 by default<br>
+&nbsp;&nbsp;&nbsp; https://technet.microsoft.com/en-us/library/ff630161%28v=ws.10%29.aspx<br>
+<br>
+.LINK<br>
+&nbsp;&nbsp;&nbsp; Disk Cleanup Wizard addon lets users delete outdated Windows updates on Windows 7 SP1
+<br>
+&nbsp;&nbsp;&nbsp; or Windows Server 2008 R2 SP1 <br>
+&nbsp;&nbsp;&nbsp; https://support.microsoft.com/en-us/kb/2852386<br>
+<br>
+.LINK<br>
+&nbsp;&nbsp;&nbsp; Automating Disk Cleanup Tool in Windows <br>
+&nbsp;&nbsp;&nbsp; https://support.microsoft.com/en-us/kb/253597/en-us<br>
+<br>
+.LINK<br>
+&nbsp;&nbsp;&nbsp; Creating a Disk Cleanup Handler<br>
+&nbsp;&nbsp;&nbsp; http://msdn.microsoft.com/en-us/library/bb776782.aspx</p>
+<p>&nbsp;</p>
+<p></p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&lt;#
+  ****************************************************************
+  * DO NOT USE IN A PRODUCTION ENVIRONMENT UNTIL YOU HAVE TESTED *
+  * THOROUGHLY IN A LAB ENVIRONMENT. USE AT YOUR OWN RISK.  IF   *
+  * YOU DO NOT UNDERSTAND WHAT THIS SCRIPT DOES OR HOW IT WORKS, *
+  * DO NOT USE IT OUTSIDE OF A SECURE, TEST SETTING.             *
+  ****************************************************************
+#&gt; 
+Function Invoke-LHSDiskCleanup
+{
+&lt;#
+.SYNOPSIS
+    Invoke Disk cleanup on local or remote Windows Server 2008R2.
+
+.DESCRIPTION
+    Invoke Disk cleanup on local or remote Windows Server 2008R2 using WMI and dotNet.
+    Without the need to Install the Desktop Experience feature (by creating Reg Key structure 'CLSID'). 
+    This script requires KB2852386. Run with Admin rights
+
+    This Script supports only Win Server 2008R2 English and German OS Versions
+
+    The following Elements are going to be cleaned up by default,
+    each Element can be set to $True/$False in #region Settings :
+
+        'Active Setup Temp Folders', 
+        'Downloaded Program Files', 
+        'Internet Cache Files', 
+        'Offline Pages Files', 
+        'Previous Installations', 
+        'Recycle Bin',
+        'Service Pack Cleanup', 
+        'System error memory dump files', 
+        'System error minidump files', 
+        'Temporary Setup Files',
+        'Thumbnail Cache',
+        'Update Cleanup', 
+        'Upgrade Discarded Files', 
+        'Windows Error Reporting Archive Files',
+        'Windows Error Reporting Queue Files', 
+        'Windows Error Reporting System Archive Files', 
+        'Windows Error Reporting System Queue Files', 
+        'Windows Upgrade Log Files'
+
+
+.PARAMETER ComputerName
+    The computer name to run disk Cleanup. 
+    Default to local Computer
+
+.EXAMPLE
+    Invoke-LHSDiskCleanup
+
+    To run disk cleanup on the local computer.
+
+.EXAMPLE
+    Invoke-LHSDiskCleanup -ComputerName Server1 -Verbose
+
+    To run disk cleanup on 'Server1' with detailed output info
+
+.INPUTS
+    System.String, you can pipe ComputerNames to this Function
+
+.OUTPUTS
+    None to the pipeline.
+
+.NOTES
+    The Disk Cleanup executable file cleanmgr.exe and the associated Disk Cleanup button 
+    are not present in Windows Server&reg; 2008 or in Windows Server&reg; 2008 R2 by default.
+
+    In order to use cleanmgr.exe you&rsquo;ll need to copy two files that are already 
+    present on the server, cleanmgr.exe and cleanmgr.exe.mui.
+    
+    For an English OS, moving cleanmgr.exe and cleanmgr.exe.mui into the correct directories 
+    from within winsxs:
+    Copy-Item &quot;C:\Windows\winsxs\amd64_microsoft-windows-cleanmgr_31bf3856ad364e35_6.1.7600.16385_none_c9392808773cd7da\cleanmgr.exe&quot; C:\Windows\system32
+    Copy-Item &quot;C:\Windows\winsxs\amd64_microsoft-windows-cleanmgr.resources_31bf3856ad364e35_6.1.7600.16385_en-us_b9cb6194b257cc63\cleanmgr.exe.mui&quot; C:\Windows\System32\en-US
+ 
+    If you have a Server OS which is NOT en-US, then the MUI file probably needs to be 
+    copied into the matching subfolder. Otherwise the process will load, but offer no UI at all. 
+
+
+    NOTE: on Servers where there is nothing to cleanup, the Free space in GB After the cleanup is ~ 100 MB less
+        than before. The reason is that a logfile is created under c:\Windows\Logs\CBS\CBS.log which is
+        about 100MB big in size. After a reboot this file is only about 4KB big in size and will increase again.
+        (Component Based Servicing)
+    
+
+    Note (PL): I found out that copying these files does not enable all disk cleanup feature. 
+    Options for 'System error memory dump files' or 'System error minidump files' are not available. 
+    If you install the 'Desktop Experience', all these options are available. For more Info see
+    Automating Disk Cleanup Tool in Windows.docx.
+
+    'System error memory dump files' are stored under C:\Windows\memory.dmp
+    'System error minidump files' are stored under C:\Windows\Minidump\021115-19078-01.dmp
+
+    (PL)To make it work copy the following files
+    1.	C:\Windows\winsxs\amd64_microsoft-windows-dataclen_31bf3856ad364e35_6.1.7600.16385_none_529b2718ad26c095\dataclen.dll
+        Should go in  %systemroot%\System32
+    2.	C:\Windows\winsxs\amd64_microsoft-windows-dataclen.resources_31bf3856ad364e35_6.1.7600.16385_de-de_704bd9d247dc15d7\dataclen.dll.mui  
+        Should go in  %systemroot%\System32\de-DE 
+        For an English system ist should go in %systemroot%\System32\en-US
+    3.	Export the following Registry structure from a Computer with Desktop Experience enabled, and import it:
+        HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}
+        (it works also exporting it from a Win 7 and import it to a win 2008R2)
+
+
+
+    AUTHOR  : Pasquale Lantella 
+    LASTEDIT: 19.05.2015
+    Version : 1.1
+        Added Hashtable for folder Names which will be cleaned. Each folder can now be enabled/disabled.
+    Version : 1.2
+        Added Copy file of dataclen.dll,dataclen.dll.mui
+        Added Create Registry Key structure: HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}
+    KEYWORDS: Disk Cleanup
+
+.LINK
+    Disk Cleanup option on drive&rsquo;s general properties and cleanmgr.exe is not present in 
+    Windows Server 2008 or Windows Server 2008 R2 by default
+    https://technet.microsoft.com/en-us/library/ff630161%28v=ws.10%29.aspx
+
+.LINK
+    Disk Cleanup Wizard addon lets users delete outdated Windows updates on Windows 7 SP1 
+    or Windows Server 2008 R2 SP1 
+    https://support.microsoft.com/en-us/kb/2852386
+
+.LINK
+    Automating Disk Cleanup Tool in Windows 
+    https://support.microsoft.com/en-us/kb/253597/en-us
+
+.LINK
+    Creating a Disk Cleanup Handler
+    http://msdn.microsoft.com/en-us/library/bb776782.aspx
+
+#Requires -Version 2.0
+#&gt;
+   
+[cmdletbinding(  
+    ConfirmImpact = 'low',
+    SupportsShouldProcess = $false
+)]  
+
+[OutputType('None')] 
+
+Param(
+    [Parameter(ParameterSetName='Default', Position=0,Mandatory=$False,ValueFromPipeline=$True,
+        HelpMessage='A computer name. The default is the local computer.')]
+	[alias(&quot;CN&quot;)]
+	[string]$ComputerName = $Env:COMPUTERNAME
+)
+
+BEGIN {
+
+    Set-StrictMode -Version Latest
+    ${CmdletName} = $Pscmdlet.MyInvocation.MyCommand.Name
+
+
+#region Settings    
+    $RegHive = 'LocalMachine'
+    $RegPath = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches'
+    $RegValueName = 'StateFlags0032'
+
+    #Folders Names for Win 2008R2 which will been cleaned. Veryfied in Registry (EN/GER)
+    $TempFolders = @{
+        'Active Setup Temp Folders' = $true; 
+        'Downloaded Program Files' = $true; 
+        'Internet Cache Files' = $true;  
+        'Offline Pages Files' = $true;  
+        'Previous Installations' = $true;  
+        'Recycle Bin' = $true; 
+        'Service Pack Cleanup' = $true;  
+        'System error memory dump files' = $true;  
+        'System error minidump files' = $true;  
+        'Temporary Setup Files' = $true; 
+        'Thumbnail Cache' = $true; 
+        'Update Cleanup' = $true;  
+        'Upgrade Discarded Files' = $true;  
+        'Windows Error Reporting Archive Files' = $true; 
+        'Windows Error Reporting Queue Files' = $true;  
+        'Windows Error Reporting System Archive Files' = $true;  
+        'Windows Error Reporting System Queue Files' = $true;  
+        'Windows Upgrade Log Files' = $true;  
+    } 
+
+
+#endregion Settings
+
+
+#region functions
+
+function Test-IsAdmin {
+    $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+
+    (New-Object Security.Principal.WindowsPrincipal $currentUser).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+}
+
+
+
+function Test-RegSubKey
+{
+# Function: Test-RegSubKey
+# Description: Test the existence of the registry key
+# Return Value: True/false respectively
+	param(
+		[string]$ComputerName = &quot;.&quot;,
+		[string]$hive,
+		[string]$keyName
+	)
+
+	$hives = [enum]::getnames([Microsoft.Win32.RegistryHive])
+
+	if($hives -notcontains $hive){
+		write-error &quot;Invalid hive value&quot;;
+		return;
+	}
+	
+	$regHive = [Microsoft.Win32.RegistryHive]$hive;
+	$regKey = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey($regHive,$ComputerName);
+	$subKey = $regKey.OpenSubKey($keyName);
+
+	if(!$subKey){$false}  else {$true}
+}
+
+
+function New-RegSubKey
+{
+# Function: New-RegSubKey
+# Description: Create the registry key
+# Return Value: True/false respectively
+
+	param(
+		[string]$ComputerName = &quot;.&quot;,
+		[string]$hive,
+		[string]$keyName
+	)
+
+	$hives = [enum]::getnames([Microsoft.Win32.RegistryHive])
+
+	if($hives -notcontains $hive){
+		write-error &quot;Invalid hive value&quot;;
+		return;
+	}
+	
+	$regHive = [Microsoft.Win32.RegistryHive]$hive;
+	$regKey = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey($regHive,$ComputerName);
+	[void]$regKey.CreateSubKey($keyName);
+	
+	if($?) {$true} else {$false}
+}
+
+function Test-RegValue
+{
+# Function: Test-RegValue
+# Description: Test the existence of the registry value
+# Return Value: True/false respectively
+	param(
+		[string]$ComputerName = $env:COMPUTERNAME,
+		[string]$hive,
+		[string]$keyName,
+		[string]$valueName
+	)
+
+	$hives = [enum]::getnames([Microsoft.Win32.RegistryHive])
+
+	if($hives -notcontains $hive)
+    {
+		write-error &quot;Invalid hive value&quot;;
+		return;
+	}
+	
+	$regHive = [Microsoft.Win32.RegistryHive]$hive;
+	$regKey = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey($regHive,$ComputerName);
+	$subKey = $regKey.OpenSubKey($keyName);
+	
+	if(!$subKey)
+    {
+		write-error &quot;The specified registry key does not exist.&quot;;
+		return;
+	}
+	
+	$regVal=$subKey.GetValue($valueName);
+	if(!$regVal){$false} else {$true}
+}#end function Test-RegValue
+
+
+
+function Set-RegDefault
+{
+# Function: Set-RegDefault
+# Description: Set the registry default value
+# Return Value: True/false respectively
+
+	param(
+		[string]$ComputerName = &quot;.&quot;,
+		[string]$hive,
+		[string]$keyName,
+        [ValidateSet('String','ExpandString','DWord')]
+        [string]$Type,
+		$value	
+	)
+	
+	$hives = [enum]::getnames([Microsoft.Win32.RegistryHive])
+
+	if($hives -notcontains $hive){
+		write-error &quot;Invalid hive value&quot;;
+		return;
+	}
+	
+	$regHive = [Microsoft.Win32.RegistryHive]$hive;
+	$regKey = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey($regHive,$ComputerName);
+	$subKey = $regKey.OpenSubKey($keyName,$true);
+
+	if(!$subKey){
+		write-error &quot;The specified registry key does not exist.&quot;;
+		return;
+	}
+
+    Switch ($Type)
+    {
+	    'String' {#$regKey.SetValue($null, $value,[Microsoft.Win32.RegistryValueKind]::String);
+	            $subKey.SetValue($null, $value,[Microsoft.Win32.RegistryValueKind]::String);}
+
+        'ExpandString' { $subKey.SetValue($null, $value,[Microsoft.Win32.RegistryValueKind]::ExpandString); }
+
+        'DWord' { $subKey.SetValue($null, $value,[Microsoft.Win32.RegistryValueKind]::DWord); }
+    
+	}
+	if($?) {$true} else {$false}
+}
+
+
+
+function Set-RegString
+{
+# Function: Set-RegString
+# Description: Create/Update the specified registry string value
+# Return Value: True/false respectively
+	param(
+		[string]$ComputerName = &quot;.&quot;,
+		[string]$hive,
+		[string]$keyName,
+		[string]$valueName,
+		[string]$value	
+	)
+	
+	$hives = [enum]::getnames([Microsoft.Win32.RegistryHive])
+
+	if($hives -notcontains $hive){
+		write-error &quot;Invalid hive value&quot;;
+		return;
+	}
+	
+	$regHive = [Microsoft.Win32.RegistryHive]$hive;
+	$regKey = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey($regHive,$ComputerName);
+	$subKey = $regKey.OpenSubKey($keyName,$true);
+
+	if(!$subKey){
+		write-error &quot;The specified registry key does not exist.&quot;;
+		return;
+	}
+	
+	$subKey.SetValue($valueName, $value, [Microsoft.Win32.RegistryValueKind]::String);
+	if($?) {$true} else {$false}
+}
+
+
+function Set-RegDWord
+{
+# Function: Set-RegDWord
+# Description: Create/Update the registry value (REG_DWORD)
+# Return Value: True/false respectively
+	param(
+		[string]$ComputerName = $env:COMPUTERNAME,
+		[string]$hive,
+		[string]$keyName,
+		[string]$valueName,
+		[double]$value	
+	)
+
+	$hives = [enum]::getnames([Microsoft.Win32.RegistryHive])
+
+	if($hives -notcontains $hive)
+    {
+		write-error &quot;Invalid hive value&quot;;
+		return;
+	}
+	$regHive = [Microsoft.Win32.RegistryHive]$hive;
+	$regKey = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey($regHive,$ComputerName);
+	$subKey = $regKey.OpenSubKey($keyName,$true);
+
+	if(!$subKey){
+		write-error &quot;The specified registry key does not exist.&quot;;
+		return;
+	}
+	
+	$subKey.SetValue($valueName, $value,[Microsoft.Win32.RegistryValueKind]::DWord);
+	if($?) {$true} else {$false}
+}#end function Set-RegDWord
+
+#endregion functions
+
+
+} # end BEGIN
+
+PROCESS {
+
+    If (-not (Test-IsAdmin)) { Write-Warning &quot;This script requires Admin rights.&quot; ; return}
+
+    IF (Test-Connection -ComputerName $ComputerName -count 2 -quiet) 
+    {    
+        Try
+        {    
+            # ensure we're running on Windows Server 2008R2 
+            $OS = Get-WmiObject -Class Win32_OperatingSystem -ComputerName $ComputerName -Property Version, ProductType, OSLanguage -ErrorAction Stop
+            If (($OS.Version -like '6.1*') -and ($OS.ProductType -eq 3))
+            {
+                Write-Verbose &quot;Windows Server 2008R2 detected&quot; -Verbose
+                Try{Get-HotFix -ComputerName $ComputerName -Id kb2852386 -ErrorAction Stop | Out-Null}
+                Catch {Write-Warning &quot;KB2852386 is required. Please install hotfix and re-run.&quot;;return}
+
+                Switch ($OS.OSLanguage)
+                {
+                    '1031' { Write-Verbose &quot;OS = German&quot;
+             
+                            Copy-Item &quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-cleanmgr_31bf3856ad364e35_6.1.7600.16385_none_c9392808773cd7da\cleanmgr.exe&quot; &quot;\\$ComputerName\C$\Windows\system32&quot; -ErrorAction Stop
+                            Copy-Item &quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-cleanmgr.resources_31bf3856ad364e35_6.1.7600.16385_de-de_10da8b9bc379c09e\cleanmgr.exe.mui&quot; &quot;\\$ComputerName\C$\Windows\System32\de-DE&quot; -ErrorAction Stop
+
+                            Copy-Item &quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-dataclen_31bf3856ad364e35_6.1.7600.16385_none_529b2718ad26c095\dataclen.dll&quot; &quot;\\$ComputerName\C$\Windows\system32&quot; -ErrorAction Stop
+                            Copy-Item &quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-dataclen.resources_31bf3856ad364e35_6.1.7600.16385_de-de_704bd9d247dc15d7\dataclen.dll.mui&quot; &quot;\\$ComputerName\C$\Windows\System32\de-DE&quot; -ErrorAction Stop
+                        }
+                    '1033' { Write-Verbose &quot;OS = English_US&quot;
+    
+                            Copy-Item &quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-cleanmgr_31bf3856ad364e35_6.1.7600.16385_none_c9392808773cd7da\cleanmgr.exe&quot; &quot;\\$ComputerName\C$\Windows\system32&quot; -ErrorAction Stop
+                            Copy-Item &quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-cleanmgr.resources_31bf3856ad364e35_6.1.7600.16385_en-us_b9cb6194b257cc63\cleanmgr.exe.mui&quot; &quot;\\$ComputerName\C$\Windows\System32\en-US&quot; -ErrorAction Stop
+
+                            Copy-Item &quot;\\$ComputerName\c$\windows\winsxs\amd64_microsoft-windows-dataclen_31bf3856ad364e35_6.1.7600.16385_none_529b2718ad26c095\dataclen.dll&quot; &quot;\\$ComputerName\C$\Windows\system32&quot; -ErrorAction Stop
+                            Copy-Item &quot;\\$ComputerName\c$\windows\winsxs\amd64_microsoft-windows-dataclen.resources_31bf3856ad364e35_6.1.7600.16385_en-us_193cafcb36ba219c\dataclen.dll.mui&quot; &quot;\\$ComputerName\C$\Windows\System32\en-US&quot; -ErrorAction Stop
+                         }
+                    Default { Write-Warning &quot;OS Language [$($OS.OSLanguage)] not Supported for this Script&quot;; return }
+                }
+
+            }
+            Else
+            {
+                Write-Warning &quot;This script is for Windows Server 2008R2 only&quot;
+                return
+            }
+
+            ($TempFolders.GetEnumerator() | Sort-Object Name) | Out-String | Write-Verbose 
+
+#region Reg_CLSID
+            # save the current Setting
+            $DefaultErrorActionPreference = $ErrorActionPreference.ToString()
+            $ErrorActionPreference = 'Stop'  
+             
+            # create Registry CLSID structure for Disk Cleanup Manager
+            If (-not (Test-RegSubKey -ComputerName $ComputerName -hive 'ClassesRoot' -keyName 'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}'))
+            {
+
+                Write-Verbose &quot;Creating RegKey \\$ComputerName\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6} ...&quot;
+                New-RegSubKey -ComputerName $ComputerName -hive 'ClassesRoot' -keyName 'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}'
+
+                Write-Verbose &quot;Creating RegKey \\$ComputerName\HKEY_CLASSES_ROOT\CLSID\{C1060E7E-7939-44A5-99C3-A6DCCD92AED0}\InProcServer32 ...&quot;
+                New-RegSubKey -ComputerName $ComputerName -hive 'ClassesRoot' -keyName 'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}\InProcServer32'
+
+                Write-Verbose &quot;Creating Default RegValue at \\$ComputerName\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6} ...&quot;
+                # Reg_SZ
+                Set-RegDefault -ComputerName $ComputerName -hive 'ClassesRoot' -keyName 'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}' -Type String -value 'Data Driven Cleaner' 
+
+                Write-Verbose &quot;Creating Default RegValue at \\$ComputerName\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}\InProcServer32 ...&quot;
+                # Reg_EXPAND_SZ
+                Set-RegDefault -ComputerName $ComputerName -hive 'ClassesRoot' -keyName 'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}\InProcServer32' -Type ExpandString -value '%SystemRoot%\System32\DATACLEN.DLL' 
+
+                 Write-Verbose &quot;Creating 'Apartment' RegValue at \\$ComputerName\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}\InProcServer32 ...&quot;
+                # Reg_SZ
+                Set-RegString -ComputerName $ComputerName -hive 'ClassesRoot' -keyName 'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}\InProcServer32' -valueName 'ThreadingModel' -value 'Apartment'
+
+            }
+            # Reset to Default
+            $ErrorActionPreference = $DefaultErrorActionPreference 
+#endregion Reg_CLSID
+
+
+#region Reg_StateFlags
+            #Set StateFlags setting for each item of disk cleanup utility
+            foreach ($TemFolder in ($TempFolders.GetEnumerator() | Sort-Object Name).Key)
+            {
+                $RegKey = $RegPath &#43; &quot;\&quot; &#43; $TemFolder
+                
+                If ($TempFolders.$TemFolder)
+                {
+                    #Include this handler when this profile is run.
+                    If (-Not (Set-RegDWord -ComputerName $ComputerName -hive $RegHive -keyName $RegKey -valueName $RegValueName -value 2))
+                    {
+                        Write-Error &quot;Could not set RegValue \\$ComputerName\$RegHive\$RegKey\$RegValueName&quot;
+                        return
+                    }
+                }
+                Else
+                {
+                    # Do not run this handler when this profile is run.
+                    If (-Not (Set-RegDWord -ComputerName $ComputerName -hive $RegHive -keyName $RegKey -valueName $RegValueName -value 0))
+                    {
+                        Write-Error &quot;Could not set RegValue \\$ComputerName\$RegHive\$RegKey\$RegValueName&quot;
+                        return
+                    }
+                }
+
+             } #end foreach ($TemFolder in $TempFolders)
+#endregion Reg_StateFlags
+
+            #Capture current free disk space on Drive C:
+            $FreespaceBefore = (Get-WmiObject -Class win32_logicaldisk -ComputerName $ComputerName -filter &quot;DeviceID='C:'&quot; | select Freespace).FreeSpace/1GB
+
+    
+            # Invoke cleanmgr.exe on local or remote Computer
+            $WMIParam = @{
+                Path = 'Win32_Process';
+                ComputerName = $ComputerName;	
+                Name = 'Create';
+                ArgumentList = 'cleanmgr.exe /sagerun:32'; 
+            }
+            Try 
+            {
+                Invoke-WmiMethod @WMIParam -ErrorAction Stop | Out-Null
+            } 
+            Catch 
+            {
+                Write-Warning (&quot;{0}: {1}&quot; -f $ComputerName,$_.Exception.Message)
+                return
+            }
+
+            do 
+            {
+                Write-Host &quot;waiting for cleanmgr to complete. . .&quot;
+                start-sleep 5
+            } while ((Get-WmiObject -Class win32_process -ComputerName $ComputerName | Where-Object {$_.processname -eq 'cleanmgr.exe'} | measure).count)
+
+            #Capture free disk space after cleanmgr on Drive C:
+            $FreespaceAfter = (Get-WmiObject -Class win32_logicaldisk -ComputerName $ComputerName -filter &quot;DeviceID='C:'&quot; | select Freespace).FreeSpace/1GB
+
+            Write-Host &quot; &quot;    
+            &quot;Free Space in GB Before: {0:N3}&quot; -f $FreespaceBefore
+            &quot;Free Space in GB After : {0:N3}&quot; -f $FreespaceAfter                
+    
+            Write-Host  &quot;Disk Cleanup was successfully&quot; -ForegroundColor Green 
+
+         }
+         Catch
+         {
+            Write-Error (&quot;{0}: {1}&quot; -f $ComputerName,$_.Exception.Message)
+         }   
+
+    } 
+    Else 
+    {
+        Write-Warning &quot;\\$ComputerName DO NOT reply to ping&quot; 
+    } # end IF (Test-Connection -ComputerName $ComputerName -count 2 -quiet)    
+
+} # end PROCESS
+
+END { Write-Verbose &quot;Function ${CmdletName} finished.&quot; }
+
+} # end Function Invoke-LHSDiskCleanup      
+             
+
+
+
+
+
+
+
+
+
+</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__mlcom">&lt;#&nbsp;
+&nbsp;&nbsp;****************************************************************&nbsp;
+&nbsp;&nbsp;*&nbsp;DO&nbsp;NOT&nbsp;USE&nbsp;IN&nbsp;A&nbsp;PRODUCTION&nbsp;ENVIRONMENT&nbsp;UNTIL&nbsp;YOU&nbsp;HAVE&nbsp;TESTED&nbsp;*&nbsp;
+&nbsp;&nbsp;*&nbsp;THOROUGHLY&nbsp;IN&nbsp;A&nbsp;LAB&nbsp;ENVIRONMENT.&nbsp;USE&nbsp;AT&nbsp;YOUR&nbsp;OWN&nbsp;RISK.&nbsp;&nbsp;IF&nbsp;&nbsp;&nbsp;*&nbsp;
+&nbsp;&nbsp;*&nbsp;YOU&nbsp;DO&nbsp;NOT&nbsp;UNDERSTAND&nbsp;WHAT&nbsp;THIS&nbsp;SCRIPT&nbsp;DOES&nbsp;OR&nbsp;HOW&nbsp;IT&nbsp;WORKS,&nbsp;*&nbsp;
+&nbsp;&nbsp;*&nbsp;DO&nbsp;NOT&nbsp;USE&nbsp;IT&nbsp;OUTSIDE&nbsp;OF&nbsp;A&nbsp;SECURE,&nbsp;TEST&nbsp;SETTING.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;
+&nbsp;&nbsp;****************************************************************&nbsp;
+#&gt;</span>&nbsp;&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;Invoke<span class="powerShell__operator">-</span>LHSDiskCleanup&nbsp;
+{&nbsp;
+<span class="powerShell__mlcom">&lt;#&nbsp;
+.SYNOPSIS&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Invoke&nbsp;Disk&nbsp;cleanup&nbsp;on&nbsp;local&nbsp;or&nbsp;remote&nbsp;Windows&nbsp;Server&nbsp;2008R2.&nbsp;
+&nbsp;
+.DESCRIPTION&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Invoke&nbsp;Disk&nbsp;cleanup&nbsp;on&nbsp;local&nbsp;or&nbsp;remote&nbsp;Windows&nbsp;Server&nbsp;2008R2&nbsp;using&nbsp;WMI&nbsp;and&nbsp;dotNet.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Without&nbsp;the&nbsp;need&nbsp;to&nbsp;Install&nbsp;the&nbsp;Desktop&nbsp;Experience&nbsp;feature&nbsp;(by&nbsp;creating&nbsp;Reg&nbsp;Key&nbsp;structure&nbsp;'CLSID').&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;script&nbsp;requires&nbsp;KB2852386.&nbsp;Run&nbsp;with&nbsp;Admin&nbsp;rights&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;Script&nbsp;supports&nbsp;only&nbsp;Win&nbsp;Server&nbsp;2008R2&nbsp;English&nbsp;and&nbsp;German&nbsp;OS&nbsp;Versions&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;following&nbsp;Elements&nbsp;are&nbsp;going&nbsp;to&nbsp;be&nbsp;cleaned&nbsp;up&nbsp;by&nbsp;default,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;each&nbsp;Element&nbsp;can&nbsp;be&nbsp;set&nbsp;to&nbsp;$True/$False&nbsp;in&nbsp;#region&nbsp;Settings&nbsp;:&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Active&nbsp;Setup&nbsp;Temp&nbsp;Folders',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Downloaded&nbsp;Program&nbsp;Files',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Internet&nbsp;Cache&nbsp;Files',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Offline&nbsp;Pages&nbsp;Files',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Previous&nbsp;Installations',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Recycle&nbsp;Bin',&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Service&nbsp;Pack&nbsp;Cleanup',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'System&nbsp;error&nbsp;memory&nbsp;dump&nbsp;files',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'System&nbsp;error&nbsp;minidump&nbsp;files',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Temporary&nbsp;Setup&nbsp;Files',&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Thumbnail&nbsp;Cache',&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Update&nbsp;Cleanup',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Upgrade&nbsp;Discarded&nbsp;Files',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Windows&nbsp;Error&nbsp;Reporting&nbsp;Archive&nbsp;Files',&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Windows&nbsp;Error&nbsp;Reporting&nbsp;Queue&nbsp;Files',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Windows&nbsp;Error&nbsp;Reporting&nbsp;System&nbsp;Archive&nbsp;Files',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Windows&nbsp;Error&nbsp;Reporting&nbsp;System&nbsp;Queue&nbsp;Files',&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Windows&nbsp;Upgrade&nbsp;Log&nbsp;Files'&nbsp;
+&nbsp;
+&nbsp;
+.PARAMETER&nbsp;ComputerName&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;computer&nbsp;name&nbsp;to&nbsp;run&nbsp;disk&nbsp;Cleanup.&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Default&nbsp;to&nbsp;local&nbsp;Computer&nbsp;
+&nbsp;
+.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Invoke-LHSDiskCleanup&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;To&nbsp;run&nbsp;disk&nbsp;cleanup&nbsp;on&nbsp;the&nbsp;local&nbsp;computer.&nbsp;
+&nbsp;
+.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Invoke-LHSDiskCleanup&nbsp;-ComputerName&nbsp;Server1&nbsp;-Verbose&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;To&nbsp;run&nbsp;disk&nbsp;cleanup&nbsp;on&nbsp;'Server1'&nbsp;with&nbsp;detailed&nbsp;output&nbsp;info&nbsp;
+&nbsp;
+.INPUTS&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;System.String,&nbsp;you&nbsp;can&nbsp;pipe&nbsp;ComputerNames&nbsp;to&nbsp;this&nbsp;Function&nbsp;
+&nbsp;
+.OUTPUTS&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;None&nbsp;to&nbsp;the&nbsp;pipeline.&nbsp;
+&nbsp;
+.NOTES&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;Disk&nbsp;Cleanup&nbsp;executable&nbsp;file&nbsp;cleanmgr.exe&nbsp;and&nbsp;the&nbsp;associated&nbsp;Disk&nbsp;Cleanup&nbsp;button&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;not&nbsp;present&nbsp;in&nbsp;Windows&nbsp;Server&reg;&nbsp;2008&nbsp;or&nbsp;in&nbsp;Windows&nbsp;Server&reg;&nbsp;2008&nbsp;R2&nbsp;by&nbsp;default.&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;In&nbsp;order&nbsp;to&nbsp;use&nbsp;cleanmgr.exe&nbsp;you&rsquo;ll&nbsp;need&nbsp;to&nbsp;copy&nbsp;two&nbsp;files&nbsp;that&nbsp;are&nbsp;already&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;present&nbsp;on&nbsp;the&nbsp;server,&nbsp;cleanmgr.exe&nbsp;and&nbsp;cleanmgr.exe.mui.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;For&nbsp;an&nbsp;English&nbsp;OS,&nbsp;moving&nbsp;cleanmgr.exe&nbsp;and&nbsp;cleanmgr.exe.mui&nbsp;into&nbsp;the&nbsp;correct&nbsp;directories&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;within&nbsp;winsxs:&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Copy-Item&nbsp;&quot;C:\Windows\winsxs\amd64_microsoft-windows-cleanmgr_31bf3856ad364e35_6.1.7600.16385_none_c9392808773cd7da\cleanmgr.exe&quot;&nbsp;C:\Windows\system32&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Copy-Item&nbsp;&quot;C:\Windows\winsxs\amd64_microsoft-windows-cleanmgr.resources_31bf3856ad364e35_6.1.7600.16385_en-us_b9cb6194b257cc63\cleanmgr.exe.mui&quot;&nbsp;C:\Windows\System32\en-US&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;you&nbsp;have&nbsp;a&nbsp;Server&nbsp;OS&nbsp;which&nbsp;is&nbsp;NOT&nbsp;en-US,&nbsp;then&nbsp;the&nbsp;MUI&nbsp;file&nbsp;probably&nbsp;needs&nbsp;to&nbsp;be&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;copied&nbsp;into&nbsp;the&nbsp;matching&nbsp;subfolder.&nbsp;Otherwise&nbsp;the&nbsp;process&nbsp;will&nbsp;load,&nbsp;but&nbsp;offer&nbsp;no&nbsp;UI&nbsp;at&nbsp;all.&nbsp;&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;NOTE:&nbsp;on&nbsp;Servers&nbsp;where&nbsp;there&nbsp;is&nbsp;nothing&nbsp;to&nbsp;cleanup,&nbsp;the&nbsp;Free&nbsp;space&nbsp;in&nbsp;GB&nbsp;After&nbsp;the&nbsp;cleanup&nbsp;is&nbsp;~&nbsp;100&nbsp;MB&nbsp;less&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;than&nbsp;before.&nbsp;The&nbsp;reason&nbsp;is&nbsp;that&nbsp;a&nbsp;logfile&nbsp;is&nbsp;created&nbsp;under&nbsp;c:\Windows\Logs\CBS\CBS.log&nbsp;which&nbsp;is&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;about&nbsp;100MB&nbsp;big&nbsp;in&nbsp;size.&nbsp;After&nbsp;a&nbsp;reboot&nbsp;this&nbsp;file&nbsp;is&nbsp;only&nbsp;about&nbsp;4KB&nbsp;big&nbsp;in&nbsp;size&nbsp;and&nbsp;will&nbsp;increase&nbsp;again.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Component&nbsp;Based&nbsp;Servicing)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Note&nbsp;(PL):&nbsp;I&nbsp;found&nbsp;out&nbsp;that&nbsp;copying&nbsp;these&nbsp;files&nbsp;does&nbsp;not&nbsp;enable&nbsp;all&nbsp;disk&nbsp;cleanup&nbsp;feature.&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Options&nbsp;for&nbsp;'System&nbsp;error&nbsp;memory&nbsp;dump&nbsp;files'&nbsp;or&nbsp;'System&nbsp;error&nbsp;minidump&nbsp;files'&nbsp;are&nbsp;not&nbsp;available.&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;you&nbsp;install&nbsp;the&nbsp;'Desktop&nbsp;Experience',&nbsp;all&nbsp;these&nbsp;options&nbsp;are&nbsp;available.&nbsp;For&nbsp;more&nbsp;Info&nbsp;see&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Automating&nbsp;Disk&nbsp;Cleanup&nbsp;Tool&nbsp;in&nbsp;Windows.docx.&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;'System&nbsp;error&nbsp;memory&nbsp;dump&nbsp;files'&nbsp;are&nbsp;stored&nbsp;under&nbsp;C:\Windows\memory.dmp&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;'System&nbsp;error&nbsp;minidump&nbsp;files'&nbsp;are&nbsp;stored&nbsp;under&nbsp;C:\Windows\Minidump\021115-19078-01.dmp&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;(PL)To&nbsp;make&nbsp;it&nbsp;work&nbsp;copy&nbsp;the&nbsp;following&nbsp;files&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;1.&nbsp;&nbsp;&nbsp;&nbsp;C:\Windows\winsxs\amd64_microsoft-windows-dataclen_31bf3856ad364e35_6.1.7600.16385_none_529b2718ad26c095\dataclen.dll&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Should&nbsp;go&nbsp;in&nbsp;&nbsp;%systemroot%\System32&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;&nbsp;&nbsp;&nbsp;C:\Windows\winsxs\amd64_microsoft-windows-dataclen.resources_31bf3856ad364e35_6.1.7600.16385_de-de_704bd9d247dc15d7\dataclen.dll.mui&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Should&nbsp;go&nbsp;in&nbsp;&nbsp;%systemroot%\System32\de-DE&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For&nbsp;an&nbsp;English&nbsp;system&nbsp;ist&nbsp;should&nbsp;go&nbsp;in&nbsp;%systemroot%\System32\en-US&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;&nbsp;&nbsp;&nbsp;Export&nbsp;the&nbsp;following&nbsp;Registry&nbsp;structure&nbsp;from&nbsp;a&nbsp;Computer&nbsp;with&nbsp;Desktop&nbsp;Experience&nbsp;enabled,&nbsp;and&nbsp;import&nbsp;it:&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(it&nbsp;works&nbsp;also&nbsp;exporting&nbsp;it&nbsp;from&nbsp;a&nbsp;Win&nbsp;7&nbsp;and&nbsp;import&nbsp;it&nbsp;to&nbsp;a&nbsp;win&nbsp;2008R2)&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;AUTHOR&nbsp;&nbsp;:&nbsp;Pasquale&nbsp;Lantella&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;LASTEDIT:&nbsp;19.05.2015&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Version&nbsp;:&nbsp;1.1&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Added&nbsp;Hashtable&nbsp;for&nbsp;folder&nbsp;Names&nbsp;which&nbsp;will&nbsp;be&nbsp;cleaned.&nbsp;Each&nbsp;folder&nbsp;can&nbsp;now&nbsp;be&nbsp;enabled/disabled.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Version&nbsp;:&nbsp;1.2&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Added&nbsp;Copy&nbsp;file&nbsp;of&nbsp;dataclen.dll,dataclen.dll.mui&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Added&nbsp;Create&nbsp;Registry&nbsp;Key&nbsp;structure:&nbsp;HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;KEYWORDS:&nbsp;Disk&nbsp;Cleanup&nbsp;
+&nbsp;
+.LINK&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Disk&nbsp;Cleanup&nbsp;option&nbsp;on&nbsp;drive&rsquo;s&nbsp;general&nbsp;properties&nbsp;and&nbsp;cleanmgr.exe&nbsp;is&nbsp;not&nbsp;present&nbsp;in&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Windows&nbsp;Server&nbsp;2008&nbsp;or&nbsp;Windows&nbsp;Server&nbsp;2008&nbsp;R2&nbsp;by&nbsp;default&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;https://technet.microsoft.com/en-us/library/ff630161%28v=ws.10%29.aspx&nbsp;
+&nbsp;
+.LINK&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Disk&nbsp;Cleanup&nbsp;Wizard&nbsp;addon&nbsp;lets&nbsp;users&nbsp;delete&nbsp;outdated&nbsp;Windows&nbsp;updates&nbsp;on&nbsp;Windows&nbsp;7&nbsp;SP1&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;Windows&nbsp;Server&nbsp;2008&nbsp;R2&nbsp;SP1&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;https://support.microsoft.com/en-us/kb/2852386&nbsp;
+&nbsp;
+.LINK&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Automating&nbsp;Disk&nbsp;Cleanup&nbsp;Tool&nbsp;in&nbsp;Windows&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;https://support.microsoft.com/en-us/kb/253597/en-us&nbsp;
+&nbsp;
+.LINK&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Creating&nbsp;a&nbsp;Disk&nbsp;Cleanup&nbsp;Handler&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;http://msdn.microsoft.com/en-us/library/bb776782.aspx&nbsp;
+&nbsp;
+#Requires&nbsp;-Version&nbsp;2.0&nbsp;
+#&gt;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;
+[cmdletbinding(&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;ConfirmImpact&nbsp;=&nbsp;<span class="powerShell__string">'low'</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;SupportsShouldProcess&nbsp;=&nbsp;<span class="powerShell__variable">$false</span>&nbsp;
+)]&nbsp;&nbsp;&nbsp;
+&nbsp;
+[OutputType(<span class="powerShell__string">'None'</span>)]&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Param</span>(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(ParameterSetName=<span class="powerShell__string">'Default'</span>,&nbsp;Position=0,Mandatory=<span class="powerShell__variable">$False</span>,ValueFromPipeline=<span class="powerShell__variable">$True</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HelpMessage=<span class="powerShell__string">'A&nbsp;computer&nbsp;name.&nbsp;The&nbsp;default&nbsp;is&nbsp;the&nbsp;local&nbsp;computer.'</span>)]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[alias(<span class="powerShell__string">&quot;CN&quot;</span>)]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$ComputerName</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Env</span>:COMPUTERNAME&nbsp;
+)&nbsp;
+&nbsp;
+<span class="powerShell__keyword">BEGIN</span>&nbsp;{&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Set<span class="powerShell__operator">-</span>StrictMode&nbsp;<span class="powerShell__operator">-</span>Version&nbsp;Latest&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$</span>{CmdletName}&nbsp;=&nbsp;<span class="powerShell__variable">$Pscmdlet</span>.MyInvocation.MyCommand.Name&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#region&nbsp;Settings&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RegHive</span>&nbsp;=&nbsp;<span class="powerShell__string">'LocalMachine'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RegPath</span>&nbsp;=&nbsp;<span class="powerShell__string">'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RegValueName</span>&nbsp;=&nbsp;<span class="powerShell__string">'StateFlags0032'</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Folders&nbsp;Names&nbsp;for&nbsp;Win&nbsp;2008R2&nbsp;which&nbsp;will&nbsp;been&nbsp;cleaned.&nbsp;Veryfied&nbsp;in&nbsp;Registry&nbsp;(EN/GER)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$TempFolders</span>&nbsp;=&nbsp;@{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Active&nbsp;Setup&nbsp;Temp&nbsp;Folders'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Downloaded&nbsp;Program&nbsp;Files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Internet&nbsp;Cache&nbsp;Files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Offline&nbsp;Pages&nbsp;Files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Previous&nbsp;Installations'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Recycle&nbsp;Bin'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Service&nbsp;Pack&nbsp;Cleanup'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'System&nbsp;error&nbsp;memory&nbsp;dump&nbsp;files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'System&nbsp;error&nbsp;minidump&nbsp;files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Temporary&nbsp;Setup&nbsp;Files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Thumbnail&nbsp;Cache'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Update&nbsp;Cleanup'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Upgrade&nbsp;Discarded&nbsp;Files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Windows&nbsp;Error&nbsp;Reporting&nbsp;Archive&nbsp;Files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Windows&nbsp;Error&nbsp;Reporting&nbsp;Queue&nbsp;Files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Windows&nbsp;Error&nbsp;Reporting&nbsp;System&nbsp;Archive&nbsp;Files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Windows&nbsp;Error&nbsp;Reporting&nbsp;System&nbsp;Queue&nbsp;Files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'Windows&nbsp;Upgrade&nbsp;Log&nbsp;Files'</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#endregion&nbsp;Settings</span>&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#region&nbsp;functions</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Test<span class="powerShell__operator">-</span>IsAdmin&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$currentUser</span>&nbsp;=&nbsp;[Security.Principal.WindowsIdentity]::GetCurrent()&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="powerShell__cmdlets">New-Object</span>&nbsp;Security.Principal.WindowsPrincipal&nbsp;<span class="powerShell__variable">$currentUser</span>).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Test<span class="powerShell__operator">-</span>RegSubKey&nbsp;
+{&nbsp;
+<span class="powerShell__com">#&nbsp;Function:&nbsp;Test-RegSubKey</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Description:&nbsp;Test&nbsp;the&nbsp;existence&nbsp;of&nbsp;the&nbsp;registry&nbsp;key</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Return&nbsp;Value:&nbsp;True/false&nbsp;respectively</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">param</span>(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$ComputerName</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;.&quot;</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$hive</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$keyName</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$hives</span>&nbsp;=&nbsp;[enum]::getnames([Microsoft.Win32.RegistryHive])&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$hives</span>&nbsp;<span class="powerShell__operator">-</span>notcontains&nbsp;<span class="powerShell__variable">$hive</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">write-error</span>&nbsp;<span class="powerShell__string">&quot;Invalid&nbsp;hive&nbsp;value&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regHive</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryHive]<span class="powerShell__variable">$hive</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regKey</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey(<span class="powerShell__variable">$regHive</span>,<span class="powerShell__variable">$ComputerName</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$subKey</span>&nbsp;=&nbsp;<span class="powerShell__variable">$regKey</span>.OpenSubKey(<span class="powerShell__variable">$keyName</span>);&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__operator">!</span><span class="powerShell__variable">$subKey</span>){<span class="powerShell__variable">$false</span>}&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{<span class="powerShell__variable">$true</span>}&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;New<span class="powerShell__operator">-</span>RegSubKey&nbsp;
+{&nbsp;
+<span class="powerShell__com">#&nbsp;Function:&nbsp;New-RegSubKey</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Description:&nbsp;Create&nbsp;the&nbsp;registry&nbsp;key</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Return&nbsp;Value:&nbsp;True/false&nbsp;respectively</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">param</span>(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$ComputerName</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;.&quot;</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$hive</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$keyName</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$hives</span>&nbsp;=&nbsp;[enum]::getnames([Microsoft.Win32.RegistryHive])&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$hives</span>&nbsp;<span class="powerShell__operator">-</span>notcontains&nbsp;<span class="powerShell__variable">$hive</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">write-error</span>&nbsp;<span class="powerShell__string">&quot;Invalid&nbsp;hive&nbsp;value&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regHive</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryHive]<span class="powerShell__variable">$hive</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regKey</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey(<span class="powerShell__variable">$regHive</span>,<span class="powerShell__variable">$ComputerName</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[void]<span class="powerShell__variable">$regKey</span>.CreateSubKey(<span class="powerShell__variable">$keyName</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$</span>?)&nbsp;{<span class="powerShell__variable">$true</span>}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{<span class="powerShell__variable">$false</span>}&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Test<span class="powerShell__operator">-</span>RegValue&nbsp;
+{&nbsp;
+<span class="powerShell__com">#&nbsp;Function:&nbsp;Test-RegValue</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Description:&nbsp;Test&nbsp;the&nbsp;existence&nbsp;of&nbsp;the&nbsp;registry&nbsp;value</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Return&nbsp;Value:&nbsp;True/false&nbsp;respectively</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">param</span>(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$ComputerName</span>&nbsp;=&nbsp;<span class="powerShell__variable">$env</span>:COMPUTERNAME,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$hive</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$keyName</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$valueName</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$hives</span>&nbsp;=&nbsp;[enum]::getnames([Microsoft.Win32.RegistryHive])&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$hives</span>&nbsp;<span class="powerShell__operator">-</span>notcontains&nbsp;<span class="powerShell__variable">$hive</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">write-error</span>&nbsp;<span class="powerShell__string">&quot;Invalid&nbsp;hive&nbsp;value&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regHive</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryHive]<span class="powerShell__variable">$hive</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regKey</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey(<span class="powerShell__variable">$regHive</span>,<span class="powerShell__variable">$ComputerName</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$subKey</span>&nbsp;=&nbsp;<span class="powerShell__variable">$regKey</span>.OpenSubKey(<span class="powerShell__variable">$keyName</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__operator">!</span><span class="powerShell__variable">$subKey</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">write-error</span>&nbsp;<span class="powerShell__string">&quot;The&nbsp;specified&nbsp;registry&nbsp;key&nbsp;does&nbsp;not&nbsp;exist.&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regVal</span>=<span class="powerShell__variable">$subKey</span>.GetValue(<span class="powerShell__variable">$valueName</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__operator">!</span><span class="powerShell__variable">$regVal</span>){<span class="powerShell__variable">$false</span>}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{<span class="powerShell__variable">$true</span>}&nbsp;
+}<span class="powerShell__com">#end&nbsp;function&nbsp;Test-RegValue</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Set<span class="powerShell__operator">-</span>RegDefault&nbsp;
+{&nbsp;
+<span class="powerShell__com">#&nbsp;Function:&nbsp;Set-RegDefault</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Description:&nbsp;Set&nbsp;the&nbsp;registry&nbsp;default&nbsp;value</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Return&nbsp;Value:&nbsp;True/false&nbsp;respectively</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">param</span>(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$ComputerName</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;.&quot;</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$hive</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$keyName</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ValidateSet(<span class="powerShell__string">'String'</span>,<span class="powerShell__string">'ExpandString'</span>,<span class="powerShell__string">'DWord'</span>)]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$Type</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$value</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$hives</span>&nbsp;=&nbsp;[enum]::getnames([Microsoft.Win32.RegistryHive])&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$hives</span>&nbsp;<span class="powerShell__operator">-</span>notcontains&nbsp;<span class="powerShell__variable">$hive</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">write-error</span>&nbsp;<span class="powerShell__string">&quot;Invalid&nbsp;hive&nbsp;value&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regHive</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryHive]<span class="powerShell__variable">$hive</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regKey</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey(<span class="powerShell__variable">$regHive</span>,<span class="powerShell__variable">$ComputerName</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$subKey</span>&nbsp;=&nbsp;<span class="powerShell__variable">$regKey</span>.OpenSubKey(<span class="powerShell__variable">$keyName</span>,<span class="powerShell__variable">$true</span>);&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__operator">!</span><span class="powerShell__variable">$subKey</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">write-error</span>&nbsp;<span class="powerShell__string">&quot;The&nbsp;specified&nbsp;registry&nbsp;key&nbsp;does&nbsp;not&nbsp;exist.&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Switch</span>&nbsp;(<span class="powerShell__variable">$Type</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'String'</span>&nbsp;{<span class="powerShell__com">#$regKey.SetValue($null,&nbsp;$value,[Microsoft.Win32.RegistryValueKind]::String);</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$subKey</span>.SetValue(<span class="powerShell__variable">$null</span>,&nbsp;<span class="powerShell__variable">$value</span>,[Microsoft.Win32.RegistryValueKind]::String);}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'ExpandString'</span>&nbsp;{&nbsp;<span class="powerShell__variable">$subKey</span>.SetValue(<span class="powerShell__variable">$null</span>,&nbsp;<span class="powerShell__variable">$value</span>,[Microsoft.Win32.RegistryValueKind]::ExpandString);&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'DWord'</span>&nbsp;{&nbsp;<span class="powerShell__variable">$subKey</span>.SetValue(<span class="powerShell__variable">$null</span>,&nbsp;<span class="powerShell__variable">$value</span>,[Microsoft.Win32.RegistryValueKind]::DWord);&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$</span>?)&nbsp;{<span class="powerShell__variable">$true</span>}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{<span class="powerShell__variable">$false</span>}&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Set<span class="powerShell__operator">-</span>RegString&nbsp;
+{&nbsp;
+<span class="powerShell__com">#&nbsp;Function:&nbsp;Set-RegString</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Description:&nbsp;Create/Update&nbsp;the&nbsp;specified&nbsp;registry&nbsp;string&nbsp;value</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Return&nbsp;Value:&nbsp;True/false&nbsp;respectively</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">param</span>(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$ComputerName</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;.&quot;</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$hive</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$keyName</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$valueName</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$value</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$hives</span>&nbsp;=&nbsp;[enum]::getnames([Microsoft.Win32.RegistryHive])&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$hives</span>&nbsp;<span class="powerShell__operator">-</span>notcontains&nbsp;<span class="powerShell__variable">$hive</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">write-error</span>&nbsp;<span class="powerShell__string">&quot;Invalid&nbsp;hive&nbsp;value&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regHive</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryHive]<span class="powerShell__variable">$hive</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regKey</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey(<span class="powerShell__variable">$regHive</span>,<span class="powerShell__variable">$ComputerName</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$subKey</span>&nbsp;=&nbsp;<span class="powerShell__variable">$regKey</span>.OpenSubKey(<span class="powerShell__variable">$keyName</span>,<span class="powerShell__variable">$true</span>);&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__operator">!</span><span class="powerShell__variable">$subKey</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">write-error</span>&nbsp;<span class="powerShell__string">&quot;The&nbsp;specified&nbsp;registry&nbsp;key&nbsp;does&nbsp;not&nbsp;exist.&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$subKey</span>.SetValue(<span class="powerShell__variable">$valueName</span>,&nbsp;<span class="powerShell__variable">$value</span>,&nbsp;[Microsoft.Win32.RegistryValueKind]::String);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$</span>?)&nbsp;{<span class="powerShell__variable">$true</span>}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{<span class="powerShell__variable">$false</span>}&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Set<span class="powerShell__operator">-</span>RegDWord&nbsp;
+{&nbsp;
+<span class="powerShell__com">#&nbsp;Function:&nbsp;Set-RegDWord</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Description:&nbsp;Create/Update&nbsp;the&nbsp;registry&nbsp;value&nbsp;(REG_DWORD)</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Return&nbsp;Value:&nbsp;True/false&nbsp;respectively</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">param</span>(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$ComputerName</span>&nbsp;=&nbsp;<span class="powerShell__variable">$env</span>:COMPUTERNAME,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$hive</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$keyName</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$valueName</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[double]<span class="powerShell__variable">$value</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$hives</span>&nbsp;=&nbsp;[enum]::getnames([Microsoft.Win32.RegistryHive])&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$hives</span>&nbsp;<span class="powerShell__operator">-</span>notcontains&nbsp;<span class="powerShell__variable">$hive</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">write-error</span>&nbsp;<span class="powerShell__string">&quot;Invalid&nbsp;hive&nbsp;value&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regHive</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryHive]<span class="powerShell__variable">$hive</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regKey</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey(<span class="powerShell__variable">$regHive</span>,<span class="powerShell__variable">$ComputerName</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$subKey</span>&nbsp;=&nbsp;<span class="powerShell__variable">$regKey</span>.OpenSubKey(<span class="powerShell__variable">$keyName</span>,<span class="powerShell__variable">$true</span>);&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__operator">!</span><span class="powerShell__variable">$subKey</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">write-error</span>&nbsp;<span class="powerShell__string">&quot;The&nbsp;specified&nbsp;registry&nbsp;key&nbsp;does&nbsp;not&nbsp;exist.&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$subKey</span>.SetValue(<span class="powerShell__variable">$valueName</span>,&nbsp;<span class="powerShell__variable">$value</span>,[Microsoft.Win32.RegistryValueKind]::DWord);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$</span>?)&nbsp;{<span class="powerShell__variable">$true</span>}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{<span class="powerShell__variable">$false</span>}&nbsp;
+}<span class="powerShell__com">#end&nbsp;function&nbsp;Set-RegDWord</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#endregion&nbsp;functions</span>&nbsp;
+&nbsp;
+&nbsp;
+}&nbsp;<span class="powerShell__com">#&nbsp;end&nbsp;BEGIN</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">PROCESS</span>&nbsp;{&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__operator">-</span>not&nbsp;(Test<span class="powerShell__operator">-</span>IsAdmin))&nbsp;{&nbsp;<span class="powerShell__cmdlets">Write-Warning</span>&nbsp;<span class="powerShell__string">&quot;This&nbsp;script&nbsp;requires&nbsp;Admin&nbsp;rights.&quot;</span>&nbsp;;&nbsp;<span class="powerShell__keyword">return</span>}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">IF</span>&nbsp;(Test<span class="powerShell__operator">-</span>Connection&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>count&nbsp;2&nbsp;<span class="powerShell__operator">-</span>quiet)&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Try</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;ensure&nbsp;we're&nbsp;running&nbsp;on&nbsp;Windows&nbsp;Server&nbsp;2008R2&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$OS</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-WmiObject</span>&nbsp;<span class="powerShell__operator">-</span>Class&nbsp;Win32_OperatingSystem&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>Property&nbsp;Version,&nbsp;ProductType,&nbsp;OSLanguage&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;((<span class="powerShell__variable">$OS</span>.Version&nbsp;<span class="powerShell__operator">-</span>like&nbsp;<span class="powerShell__string">'6.1*'</span>)&nbsp;<span class="powerShell__operator">-</span>and&nbsp;(<span class="powerShell__variable">$OS</span>.ProductType&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;3))&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Windows&nbsp;Server&nbsp;2008R2&nbsp;detected&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Verbose&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Try</span>{Get<span class="powerShell__operator">-</span>HotFix&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>Id&nbsp;kb2852386&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Out-Null</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Catch</span>&nbsp;{<span class="powerShell__cmdlets">Write-Warning</span>&nbsp;<span class="powerShell__string">&quot;KB2852386&nbsp;is&nbsp;required.&nbsp;Please&nbsp;install&nbsp;hotfix&nbsp;and&nbsp;re-run.&quot;</span>;<span class="powerShell__keyword">return</span>}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Switch</span>&nbsp;(<span class="powerShell__variable">$OS</span>.OSLanguage)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'1031'</span>&nbsp;{&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;OS&nbsp;=&nbsp;German&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copy<span class="powerShell__operator">-</span>Item&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-cleanmgr_31bf3856ad364e35_6.1.7600.16385_none_c9392808773cd7da\cleanmgr.exe&quot;</span>&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\system32&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copy<span class="powerShell__operator">-</span>Item&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-cleanmgr.resources_31bf3856ad364e35_6.1.7600.16385_de-de_10da8b9bc379c09e\cleanmgr.exe.mui&quot;</span>&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\System32\de-DE&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copy<span class="powerShell__operator">-</span>Item&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-dataclen_31bf3856ad364e35_6.1.7600.16385_none_529b2718ad26c095\dataclen.dll&quot;</span>&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\system32&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copy<span class="powerShell__operator">-</span>Item&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-dataclen.resources_31bf3856ad364e35_6.1.7600.16385_de-de_704bd9d247dc15d7\dataclen.dll.mui&quot;</span>&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\System32\de-DE&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'1033'</span>&nbsp;{&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;OS&nbsp;=&nbsp;English_US&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copy<span class="powerShell__operator">-</span>Item&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-cleanmgr_31bf3856ad364e35_6.1.7600.16385_none_c9392808773cd7da\cleanmgr.exe&quot;</span>&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\system32&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copy<span class="powerShell__operator">-</span>Item&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\winsxs\amd64_microsoft-windows-cleanmgr.resources_31bf3856ad364e35_6.1.7600.16385_en-us_b9cb6194b257cc63\cleanmgr.exe.mui&quot;</span>&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\System32\en-US&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copy<span class="powerShell__operator">-</span>Item&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\c$\windows\winsxs\amd64_microsoft-windows-dataclen_31bf3856ad364e35_6.1.7600.16385_none_529b2718ad26c095\dataclen.dll&quot;</span>&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\system32&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copy<span class="powerShell__operator">-</span>Item&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\c$\windows\winsxs\amd64_microsoft-windows-dataclen.resources_31bf3856ad364e35_6.1.7600.16385_en-us_193cafcb36ba219c\dataclen.dll.mui&quot;</span>&nbsp;<span class="powerShell__string">&quot;\\$ComputerName\C$\Windows\System32\en-US&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default&nbsp;{&nbsp;<span class="powerShell__cmdlets">Write-Warning</span>&nbsp;<span class="powerShell__string">&quot;OS&nbsp;Language&nbsp;[$($OS.OSLanguage)]&nbsp;not&nbsp;Supported&nbsp;for&nbsp;this&nbsp;Script&quot;</span>;&nbsp;<span class="powerShell__keyword">return</span>&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Warning</span>&nbsp;<span class="powerShell__string">&quot;This&nbsp;script&nbsp;is&nbsp;for&nbsp;Windows&nbsp;Server&nbsp;2008R2&nbsp;only&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="powerShell__variable">$TempFolders</span>.GetEnumerator()&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">Sort</span><span class="powerShell__operator">-</span>Object&nbsp;Name)&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Out-String</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__com">#region&nbsp;Reg_CLSID</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;save&nbsp;the&nbsp;current&nbsp;Setting</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$DefaultErrorActionPreference</span>&nbsp;=&nbsp;<span class="powerShell__variable">$ErrorActionPreference</span>.ToString()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ErrorActionPreference</span>&nbsp;=&nbsp;<span class="powerShell__string">'Stop'</span>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;create&nbsp;Registry&nbsp;CLSID&nbsp;structure&nbsp;for&nbsp;Disk&nbsp;Cleanup&nbsp;Manager</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__operator">-</span>not&nbsp;(Test<span class="powerShell__operator">-</span>RegSubKey&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>hive&nbsp;<span class="powerShell__string">'ClassesRoot'</span>&nbsp;<span class="powerShell__operator">-</span>keyName&nbsp;<span class="powerShell__string">'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}'</span>))&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Creating&nbsp;RegKey&nbsp;\\$ComputerName\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}&nbsp;...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New<span class="powerShell__operator">-</span>RegSubKey&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>hive&nbsp;<span class="powerShell__string">'ClassesRoot'</span>&nbsp;<span class="powerShell__operator">-</span>keyName&nbsp;<span class="powerShell__string">'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}'</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Creating&nbsp;RegKey&nbsp;\\$ComputerName\HKEY_CLASSES_ROOT\CLSID\{C1060E7E-7939-44A5-99C3-A6DCCD92AED0}\InProcServer32&nbsp;...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New<span class="powerShell__operator">-</span>RegSubKey&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>hive&nbsp;<span class="powerShell__string">'ClassesRoot'</span>&nbsp;<span class="powerShell__operator">-</span>keyName&nbsp;<span class="powerShell__string">'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}\InProcServer32'</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Creating&nbsp;Default&nbsp;RegValue&nbsp;at&nbsp;\\$ComputerName\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}&nbsp;...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Reg_SZ</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set<span class="powerShell__operator">-</span>RegDefault&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>hive&nbsp;<span class="powerShell__string">'ClassesRoot'</span>&nbsp;<span class="powerShell__operator">-</span>keyName&nbsp;<span class="powerShell__string">'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}'</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__alias">Type</span>&nbsp;String&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">'Data&nbsp;Driven&nbsp;Cleaner'</span>&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Creating&nbsp;Default&nbsp;RegValue&nbsp;at&nbsp;\\$ComputerName\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}\InProcServer32&nbsp;...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Reg_EXPAND_SZ</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set<span class="powerShell__operator">-</span>RegDefault&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>hive&nbsp;<span class="powerShell__string">'ClassesRoot'</span>&nbsp;<span class="powerShell__operator">-</span>keyName&nbsp;<span class="powerShell__string">'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}\InProcServer32'</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__alias">Type</span>&nbsp;ExpandString&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">'%SystemRoot%\System32\DATACLEN.DLL'</span>&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Creating&nbsp;'Apartment'&nbsp;RegValue&nbsp;at&nbsp;\\$ComputerName\HKEY_CLASSES_ROOT\CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}\InProcServer32&nbsp;...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Reg_SZ</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set<span class="powerShell__operator">-</span>RegString&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>hive&nbsp;<span class="powerShell__string">'ClassesRoot'</span>&nbsp;<span class="powerShell__operator">-</span>keyName&nbsp;<span class="powerShell__string">'CLSID\{C0E13E61-0CC6-11d1-BBB6-0060978B2AE6}\InProcServer32'</span>&nbsp;<span class="powerShell__operator">-</span>valueName&nbsp;<span class="powerShell__string">'ThreadingModel'</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">'Apartment'</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Reset&nbsp;to&nbsp;Default</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ErrorActionPreference</span>&nbsp;=&nbsp;<span class="powerShell__variable">$DefaultErrorActionPreference</span>&nbsp;&nbsp;
+<span class="powerShell__com">#endregion&nbsp;Reg_CLSID</span>&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#region&nbsp;Reg_StateFlags</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Set&nbsp;StateFlags&nbsp;setting&nbsp;for&nbsp;each&nbsp;item&nbsp;of&nbsp;disk&nbsp;cleanup&nbsp;utility</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;(<span class="powerShell__variable">$TemFolder</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;(<span class="powerShell__variable">$TempFolders</span>.GetEnumerator()&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">Sort</span><span class="powerShell__operator">-</span>Object&nbsp;Name).Key)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RegKey</span>&nbsp;=&nbsp;<span class="powerShell__variable">$RegPath</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;&quot;\&quot;&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$TemFolder</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$TempFolders</span>.<span class="powerShell__variable">$TemFolder</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Include&nbsp;this&nbsp;handler&nbsp;when&nbsp;this&nbsp;profile&nbsp;is&nbsp;run.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__operator">-</span>Not&nbsp;(Set<span class="powerShell__operator">-</span>RegDWord&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>hive&nbsp;<span class="powerShell__variable">$RegHive</span>&nbsp;<span class="powerShell__operator">-</span>keyName&nbsp;<span class="powerShell__variable">$RegKey</span>&nbsp;<span class="powerShell__operator">-</span>valueName&nbsp;<span class="powerShell__variable">$RegValueName</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;2))&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Error</span>&nbsp;<span class="powerShell__string">&quot;Could&nbsp;not&nbsp;set&nbsp;RegValue&nbsp;\\$ComputerName\$RegHive\$RegKey\$RegValueName&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Do&nbsp;not&nbsp;run&nbsp;this&nbsp;handler&nbsp;when&nbsp;this&nbsp;profile&nbsp;is&nbsp;run.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__operator">-</span>Not&nbsp;(Set<span class="powerShell__operator">-</span>RegDWord&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span>hive&nbsp;<span class="powerShell__variable">$RegHive</span>&nbsp;<span class="powerShell__operator">-</span>keyName&nbsp;<span class="powerShell__variable">$RegKey</span>&nbsp;<span class="powerShell__operator">-</span>valueName&nbsp;<span class="powerShell__variable">$RegValueName</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;0))&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Error</span>&nbsp;<span class="powerShell__string">&quot;Could&nbsp;not&nbsp;set&nbsp;RegValue&nbsp;\\$ComputerName\$RegHive\$RegKey\$RegValueName&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__com">#end&nbsp;foreach&nbsp;($TemFolder&nbsp;in&nbsp;$TempFolders)</span>&nbsp;
+<span class="powerShell__com">#endregion&nbsp;Reg_StateFlags</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Capture&nbsp;current&nbsp;free&nbsp;disk&nbsp;space&nbsp;on&nbsp;Drive&nbsp;C:</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$FreespaceBefore</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-WmiObject</span>&nbsp;<span class="powerShell__operator">-</span>Class&nbsp;win32_logicaldisk&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__keyword">filter</span>&nbsp;<span class="powerShell__string">&quot;DeviceID='C:'&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">select</span>&nbsp;Freespace).FreeSpace<span class="powerShell__operator">/</span>1GB&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Invoke&nbsp;cleanmgr.exe&nbsp;on&nbsp;local&nbsp;or&nbsp;remote&nbsp;Computer</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$WMIParam</span>&nbsp;=&nbsp;@{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Path&nbsp;=&nbsp;<span class="powerShell__string">'Win32_Process'</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ComputerName&nbsp;=&nbsp;<span class="powerShell__variable">$ComputerName</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;=&nbsp;<span class="powerShell__string">'Create'</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ArgumentList&nbsp;=&nbsp;<span class="powerShell__string">'cleanmgr.exe&nbsp;/sagerun:32'</span>;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Try</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invoke<span class="powerShell__operator">-</span>WmiMethod&nbsp;@WMIParam&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Out-Null</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Catch</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Warning</span>&nbsp;(<span class="powerShell__string">&quot;{0}:&nbsp;{1}&quot;</span>&nbsp;<span class="powerShell__operator">-</span>f&nbsp;<span class="powerShell__variable">$ComputerName</span>,<span class="powerShell__variable">$_</span>.Exception.Message)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">do</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;waiting&nbsp;for&nbsp;cleanmgr&nbsp;to&nbsp;complete.&nbsp;.&nbsp;.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">start-sleep</span>&nbsp;5&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">while</span>&nbsp;((<span class="powerShell__cmdlets">Get-WmiObject</span>&nbsp;<span class="powerShell__operator">-</span>Class&nbsp;win32_process&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Where<span class="powerShell__operator">-</span>Object&nbsp;{<span class="powerShell__variable">$_</span>.processname&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">'cleanmgr.exe'</span>}&nbsp;<span class="powerShell__operator">|</span>&nbsp;measure).count)&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Capture&nbsp;free&nbsp;disk&nbsp;space&nbsp;after&nbsp;cleanmgr&nbsp;on&nbsp;Drive&nbsp;C:</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$FreespaceAfter</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-WmiObject</span>&nbsp;<span class="powerShell__operator">-</span>Class&nbsp;win32_logicaldisk&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__keyword">filter</span>&nbsp;<span class="powerShell__string">&quot;DeviceID='C:'&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">select</span>&nbsp;Freespace).FreeSpace<span class="powerShell__operator">/</span>1GB&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;&nbsp;&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;Free&nbsp;Space&nbsp;in&nbsp;GB&nbsp;Before:&nbsp;{0:N3}&quot;</span>&nbsp;<span class="powerShell__operator">-</span>f&nbsp;<span class="powerShell__variable">$FreespaceBefore</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;Free&nbsp;Space&nbsp;in&nbsp;GB&nbsp;After&nbsp;:&nbsp;{0:N3}&quot;</span>&nbsp;<span class="powerShell__operator">-</span>f&nbsp;<span class="powerShell__variable">$FreespaceAfter</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;&nbsp;<span class="powerShell__string">&quot;Disk&nbsp;Cleanup&nbsp;was&nbsp;successfully&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;Green&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Catch</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Error</span>&nbsp;(<span class="powerShell__string">&quot;{0}:&nbsp;{1}&quot;</span>&nbsp;<span class="powerShell__operator">-</span>f&nbsp;<span class="powerShell__variable">$ComputerName</span>,<span class="powerShell__variable">$_</span>.Exception.Message)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Warning</span>&nbsp;<span class="powerShell__string">&quot;\\$ComputerName&nbsp;DO&nbsp;NOT&nbsp;reply&nbsp;to&nbsp;ping&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__com">#&nbsp;end&nbsp;IF&nbsp;(Test-Connection&nbsp;-ComputerName&nbsp;$ComputerName&nbsp;-count&nbsp;2&nbsp;-quiet)&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+&nbsp;
+}&nbsp;<span class="powerShell__com">#&nbsp;end&nbsp;PROCESS</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">END</span>&nbsp;{&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Function&nbsp;${CmdletName}&nbsp;finished.&quot;</span>&nbsp;}&nbsp;
+&nbsp;
+}&nbsp;<span class="powerShell__com">#&nbsp;end&nbsp;Function&nbsp;Invoke-LHSDiskCleanup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<p></p>
+
+        </div>
+    </body>
+</html>

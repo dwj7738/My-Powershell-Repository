@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Remove-Update</title>        
+        <meta name="description" content="### Update ###Got some help from Adil Hindistan, he added whatif support and fixed some issues with case sensitivity.You can see more from Adil Hindistan by following him on twitter @AdilHindistanYou can also find this function on Github:https://github.com/JasonMorgan/Remove-Upda" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>### Update ###</p>
+<p>Got some help from Adil Hindistan, he added whatif support and fixed some issues with case sensitivity.</p>
+<p>You can see more from Adil Hindistan by following him on twitter @AdilHindistan</p>
+<p>&nbsp;</p>
+<p>You can also find this function on Github:</p>
+<p><a href="https://github.com/JasonMorgan/Remove-Update">https://github.com/JasonMorgan/Remove-Update</a></p>
+<p>Feel free to raise issues there or just make a pull request to fix something that's broken.</p>
+<p>&nbsp;</p>
+<p>I wrote this function to allow my organization to roll back a particular patch as needed on a given set of Servers.</p>
+<p>Remove-Update will allow you to specify one or more patches to be uninstalled to one or more computers.</p>
+<p>This function relies on PSRemoting for all communication with remote computers so ensure you have PSRemoting Enabled. If you need to enable PSRemoting remotely you can do so with the functions here:</p>
+<p><a href="http://gallery.technet.microsoft.com/scriptcenter/Enable-PSRemoting-Remotely-6cedfcb0">http://gallery.technet.microsoft.com/scriptcenter/Enable-PSRemoting-Remotely-6cedfcb0</a></p>
+<p>This function does need the WUSA.exe utility to be on the target server and in the path&nbsp;but it's a default part of the os so that shouldn't be an issue.&nbsp; If you have any issues or see anything you would like me to change or improve let me know
+ in the QA section.&nbsp; PS V3 is required on the computer running the command but your target servers can be at V2.&nbsp; I can make an V2 version at some point in the future if anyone really wants it.</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&lt;#
+.SYNOPSIS
+Remove updates accessible in the Win32_quickfixEngineering class
+
+.DESCRIPTION
+This Function will work, remotely or locally, to remove specified updates.  Updates are removed using the WUSA.exe utility.  
+All updates targetted by this function must be accessible via the Win32_quickfixEngineering WMI class, if you need to 
+remove an MSI based update this tool will not work.  Also it relies heavily on PSRemoting, if PSRemoting is not enabled in 
+your environment please escalate the issue with your System Administrator.
+
+.EXAMPLE
+Remove-update -computername $computers -articleID KB1234567 
+
+Removes the KB1234567 update from all computers in the $Computers variable
+
+.EXAMPLE
+Get-content .\computers.txt | Reomve-Update -articleID (get-content .\Badpatches.txt)
+
+Removes all the updates stored in the BadPatches.txt file from all the computers listed in .\Computers.txt.
+
+.EXAMPLE
+$Patches = Get-Hotfix -computername Computer1 | where {$_.installedon -ge (get-date).adddays(-30)} | select -expandproperty HotfixID
+
+Remove-Update -computername Computer1 -articleID $patches
+
+First gather all patches that have been installed in the last 30 days using Get-Hotfix, then remove them with Remove Update.
+
+.NOTES
+Written by Jason Morgan
+Created on 2/23/2014
+LastModified 2/23/2014
+Version 1.0.0.3
+
+#Added help and made $articleID Mandatory
+#Removed Param block and switched to $args
+</pre>
+<div class="preview">
+<pre class="powershell">&lt;<span class="powerShell__com">#</span>&nbsp;
+.SYNOPSIS&nbsp;
+Remove&nbsp;updates&nbsp;accessible&nbsp;<span class="powerShell__keyword">in</span>&nbsp;the&nbsp;Win32_quickfixEngineering&nbsp;class&nbsp;
+&nbsp;
+.DESCRIPTION&nbsp;
+This&nbsp;<span class="powerShell__keyword">Function</span>&nbsp;will&nbsp;work,&nbsp;remotely&nbsp;or&nbsp;locally,&nbsp;to&nbsp;remove&nbsp;specified&nbsp;updates.&nbsp;&nbsp;Updates&nbsp;are&nbsp;removed&nbsp;using&nbsp;the&nbsp;WUSA.exe&nbsp;utility.&nbsp;&nbsp;&nbsp;
+All&nbsp;updates&nbsp;targetted&nbsp;by&nbsp;this&nbsp;<span class="powerShell__keyword">function</span>&nbsp;must&nbsp;be&nbsp;accessible&nbsp;via&nbsp;the&nbsp;Win32_quickfixEngineering&nbsp;WMI&nbsp;class,&nbsp;<span class="powerShell__keyword">if</span>&nbsp;you&nbsp;need&nbsp;to&nbsp;&nbsp;
+remove&nbsp;an&nbsp;MSI&nbsp;based&nbsp;update&nbsp;this&nbsp;tool&nbsp;will&nbsp;not&nbsp;work.&nbsp;&nbsp;Also&nbsp;it&nbsp;relies&nbsp;heavily&nbsp;on&nbsp;PSRemoting,&nbsp;<span class="powerShell__keyword">if</span>&nbsp;PSRemoting&nbsp;is&nbsp;not&nbsp;enabled&nbsp;<span class="powerShell__keyword">in</span>&nbsp;&nbsp;
+your&nbsp;environment&nbsp;please&nbsp;escalate&nbsp;the&nbsp;issue&nbsp;with&nbsp;your&nbsp;System&nbsp;Administrator.&nbsp;
+&nbsp;
+.EXAMPLE&nbsp;
+Remove<span class="powerShell__operator">-</span>update&nbsp;<span class="powerShell__operator">-</span>computername&nbsp;<span class="powerShell__variable">$computers</span>&nbsp;<span class="powerShell__operator">-</span>articleID&nbsp;KB1234567&nbsp;&nbsp;
+&nbsp;
+Removes&nbsp;the&nbsp;KB1234567&nbsp;update&nbsp;<span class="powerShell__keyword">from</span>&nbsp;all&nbsp;computers&nbsp;<span class="powerShell__keyword">in</span>&nbsp;the&nbsp;<span class="powerShell__variable">$Computers</span>&nbsp;variable&nbsp;
+&nbsp;
+.EXAMPLE&nbsp;
+<span class="powerShell__cmdlets">Get-content</span>&nbsp;.\computers.txt&nbsp;<span class="powerShell__operator">|</span>&nbsp;Reomve<span class="powerShell__operator">-</span>Update&nbsp;<span class="powerShell__operator">-</span>articleID&nbsp;(<span class="powerShell__cmdlets">get-content</span>&nbsp;.\Badpatches.txt)&nbsp;
+&nbsp;
+Removes&nbsp;all&nbsp;the&nbsp;updates&nbsp;stored&nbsp;<span class="powerShell__keyword">in</span>&nbsp;the&nbsp;BadPatches.txt&nbsp;file&nbsp;<span class="powerShell__keyword">from</span>&nbsp;all&nbsp;the&nbsp;computers&nbsp;listed&nbsp;<span class="powerShell__keyword">in</span>&nbsp;.\Computers.txt.&nbsp;
+&nbsp;
+.EXAMPLE&nbsp;
+<span class="powerShell__variable">$Patches</span>&nbsp;=&nbsp;Get<span class="powerShell__operator">-</span>Hotfix&nbsp;<span class="powerShell__operator">-</span>computername&nbsp;Computer1&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{<span class="powerShell__variable">$_</span>.installedon&nbsp;<span class="powerShell__operator">-</span>ge&nbsp;(<span class="powerShell__cmdlets">get-date</span>).adddays(<span class="powerShell__operator">-</span>30)}&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">select</span>&nbsp;<span class="powerShell__operator">-</span>expandproperty&nbsp;HotfixID&nbsp;
+&nbsp;
+Remove<span class="powerShell__operator">-</span>Update&nbsp;<span class="powerShell__operator">-</span>computername&nbsp;Computer1&nbsp;<span class="powerShell__operator">-</span>articleID&nbsp;<span class="powerShell__variable">$patches</span>&nbsp;
+&nbsp;
+First&nbsp;gather&nbsp;all&nbsp;patches&nbsp;that&nbsp;have&nbsp;been&nbsp;installed&nbsp;<span class="powerShell__keyword">in</span>&nbsp;the&nbsp;last&nbsp;30&nbsp;days&nbsp;using&nbsp;Get<span class="powerShell__operator">-</span>Hotfix,&nbsp;then&nbsp;remove&nbsp;them&nbsp;with&nbsp;Remove&nbsp;Update.&nbsp;
+&nbsp;
+.NOTES&nbsp;
+Written&nbsp;by&nbsp;Jason&nbsp;Morgan&nbsp;
+Created&nbsp;on&nbsp;2<span class="powerShell__operator">/</span>23<span class="powerShell__operator">/</span>2014&nbsp;
+LastModified&nbsp;2<span class="powerShell__operator">/</span>23<span class="powerShell__operator">/</span>2014&nbsp;
+Version&nbsp;1.0.0.3&nbsp;
+&nbsp;
+<span class="powerShell__com">#Added&nbsp;help&nbsp;and&nbsp;made&nbsp;$articleID&nbsp;Mandatory</span>&nbsp;
+<span class="powerShell__com">#Removed&nbsp;Param&nbsp;block&nbsp;and&nbsp;switched&nbsp;to&nbsp;$args</span>&nbsp;
+</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+        </div>
+    </body>
+</html>

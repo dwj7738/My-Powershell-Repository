@@ -1,0 +1,308 @@
+<body>
+        <div id="longDesc">
+            <div id="longDesc">
+                <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">
+                    Introduction
+                </h1>
+                <div id="longDesc">
+                    <span style="font-family:Calibri; font-size:medium">
+                        <p>
+                            The<strong> xInternetExplorerHomePage</strong> module is a part of the Windows PowerShell Desired State Configuration (DSC) Resource Kit, which is a collection of DSC Resources. This module contains the
+                            <strong>xInternetExplorerHomePage</strong> resource. This resource enables you to set one or more IE homepages using PowerShell DSC.
+                        </p>
+                        <p>
+                            <strong>All of the resources in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program or service. The &quot;x&quot; in xInternetExplorerHomePage stands for experimental</strong>, which means that these resources
+                            will be <strong>fix forward</strong> and monitored by the module owner(s).
+                        </p>
+                        <p>Please leave comments, feature requests, and bug reports in the Q &amp; A tab for this module.</p>
+                        <p>
+                            If you would like to modify <strong>xInternetExplorerHomePage</strong> module, feel free. When modifying, please update the module name, resource friendly name, and MOF class name (instructions below). As specified in the license, you may copy or modify
+                            this resource as long as they are used on the Windows Platform.
+                        </p>
+                        <p>
+                            For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+                            <a href="http://blogs.msdn.com/b/powershell/"><span style="color:#0000ff">PowerShell Blog</span></a> (<a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx"><span style="color:#0000ff">this</span></a>
+                            is a good starting point). There are also great community resources, such as <a href="http://powershell.org/wp/tag/dsc/">
+                                <span style="color:#0000ff">PowerShell.org</span>
+                            </a>, or <a href="http://www.powershellmagazine.com/tag/dsc/">
+                                <span style="color:#0000ff">PowerShell Magazine</span>
+                            </a>. For more information on the DSC Resource Kit, check out
+                            <a href="http://go.microsoft.com/fwlink/?LinkID=389546"><span style="color:#0000ff">this blog post</span></a>.
+                        </p>
+                        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Installation</h1>
+                        <p>To install <strong>xInternetExplorerHomePage</strong> module</p>
+                        <ul style="list-style-type:disc; direction:ltr">
+                            <li>
+                                If you are using WMF4 / PowerShell Version 4: Unzip the content under $env:ProgramFiles\WindowsPowerShell\Modules folder
+                            </li>
+                            <li>
+                                If you are using WMF5 Preview: From an elevated PowerShell session run &lsquo;Install-Module xInternetExplorerHomePage&rsquo;
+                            </li>
+                        </ul>
+                        <p>To confirm installation:</p>
+                        <ul style="list-style-type:disc; direction:ltr">
+                            <li>
+                                Run <strong>Get-DSCResource</strong> to see that the resources listed above are among the DSC Resources displayed
+                            </li>
+                        </ul>
+                        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Requirements</h1>
+                        <p>
+                            This module requires the latest version of PowerShell (v4.0, which ships in Windows 8.1 or Windows Server 2012R2). To easily use PowerShell 4.0 on older operating systems,
+                            <a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855"><span style="color:#0000ff">install WMF 4.0</span></a>. Please read the installation instructions that are present on both the download page and the release notes for WMF 4.0.
+                        </p>
+                        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Details</h1>
+                        <p><strong>xInternetExplorerHomePage</strong> resource has following properties:</p>
+                        <ul style="list-style-type:disc; direction:ltr">
+                            <li><strong>StartPage</strong>: Specifies the home page of Internet Explorer. </li>
+                            <li>
+                                <strong>SecondaryStartPages</strong>: Specifies the secondary home pages of Internet Explorer.
+                            </li>
+                            <li><strong>Ensure</strong>: Indicates the IE home page is Present or Absent. </li>
+                        </ul>
+                        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Renaming Requirements</h1>
+                        <p>When making changes to these resources, we suggest the following practice:</p>
+                        <ol style="list-style-type:decimal; direction:ltr">
+                            <li>
+                                Update the following names by replacing MSFT with your company/community name and replacing the
+                                <strong>&quot;x&quot;</strong> with <strong>&quot;c&quot;</strong> (short for &quot;Community&quot;) or another prefix of your choice:
+                                <ul>
+                                    <li>
+                                        <strong>Module name (ex: x<span style="font-family:Calibri; font-size:medium"><strong>InternetExplorerHomePage</strong></span></strong> becomes
+                                        <strong>c<span style="font-family:Calibri; font-size:medium"><strong>InternetExplorerHomePage</strong></span></strong>)
+                                    </li>
+                                    <li>
+                                        <strong>Resource folder (ex: MSFT_</strong><span style="font-family:Calibri; font-size:medium"><strong>xInternetExplorerHomePage</strong></span> becomes
+                                        <strong>Contoso_x</strong><span style="font-family:Calibri; font-size:medium"><strong>InternetExplorerHomePage</strong></span>)
+                                    </li>
+                                    <li>
+                                        <strong>Resource Name (ex: MSFT_<span style="font-family:Calibri; font-size:medium"><strong>xInternetExplorerHomePage</strong></span></strong> becomes
+                                        <strong>Contoso_c</strong><span style="font-family:Calibri; font-size:medium"><strong>InternetExplorerHomePage</strong></span>)
+                                    </li>
+                                    <li>
+                                        <strong>
+                                            Resource Friendly Name (ex: <span style="font-family:Calibri; font-size:medium">
+                                                <strong>xInternetExplorerHomePage</strong>
+                                            </span>
+                                        </strong>becomes <strong>c<span style="font-family:Calibri; font-size:medium"><strong>InternetExplorerHomePage</strong></span></strong>)
+                                    </li>
+                                    <li>
+                                        <strong>MOF class name (ex: MSFT_x<span style="font-family:Calibri; font-size:medium"><strong>InternetExplorerHomePage</strong></span></strong> becomes
+                                        <strong>Contoso_c<span style="font-family:Calibri; font-size:medium"><strong>InternetExplorerHomePage</strong></span></strong>)
+                                    </li>
+                                    <li>
+                                        <strong>Filename for the &lt;resource&gt;.schema.mof (ex: MSFT_x<span style="font-family:Calibri; font-size:medium"><strong>InternetExplorerHomePage</strong></span></strong>.schema.mof becomes
+                                        <strong>Contoso_c<span style="font-family:Calibri; font-size:medium"><strong>InternetExplorerHomePage</strong></span></strong>.schema.mof)
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>Update module and metadata information in the module manifest </li>
+                            <li>Update any configuration that use these resources </li>
+                        </ol>
+                        <p>
+                            <em>
+                                We reserve resource and module names without prefixes (&quot;x&quot; or &quot;c&quot;) for future use (e.g. &quot;MSFT_InternetExplorerHomePage&quot; or &quot;MSFT_ADUser&quot;). If the next version of Windows Server ships with a &quot;InternetExplorerHomePage&quot; resource, we don't want to break
+                                any configurations that use any community modifications. Please keep a prefix such as &quot;c&quot; on all community modifications.
+                            </em>
+                        </p>
+                        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Versions</h1>
+                        <p>1.0.0.0</p>
+                        <ul style="list-style-type:disc; direction:ltr">
+                            <li>
+                                Initial release with the following resources
+                                <ul style="list-style-type:circle">
+                                    <li>
+                                        <span style="font-family:Calibri; font-size:medium">xInternetExplorerHomePage</span>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <h1 style="margin-bottom:0pt; font-family:Calibri Light; color:#2e74b5; font-size:large">
+                            Examples
+                        </h1>
+                        <p><strong>Example 1: </strong>Set the Internet Explorer Home Page</p>
+                    </span>
+                </div>
+            </div>
+            <div class="scriptcode">
+                <div class="pluginEditHolder" plugincommand="mceScriptCode">
+                    <div class="title"><span>PowerShell</span></div>
+                    <div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+                    <span class="hidden">powershell</span>
+<pre class="hidden">Configuration SetIEHomePage
+{
+    Param
+    (
+        #Target nodes to apply the configuration  
+        [String[]]$NodeName = $env:COMPUTERNAME,  
+  
+        #Specifies the URL for the home page of Internet Explorer.
+        [Parameter(Mandatory)]  
+        [ValidateNotNullOrEmpty()]  
+        [String]$StartPageURL,  
+  
+        #Specifies the URL for the secondary home pages of Internet Explorer.
+        [Parameter()]   
+        [String]$SecondaryStartPagesURL,  
+  
+        #Set the value as 'Present'/'Absent', it indicates the IE home page is configured/unconfigured.
+        [Parameter(Mandatory)]  
+        [ValidateSet('Present','Absent')]  
+        [String]$SetEnsure
+    )
+    
+    Import-DSCResource -ModuleName xInternetExplorerHomePage
+ 
+    Node &quot;localhost&quot;
+    {
+        xInternetExplorerHomePage IEHomePage
+        {
+            StartPage = $StartPageURL
+            SecondaryStartPages = $SecondaryStartPagesURL
+            Ensure = $SetEnsure
+        }
+    }
+}
+ 
+SetIEHomePage -StartPageURL &quot;www.bing.com&quot; -SetEnsure 'Present'
+Start-DscConfiguration -Path .\SetIEHomePage  -Wait -Force -Verbose
+</pre>
+                    <div class="preview">
+<pre class="powershell">Configuration&nbsp;SetIEHomePage&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Param</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Target&nbsp;nodes&nbsp;to&nbsp;apply&nbsp;the&nbsp;configuration&nbsp;&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String[]]<span class="powerShell__variable">$NodeName</span>&nbsp;=&nbsp;<span class="powerShell__variable">$env</span>:COMPUTERNAME,&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Specifies&nbsp;the&nbsp;URL&nbsp;for&nbsp;the&nbsp;home&nbsp;page&nbsp;of&nbsp;Internet&nbsp;Explorer.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory)]&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ValidateNotNullOrEmpty()]&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String]<span class="powerShell__variable">$StartPageURL</span>,&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Specifies&nbsp;the&nbsp;URL&nbsp;for&nbsp;the&nbsp;secondary&nbsp;home&nbsp;pages&nbsp;of&nbsp;Internet&nbsp;Explorer.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter()]&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String]<span class="powerShell__variable">$SecondaryStartPagesURL</span>,&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Set&nbsp;the&nbsp;value&nbsp;as&nbsp;'Present'/'Absent',&nbsp;it&nbsp;indicates&nbsp;the&nbsp;IE&nbsp;home&nbsp;page&nbsp;is&nbsp;configured/unconfigured.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory)]&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ValidateSet(<span class="powerShell__string">'Present'</span>,<span class="powerShell__string">'Absent'</span>)]&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String]<span class="powerShell__variable">$SetEnsure</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Import<span class="powerShell__operator">-</span>DSCResource&nbsp;<span class="powerShell__operator">-</span>ModuleName&nbsp;xInternetExplorerHomePage&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Node&nbsp;<span class="powerShell__string">&quot;localhost&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xInternetExplorerHomePage&nbsp;IEHomePage&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StartPage&nbsp;=&nbsp;<span class="powerShell__variable">$StartPageURL</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SecondaryStartPages&nbsp;=&nbsp;<span class="powerShell__variable">$SecondaryStartPagesURL</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ensure&nbsp;=&nbsp;<span class="powerShell__variable">$SetEnsure</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+}&nbsp;
+&nbsp;&nbsp;
+SetIEHomePage&nbsp;<span class="powerShell__operator">-</span>StartPageURL&nbsp;<span class="powerShell__string">&quot;www.bing.com&quot;</span>&nbsp;<span class="powerShell__operator">-</span>SetEnsure&nbsp;<span class="powerShell__string">'Present'</span>&nbsp;
+Start<span class="powerShell__operator">-</span>DscConfiguration&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;.\SetIEHomePage&nbsp;&nbsp;<span class="powerShell__operator">-</span>Wait&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;<span class="powerShell__operator">-</span>Verbose&nbsp;
+</pre>
+                    </div>
+                </div>
+            </div>
+            <div class="endscriptcode">&nbsp;</div>
+            <div class="endscriptcode"></div>
+            <p></p>
+            <p><strong>Example 2: </strong>Set the Secondary Start Page</p>
+            <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">
+                <div class="scriptcode">
+                    <div class="pluginEditHolder" plugincommand="mceScriptCode">
+                        <div class="title"><span>PowerShell</span></div>
+                        <div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+                        <span class="hidden">powershell</span>
+<pre class="hidden"> 
+Configuration SetIEHomePage
+{
+    Param
+    (
+        #Target nodes to apply the configuration  
+        [String[]]$NodeName = $env:COMPUTERNAME,  
+  
+        #Specifies the URL for the home page of Internet Explorer.
+        [Parameter(Mandatory)]  
+        [ValidateNotNullOrEmpty()]  
+        [String]$StartPageURL,  
+  
+        #Specifies the URL for the secondary home pages of Internet Explorer.
+        [Parameter()]   
+        [String]$SecondaryStartPagesURL,  
+  
+        #Set the value as 'Present'/'Absent', it indicates the IE home page is configured/unconfigured.
+        [Parameter(Mandatory)]  
+        [ValidateSet('Present','Absent')]  
+        [String]$SetEnsure
+    )
+    
+    Import-DSCResource -ModuleName xInternetExplorerHomePage
+ 
+    Node &quot;localhost&quot;
+    {
+        xInternetExplorerHomePage IEHomePage
+        {
+            StartPage = $StartPageURL
+            SecondaryStartPages = $SecondaryStartPagesURL
+            Ensure = $SetEnsure
+        }
+    }
+}
+ 
+SetIEHomePage -StartPageURL &quot;www.bing.com&quot; -SecondaryStartPagesURL &quot;www.google.com&quot; -SetEnsure 'Present'
+Start-DscConfiguration -Path .\SetIEHomePage  -Wait -Force -Verbose
+</pre>
+                        <div class="preview">
+<pre class="powershell">&nbsp;&nbsp;
+Configuration&nbsp;SetIEHomePage&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Param</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Target&nbsp;nodes&nbsp;to&nbsp;apply&nbsp;the&nbsp;configuration&nbsp;&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String[]]<span class="powerShell__variable">$NodeName</span>&nbsp;=&nbsp;<span class="powerShell__variable">$env</span>:COMPUTERNAME,&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Specifies&nbsp;the&nbsp;URL&nbsp;for&nbsp;the&nbsp;home&nbsp;page&nbsp;of&nbsp;Internet&nbsp;Explorer.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory)]&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ValidateNotNullOrEmpty()]&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String]<span class="powerShell__variable">$StartPageURL</span>,&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Specifies&nbsp;the&nbsp;URL&nbsp;for&nbsp;the&nbsp;secondary&nbsp;home&nbsp;pages&nbsp;of&nbsp;Internet&nbsp;Explorer.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter()]&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String]<span class="powerShell__variable">$SecondaryStartPagesURL</span>,&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Set&nbsp;the&nbsp;value&nbsp;as&nbsp;'Present'/'Absent',&nbsp;it&nbsp;indicates&nbsp;the&nbsp;IE&nbsp;home&nbsp;page&nbsp;is&nbsp;configured/unconfigured.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory)]&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ValidateSet(<span class="powerShell__string">'Present'</span>,<span class="powerShell__string">'Absent'</span>)]&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String]<span class="powerShell__variable">$SetEnsure</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Import<span class="powerShell__operator">-</span>DSCResource&nbsp;<span class="powerShell__operator">-</span>ModuleName&nbsp;xInternetExplorerHomePage&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Node&nbsp;<span class="powerShell__string">&quot;localhost&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xInternetExplorerHomePage&nbsp;IEHomePage&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StartPage&nbsp;=&nbsp;<span class="powerShell__variable">$StartPageURL</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SecondaryStartPages&nbsp;=&nbsp;<span class="powerShell__variable">$SecondaryStartPagesURL</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ensure&nbsp;=&nbsp;<span class="powerShell__variable">$SetEnsure</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+}&nbsp;
+&nbsp;&nbsp;
+SetIEHomePage&nbsp;<span class="powerShell__operator">-</span>StartPageURL&nbsp;<span class="powerShell__string">&quot;www.bing.com&quot;</span>&nbsp;<span class="powerShell__operator">-</span>SecondaryStartPagesURL&nbsp;<span class="powerShell__string">&quot;www.google.com&quot;</span>&nbsp;<span class="powerShell__operator">-</span>SetEnsure&nbsp;<span class="powerShell__string">'Present'</span>&nbsp;
+Start<span class="powerShell__operator">-</span>DscConfiguration&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;.\SetIEHomePage&nbsp;&nbsp;<span class="powerShell__operator">-</span>Wait&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;<span class="powerShell__operator">-</span>Verbose&nbsp;
+</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="endscriptcode">&nbsp;</div>
+</div>
+
+
+</body>
+</html>

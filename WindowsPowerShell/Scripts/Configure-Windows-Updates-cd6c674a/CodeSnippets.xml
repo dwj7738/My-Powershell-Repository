@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content="Set-WindowsUpdates" />
+  <Code Content="Set-WindowsUpdates -ComputerName (Get-Content &quot;.\Computers.txt&quot;) -Options DownloadOnly -Verbose" />
+  <Code Content="Set-WindowsUpdates -ComputerName ((Get-ADComputer -Filter * ).Name) -Options Install " />
+  <Code Content="$VMs = (Get-VM -ComputerName &quot;HVHost01&quot; | Where { $_.State -eq &quot;Running&quot; }).VMName&#xD;&#xA;Set-WindowsUpdates -ComputerName $VMs -Options CheckOnly" />
+  <Code Content="Set-WindowsUpdates" />
+  <Code Content="Set-WindowsUpdates -ComputerName (Get-Content &quot;.\Computers.txt&quot;) -Options DownloadOnly -Verbose" />
+  <Code Content="Set-WindowsUpdates -ComputerName ((Get-ADComputer -Filter * ).Name) -Options Install " />
+  <Code Content="$VMs = (Get-VM -ComputerName &quot;HVHost01&quot; | Where { $_.State -eq &quot;Running&quot; }).VMName&#xD;&#xA;Set-WindowsUpdates -ComputerName $VMs -Options CheckOnly" />
+</CodeSnippets>

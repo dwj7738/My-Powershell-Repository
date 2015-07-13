@@ -1,0 +1,893 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>WSUS delay automatic approvals</title>        
+        <meta name="description" content="WSUS DELAY AUTO APPROVALS approve updates after a customable delay" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<h1><span style="font-size:x-large; text-decoration:underline">WSUS DELAY AUTO APPROVALS</span></h1>
+<h1 style="text-align:right"><span style="font-size:small">last release 2013/03/05</span></h1>
+<ul>
+<li>approve updates after a customable <span style="text-decoration:underline">delay</span>
+</li><li>approve updates for only <span style="text-decoration:underline">one computer target</span>&nbsp;&nbsp;
+</li><li>exclude &quot;Service pack&quot; classification (hard coded) </li><li>have a log file </li><li>make one HTML report per execution </li><li>put execution error in logfile, if at least&nbsp;script&nbsp;have rights to create and write in the specified log file.
+</li><li>recommended to be executed in task scheduler </li></ul>
+<p><strong>To preserve your WSUS Database, the method &quot;approve&quot; are commeted out.
+</strong><strong>After some dry runs, when </strong><strong>reports are ok for you and
+</strong><strong>log&nbsp;is ok for you, </strong><span style="text-decoration:underline"><span style="font-size:x-small"><strong>uncomment line 262, 263 and 264</strong></span></span></p>
+<p><span style="color:#ff0000; font-size:small"><span style="font-size:x-small"><span style="text-decoration:underline">Before running script :</span></span></span></p>
+<ol>
+<li>You must run this script on your WSUS Server </li><li>On Windows 2003 Server, you need to install Powershell <a href="http://support.microsoft.com/kb/968929/fr">
+http://support.microsoft.com/kb/968929/fr</a> </li><li>Set variable $WSUS_TargetGroup_To_Approved (for example&nbsp; &quot;All Computers&quot; )
+</li><li>Set variable&nbsp;$PATH_DIR&nbsp;(for example &quot;D:\DELAY-WSUS-AUTO-APPROVALS&quot; and create this folder)
+</li><li><span style="color:#ff6600; font-size:x-small">Optional variable :&nbsp;You can specify a &quot;Validation Target Group&quot; which will contain&nbsp;some computers to test before all others. If this &quot;Validation Target Group&quot; is specified, the delay is counted from
+ the Approval Date of this Target Group in place of Arrival Date of updates.</span>&nbsp;
+</li></ol>
+<p>&nbsp;HINTS : Try to run it from command line to fix rights access problems or target groups misspelled problems.</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&lt;#  
+.SYNOPSIS  
+    DELAY WSUS AUTO APPROVALS
+
+.DESCRIPTION  
+    This script delay approvals for specific target group (OU).
+    The delay is customizable.
+    You must run this script on your WSUS Server.
+.NOTES  
+    File Name            : DELAY-WSUS-AUTO-APPROVALS.ps1  
+    Author               : Baptiste LEMARIE (FrameIP)
+    Copyright 2013       : Veolia Transport
+    Version              : 1.3 (2013/03/05) - make optional validation targetgroup
+                                            - count delay from Creation Date (if validation target group exists) else from Arrival Date of updates
+    History              : 1.2 (2013/02/14) - Fix
+    History              : 1.1 (2013/01/29) - Fix
+    History              : 1.0 (2013/01/22) - First Version
+#&gt;
+
+
+
+
+
+###############################################################################
+# GLOBALS
+
+##################
+# WSUS Part
+
+# This the delay between arrival date of updates and automatic approvals
+$DELAY = [TimeSpan]30d ; 
+
+# Only these categories are concerned
+# and &quot;service packs&quot; are hard coded excluded
+$WSUS_CategoriesIncluded = @(&quot;Windows server 2008&quot;,  &quot;Windows server 2008 R2&quot;, &quot;Windows 7&quot;); 
+
+# We approve updates on this TargetGroup
+$WSUS_TargetGroup_To_Approved = &quot;All Computers&quot;;
+
+# Optional : Validation TargetGroup
+# If you don't have/want a Validation Target Group (with limited computers), set variable to null.
+#$WSUS_TargetGroup_Validation = &quot;Validation&quot;;
+$WSUS_TargetGroup_Validation = $null;
+
+##################
+# LOG, REPORT and RUN files
+
+$PATH_DIR = &quot;D:\DELAY-WSUS-AUTO-APPROVALS&quot;;
+$FILENAME_LOG = &quot;DELAY-WSUS-AUTO-APPROVALS.log&quot;
+$FILENAME_REPORTS = &quot;DELAY-WSUS-AUTO-APPROVALS_&quot; &#43; $(Get-Date -format yyyy-MM-dd_HH\hmm\mss\s)  &#43; &quot;.html&quot;
+$TITLE = &quot;DELAY WSUS AUTO APPROVALS&quot;
+
+
+
+###############################################################################
+# FUNCTIONS
+
+function BuildHTMLTable($report){
+    # The content
+    if ($report.count -eq 0){
+        return &quot;&lt;h3&gt;No updates&lt;/h3&gt;&quot;
+    } else {
+        # $WSUS_TargetGroup_Validation is optinal 
+        if ( $WSUS_TargetGroup_Validation -ne $null ) {
+            $rows=&quot;&lt;table&gt;`
+                &lt;col&gt;
+                &lt;col width=150px&gt;
+                &lt;col width=100px&gt;
+                &lt;col width=50px&gt;
+                &lt;col width=180px&gt;
+                &lt;tr&gt;`
+                &lt;th&gt;Name&lt;/th&gt;`
+                &lt;th&gt;Date of Arrivals&lt;/th&gt;`
+                &lt;th&gt;Approved by Validation&lt;/th&gt;`
+                &lt;th&gt;Action&lt;/th&gt;`
+                &lt;th&gt;Description&lt;/th&gt;`
+                &lt;/tr&gt;&quot;
+            $rows&#43;= $report | Sort-Object &quot;Date of Arrival&quot; -descending  | `
+                foreach { &quot;`
+                    &lt;tr&gt;`
+                    &lt;td&gt;&quot;&#43;$($_.&quot;name&quot;)&#43;&quot;&lt;/td&gt;`
+                    &lt;td&gt;&quot;&#43;$($_.&quot;Date of Arrival&quot;)&#43;&quot;&lt;/td&gt;`
+                    &lt;td style='text-align:center'&gt;&quot;&#43;$($_.&quot;Approved by Validation&quot;) &#43;&quot;&lt;/td&gt;`
+                    &lt;td style='text-align:center'&gt;&quot;&#43;$($_.&quot;Action&quot;) &#43; &quot;&lt;/td&gt;`
+                    &lt;td&gt;&quot;&#43;$($_.&quot;Description&quot;)&#43;&quot;&lt;/td&gt;`
+                    &lt;/tr&gt;&quot; }
+            $rows&#43;=&quot;&lt;/table&gt;&quot;
+        } else {
+            $rows=&quot;&lt;table&gt;`
+                &lt;col&gt;
+                &lt;col width=150px&gt;
+                &lt;col width=50px&gt;
+                &lt;col width=180px&gt;
+                &lt;tr&gt;`
+                &lt;th&gt;Name&lt;/th&gt;`
+                &lt;th&gt;Date of Arrivals&lt;/th&gt;`
+                &lt;th&gt;Action&lt;/th&gt;`
+                &lt;th&gt;Description&lt;/th&gt;`
+                &lt;/tr&gt;&quot;
+            $rows&#43;= $report | Sort-Object &quot;Date of Arrival&quot; -descending  | `
+                foreach { &quot;`
+                    &lt;tr&gt;`
+                    &lt;td&gt;&quot;&#43;$($_.&quot;name&quot;)&#43;&quot;&lt;/td&gt;`
+                    &lt;td&gt;&quot;&#43;$($_.&quot;Date of Arrival&quot;)&#43;&quot;&lt;/td&gt;`
+                    &lt;td style='text-align:center'&gt;&quot;&#43;$($_.&quot;Action&quot;) &#43; &quot;&lt;/td&gt;`
+                    &lt;td&gt;&quot;&#43;$($_.&quot;Description&quot;)&#43;&quot;&lt;/td&gt;`
+                    &lt;/tr&gt;&quot; }
+            $rows&#43;=&quot;&lt;/table&gt;&quot;
+        }
+    }
+    return $rows
+}
+
+
+function filterUpdates($updates){
+
+    $updates_filtered = @()
+    $nb_rejected=0
+    
+    # Get update not approved for no targetgroup
+    $updates | foreach {
+        if ( $_.IsApproved -eq $False ){
+            $updates_filtered &#43;= $_
+        }
+    }
+
+    # Get update approved only for a specific Targetgroup
+    $updates | where { $_.IsApproved -eq $True } | foreach { `
+        $mark_tg_approved = $false
+        $_.getUpdateApprovals() | foreach {
+            if ($_.ComputerTargetGroupId -eq $tg_to_Approve.id ){
+                $mark_tg_approved = $true
+            }
+        }
+        if ( $mark_tg_approved ) {
+            $nb_rejected&#43;&#43;
+        } else {
+            $updates_filtered &#43;= $_
+        }
+    
+    }
+
+    return ($updates_filtered,$nb_rejected)
+}
+
+
+###############################################################################
+# CORE PROGRAM - DON'T TOUCH !!! ... Normally
+
+
+
+####
+# INIT
+####
+# init trap
+$logfile = $PATH_DIR &#43; &quot;\&quot; &#43; $FILENAME_LOG
+trap {Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') Error - $_&quot;;break}
+# get date
+$now = Get-Date
+# build filename for reports
+$report_filename =$PATH_DIR &#43; &quot;\&quot; &#43; $FILENAME_REPORTS
+$ErrorActionPreference = &quot;Stop&quot;
+
+####
+# Log
+####
+Add-content $logfile -value &quot;----------------------------------------------------&quot;
+Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') Start&quot;
+
+
+
+####
+# Load Assembly
+####
+Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') Loading Assembly ... &quot;
+[reflection.assembly]::LoadWithPartialName(&quot;Microsoft.UpdateServices.Administration&quot;) | Out-Null
+$wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer()
+# GetID of TargetGroup
+$tg_to_Approve=$wsus.GetComputerTargetGroups() | where { $_.name -eq $WSUS_TargetGroup_To_Approved }
+# $WSUS_TargetGroup_Validation is optinal 
+if ( $WSUS_TargetGroup_Validation -ne $null ){
+    $tg_valid_Approve=$wsus.GetComputerTargetGroups() | where { $_.name -eq $WSUS_TargetGroup_Validation }
+}
+
+
+
+
+####
+# Get all updates we want.
+####
+Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') Collect and filter updates ... &quot;
+
+# building Rexgexp
+$regexpCateg=&quot;&quot;; $WSUS_CategoriesIncluded | foreach { $regexpCateg &#43;= &quot;^$_$|&quot; }
+$regexpCateg = $regexpCateg.substring(0,$regexpCateg.length-1)
+$allUpdates=$wsus.getUpdates()
+$updates= $allUpdates | Where {$_.ProductTitles -match $regexpCateg `
+                       -and $_.UpdateClassificationTitle -notmatch &quot;Service Packs&quot; `
+                       -and $_.IsDeclined -eq $False `
+                       -and $_.IsSuperseded -eq $False }
+
+Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') - Total Updates : $($allUpdates.count)     Useful Updates : $($updates.count)&quot;
+
+
+
+
+####
+# Eliminates some updates we collect
+####
+Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') Reject some useless updates ... &quot;
+
+($updates_filtered,$nb_rejected) = filterUpdates($updates)
+
+Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') - Total updates rejected $nb_rejected (because they are already approved) &quot;
+
+
+
+
+
+####
+# Automatic Approve
+# and construct list of each updates
+####
+Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') Approving updates ... &quot;
+
+# Title, arrivaldate, producttitles, is not superseded, approved by validation, delay OK, action, remark
+$report= @()
+$nb_approved=0
+$updates_filtered | foreach {
+    $action=@()
+    $desc=@()
+    
+    
+    # $WSUS_TargetGroup_Validation is optinal 
+    if ( $WSUS_TargetGroup_Validation -ne $null ){
+        $isValidationApproved = $false
+        $isDelayExceeded = $false
+        if ( $_.isApproved ){
+            $_.getUpdateApprovals() | foreach { 
+                if ($_.ComputerTargetGroupId -eq $tg_valid_Approve.id ){ 
+                    $isValidationApproved = $true
+                    $delayCount = $_.CreationDate.add($DELAY)
+                    $isDelayExceeded = $delayCount -lt $now
+                 }
+            }
+        }
+    } else {
+        $delayCount = $_.ArrivalDate.add($DELAY)
+        $isDelayExceeded = $delayCount -lt $now
+        $isValidationApproved = $true
+    }
+    
+
+    # $WSUS_TargetGroup_Validation is optinal 
+    if ($isValidationApproved -or $WSUS_TargetGroup_Validation -eq $null ){
+        if ($isDelayExceeded){
+            Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') - Approve $($_.legacyname) &quot;
+            $nb_approved&#43;&#43;
+            $action=&quot;(Approve !)&quot;
+            $desc=&quot;Uncomment action in script&quot;
+            ## UNCOMMENT WHEN YOU'RE SURE 
+            #$action=&quot;Approve !&quot;
+            #$desc = &quot;$($($now - $_.ArrivalDate.add($DELAY) ).days) days left&quot;
+            #$_.approve(&ldquo;Install&rdquo;,$tg_to_Approve)
+        } else {         
+            $action=&quot;Wait&quot;
+            $desc= &quot;$($($delayCount - $now).days) days remaining&quot;
+        }
+    } else {
+        if ( $WSUS_TargetGroup_Validation -ne $null ){
+            $action=&quot;Wait&quot;
+            $desc=&quot;$($tg_valid_Approve.name) must be approved first&quot;
+        } else {
+            $action=&quot;Wait&quot;
+            $desc=&quot;This case never happen - send comments on script center for this script&quot;
+        }
+    }
+
+
+    $line = New-Object System.Object
+    $line | Add-Member -type NoteProperty -name &quot;Name&quot; -value $_.title
+    $line | Add-Member -type NoteProperty -name &quot;Date of Arrival&quot; -value $_.ArrivalDate.ToString(&quot;yyyy/MM/dd HH:mm:ss&quot;)
+    $line | Add-Member -type NoteProperty -name &quot;Product&quot; -value $_.ProductTitles
+    # $WSUS_TargetGroup_Validation is optinal 
+    if ( $WSUS_TargetGroup_Validation -ne $null ){
+        $line | Add-Member -type NoteProperty -name &quot;Approved by Validation&quot; -value $isValidationApproved
+    }
+    $line | Add-Member -type NoteProperty -name &quot;Action&quot; -value $action
+    $line | Add-Member -type NoteProperty -name &quot;Description&quot; -value $desc
+    $report &#43;= $line
+}
+Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') - Total updates approved $nb_approved &quot;
+
+
+
+
+
+
+####
+# Build report
+####
+Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') Building report ... &quot;
+
+
+$HTML_head = &quot;<style><!--mce:0--></style>&quot;;
+    
+$HTML_body = &quot;&lt;H2&gt; $TITLE - Date of reports : $($now.ToString(&quot;yyyy/MM/dd HH:mm:ss&quot;))&lt;/H2&gt;`
+    &lt;p&gt;Results are filtered and sorted by date&lt;/p&gt;`
+    &lt;p&gt;Delay before auto approve of target group &lt;b&gt;$WSUS_TargetGroup_To_Approved&lt;/b&gt; is &lt;b&gt;$($DELAY.days) days&lt;/b&gt;&lt;/p&gt;&quot;
+
+$report_html = BuildHTMLTable($report)
+
+$html = &quot;&lt;!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'&gt;`
+    &lt;html xmlns='http://www.w3.org/1999/xhtml'&gt;&quot; &#43; `
+    &quot;&lt;head&gt;&quot; &#43; `
+    &quot;&lt;title&gt;&quot; &#43; $TITLE &#43; &quot;&lt;/title&gt;&quot; &#43; `
+    $HTML_style &#43; `
+    &quot;&lt;/head&gt;&quot; &#43; `
+    &quot;&lt;body&gt;&quot; &#43; `
+    $HTML_body &#43; `
+    $report_html &#43; `
+    &quot;&lt;/body&gt;&quot; &#43; `
+    &quot;&lt;/html&gt;&quot;
+
+
+$html | Set-Content $report_filename
+
+
+
+
+####
+# End
+####
+
+Add-content $logfile -value &quot;$(Get-Date -format 'yyyy/MM/dd HH:mm:ss') End &quot;</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__mlcom">&lt;#&nbsp;&nbsp;&nbsp;
+.SYNOPSIS&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;DELAY&nbsp;WSUS&nbsp;AUTO&nbsp;APPROVALS&nbsp;
+&nbsp;
+.DESCRIPTION&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;script&nbsp;delay&nbsp;approvals&nbsp;for&nbsp;specific&nbsp;target&nbsp;group&nbsp;(OU).&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;delay&nbsp;is&nbsp;customizable.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;You&nbsp;must&nbsp;run&nbsp;this&nbsp;script&nbsp;on&nbsp;your&nbsp;WSUS&nbsp;Server.&nbsp;
+.NOTES&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;File&nbsp;Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;DELAY-WSUS-AUTO-APPROVALS.ps1&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Author&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Baptiste&nbsp;LEMARIE&nbsp;(FrameIP)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Copyright&nbsp;2013&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Veolia&nbsp;Transport&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;1.3&nbsp;(2013/03/05)&nbsp;-&nbsp;make&nbsp;optional&nbsp;validation&nbsp;targetgroup&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;count&nbsp;delay&nbsp;from&nbsp;Creation&nbsp;Date&nbsp;(if&nbsp;validation&nbsp;target&nbsp;group&nbsp;exists)&nbsp;else&nbsp;from&nbsp;Arrival&nbsp;Date&nbsp;of&nbsp;updates&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;History&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;1.2&nbsp;(2013/02/14)&nbsp;-&nbsp;Fix&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;History&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;1.1&nbsp;(2013/01/29)&nbsp;-&nbsp;Fix&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;History&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;1.0&nbsp;(2013/01/22)&nbsp;-&nbsp;First&nbsp;Version&nbsp;
+#&gt;</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">###############################################################################</span>&nbsp;
+<span class="powerShell__com">#&nbsp;GLOBALS</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">##################</span>&nbsp;
+<span class="powerShell__com">#&nbsp;WSUS&nbsp;Part</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;This&nbsp;the&nbsp;delay&nbsp;between&nbsp;arrival&nbsp;date&nbsp;of&nbsp;updates&nbsp;and&nbsp;automatic&nbsp;approvals</span>&nbsp;
+<span class="powerShell__variable">$DELAY</span>&nbsp;=&nbsp;[TimeSpan]30d&nbsp;;&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Only&nbsp;these&nbsp;categories&nbsp;are&nbsp;concerned</span>&nbsp;
+<span class="powerShell__com">#&nbsp;and&nbsp;&quot;service&nbsp;packs&quot;&nbsp;are&nbsp;hard&nbsp;coded&nbsp;excluded</span>&nbsp;
+<span class="powerShell__variable">$WSUS_CategoriesIncluded</span>&nbsp;=&nbsp;@(<span class="powerShell__string">&quot;Windows&nbsp;server&nbsp;2008&quot;</span>,&nbsp;&nbsp;<span class="powerShell__string">&quot;Windows&nbsp;server&nbsp;2008&nbsp;R2&quot;</span>,&nbsp;<span class="powerShell__string">&quot;Windows&nbsp;7&quot;</span>);&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;We&nbsp;approve&nbsp;updates&nbsp;on&nbsp;this&nbsp;TargetGroup</span>&nbsp;
+<span class="powerShell__variable">$WSUS_TargetGroup_To_Approved</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;All&nbsp;Computers&quot;</span>;&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Optional&nbsp;:&nbsp;Validation&nbsp;TargetGroup</span>&nbsp;
+<span class="powerShell__com">#&nbsp;If&nbsp;you&nbsp;don't&nbsp;have/want&nbsp;a&nbsp;Validation&nbsp;Target&nbsp;Group&nbsp;(with&nbsp;limited&nbsp;computers),&nbsp;set&nbsp;variable&nbsp;to&nbsp;null.</span>&nbsp;
+<span class="powerShell__com">#$WSUS_TargetGroup_Validation&nbsp;=&nbsp;&quot;Validation&quot;;</span>&nbsp;
+<span class="powerShell__variable">$WSUS_TargetGroup_Validation</span>&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>;&nbsp;
+&nbsp;
+<span class="powerShell__com">##################</span>&nbsp;
+<span class="powerShell__com">#&nbsp;LOG,&nbsp;REPORT&nbsp;and&nbsp;RUN&nbsp;files</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$PATH_DIR</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;D:\DELAY-WSUS-AUTO-APPROVALS&quot;</span>;&nbsp;
+<span class="powerShell__variable">$FILENAME_LOG</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;DELAY-WSUS-AUTO-APPROVALS.log&quot;</span>&nbsp;
+<span class="powerShell__variable">$FILENAME_REPORTS</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;DELAY-WSUS-AUTO-APPROVALS_&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$</span>(<span class="powerShell__cmdlets">Get-Date</span>&nbsp;<span class="powerShell__operator">-</span>format&nbsp;yyyy<span class="powerShell__operator">-</span>MM<span class="powerShell__operator">-</span>dd_HH\hmm\mss\s)&nbsp;&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;.html&quot;</span>&nbsp;
+<span class="powerShell__variable">$TITLE</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;DELAY&nbsp;WSUS&nbsp;AUTO&nbsp;APPROVALS&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">###############################################################################</span>&nbsp;
+<span class="powerShell__com">#&nbsp;FUNCTIONS</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;BuildHTMLTable(<span class="powerShell__variable">$report</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;The&nbsp;content</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$report</span>.count&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;0){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>&nbsp;<span class="powerShell__string">&quot;&lt;h3&gt;No&nbsp;updates&lt;/h3&gt;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;$WSUS_TargetGroup_Validation&nbsp;is&nbsp;optinal&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(&nbsp;<span class="powerShell__variable">$WSUS_TargetGroup_Validation</span>&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__variable">$null</span>&nbsp;)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$rows</span>=&quot;&lt;table&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;col&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;col&nbsp;width=150px&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;col&nbsp;width=100px&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;col&nbsp;width=50px&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;col&nbsp;width=180px&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Name&lt;<span class="powerShell__operator">/</span>th&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Date&nbsp;of&nbsp;Arrivals&lt;<span class="powerShell__operator">/</span>th&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Approved&nbsp;by&nbsp;Validation&lt;<span class="powerShell__operator">/</span>th&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Action&lt;<span class="powerShell__operator">/</span>th&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Description&lt;<span class="powerShell__operator">/</span>th&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="powerShell__operator">/</span>tr&gt;&quot;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$rows</span><span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__variable">$report</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">Sort</span><span class="powerShell__operator">-</span>Object&nbsp;<span class="powerShell__string">&quot;Date&nbsp;of&nbsp;Arrival&quot;</span>&nbsp;<span class="powerShell__operator">-</span>descending&nbsp;&nbsp;<span class="powerShell__operator">|</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;&quot;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;<span class="powerShell__string">&quot;&#43;$($_.&quot;</span>name<span class="powerShell__string">&quot;)&#43;&quot;</span>&lt;<span class="powerShell__operator">/</span>td&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;<span class="powerShell__string">&quot;&#43;$($_.&quot;</span>Date&nbsp;of&nbsp;Arrival<span class="powerShell__string">&quot;)&#43;&quot;</span>&lt;<span class="powerShell__operator">/</span>td&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;style=<span class="powerShell__string">'text-align:center'</span>&gt;<span class="powerShell__string">&quot;&#43;$($_.&quot;</span>Approved&nbsp;by&nbsp;Validation<span class="powerShell__string">&quot;)&nbsp;&#43;&quot;</span>&lt;<span class="powerShell__operator">/</span>td&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;style=<span class="powerShell__string">'text-align:center'</span>&gt;<span class="powerShell__string">&quot;&#43;$($_.&quot;</span>Action<span class="powerShell__string">&quot;)&nbsp;&#43;&nbsp;&quot;</span>&lt;<span class="powerShell__operator">/</span>td&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;<span class="powerShell__string">&quot;&#43;$($_.&quot;</span>Description<span class="powerShell__string">&quot;)&#43;&quot;</span>&lt;<span class="powerShell__operator">/</span>td&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="powerShell__operator">/</span>tr&gt;&quot;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$rows</span><span class="powerShell__operator">&#43;</span>=<span class="powerShell__string">&quot;&lt;/table&gt;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$rows</span>=&quot;&lt;table&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;col&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;col&nbsp;width=150px&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;col&nbsp;width=50px&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;col&nbsp;width=180px&gt;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Name&lt;<span class="powerShell__operator">/</span>th&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Date&nbsp;of&nbsp;Arrivals&lt;<span class="powerShell__operator">/</span>th&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Action&lt;<span class="powerShell__operator">/</span>th&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Description&lt;<span class="powerShell__operator">/</span>th&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="powerShell__operator">/</span>tr&gt;&quot;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$rows</span><span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__variable">$report</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">Sort</span><span class="powerShell__operator">-</span>Object&nbsp;<span class="powerShell__string">&quot;Date&nbsp;of&nbsp;Arrival&quot;</span>&nbsp;<span class="powerShell__operator">-</span>descending&nbsp;&nbsp;<span class="powerShell__operator">|</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;&quot;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;<span class="powerShell__string">&quot;&#43;$($_.&quot;</span>name<span class="powerShell__string">&quot;)&#43;&quot;</span>&lt;<span class="powerShell__operator">/</span>td&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;<span class="powerShell__string">&quot;&#43;$($_.&quot;</span>Date&nbsp;of&nbsp;Arrival<span class="powerShell__string">&quot;)&#43;&quot;</span>&lt;<span class="powerShell__operator">/</span>td&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;style=<span class="powerShell__string">'text-align:center'</span>&gt;<span class="powerShell__string">&quot;&#43;$($_.&quot;</span>Action<span class="powerShell__string">&quot;)&nbsp;&#43;&nbsp;&quot;</span>&lt;<span class="powerShell__operator">/</span>td&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt;<span class="powerShell__string">&quot;&#43;$($_.&quot;</span>Description<span class="powerShell__string">&quot;)&#43;&quot;</span>&lt;<span class="powerShell__operator">/</span>td&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="powerShell__operator">/</span>tr&gt;&quot;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$rows</span><span class="powerShell__operator">&#43;</span>=<span class="powerShell__string">&quot;&lt;/table&gt;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>&nbsp;<span class="powerShell__variable">$rows</span>&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;filterUpdates(<span class="powerShell__variable">$updates</span>){&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$updates_filtered</span>&nbsp;=&nbsp;@()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$nb_rejected</span>=0&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Get&nbsp;update&nbsp;not&nbsp;approved&nbsp;for&nbsp;no&nbsp;targetgroup</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$updates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(&nbsp;<span class="powerShell__variable">$_</span>.IsApproved&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$False</span>&nbsp;){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$updates_filtered</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Get&nbsp;update&nbsp;approved&nbsp;only&nbsp;for&nbsp;a&nbsp;specific&nbsp;Targetgroup</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$updates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.IsApproved&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$True</span>&nbsp;}&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$mark_tg_approved</span>&nbsp;=&nbsp;<span class="powerShell__variable">$false</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$_</span>.getUpdateApprovals()&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$_</span>.ComputerTargetGroupId&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$tg_to_Approve</span>.id&nbsp;){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$mark_tg_approved</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(&nbsp;<span class="powerShell__variable">$mark_tg_approved</span>&nbsp;)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$nb_rejected</span><span class="powerShell__operator">&#43;</span><span class="powerShell__operator">&#43;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$updates_filtered</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>&nbsp;(<span class="powerShell__variable">$updates_filtered</span>,<span class="powerShell__variable">$nb_rejected</span>)&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">###############################################################################</span>&nbsp;
+<span class="powerShell__com">#&nbsp;CORE&nbsp;PROGRAM&nbsp;-&nbsp;DON'T&nbsp;TOUCH&nbsp;!!!&nbsp;...&nbsp;Normally</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__com">#&nbsp;INIT</span>&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__com">#&nbsp;init&nbsp;trap</span>&nbsp;
+<span class="powerShell__variable">$logfile</span>&nbsp;=&nbsp;<span class="powerShell__variable">$PATH_DIR</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;&quot;\&quot;&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$FILENAME_LOG</span>&nbsp;
+<span class="powerShell__keyword">trap</span>&nbsp;{<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;Error&nbsp;-&nbsp;$_&quot;</span>;<span class="powerShell__keyword">break</span>}&nbsp;
+<span class="powerShell__com">#&nbsp;get&nbsp;date</span>&nbsp;
+<span class="powerShell__variable">$now</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-Date</span>&nbsp;
+<span class="powerShell__com">#&nbsp;build&nbsp;filename&nbsp;for&nbsp;reports</span>&nbsp;
+<span class="powerShell__variable">$report_filename</span>&nbsp;=<span class="powerShell__variable">$PATH_DIR</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;&quot;\&quot;&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$FILENAME_REPORTS</span>&nbsp;
+<span class="powerShell__variable">$ErrorActionPreference</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Stop&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Log</span>&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;----------------------------------------------------&quot;</span>&nbsp;
+<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;Start&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Load&nbsp;Assembly</span>&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;Loading&nbsp;Assembly&nbsp;...&nbsp;&quot;</span>&nbsp;
+[reflection.assembly]::LoadWithPartialName(<span class="powerShell__string">&quot;Microsoft.UpdateServices.Administration&quot;</span>)&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Out-Null</span>&nbsp;
+<span class="powerShell__variable">$wsus</span>&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer()&nbsp;
+<span class="powerShell__com">#&nbsp;GetID&nbsp;of&nbsp;TargetGroup</span>&nbsp;
+<span class="powerShell__variable">$tg_to_Approve</span>=<span class="powerShell__variable">$wsus</span>.GetComputerTargetGroups()&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$WSUS_TargetGroup_To_Approved</span>&nbsp;}&nbsp;
+<span class="powerShell__com">#&nbsp;$WSUS_TargetGroup_Validation&nbsp;is&nbsp;optinal&nbsp;</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(&nbsp;<span class="powerShell__variable">$WSUS_TargetGroup_Validation</span>&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__variable">$null</span>&nbsp;){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$tg_valid_Approve</span>=<span class="powerShell__variable">$wsus</span>.GetComputerTargetGroups()&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$WSUS_TargetGroup_Validation</span>&nbsp;}&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Get&nbsp;all&nbsp;updates&nbsp;we&nbsp;want.</span>&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;Collect&nbsp;and&nbsp;filter&nbsp;updates&nbsp;...&nbsp;&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;building&nbsp;Rexgexp</span>&nbsp;
+<span class="powerShell__variable">$regexpCateg</span>=<span class="powerShell__string">&quot;&quot;</span>;&nbsp;<span class="powerShell__variable">$WSUS_CategoriesIncluded</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;<span class="powerShell__variable">$regexpCateg</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__string">&quot;^$_$|&quot;</span>&nbsp;}&nbsp;
+<span class="powerShell__variable">$regexpCateg</span>&nbsp;=&nbsp;<span class="powerShell__variable">$regexpCateg</span>.substring(0,<span class="powerShell__variable">$regexpCateg</span>.length<span class="powerShell__operator">-</span>1)&nbsp;
+<span class="powerShell__variable">$allUpdates</span>=<span class="powerShell__variable">$wsus</span>.getUpdates()&nbsp;
+<span class="powerShell__variable">$updates</span>=&nbsp;<span class="powerShell__variable">$allUpdates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Where&nbsp;{<span class="powerShell__variable">$_</span>.ProductTitles&nbsp;<span class="powerShell__operator">-</span>match&nbsp;<span class="powerShell__variable">$regexpCateg</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$_</span>.UpdateClassificationTitle&nbsp;<span class="powerShell__operator">-</span>notmatch&nbsp;<span class="powerShell__string">&quot;Service&nbsp;Packs&quot;</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$_</span>.IsDeclined&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$False</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$_</span>.IsSuperseded&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$False</span>&nbsp;}&nbsp;
+&nbsp;
+<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;-&nbsp;Total&nbsp;Updates&nbsp;:&nbsp;$($allUpdates.count)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Useful&nbsp;Updates&nbsp;:&nbsp;$($updates.count)&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Eliminates&nbsp;some&nbsp;updates&nbsp;we&nbsp;collect</span>&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;Reject&nbsp;some&nbsp;useless&nbsp;updates&nbsp;...&nbsp;&quot;</span>&nbsp;
+&nbsp;
+(<span class="powerShell__variable">$updates_filtered</span>,<span class="powerShell__variable">$nb_rejected</span>)&nbsp;=&nbsp;filterUpdates(<span class="powerShell__variable">$updates</span>)&nbsp;
+&nbsp;
+<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;-&nbsp;Total&nbsp;updates&nbsp;rejected&nbsp;$nb_rejected&nbsp;(because&nbsp;they&nbsp;are&nbsp;already&nbsp;approved)&nbsp;&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Automatic&nbsp;Approve</span>&nbsp;
+<span class="powerShell__com">#&nbsp;and&nbsp;construct&nbsp;list&nbsp;of&nbsp;each&nbsp;updates</span>&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;Approving&nbsp;updates&nbsp;...&nbsp;&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Title,&nbsp;arrivaldate,&nbsp;producttitles,&nbsp;is&nbsp;not&nbsp;superseded,&nbsp;approved&nbsp;by&nbsp;validation,&nbsp;delay&nbsp;OK,&nbsp;action,&nbsp;remark</span>&nbsp;
+<span class="powerShell__variable">$report</span>=&nbsp;@()&nbsp;
+<span class="powerShell__variable">$nb_approved</span>=0&nbsp;
+<span class="powerShell__variable">$updates_filtered</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$action</span>=@()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$desc</span>=@()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;$WSUS_TargetGroup_Validation&nbsp;is&nbsp;optinal&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(&nbsp;<span class="powerShell__variable">$WSUS_TargetGroup_Validation</span>&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__variable">$null</span>&nbsp;){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$isValidationApproved</span>&nbsp;=&nbsp;<span class="powerShell__variable">$false</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$isDelayExceeded</span>&nbsp;=&nbsp;<span class="powerShell__variable">$false</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(&nbsp;<span class="powerShell__variable">$_</span>.isApproved&nbsp;){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$_</span>.getUpdateApprovals()&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$_</span>.ComputerTargetGroupId&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$tg_valid_Approve</span>.id&nbsp;){&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$isValidationApproved</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$delayCount</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>.CreationDate.add(<span class="powerShell__variable">$DELAY</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$isDelayExceeded</span>&nbsp;=&nbsp;<span class="powerShell__variable">$delayCount</span>&nbsp;<span class="powerShell__operator">-</span>lt&nbsp;<span class="powerShell__variable">$now</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$delayCount</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>.ArrivalDate.add(<span class="powerShell__variable">$DELAY</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$isDelayExceeded</span>&nbsp;=&nbsp;<span class="powerShell__variable">$delayCount</span>&nbsp;<span class="powerShell__operator">-</span>lt&nbsp;<span class="powerShell__variable">$now</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$isValidationApproved</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;$WSUS_TargetGroup_Validation&nbsp;is&nbsp;optinal&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$isValidationApproved</span>&nbsp;<span class="powerShell__operator">-</span>or&nbsp;<span class="powerShell__variable">$WSUS_TargetGroup_Validation</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$null</span>&nbsp;){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$isDelayExceeded</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;-&nbsp;Approve&nbsp;$($_.legacyname)&nbsp;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$nb_approved</span><span class="powerShell__operator">&#43;</span><span class="powerShell__operator">&#43;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$action</span>=<span class="powerShell__string">&quot;(Approve&nbsp;!)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$desc</span>=<span class="powerShell__string">&quot;Uncomment&nbsp;action&nbsp;in&nbsp;script&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">##&nbsp;UNCOMMENT&nbsp;WHEN&nbsp;YOU'RE&nbsp;SURE&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$action=&quot;Approve&nbsp;!&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$desc&nbsp;=&nbsp;&quot;$($($now&nbsp;-&nbsp;$_.ArrivalDate.add($DELAY)&nbsp;).days)&nbsp;days&nbsp;left&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$_.approve(&ldquo;Install&rdquo;,$tg_to_Approve)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$action</span>=<span class="powerShell__string">&quot;Wait&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$desc</span>=&nbsp;<span class="powerShell__string">&quot;$($($delayCount&nbsp;-&nbsp;$now).days)&nbsp;days&nbsp;remaining&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(&nbsp;<span class="powerShell__variable">$WSUS_TargetGroup_Validation</span>&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__variable">$null</span>&nbsp;){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$action</span>=<span class="powerShell__string">&quot;Wait&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$desc</span>=<span class="powerShell__string">&quot;$($tg_valid_Approve.name)&nbsp;must&nbsp;be&nbsp;approved&nbsp;first&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$action</span>=<span class="powerShell__string">&quot;Wait&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$desc</span>=<span class="powerShell__string">&quot;This&nbsp;case&nbsp;never&nbsp;happen&nbsp;-&nbsp;send&nbsp;comments&nbsp;on&nbsp;script&nbsp;center&nbsp;for&nbsp;this&nbsp;script&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$line</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;System.Object&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$line</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Add-Member</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__alias">type</span>&nbsp;NoteProperty&nbsp;<span class="powerShell__operator">-</span>name&nbsp;<span class="powerShell__string">&quot;Name&quot;</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__variable">$_</span>.title&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$line</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Add-Member</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__alias">type</span>&nbsp;NoteProperty&nbsp;<span class="powerShell__operator">-</span>name&nbsp;<span class="powerShell__string">&quot;Date&nbsp;of&nbsp;Arrival&quot;</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__variable">$_</span>.ArrivalDate.ToString(<span class="powerShell__string">&quot;yyyy/MM/dd&nbsp;HH:mm:ss&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$line</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Add-Member</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__alias">type</span>&nbsp;NoteProperty&nbsp;<span class="powerShell__operator">-</span>name&nbsp;<span class="powerShell__string">&quot;Product&quot;</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__variable">$_</span>.ProductTitles&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;$WSUS_TargetGroup_Validation&nbsp;is&nbsp;optinal&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(&nbsp;<span class="powerShell__variable">$WSUS_TargetGroup_Validation</span>&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__variable">$null</span>&nbsp;){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$line</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Add-Member</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__alias">type</span>&nbsp;NoteProperty&nbsp;<span class="powerShell__operator">-</span>name&nbsp;<span class="powerShell__string">&quot;Approved&nbsp;by&nbsp;Validation&quot;</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__variable">$isValidationApproved</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$line</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Add-Member</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__alias">type</span>&nbsp;NoteProperty&nbsp;<span class="powerShell__operator">-</span>name&nbsp;<span class="powerShell__string">&quot;Action&quot;</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__variable">$action</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$line</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Add-Member</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__alias">type</span>&nbsp;NoteProperty&nbsp;<span class="powerShell__operator">-</span>name&nbsp;<span class="powerShell__string">&quot;Description&quot;</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__variable">$desc</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$report</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__variable">$line</span>&nbsp;
+}&nbsp;
+<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;-&nbsp;Total&nbsp;updates&nbsp;approved&nbsp;$nb_approved&nbsp;&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Build&nbsp;report</span>&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;Building&nbsp;report&nbsp;...&nbsp;&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__variable">$HTML_head</span>&nbsp;=&nbsp;&quot;&lt;style&gt;&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;th{background<span class="powerShell__operator">-</span>color:<span class="powerShell__com">#cce;}&nbsp;`</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;tr:nth<span class="powerShell__operator">-</span>child(odd){&nbsp;background<span class="powerShell__operator">-</span>color:<span class="powerShell__com">#eee;&nbsp;}&nbsp;`</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;tr:nth<span class="powerShell__operator">-</span>child(even){&nbsp;background<span class="powerShell__operator">-</span>color:<span class="powerShell__com">#fff;&nbsp;}&nbsp;`</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="powerShell__operator">/</span>style&gt;&quot;;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="powerShell__variable">$HTML_body</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&lt;H2&gt;&nbsp;$TITLE&nbsp;-&nbsp;Date&nbsp;of&nbsp;reports&nbsp;:&nbsp;$($now.ToString(&quot;</span>yyyy<span class="powerShell__operator">/</span>MM<span class="powerShell__operator">/</span>dd&nbsp;HH:mm:ss&quot;))&lt;<span class="powerShell__operator">/</span>H2&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Results&nbsp;are&nbsp;filtered&nbsp;and&nbsp;sorted&nbsp;by&nbsp;date&lt;<span class="powerShell__operator">/</span>p&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Delay&nbsp;before&nbsp;auto&nbsp;approve&nbsp;of&nbsp;target&nbsp;<span class="powerShell__alias">group</span>&nbsp;&lt;b&gt;<span class="powerShell__variable">$WSUS_TargetGroup_To_Approved</span>&lt;<span class="powerShell__operator">/</span>b&gt;&nbsp;is&nbsp;&lt;b&gt;<span class="powerShell__variable">$</span>(<span class="powerShell__variable">$DELAY</span>.days)&nbsp;days&lt;<span class="powerShell__operator">/</span>b&gt;&lt;<span class="powerShell__operator">/</span>p&gt;&quot;&nbsp;
+&nbsp;
+<span class="powerShell__variable">$report_html</span>&nbsp;=&nbsp;BuildHTMLTable(<span class="powerShell__variable">$report</span>)&nbsp;
+&nbsp;
+<span class="powerShell__variable">$html</span>&nbsp;=&nbsp;&quot;&lt;<span class="powerShell__operator">!</span>DOCTYPE&nbsp;html&nbsp;PUBLIC&nbsp;<span class="powerShell__string">'-//W3C//DTD&nbsp;XHTML&nbsp;1.0&nbsp;Strict//EN'</span>&nbsp;&nbsp;<span class="powerShell__string">'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'</span>&gt;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;html&nbsp;xmlns=<span class="powerShell__string">'http://www.w3.org/1999/xhtml'</span>&gt;&quot;&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;&lt;head&gt;&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;&lt;title&gt;&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$TITLE</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&lt;/title&gt;&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTML_style</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;&lt;/head&gt;&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;&lt;body&gt;&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$HTML_body</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$report_html</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;&lt;/body&gt;&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;&lt;/html&gt;&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__variable">$html</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Set-Content</span>&nbsp;<span class="powerShell__variable">$report_filename</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+<span class="powerShell__com">#&nbsp;End</span>&nbsp;
+<span class="powerShell__com">####</span>&nbsp;
+&nbsp;
+<span class="powerShell__cmdlets">Add-content</span>&nbsp;<span class="powerShell__variable">$logfile</span>&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-format&nbsp;'yyyy/MM/dd&nbsp;HH:mm:ss')&nbsp;End&nbsp;&quot;</span></pre>
+</div>
+</div>
+</div>
+<h2 class="endscriptcode">&nbsp;Examples of reports :</h2>
+<ul>
+<li>
+<div class="endscriptcode">When Validation Target Group is null :</div>
+<ul>
+<li>
+<div class="endscriptcode">DELAY-WSUS-AUTO-APPROVALS_2013-03-05_12h50m29s.html</div>
+</li></ul>
+</li><li>
+<div class="attachment">
+<div class="displayAttachment">When Validation Tagret Group is&nbsp;specified :</div>
+</div>
+<ul>
+<li>
+<div class="endscriptcode">
+<div class="attachment">
+<div class="displayAttachment">DELAY-WSUS-AUTO-APPROVALS_2013-03-05_12h52m08s.html</div>
+</div>
+</div>
+</li></ul>
+</li><li>
+<div class="endscriptcode">
+<div class="attachment">
+<div class="endscriptcode">
+<div class="attachment">
+<div class="displayAttachment">When Validation Target Group is defined and for some reasons some updates for&nbsp;Validation Target Group haven't been approved yet</div>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>
+<div class="endscriptcode">
+<div class="attachment">
+<div class="endscriptcode">
+<div class="attachment">
+<div class="displayAttachment">DELAY-WSUS-AUTO-APPROVALS_2013-03-05_14h05m39s.html</div>
+</div>
+</div>
+</div>
+</div>
+</li></ul>
+</li><li>
+<div class="attachment">When lines of code&nbsp;which approve are commented out</div>
+<ul>
+<li>
+<div class="attachment">DELAY-WSUS-AUTO-APPROVALS_2013-03-05_14h25m20s.html</div>
+</li></ul>
+</li></ul>
+<h2 class="endscriptcode">&nbsp;Example of log :</h2>
+<pre class="endscriptcode"><span style="font-size:x-small">&nbsp;----------------------------------------------------</span><br><span style="font-size:x-small">2013/03/05 14:05:39 Start</span><br><span style="font-size:x-small">2013/03/05 14:05:39 Loading Assembly ... </span><br><span style="font-size:x-small">2013/03/05 14:05:39 Collect and filter updates ... </span><br><span style="font-size:x-small">2013/03/05 14:05:47 - Total Updates : 5623&nbsp;&nbsp;&nbsp;&nbsp; Useful Updates : 969</span><br><span style="font-size:x-small">2013/03/05 14:05:47 Reject some useless updates ... </span><br><span style="font-size:x-small">2013/03/05 14:05:51 - Total updates rejected 890 (because they are already approved) </span><br><span style="font-size:x-small">2013/03/05 14:05:51 Approving updates ... </span><br><span style="font-size:x-small">2013/03/05 14:05:51 - Total updates approved 0 </span><br><span style="font-size:x-small">2013/03/05 14:05:51 Building report ... </span><br><span style="font-size:x-small">2013/03/05 14:05:51 End </span><br><span style="font-size:x-small">----------------------------------------------------</span><br><span style="font-size:x-small">2013/03/05 14:25:20 Start</span><br><span style="font-size:x-small">2013/03/05 14:25:20 Loading Assembly ... </span><br><span style="font-size:x-small">2013/03/05 14:25:20 Collect and filter updates ... </span><br><span style="font-size:x-small">2013/03/05 14:25:28 - Total Updates : 5623&nbsp;&nbsp;&nbsp;&nbsp; Useful Updates : 969</span><br><span style="font-size:x-small">2013/03/05 14:25:28 Reject some useless updates ... </span><br><span style="font-size:x-small">2013/03/05 14:25:32 - Total updates rejected 890 (because they are already approved) </span><br><span style="font-size:x-small">2013/03/05 14:25:32 Approving updates ... </span><br><span style="font-size:x-small">2013/03/05 14:25:32 - Approve KB2790113-Win7-RTM-SP1-X64-TSL </span><br><span style="font-size:x-small">2013/03/05 14:25:32 - Approve KB2780091-Win2008-SP2-X64-TSL </span><br><span style="font-size:x-small">2013/03/05 14:25:32 - Total updates approved&nbsp;2 </span><br><span style="font-size:x-small">2013/03/05 14:25:32 Building report ... </span><br><span style="font-size:x-small">2013/03/05 14:25:32 End&nbsp;</span><br>&nbsp;</pre>
+<h2 class="endscriptcode" style="text-align:center">&nbsp;Comments and feedbacks are welcome !</h2>
+
+        </div>
+    </body>
+</html>

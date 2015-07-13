@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content=". .\Invoke-WSUSClientIDFix.ps1" />
+  <Code Content="Invoke-WSUSClientIDFix -Computername 'Server' -Verbose" />
+  <Code Content=". .\Invoke-WSUSClientIDFix.ps1" />
+  <Code Content="Invoke-WSUSClientIDFix -Computername 'Server' -Verbose" />
+</CodeSnippets>

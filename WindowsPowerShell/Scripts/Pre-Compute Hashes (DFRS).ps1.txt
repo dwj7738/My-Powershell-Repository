@@ -1,0 +1,76 @@
+# Source http://gallery.technet.microsoft.com/scriptcenter/1de44cc1-ce79-4e98-9283-92548fc02af9
+#Prestage filehash comparison 
+#Filename:  Filehash.ps1 
+#Author:  Paul Fragale (pfragale@microsoft.com) 
+# 
+#Description: 
+#Takes 4 user inputes: Source Directory, Target Directory, Number of files to compare, and outputfile. 
+#Script then transverses the source directory and subdirectorys and selects random files. 
+#Number of Random files are based on Users 3rd Input. 
+#Script then uses Dfsrdiag filehash to gather the file hashes. 
+#Comparison is done and output is to console in CSV. 
+#Comparison returns True for match and False for nonmatch. 
+# 
+#Version 1.0 
+####################################### 
+ 
+ 
+#3 User input 
+#Source Directory 
+$source =  read-host "Where is the Source Directory?" 
+#Staged Directory 
+$staged = read-host "Where is the Destination Directory?" 
+#Number of Files to Compare 
+$randomfiles = read-host "How many random sample files do you want to compare?" 
+#Result file 
+$output = read-host "Please provide a file name and location for the results. (Results are defaulted to CSV format.  (Ex: c:\filehash.csv)" 
+ 
+#Creates Regular Expression to remove FullName : from Output created by the dir stored in $files 
+$fullnamereg = "FullName : " 
+$regex = [regex]$fullnamereg 
+ 
+#Scans the source directory can stores $randomfiles of files in $files as objects. 
+$files = $source |dir -recurse | get-random -count $randomfiles 
+ 
+#Creates the header for the output 
+echo "FileName,Source Hash,Destination Hash,Match Success" | out-file -filepath $output 
+ 
+#For loop to build the hashes, parse the output and compare.  Output is returned to $output file in CSV. 
+foreach ($file in $files) 
+ 
+{ 
+#Grabs the full path for the file and removes the FullName : 
+$sourcefilename = $file.fullname -split $regex,2; 
+#Creates the target location for the file by replaces the fullpath of the source with the fullpath of the target server.   
+$targetfilename = $sourcefilename -replace [regex]::Escape($source) , $staged; 
+ 
+#Uses dfsrdiag filehash to generate filehash on source file. 
+$sourcehash = dfsrdiag filehash /filepath:$sourcefilename 
+#Cleans up the output from the dfsrdiag command to store just the hash in $test for the source. 
+$test = $sourcehash -split "File Hash: ",2  
+$test = $test -split "operation succeeded",0 
+$test =  $test -match "\w" 
+ 
+#Error Condition check : Validates file does exist in target folder. 
+if((test-path $targetfilename)) 
+{ 
+ 
+#Uses dfsrdiag filehash to generate filehash on destination file. 
+$targethash = dfsrdiag filehash /filepath:$targetfilename 
+#Cleans up the output from the dfsrdiag command to store just the hash in $test2 for the target. 
+$test2 = $targethash -split "File Hash: ",2  
+$test2 = $test2 -split "operation succeeded",0 
+$test2 = $test2 -match "\w"; 
+ 
+} 
+else 
+{$test2 = "File not found."} 
+ 
+#compares $test and $test2, if match sets $compare to 1 if no match sets $compare to 0 
+if ($test -match $test2){$compare = "TRUE"}else {$compare = "False"}; 
+#Outputs each file results on one line and sends it to file in CSV. 
+echo "$file,$test,$test2,$compare" | out-file -filepath $output -append 
+ 
+ 
+} 
+write-host "Script completed.  File is located at $output."

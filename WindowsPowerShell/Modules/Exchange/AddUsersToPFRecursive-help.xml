@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<helpItems schema="maml">
+  <_locDefinition>
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">maml:para</_locTag>
+    <_locTag _loc="locData">maml:title</_locTag>
+  </_locDefinition>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>AddUsersToPFRecursive.ps1</command:name>
+      <maml:description>
+        <maml:para _locID="CommandShortDescription">Adds a specific user with specific permissions to the client permissions list for a public folder, and all the folders under it. If the user is already listed in the client permissions list for a particular folder, the user's permissions are updated to the new specified set.</maml:para>
+      </maml:description>
+      <maml:copyright>
+        <maml:para _locID="Copyright">Copyright (c) Microsoft.  All rights reserved.</maml:para>
+      </maml:copyright>
+      <command:verb>AddUsersToPFRecursive.ps1</command:verb>
+      <command:noun></command:noun>
+      <dev:version />
+    </command:details>
+    <maml:description>
+      <maml:para _locID="CommandLongDescription"></maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <command:name>AddUsersToPFRecursive.ps1</command:name>
+        <command:parameter required="true" position="1">
+          <maml:name>TopPublicFolder</maml:name>
+          <command:parameterValue>String</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="true" position="2">
+          <maml:name>User</maml:name>
+          <command:parameterValue>String</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="true" position="3">
+          <maml:name>Permissions</maml:name>
+          <command:parameterValue>String</command:parameterValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="" globbing="" pipelineInput="false" position="1">
+        <maml:name>TopPublicFolder</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_TopPublicFolder">The folder identity of the top of the tree of folders to modify</maml:para>
+        </maml:description>
+        <command:parameterValue>String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+      <command:parameter required="true" variableLength="" globbing="" pipelineInput="false" position="2">
+        <maml:name>User</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_User">The identity of the user to add to the client permissions.</maml:para>
+        </maml:description>
+        <command:parameterValue>String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+      <command:parameter required="true" variableLength="" globbing="" pipelineInput="false" position="3">
+        <maml:name>Permissions</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_Permissions">A MAPI client permission set</maml:para>
+        </maml:description>
+        <command:parameterValue>String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+    </command:parameters>
+    <command:examples>
+      <command:example>
+        <maml:title _locID="Example_Title_1">-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <maml:introduction>
+          <maml:para>C:\PS&gt;</maml:para>
+        </maml:introduction>
+        <dev:code>AddUsersToPFRecursive.ps1 -TopPublicFolder "\Folder" -User "user" -Permissions {Reviewer,Owner}</dev:code>
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+  </command:command>
+</helpItems>

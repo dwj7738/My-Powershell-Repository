@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content=".\Start-WsusServerSync.ps1 -WsusServer &quot;wsus01.company.tld&quot;" />
+  <Code Content=".\Start-WsusServerSync.ps1 -WsusServer &quot;wsus01.company.tld&quot; -Recursive" />
+  <Code Content=".\Start-WsusServerSync.ps1 -WsusServer &quot;wsus01.company.tld&quot; -Recursive -TrialRun $False -SleepTime 900" />
+  <Code Content="$SmtpServer = &quot;smtp.company.com&quot;,&#xD;&#xA;$From = &quot;wsus@company.com&quot;,&#xD;&#xA;$To = &quot;wsus@company.com&quot;,&#xD;&#xA;$Subject = &quot;WSUS Server Synchronization.&quot;" />
+  <Code Content="#Upstream WSUS server to synchronize and retrieve downstream servers to synchronize&#xD;&#xA;$WsusServer = &quot;wsus.company.com&quot;&#xD;&#xA;$UseSSL = $false&#xD;&#xA;$PortNumber = 80&#xD;&#xA;$TrialRun = $true&#xD;&#xA;$SleepTimer = 5&#xD;&#xA;&#xD;&#xA;#E-mail Configuration&#xD;&#xA;$SMTPServer = &quot;smtp.company.com&quot;&#xD;&#xA;$FromAddress = &quot;wsus@company.com&quot;&#xD;&#xA;$Recipients = &quot;wsusadmins@company.com&quot;&#xD;&#xA;$MessageSubject = &quot;WSUS Synchronization.&quot;" />
+  <Code Content=".\Start-WsusServerSync.ps1 -WsusServer &quot;wsus01.company.tld&quot;" />
+  <Code Content=".\Start-WsusServerSync.ps1 -WsusServer &quot;wsus01.company.tld&quot; -Recursive" />
+  <Code Content=".\Start-WsusServerSync.ps1 -WsusServer &quot;wsus01.company.tld&quot; -Recursive -TrialRun $False -SleepTime 900" />
+  <Code Content="$SmtpServer = &quot;smtp.company.com&quot;,&#xD;&#xA;$From = &quot;wsus@company.com&quot;,&#xD;&#xA;$To = &quot;wsus@company.com&quot;,&#xD;&#xA;$Subject = &quot;WSUS Server Synchronization.&quot;" />
+  <Code Content="#Upstream WSUS server to synchronize and retrieve downstream servers to synchronize&#xD;&#xA;$WsusServer = &quot;wsus.company.com&quot;&#xD;&#xA;$UseSSL = $false&#xD;&#xA;$PortNumber = 80&#xD;&#xA;$TrialRun = $true&#xD;&#xA;$SleepTimer = 5&#xD;&#xA;&#xD;&#xA;#E-mail Configuration&#xD;&#xA;$SMTPServer = &quot;smtp.company.com&quot;&#xD;&#xA;$FromAddress = &quot;wsus@company.com&quot;&#xD;&#xA;$Recipients = &quot;wsusadmins@company.com&quot;&#xD;&#xA;$MessageSubject = &quot;WSUS Synchronization.&quot;" />
+  <Code Content=".\Start-WsusServerSync.ps1 -WsusServer &quot;wsus01.company.tld&quot;" />
+  <Code Content=".\Start-WsusServerSync.ps1 -WsusServer &quot;wsus01.company.tld&quot; -Recursive" />
+  <Code Content=".\Start-WsusServerSync.ps1 -WsusServer &quot;wsus01.company.tld&quot; -Recursive -TrialRun $False -SleepTime 900" />
+  <Code Content="$SmtpServer = &quot;smtp.company.com&quot;,&#xD;&#xA;$From = &quot;wsus@company.com&quot;,&#xD;&#xA;$To = &quot;wsus@company.com&quot;,&#xD;&#xA;$Subject = &quot;WSUS Server Synchronization.&quot;" />
+  <Code Content="#Upstream WSUS server to synchronize and retrieve downstream servers to synchronize&#xD;&#xA;$WsusServer = &quot;wsus.company.com&quot;&#xD;&#xA;$UseSSL = $false&#xD;&#xA;$PortNumber = 80&#xD;&#xA;$TrialRun = $true&#xD;&#xA;$SleepTimer = 5&#xD;&#xA;&#xD;&#xA;#E-mail Configuration&#xD;&#xA;$SMTPServer = &quot;smtp.company.com&quot;&#xD;&#xA;$FromAddress = &quot;wsus@company.com&quot;&#xD;&#xA;$Recipients = &quot;wsusadmins@company.com&quot;&#xD;&#xA;$MessageSubject = &quot;WSUS Synchronization.&quot;" />
+</CodeSnippets>

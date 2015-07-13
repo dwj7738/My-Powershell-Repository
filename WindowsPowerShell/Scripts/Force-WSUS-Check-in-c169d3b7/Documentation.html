@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Force WSUS Check-in</title>        
+        <meta name="description" content="This script will make sure the wuauserv service is started and if it is it will force WSUS checkin. I have tested this script on Windows Server 2K8 and 2K8 R2 as well as Windows 7 x64 and x32 and Windows Vista. All That said, USE AT YOUR OWN RISK. I hacked this
+ thing together t" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>This script will make sure the wuauserv service is started and if it is it will force WSUS checkin. I have tested this script on Windows Server 2K8 and 2K8 R2 as well as Windows 7 x64 and x32 and Windows Vista. All That said, USE AT YOUR OWN RISK. I hacked
+ this thing together to run on a few laptops that were having problems pulling updates.</p>
+<p>To use the script open a Powershell windows and run ./filename.ps1 after you enable remote signing.</p>
+<div>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">#  *** THIS SCRIPT IS PROVIDED WITHOUT WARRANTY, USE AT YOUR OWN RISK ***
+#
+# Author: David Hall, signalwarrant.com
+#
+# This script will allow you to start the wuauserv service and force a WSUS checkin.
+
+
+# Define a service variable
+$service = get-service -Name wuauserv
+
+# Check to see if the service variable is stopped
+if ($service.Status -eq &quot;Stopped&quot;){
+    
+    # If the service is stopped we're going to start it and force WSUS checkin
+    # and Exit
+    Write-host -foregroundcolor Cyan &quot;1. WUAUSERV is stopped... starting&quot;
+    Start-Service wuauserv 
+        [System.Threading.Thread]::Sleep(1500)
+    Write-host -foregroundcolor Cyan &quot;2. WUAUSERV started&quot;    
+        [System.Threading.Thread]::Sleep(1500)
+    Write-host -foregroundcolor Cyan &quot;3. Forcing WSUS Checkin&quot;
+    Invoke-Command {wuauclt.exe /detectnow}
+        [System.Threading.Thread]::Sleep(1500)
+    Write-host -foregroundcolor Cyan &quot;4. Checkin Complete&quot;
+    Exit  
+    
+    } else {
+    
+    # If the service is started we'll just for the WSUS checkin and Exit
+    Write-host -foregroundcolor Cyan &quot;1. Forcing WSUS Checkin&quot;
+    Invoke-Command {wuauclt.exe /detectnow}
+        [System.Threading.Thread]::Sleep(1500)
+    Write-host -foregroundcolor Cyan &quot;2. Checkin Complete&quot;
+    Exit
+    
+    }</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__com">#&nbsp;&nbsp;***&nbsp;THIS&nbsp;SCRIPT&nbsp;IS&nbsp;PROVIDED&nbsp;WITHOUT&nbsp;WARRANTY,&nbsp;USE&nbsp;AT&nbsp;YOUR&nbsp;OWN&nbsp;RISK&nbsp;***</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Author:&nbsp;David&nbsp;Hall,&nbsp;signalwarrant.com</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#&nbsp;This&nbsp;script&nbsp;will&nbsp;allow&nbsp;you&nbsp;to&nbsp;start&nbsp;the&nbsp;wuauserv&nbsp;service&nbsp;and&nbsp;force&nbsp;a&nbsp;WSUS&nbsp;checkin.</span>&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Define&nbsp;a&nbsp;service&nbsp;variable</span>&nbsp;
+<span class="powerShell__variable">$service</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">get-service</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;wuauserv&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Check&nbsp;to&nbsp;see&nbsp;if&nbsp;the&nbsp;service&nbsp;variable&nbsp;is&nbsp;stopped</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$service</span>.Status&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;Stopped&quot;</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;If&nbsp;the&nbsp;service&nbsp;is&nbsp;stopped&nbsp;we're&nbsp;going&nbsp;to&nbsp;start&nbsp;it&nbsp;and&nbsp;force&nbsp;WSUS&nbsp;checkin</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;and&nbsp;Exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;1.&nbsp;WUAUSERV&nbsp;is&nbsp;stopped...&nbsp;starting&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Start-Service</span>&nbsp;wuauserv&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(1500)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;2.&nbsp;WUAUSERV&nbsp;started&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(1500)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;3.&nbsp;Forcing&nbsp;WSUS&nbsp;Checkin&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Invoke<span class="powerShell__operator">-</span>Command&nbsp;{wuauclt.exe&nbsp;<span class="powerShell__operator">/</span>detectnow}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(1500)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;4.&nbsp;Checkin&nbsp;Complete&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;If&nbsp;the&nbsp;service&nbsp;is&nbsp;started&nbsp;we'll&nbsp;just&nbsp;for&nbsp;the&nbsp;WSUS&nbsp;checkin&nbsp;and&nbsp;Exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;1.&nbsp;Forcing&nbsp;WSUS&nbsp;Checkin&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Invoke<span class="powerShell__operator">-</span>Command&nbsp;{wuauclt.exe&nbsp;<span class="powerShell__operator">/</span>detectnow}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(1500)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;2.&nbsp;Checkin&nbsp;Complete&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+</div>
+
+        </div>
+    </body>
+</html>

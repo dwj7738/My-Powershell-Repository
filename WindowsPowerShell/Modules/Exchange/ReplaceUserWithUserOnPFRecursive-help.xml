@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<helpItems schema="maml">
+  <_locDefinition>
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">maml:para</_locTag>
+    <_locTag _loc="locData">maml:title</_locTag>
+  </_locDefinition>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>ReplaceUserWithUserOnPFRecursive.ps1</command:name>
+      <maml:description>
+        <maml:para _locID="CommandShortDescription">Replace the permissions of a specific user in the client permissions list for a public folder with a new set of permissions, and all the contained folders under it. Any folders where the user is not currently specified are left alone.</maml:para>
+      </maml:description>
+      <maml:copyright>
+        <maml:para _locID="Copyright">Copyright (c) Microsoft.  All rights reserved.</maml:para>
+      </maml:copyright>
+      <command:verb>ReplaceUserWithUserOnPFRecursive.ps1</command:verb>
+      <command:noun></command:noun>
+      <dev:version />
+    </command:details>
+    <maml:description>
+      <maml:para _locID="CommandLongDescription"></maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <command:name>ReplaceUserWithUserOnPFRecursive.ps1</command:name>
+        <command:parameter>
+          <maml:name>TopPublicFolder</maml:name>
+          <command:parameterValue>String</command:parameterValue>
+        </command:parameter>
+        <command:parameter>
+          <maml:name>UserOld</maml:name>
+          <command:parameterValue>String</command:parameterValue>
+        </command:parameter>
+        <command:parameter>
+          <maml:name>UserNew</maml:name>
+          <command:parameterValue>String</command:parameterValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="" globbing="" pipelineInput="false" position="1">
+        <maml:name>TopPublicFolder</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_TopPublicFolder">The folder identity of the top of the tree of folders to modify</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+      <command:parameter required="true" variableLength="" globbing="" pipelineInput="false" position="2">
+        <maml:name>UserOld</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_UserOld">The identity of the user to remove from the client permissions.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+      <command:parameter required="true" variableLength="" globbing="" pipelineInput="false" position="3">
+        <maml:name>UserNew</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_UserNew">The identity of the user to add to the client permissions.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+    </command:parameters>
+    <command:examples>
+      <command:example>
+        <maml:title _locID="Example_Title_1">-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <maml:introduction>
+          <maml:para>C:\PS&gt;</maml:para>
+        </maml:introduction>
+        <dev:code>ReplaceUserWithUserOnPFRecursive.ps1 -TopPublicFolder "\Folder" -UserOld "userToReplace" -UserNew "replacementUser"</dev:code>
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+  </command:command>
+</helpItems>

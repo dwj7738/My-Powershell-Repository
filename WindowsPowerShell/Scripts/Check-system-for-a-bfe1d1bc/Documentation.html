@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Check system for a specific patch</title>        
+        <meta name="description" content="You can use this scrit to identify if a special patch&#160;is installed on a system listed in the servers.txt file. you have to create a text file with the server names to be checked.&#160;Insert the server name as shown below, followed by a CR/LF at the end and save it as servers.txt in t" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<div>You can use this scrit to identify if a special patch&nbsp;is installed on a system listed in the servers.txt file. you have to create a text file with the server names to be checked.</div>
+<div>&nbsp;</div>
+<div>Insert the server name as shown below, followed by a CR/LF at the end and save it as servers.txt in the folder where the script is located.</div>
+<div></div>
+<div><strong><span style="text-decoration:underline">servers.txt</span></strong></div>
+<div></div>
+<div><strong><span style="color:#ff0000">server1</span></strong></div>
+<div><strong><span style="color:#ff0000">server2</span></strong></div>
+<div><strong><span style="color:#ff0000">server3</span></strong></div>
+<div><strong><span style="color:#ff0000">serverN</span></strong></div>
+<div></div>
+<div></div>
+<div>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">$servers = Get-Content servers.txt
+$KBPatch = 'KB2858725'
+#$KBPatch = 'KB2978092'
+
+#write-host $KBPatch $LogFile $Installed
+
+Foreach ($server in $servers)
+{
+	if (!(get-hotfix -id $KBPatch -computername $server -ErrorAction 0))	
+		{ 
+		write-host -ForegroundColor &quot;green&quot; &quot;$server - $KBPatch - not installed&quot;
+		} Else {
+		write-host -ForegroundColor &quot;red&quot; &quot;$server - $KBPatch - installed&quot;
+		}
+}</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__variable">$servers</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-Content</span>&nbsp;servers.txt&nbsp;
+<span class="powerShell__variable">$KBPatch</span>&nbsp;=&nbsp;<span class="powerShell__string">'KB2858725'</span>&nbsp;
+<span class="powerShell__com">#write-host&nbsp;$KBPatch&nbsp;$LogFile&nbsp;$Installed</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Foreach</span>&nbsp;(<span class="powerShell__variable">$server</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$servers</span>)&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__operator">!</span>(get<span class="powerShell__operator">-</span>hotfix&nbsp;<span class="powerShell__operator">-</span>id&nbsp;<span class="powerShell__variable">$KBPatch</span>&nbsp;<span class="powerShell__operator">-</span>computername&nbsp;<span class="powerShell__variable">$server</span>&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;0))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;<span class="powerShell__string">&quot;green&quot;</span>&nbsp;<span class="powerShell__string">&quot;$server&nbsp;-&nbsp;$KBPatch&nbsp;-&nbsp;not&nbsp;installed&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;<span class="powerShell__string">&quot;red&quot;</span>&nbsp;<span class="powerShell__string">&quot;$server&nbsp;-&nbsp;$KBPatch&nbsp;-&nbsp;installed&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+}</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;Change the value of $KBPatch to an Microsoft Knowledge Base article in the format &quot;KB&lt;ARTICLE_NUMBER&gt;&quot;.</div>
+<div class="endscriptcode"></div>
+</div>
+
+        </div>
+    </body>
+</html>

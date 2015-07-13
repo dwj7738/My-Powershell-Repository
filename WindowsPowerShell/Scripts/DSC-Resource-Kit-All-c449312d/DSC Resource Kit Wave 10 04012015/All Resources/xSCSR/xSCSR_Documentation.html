@@ -1,0 +1,212 @@
+﻿<body>
+<div id="longDesc">
+<span style="font-family:Calibri; font-size:medium">
+<h1 style="font-family:Calibri Light; color:#2e74b5; font-size:large">Introduction</h1>
+<p>The<strong> xSCSR</strong> module is a part of the Windows PowerShell Desired State Configuration (DSC) Resource Kit, which is a collection of DSC Resources produced by the PowerShell Team. 
+    This module contains the following resources for deploying System Center Service Reporting (SR):</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <strong>xSCSRServerSetup</strong> for installation of the SR server.
+        </li>
+        <li>
+            <strong>xSCSRServerUpdate</strong>for updating an SR server to Update Rollup 4.
+        </li>
+    </ul>
+
+<p><strong>All of the resources in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program 
+or service. The ""x" in xSCSR stands for experimental</strong>, which means that these resources will be <strong>fix forward</strong> 
+and monitored by the module owner(s).</p>
+<p>Please leave comments, feature requests, and bug reports in the Q &amp; A tab for this module.</p>
+<p>If you would like to modify <strong>xSCSR</strong> module, feel free. When modifying, please update the module name, resource friendly name, 
+and MOF class name (instructions below). As specified in the license, you may copy or modify this resource as long as they are used on the Windows Platform.</p>
+<p>For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+<a href="http://blogs.msdn.com/b/powershell/"><span style="color:#0000ff">PowerShell Blog</span></a> (</span><a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx"><span style="color:#0000ff">this</span></a> is a good starting point). There are 
+also great community resources, such as <a href="http://powershell.org/wp/tag/dsc/"><span style="color:#0000ff">PowerShell.org</span></a>, or
+<a href="http://www.powershellmagazine.com/tag/dsc/"><span style="color:#0000ff">PowerShell Magazine</span></a>. For more information on the DSC Resource Kit, check out 
+<a href="http://go.microsoft.com/fwlink/?LinkID=389546"><span style="color:#0000ff">this blog post</span></a>.<br></p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Installation</h1>
+<p>To install the <strong >xSCSR</strong> module </p>
+    <ul style="list-style-type: disc; direction: ltr;">
+        <li>
+            If you are using WMF4 / PowerShell Version 4: Unzip the content under $env:ProgramFiles\WindowsPowerShell\Modules folder
+        </li>
+        <li>
+            If you are using WMF5 Preview: From an elevated PowerShell session run
+            ‘Install-Module xSCSR’
+        </li>
+    </ul>
+<p>To confirm installation:<br></p>
+<ul style="list-style-type:disc; direction:ltr">
+    <li>
+    Run <strong>Get-DSCResource</strong> to see that <strong>xSCSRServerSetup and xSCSRServerUpdate</strong> are among the DSC Resources listed.<br>
+    </li>  
+</ul>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Requirements</h1>
+<p>This module requires PowerShell v4.0, which ships in Windows 8.1 or Windows Server 2012R2. To easily use PowerShell 4.0 on older operating systems,
+<a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855"><span style="color:#0000ff">install WMF 4.0</span></a>. Please read the installation instructions 
+that are present on both the download page and the release notes for WMF 4.0.</p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Description</h1>
+
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Details</h1>
+    <p>
+        The <strong>xSCSR </strong> module contains the following modules:
+    </p>
+    <p><strong>xSCSRServerSetup</strong> is used for installation of the SR server, and has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value (Present, Absent) that describes if the SR server is expected to be installed on the machine.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SetupCredential: </span>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SendCEIPReports: </span>Binary, indicating whether or not to participate in the Customer Experience Improvement Program.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">UseMicrosoftUpdate: </span>Binary, indicating whether or not to use Microsoft Update.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">InstallFolder: </span>Folder to install to.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">DatabaseServer: </span>REQUIRED - Name of the database server.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">DatabaseServerInstance: </span>REQUIRED - Name of the SQL Server database instance to install to.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">RepositoryDatabaseName: </span>Name of the usage repository database that already exists, or that Setup will create.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">StagingDatabaseName: </span>Name of the usage staging database that already exists, or that Setup will create.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">DWDatabaseName: </span>Name of the usage data warehouse database that already exists, or that Setup will create.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">AnalysisDatabaseServer: </span>REQUIRED - Name of the server that is running SQL Server where the analysis database already exists, or where Setup will create it.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">AnalysisDatabaseServerInstance: </span>REQUIRED - Name of the SQL Server analysis database instance to install to.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">AnalysisDatabaseName: </span>Name of the analysis database that already exists, or that Setup will create.
+        </li>
+    </ul>
+
+    <p><strong>xSCSRServerUpdate</strong> has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value that describes if the update is expected to be installed on the machine.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Credential: </span>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Update: </span>Output display name of the update.
+        </li>
+    </ul>
+
+        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Renaming Requirements</h1>
+        <p>When making changes to these resources, we suggest the following practice:</p>
+        <ol style="list-style-type:decimal; direction:ltr">
+            <li>
+                Update the following names by replacing MSFT with your company/community name and replacing the <strong>"x"</strong> with <strong>"c"</strong> (short for "Community") or another prefix of your choice:
+                <ul>
+                    <li>
+                        <strong>Module name (ex: xSCSR</strong> becomes <strong>cSCSR</strong>)
+                    </li>
+                    <li>
+                        <strong>Resource folder (ex: MSFT_xSCSRServerSetup</strong> becomes <strong>Contoso_cSCSRServerSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>Resource Name (ex: MSFT_xSCSRServerSetup</strong> becomes <strong>Contoso_cSCSRServerSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>Resource Friendly Name (ex: xSCSRServerSetup</strong> becomes <strong>cSCSRServerSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>MOF class name (ex: MSFT_xSCSRServerSetup</strong> becomes <strong>Contoso_cSCSRServerSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>Filename for the &lt;resource&gt;.schema.mof (ex: MSFT_xSCSRServerSetup</strong>.schema.mof becomes <strong>Contoso_cSCSRServerSetup</strong>.schema.mof)
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Update module and metadata information in the module manifest
+            </li>
+            <li>
+                Update any configuration that use these resources
+            </li>
+        </ol>
+        <p><em>We reserve resource and module names without prefixes ("x" or "c") for future use (e.g. "MSFT_SCSRServerSetup" or "SCSRServerSetup"). If the next version of Windows Server ships with "MSFT_SCSRServerSetup" resources, we don't want to break any configurations that use any community modifications. Please keep a prefix such as "c" on all community modifications.</em></p>
+
+
+        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Versions</h1>
+    
+    <p>1.3.0.0</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            Increased timeout for setup process to start to 60 seconds
+        </li>
+        <li>
+            Added /norestart to xSCSRUpdate to allow DSC to control reboots
+        </li>
+    </ul>
+
+    <p>1.2.0.0</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            Updated release with the following resources
+            <ul style="list-style-type:circle">
+                <li>
+                    xSCSRServerUpdate
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+        <p>1.1.0.0</p>
+        <ul style="list-style-type:disc; direction:ltr">
+            <li>
+                Initial release with the following resources
+                <ul style="list-style-type:circle">
+                    <li>
+                        xSCSRServerSetup
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h1 style="margin-bottom:0pt; font-family:Calibri Light; color:#2e74b5; font-size:large">Examples</h1>
+        <p>
+            Two example configurations are included in the Examples folder.  Both examples also use the xSQLServer module.
+            Note: the samples require the use of the <a href="http://blogs.msdn.com/b/powershell/archive/2014/09/04/windows-management-framework-5-0-preview-september-2014-is-now-available.aspx"><span style="color:#0000ff">Windows Management Framework (WMF) 5.0 Preview.</span></a>
+        </p>
+
+        <p><strong>Single Server Installation:</strong> SCSR-SingleServer.ps1 installs SR including prerequisites and SQL on a single server.</p>
+        <p><strong>Separate SQL:</strong> SCSR-SeperateSQL.ps1 installs SR on one server and SQL on a seperate server.</p>
+
+        <p>Note that both examples use the exact same Configuration and just modify the behavior based on input ConfigurationData.</p>
+        <p>In the Examples folder you will see a version of each file with "-TP" appended to the name. These are the equivalent examples for deployment of System Center Technical Preview on Windows Server Technical Preview.</p>
+        <p></p>
+        <p></p>
+        </span>
+</div>
+</body>

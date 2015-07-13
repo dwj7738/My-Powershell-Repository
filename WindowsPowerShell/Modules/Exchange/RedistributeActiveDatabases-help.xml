@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<helpItems schema="maml">
+	<_locDefinition>
+		<_locDefault _loc="locNone" />
+		<_locTag _loc="locData">maml:para</_locTag>
+		<_locTag _loc="locData">maml:title</_locTag>
+	</_locDefinition>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<command:details>
+			<command:name>RedistributeActiveDatabases.ps1</command:name>
+			<maml:description>
+				<maml:para _locID="CommandShortDescription">Attempts to redistribute active databases in the specified DAG.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para _locID="Copyright">Copyright (c) Microsoft.  All rights reserved.</maml:para>
+			</maml:copyright>
+			<command:verb></command:verb>
+			<command:noun></command:noun>
+			<dev:version></dev:version>
+		</command:details>
+		<maml:description>
+			<maml:para _locID="CommandLongDescription">Moves databases between their copies to attempt to have an equal number of mounted databases on each server in a database availability group.  If required, it will also try to balance active DBs across sites.</maml:para>
+			<maml:para></maml:para>
+			<maml:para> This is a perfectly balanced distribution of 16 databases with 4 copies each across 4 servers:</maml:para>
+			<maml:para></maml:para>
+			<maml:para>    ServerName  ActiveDbs    PassiveDbs    MountedDbs    DismountedDbs PreferenceCountList</maml:para>
+			<maml:para>    ----------  ---------    ----------    ----------    ------------- -------------------</maml:para>
+			<maml:para>    EXCH-E-552          4            12             4                0 {4, 4, 4, 4}</maml:para>
+			<maml:para>    EXCH-D-668          4            12             4                0 {4, 4, 4, 4}</maml:para>
+			<maml:para>    EXCH-D-796          4            12             4                0 {4, 4, 4, 4}</maml:para>
+			<maml:para>    EXCH-D-058          4            12             4                0 {4, 4, 4, 4}</maml:para>
+			<maml:para></maml:para>
+			<maml:para></maml:para>
+			<maml:para> This is an example of an uneven distribution (even activation preference is not balanced):</maml:para>
+			<maml:para></maml:para>
+			<maml:para>    ServerName   ActiveDbs   PassiveDbs    MountedDbs    DismountedDbs PreferenceCountList</maml:para>
+			<maml:para>    ----------   ---------   ----------    ----------    ------------- -------------------</maml:para>
+			<maml:para>    EXCH-E-552           5           11             5                0 {4, 4, 3, 5}</maml:para>
+			<maml:para>    EXCH-D-668           1           15             1                0 {1, 8, 6, 1}</maml:para>
+			<maml:para>    EXCH-D-796          12            4            12                0 {13, 2, 1, 0}</maml:para>
+			<maml:para>    EXCH-D-058           1           15             1                0 {1, 1, 5, 9}</maml:para>
+		</maml:description>
+		<command:syntax>
+			<command:syntaxItem>
+				<command:name>RedistributeActiveDatabases.ps1</command:name>
+				<command:parameter required="False" position="named">
+					<maml:name>DagName</maml:name>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>RunOnlyOnPAM</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>LogEvents</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>IncludeNonReplicatedDatabases</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>WhatIf</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>Confirm</maml:name>
+				</command:parameter>
+			</command:syntaxItem>  
+			<command:syntaxItem>
+				<command:name>RedistributeActiveDatabases.ps1</command:name>
+				<command:parameter required="False" position="named">
+					<maml:name>DagName</maml:name>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="True" position="named">
+					<maml:name>BalanceDbsByActivationPreference</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>ShowFinalDatabaseDistribution</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>RunOnlyOnPAM</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>LogEvents</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>IncludeNonReplicatedDatabases</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>WhatIf</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>Confirm</maml:name>
+				</command:parameter>
+			</command:syntaxItem>  
+			<command:syntaxItem>
+				<command:name>RedistributeActiveDatabases.ps1</command:name>
+				<command:parameter required="False" position="named">
+					<maml:name>DagName</maml:name>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="True" position="named">
+					<maml:name>BalanceDbsIgnoringActivationPreference</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>ShowFinalDatabaseDistribution</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>RunOnlyOnPAM</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>LogEvents</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>IncludeNonReplicatedDatabases</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>WhatIf</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>Confirm</maml:name>
+				</command:parameter>
+			</command:syntaxItem>  
+			<command:syntaxItem>
+				<command:name>RedistributeActiveDatabases.ps1</command:name>
+				<command:parameter required="False" position="named">
+					<maml:name>DagName</maml:name>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>ShowFinalDatabaseDistribution</maml:name>
+				</command:parameter>
+				<command:parameter required="True" position="named">
+					<maml:name>ShuffleActiveDatabases</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>RunOnlyOnPAM</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>LogEvents</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>IncludeNonReplicatedDatabases</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>WhatIf</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>Confirm</maml:name>
+				</command:parameter>
+			</command:syntaxItem>  
+			<command:syntaxItem>
+				<command:name>RedistributeActiveDatabases.ps1</command:name>
+				<command:parameter required="False" position="named">
+					<maml:name>DagName</maml:name>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>ShowFinalDatabaseDistribution</maml:name>
+				</command:parameter>
+				<command:parameter required="True" position="named">
+					<maml:name>BalanceDbsBySiteAndActivationPreference</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>AllowedDeviationFromMeanPercentage</maml:name>
+					<command:parameterValue required="true">Double</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>RunOnlyOnPAM</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>LogEvents</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>IncludeNonReplicatedDatabases</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>WhatIf</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>Confirm</maml:name>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<command:name>RedistributeActiveDatabases.ps1</command:name>
+				<command:parameter required="False" position="named">
+					<maml:name>DagName</maml:name>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="True" position="named">
+					<maml:name>BalanceActivationPreferences</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>ShowFinalDatabaseDistribution</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>RunOnlyOnPAM</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>LogEvents</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>IncludeNonReplicatedDatabases</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>WhatIf</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>Confirm</maml:name>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<command:name>RedistributeActiveDatabases.ps1</command:name>
+				<command:parameter required="False" position="named">
+					<maml:name>DagName</maml:name>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="True" position="named">
+					<maml:name>ShowDatabaseCurrentActives</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>RunOnlyOnPAM</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>LogEvents</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>IncludeNonReplicatedDatabases</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>WhatIf</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>Confirm</maml:name>
+				</command:parameter>
+			</command:syntaxItem>  
+			<command:syntaxItem>
+				<command:name>RedistributeActiveDatabases.ps1</command:name>
+				<command:parameter required="False" position="named">
+					<maml:name>DagName</maml:name>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="True" position="named">
+					<maml:name>ShowDatabaseDistributionByServer</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>RunOnlyOnPAM</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>LogEvents</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>IncludeNonReplicatedDatabases</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>WhatIf</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>Confirm</maml:name>
+				</command:parameter>
+			</command:syntaxItem>  
+			<command:syntaxItem>
+				<command:name>RedistributeActiveDatabases.ps1</command:name>
+				<command:parameter required="False" position="named">
+					<maml:name>DagName</maml:name>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="True" position="named">
+					<maml:name>ShowDatabaseDistributionBySite</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>RunOnlyOnPAM</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>LogEvents</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>IncludeNonReplicatedDatabases</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>WhatIf</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>Confirm</maml:name>
+				</command:parameter>
+			</command:syntaxItem>  
+			<command:syntaxItem>
+				<command:name>RedistributeActiveDatabases.ps1</command:name>
+				<command:parameter required="False" position="named">
+					<maml:name>DagName</maml:name>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="True" position="named">
+					<maml:name>DotSourceMode</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>RunOnlyOnPAM</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>LogEvents</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>IncludeNonReplicatedDatabases</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>WhatIf</maml:name>
+				</command:parameter>
+				<command:parameter required="False" position="named">
+					<maml:name>Confirm</maml:name>
+				</command:parameter>
+			</command:syntaxItem>  
+		</command:syntax>
+		<command:parameters>
+			<command:parameter required="False" position="0">
+				<maml:name>DagName</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_DagName">Identity of the database availability group to rebalance.  If -DagName is omitted, the script will try to lookup the local DAG</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">String</command:parameterValue>
+				<dev:type>
+					<maml:name>string</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+			<command:parameter required="True" position="named">
+				<maml:name>BalanceDbsByActivationPreference</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_BalanceDbsByActivationPreference">When set, the script tries to move databases to their most preferred copy without regard for AD site balance</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>False</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="True" position="named">
+				<maml:name>BalanceDbsIgnoringActivationPreference</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_BalanceDbsIgnoringActivationPreference">When set, the script tries to balance DBs evenly across the servers w/o looking at Activation Preference or site balance.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>False</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="True" position="named">
+				<maml:name>BalanceActivationPreferences</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_BalanceActivationPreferences">When set, the script tries to balance Activation Preferences across database copies in the specified DAG.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>False</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="False" position="named">
+				<maml:name>ShowFinalDatabaseDistribution</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_ShowFinalDatabaseDistribution">After redistributing databases, show a report of the current database distribution.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>False</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="True" position="named">
+				<maml:name>BalanceDbsBySiteAndActivationPreference</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_BalanceDbsBySiteAndActivationPreference">Attempt to move databases to their most preferred copy, while also trying to balance active databases in each.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>False</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="False" position="named">
+				<maml:name>AllowedDeviationFromMeanPercentage</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_AllowedDeviationFromMeanPercentage">Sets the allowed variation of active DBs across Sites, expressed as a percentage.  The default is 20%.</maml:para>
+					<maml:para></maml:para>
+					<maml:para>For example, if there were 99 databases distributed between three sites, the ideal distribution would have 33 databases in each site. If the allowed deviation is 20%, the script will attempt to balance the databases so that each site has no more than 10% more or less than this number.  10% of 33 is 3.3, which is rounded up to 4 - so the script will attempt to have between 29 and 37 databases in each site.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">Double</command:parameterValue>
+				<dev:type>
+					<maml:name>double</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>20.0</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="True" position="named">
+				<maml:name>ShowDatabaseCurrentActives</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_ShowDatabaseCurrentActives">Output a report for each database of how the database was moved, and whether it is now on its most-preferred copy.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+			<command:parameter required="True" position="named">
+				<maml:name>ShowDatabaseDistributionByServer</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_ShowDatabaseDistributionByServer">Output a report for each server of how the databases on it have been distributed.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+			<command:parameter required="True" position="named">
+				<maml:name>ShowDatabaseDistributionBySite</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_ShowDatabaseDistributionBySite">Output a report for each server of how the databases on it have been distributed.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+			<command:parameter required="True" position="named">
+				<maml:name>DotSourceMode</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_DotSourceMode">When set, the body of the script is not executed.  This is useful for "dot-sourcing" the definitions in the script into the current environment.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>False</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="False" position="named">
+				<maml:name>RunOnlyOnPAM</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_RunOnlyOnPAM">When set, the script will check if it is being run from the Primary Active Manager and exit if it is not.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>False</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="False" position="named">
+				<maml:name>LogEvents</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_LogEvents">When set, the script will raise an event (MsExchangeRepl event 4115) containing a summary of the actions taken by the script.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>True</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="False" position="named">
+				<maml:name>IncludeNonReplicatedDatabases</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_IncludeNonReplicatedDatabases">When set, the script will include databases without copies when determining how to redistribute the active databases.  Although databases without copies can't be moved, they may affect the distribution of the databases that do have copies.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>False</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="False" position="named">
+				<maml:name>WhatIf</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_WhatIf">Describes what would happen if you executed the command without actually executing the command.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>False</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="False" position="named">
+				<maml:name>Confirm</maml:name>
+				<maml:description>
+					<maml:para _locID="Param_Description_Confirm">Prompts you for confirmation before executing the command.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">SwitchParameter</command:parameterValue>
+				<dev:type>
+					<maml:name>switch</maml:name>
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue>False</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+	</command:command>
+</helpItems>

@@ -1,0 +1,158 @@
+<body>
+    <div id="longDesc">
+        <div id="longDesc">
+            <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">
+                Introduction
+            </h1>
+            <div id="longDesc">
+                <span style="font-family:Calibri; font-size:medium">
+                    <p>
+                        The<strong> xWindowsRestore</strong> module is a part of the Windows PowerShell Desired State Configuration (DSC) Resource Kit, which is a collection of DSC Resources. This module contains the following resources:
+                    </p>
+                    <ul style="list-style-type:disc; direction:ltr">
+                        <li>
+                            <strong>xSystemRestore:</strong> Enable or disable system restore with specified system drive.
+                        </li>
+                        <li>
+                            <strong>xSystemRestorePoint:</strong> Simple resource for creating and removing system Checkpoint.
+                        </li>
+                    </ul>
+                    <p>
+                        <strong>All of the resources in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program or service. The &quot;x&quot; in xWindowsRestore stands for experimental</strong>, which means that these resources
+                        will be <strong>fix forward</strong> and monitored by the module owner(s).
+                    </p>
+                    <p>Please leave comments, feature requests, and bug reports in the Q &amp; A tab for this module.</p>
+                    <p>
+                        If you would like to modify <strong>xWindowsRestore</strong> module, feel free. When modifying, please update the module name, resource friendly name, and MOF class name (instructions below). As specified in the license, you may copy or modify
+                        this resource as long as they are used on the Windows Platform.
+                    </p>
+                    <p>
+                        For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+                        <a href="http://blogs.msdn.com/b/powershell/"><span style="color:#0000ff">PowerShell Blog</span></a> (<a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx"><span style="color:#0000ff">this</span></a>
+                        is a good starting point). There are also great community resources, such as <a href="http://powershell.org/wp/tag/dsc/">
+                            <span style="color:#0000ff">PowerShell.org</span>
+                        </a>, or <a href="http://www.powershellmagazine.com/tag/dsc/">
+                            <span style="color:#0000ff">PowerShell Magazine</span>
+                        </a>. For more information on the DSC Resource Kit, check out
+                        <a href="http://go.microsoft.com/fwlink/?LinkID=389546"><span style="color:#0000ff">this blog post</span></a>.
+                    </p>
+                    <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Installation</h1>
+                    <p>To install <strong>xWindowsRestore</strong> module</p>
+                    <ul style="list-style-type:disc; direction:ltr">
+                        <li>
+                            If you are using WMF4 / PowerShell Version 4: Unzip the content under $env:ProgramFiles\WindowsPowerShell\Modules folder
+                        </li>
+                        <li>
+                            If you are using WMF5 Preview: From an elevated PowerShell session run &lsquo;Install-Module xWindowsRestore&rsquo;
+                        </li>
+                    </ul>
+                    <p>To confirm installation:</p>
+                    <ul style="list-style-type:disc; direction:ltr">
+                        <li>
+                            Run <strong>Get-DSCResource</strong> to see that the resources listed above are among the DSC Resources displayed
+                        </li>
+                    </ul>
+                    <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Requirements</h1>
+                    <p>
+                        This module requires PowerShell v4.0, which ships in Windows 8.1 or Windows Server 2012R2. To easily use PowerShell 4.0 on older operating systems,
+                        <a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855"><span style="color:#0000ff">install WMF 4.0</span></a>. Please read the
+                        installation instructions that are present on both the download page and the release notes for WMF 4.0.
+                    </p>
+                    <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Details</h1>
+                    <p>the <strong>xSystemRestore</strong> resource has following properties:</p>
+                    <ul style="list-style-type:disc; direction:ltr">
+                        <li><strong>Drive</strong>: Specifies the file system drives. Enter one or more file system drive letters, each followed by a colon and a backslash and enclosed in quotation marks, such as 'C:\' or 'D:\'.</li>
+                        <li><strong>Ensure</strong>: Use "Present" or "Absent" to indicate that the system is or is not configured for system restore. </li>
+                    </ul>
+                    <p>the <strong>xSystemRestorePoint</strong> resource has following properties:</p>
+                    <ul style="list-style-type:disc; direction:ltr">
+                        <li>
+                            <strong>Description</strong>: Specifies a descriptive name for the restore point.
+                        </li>
+                        <li>
+                            <strong>RestorePointType</strong>: Specifies the type of restore point. The default is APPLICATION_INSTALL.
+                        </li>
+                        <li>
+                            <strong>Ensure</strong>: Indicates if the specified restore point created. Set this property to 'Absent' to ensure that the restore point does not exist. Set it to 'Present' to ensure that the restore point does exist. The default is 'Present'.
+                        </li>
+                    </ul>
+
+                    <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Renaming Requirements</h1>
+                    <p>When making changes to these resources, we suggest the following practice:</p>
+                    <ol style="list-style-type:decimal; direction:ltr">
+                        <li>
+                            Update the following names by replacing MSFT with your company/community name and replacing the
+                            <strong>&quot;x&quot;</strong> with <strong>&quot;c&quot;</strong> (short for &quot;Community&quot;) or another prefix of your choice:
+                            <ul>
+                                <li>
+                                    <strong>Module name (ex: x<span style="font-family:Calibri; font-size:medium"><strong>WindowsRestore</strong></span></strong> becomes
+                                    <strong>c<span style="font-family:Calibri; font-size:medium"><strong>WindowsRestore</strong></span></strong>)
+                                </li>
+                                <li>
+                                    <strong>Resource folder (ex: MSFT_</strong><span style="font-family:Calibri; font-size:medium"><strong>xSystemRestore</strong></span> becomes
+                                    <strong>Contoso_x</strong><span style="font-family:Calibri; font-size:medium"><strong>SystemRestore</strong></span>)
+                                </li>
+                                <li>
+                                    <strong>Resource Name (ex: MSFT_<span style="font-family:Calibri; font-size:medium"><strong>xSystemRestore</strong></span></strong> becomes
+                                    <strong>Contoso_c</strong><span style="font-family:Calibri; font-size:medium"><strong>SystemRestore</strong></span>)
+                                </li>
+                                <li>
+                                    <strong>
+                                        Resource Friendly Name (ex: <span style="font-family:Calibri; font-size:medium">
+                                            <strong>xSystemRestore</strong>
+                                        </span>
+                                    </strong>becomes <strong>c<span style="font-family:Calibri; font-size:medium"><strong>SystemRestore</strong></span></strong>)
+                                </li>
+                                <li>
+                                    <strong>MOF class name (ex: MSFT_x<span style="font-family:Calibri; font-size:medium"><strong>SystemRestore</strong></span></strong> becomes
+                                    <strong>Contoso_c<span style="font-family:Calibri; font-size:medium"><strong>SystemRestore</strong></span></strong>)
+                                </li>
+                                <li>
+                                    <strong>Filename for the &lt;resource&gt;.schema.mof (ex: MSFT_x<span style="font-family:Calibri; font-size:medium"><strong>SystemRestore</strong></span></strong>.schema.mof becomes
+                                    <strong>Contoso_c<span style="font-family:Calibri; font-size:medium"><strong>SystemRestore</strong></span></strong>.schema.mof)
+                                </li>
+                            </ul>
+                        </li>
+                        <li>Update module and metadata information in the module manifest </li>
+                        <li>Update any configuration that use these resources </li>
+                    </ol>
+                    <p>
+                        <em>
+                            We reserve resource and module names without prefixes (&quot;x&quot; or &quot;c&quot;) for future use (e.g. &quot;MSFT_WindowsRestore&quot; or &quot;MSFT_ADUser&quot;). If the next version of Windows Server ships with a &quot;SystemRestore&quot; resource, we don't want to break
+                            any configurations that use any community modifications. Please keep a prefix such as &quot;c&quot; on all community modifications.
+                        </em>
+                    </p>
+                    <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Versions</h1>
+                    <p>1.0.0.0</p>
+                    <ul style="list-style-type:disc; direction:ltr">
+                        <li>
+                            Initial release with the following resources
+                            <ul style="list-style-type:circle">
+                                <li>
+                                    <span style="font-family:Calibri; font-size:medium">xWindowsRestore</span>
+                                </li>
+                                <li>
+                                    <span style="font-family:Calibri; font-size:medium">xSystemRestorePoint</span>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                    <h1 style="margin-bottom:0pt; font-family:Calibri Light; color:#2e74b5; font-size:large">
+                        Examples
+                    </h1>
+                    <p><strong>Enable System Restore</strong></p>
+                    <p>In the Examples folder, ConfigureSystemRestore.ps1 demonstrates how to enable system restore.</p>
+                    <p>&nbsp;</p>
+                    <p><strong>Create A System Restore Point</strong></p>
+                    <p>In the Examples folder, CreateSystemRestorePoint.ps1 demonstrates how to create a system restore point.</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+            </div>
+        </div>
+        </span>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content="&#xD;&#xA;[reflection.assembly]::LoadWithPartialName(&quot;Microsoft.UpdateServices.Administration&quot;) | out-null&#xD;&#xA;$wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::GetUpdateServer();&#xD;&#xA;$status = $wsus.GetStatus();&#xD;&#xA;$wsus.ServerName+&quot;,&quot;+[DateTime]::UtcNow.ToShortDateString()+&quot;,&quot;+$status.ComputerTargetCount+&quot;,&quot;+$status.UpdateCount+&quot;, `&#xD;&#xA; &quot;+$status.ComputersUpToDateCount +&quot;,&quot;+$status.ComputerTargetsNeedingUpdatesCount+&quot;,&quot;+$status.ComputerTargetsWithUpdateErrorsCount+&quot;, `&#xD;&#xA; &quot;+$status.UpdatesUpToDateCount+&quot;,&quot;+$status.UpdatesNeededByComputersCount+&quot;,&quot;+$status.UpdatesWithClientErrorsCount;&#xD;&#xA;" />
+</CodeSnippets>

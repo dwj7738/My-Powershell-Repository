@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content=".\Decline-WsusItaniumUpdates.ps1 -WsusServer &quot;wsus01.company.tld&quot;" />
+  <Code Content="$WsusServer = &quot;wsus.company.com&quot;&#xD;&#xA;$UseSSL = $false&#xD;&#xA;$PortNumber = 80&#xD;&#xA;$TrialRun = $true&#xD;&#xA;&#xD;&#xA;#E-mail Configuration&#xD;&#xA;$SMTPServer = &quot;smtp.company.com&quot;&#xD;&#xA;$FromAddress = &quot;wsus@company.com&quot;&#xD;&#xA;$Recipients = &quot;wsusadmins@company.com&quot;&#xD;&#xA;$MessageSubject = &quot;WSUS :: Declining Itanium Updates&quot;" />
+  <Code Content=".\Decline-WsusItaniumUpdates.ps1 -WsusServer &quot;wsus01.company.tld&quot;" />
+  <Code Content="$WsusServer = &quot;wsus.company.com&quot;&#xD;&#xA;$UseSSL = $false&#xD;&#xA;$PortNumber = 80&#xD;&#xA;$TrialRun = $true&#xD;&#xA;&#xD;&#xA;#E-mail Configuration&#xD;&#xA;$SMTPServer = &quot;smtp.company.com&quot;&#xD;&#xA;$FromAddress = &quot;wsus@company.com&quot;&#xD;&#xA;$Recipients = &quot;wsusadmins@company.com&quot;&#xD;&#xA;$MessageSubject = &quot;WSUS :: Declining Itanium Updates&quot;" />
+  <Code Content=".\Decline-WsusItaniumUpdates.ps1 -WsusServer &quot;wsus01.company.tld&quot;" />
+  <Code Content="$WsusServer = &quot;wsus.company.com&quot;&#xD;&#xA;$UseSSL = $false&#xD;&#xA;$PortNumber = 80&#xD;&#xA;$TrialRun = $true&#xD;&#xA;&#xD;&#xA;#E-mail Configuration&#xD;&#xA;$SMTPServer = &quot;smtp.company.com&quot;&#xD;&#xA;$FromAddress = &quot;wsus@company.com&quot;&#xD;&#xA;$Recipients = &quot;wsusadmins@company.com&quot;&#xD;&#xA;$MessageSubject = &quot;WSUS :: Declining Itanium Updates&quot;" />
+</CodeSnippets>

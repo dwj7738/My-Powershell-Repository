@@ -1,0 +1,159 @@
+﻿
+  <FileID>4cd55487-c602-407f-b38f-de0135b0a339</FileID>
+  <LastExport>129857362970335755</LastExport>
+  <FileVersion>1.2</FileVersion>
+  <Object type="System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="formServiceReporter" children="Controls">
+    <Property name="AcceptButton">
+      <Reference name="buttonOK" />
+    </Property>
+    <Property name="ClientSize">284, 191</Property>
+    <Property name="FormBorderStyle">FixedDialog</Property>
+    <Property name="MaximizeBox">False</Property>
+    <Property name="MinimizeBox">False</Property>
+    <Property name="Name">formServiceReporter</Property>
+    <Property name="StartPosition">CenterScreen</Property>
+    <Property name="Text">Service Reporter</Property>
+    <Event name="Load">FormEvent_Load</Event>
+    <Object type="System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="groupbox1" children="Controls">
+      <Property name="Location">13, 42</Property>
+      <Property name="Name">groupbox1</Property>
+      <Property name="Size">239, 94</Property>
+      <Property name="TabIndex">3</Property>
+      <Property name="TabStop">False</Property>
+      <Property name="Text">Status Filter</Property>
+      <Object type="System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="radiobuttonAll" children="Controls">
+        <Property name="Location">17, 60</Property>
+        <Property name="Name">radiobuttonAll</Property>
+        <Property name="Size">104, 24</Property>
+        <Property name="TabIndex">2</Property>
+        <Property name="Text">All</Property>
+        <Property name="UseVisualStyleBackColor">True</Property>
+      </Object>
+      <Object type="System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="radiobuttonStopped" children="Controls">
+        <Property name="Location">17, 39</Property>
+        <Property name="Name">radiobuttonStopped</Property>
+        <Property name="Size">104, 24</Property>
+        <Property name="TabIndex">1</Property>
+        <Property name="Text">Stopped</Property>
+        <Property name="UseVisualStyleBackColor">True</Property>
+      </Object>
+      <Object type="System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="radiobuttonRunning" children="Controls">
+        <Property name="Checked">True</Property>
+        <Property name="Location">17, 20</Property>
+        <Property name="Name">radiobuttonRunning</Property>
+        <Property name="Size">104, 24</Property>
+        <Property name="TabIndex">0</Property>
+        <Property name="TabStop">True</Property>
+        <Property name="Text">Running</Property>
+        <Property name="UseVisualStyleBackColor">True</Property>
+      </Object>
+    </Object>
+    <Object type="System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="labelComputername" children="Controls">
+      <Property name="ImageAlign">MiddleRight</Property>
+      <Property name="Location">13, 8</Property>
+      <Property name="Name">labelComputername</Property>
+      <Property name="Size">83, 23</Property>
+      <Property name="TabIndex">2</Property>
+      <Property name="Text">Computername</Property>
+      <Property name="TextAlign">MiddleRight</Property>
+    </Object>
+    <Object type="System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="Computername" children="Controls">
+      <Property name="Location">102, 8</Property>
+      <Property name="Name">Computername</Property>
+      <Property name="Size">150, 20</Property>
+      <Property name="TabIndex">1</Property>
+    </Object>
+    <Object type="System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" name="buttonOK" children="Controls">
+      <Property name="Anchor">Bottom, Right</Property>
+      <Property name="Location">177, 156</Property>
+      <Property name="Name">buttonOK</Property>
+      <Property name="Size">75, 23</Property>
+      <Property name="TabIndex">0</Property>
+      <Property name="Text">OK</Property>
+      <Property name="UseVisualStyleBackColor">True</Property>
+      <Event name="Click">buttonOK_Click</Event>
+    </Object>
+  </Object>
+  <Code><![CDATA[function OnApplicationLoad {
+	#Note: This function is not called in Projects
+	#Note: This function runs before the form is created
+	#Note: To get the script directory in the Packager use: Split-Path $hostinvocation.MyCommand.path
+	#Note: To get the console output in the Packager (Windows Mode) use: $ConsoleOutput (Type: System.Collections.ArrayList)
+	#Important: Form controls cannot be accessed in this function
+	#TODO: Add snapins and custom code to validate the application load
+	
+	return $true #return true for success or false for failure
+}
+
+function OnApplicationExit {
+	#Note: This function is not called in Projects
+	#Note: This function runs after the form is closed
+	#TODO: Add custom code to clean up and unload snapins when the application exits
+	
+	$script:ExitCode = 0 #Set the exit code for the Packager
+}
+
+$FormEvent_Load={
+	#TODO: Initialize Form Controls here
+	
+}
+
+$buttonOK_Click={
+	#TODO: Place custom script here
+	
+}
+]]></Code>
+  <Mode>0</Mode>
+  <Assemblies>
+    <Assembly>mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</Assembly>
+    <Assembly>System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v4.0.30319\System.Windows.Forms.dll</Assembly>
+    <Assembly>System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a|C:\Windows\Microsoft.NET\Framework\v4.0.30319\System.Drawing.dll</Assembly>
+    <Assembly>System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</Assembly>
+    <Assembly>System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll</Assembly>
+    <Assembly>System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll</Assembly>
+    <Assembly>System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.XML.dll</Assembly>
+    <Assembly>System.DirectoryServices, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a|C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.DirectoryServices.dll</Assembly>
+    <Assembly>System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll</Assembly>
+  </Assemblies>
+  <Packager>
+    <General>
+      <PackageName>
+      </PackageName>
+      <PackageIcon>
+      </PackageIcon>
+      <ManifestCreation>1</ManifestCreation>
+      <CustomManifest>
+      </CustomManifest>
+      <Platform>-1</Platform>
+      <RunSTA>0</RunSTA>
+    </General>
+    <Security>
+      <Username>
+      </Username>
+      <Password>
+      </Password>
+      <SignPackage>False</SignPackage>
+      <Certificate>
+      </Certificate>
+      <CertificatePassword>
+      </CertificatePassword>
+      <RunAs>0</RunAs>
+    </Security>
+    <Version>
+      <FileVersion>1.0.0.0</FileVersion>
+      <ProductVersion>1.0.0.0</ProductVersion>
+      <ProductName>
+      </ProductName>
+      <Description>
+      </Description>
+      <Company> http://jdhitsolutions.com/blog</Company>
+      <Copyright>
+      </Copyright>
+      <InternalName>
+      </InternalName>
+      <OriginalFileName>
+      </OriginalFileName>
+      <Comment>
+      </Comment>
+    </Version>
+  </Packager>

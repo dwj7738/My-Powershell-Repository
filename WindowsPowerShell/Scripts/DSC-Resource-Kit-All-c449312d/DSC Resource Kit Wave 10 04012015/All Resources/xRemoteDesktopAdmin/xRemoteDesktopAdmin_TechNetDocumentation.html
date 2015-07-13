@@ -1,0 +1,200 @@
+<head>
+<style type="text/css">
+.auto-style1 {
+	font-size: medium;
+}
+.auto-style2 {
+	font-family: Calibri;
+	font-size: medium;
+}
+.auto-style3 {
+	font-weight: normal;
+}
+.auto-style4 {
+	font-family: "Calibri Light";
+	font-size: large;
+	color: #2E74B5;
+}
+.auto-style5 {
+	font-family: Calibri;
+}
+</style>
+</head>
+<body>
+<div id="longDesc">
+<span style="font-family:Calibri; font-size:medium">
+<h1 style="font-family:Calibri Light; color:#2e74b5; font-size:large">Introduction</h1>
+<p>The<strong> xRemoteDesktopAdmin</strong> module is a part of the Windows PowerShell Desired State Configuration (DSC) Resource Kit, which is 
+a collection of DSC Resources produced by the PowerShell Team. This module contains the <strong>
+xRemoteDesktopAdmin</strong> resource. This DSC Resource allows you to configure 
+remote desktop settings and the Windows firewall by applying a configuration to 
+your local or a remote machine.</p>
+<p><strong>All of the resources in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program 
+or service. The ""x" in xRemoteDesktopAdmin stands for experimental</strong>, which means that these resources will be <strong>fix forward</strong> 
+and monitored by the module owner(s).</p>
+<p>Please leave comments, feature requests, and bug reports in the Q &amp; A tab for this module.</p>
+<p>If you would like to modify <strong>xRemoteDesktopAdmin</strong> module, feel free. When modifying, please update the module name, resource friendly name, 
+and MOF class name (instructions below). As specified in the license, you may copy or modify this resource as long as they are used on the Windows Platform.</p>
+	</span>
+<span style="font-size:medium">
+<p><span class="auto-style5">For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+</span>
+<a href="http://blogs.msdn.com/b/powershell/">
+<span style="color:#0000ff" class="auto-style5">PowerShell Blog</span></a><span class="auto-style5">
+</span></span>
+<span class="auto-style2">
+(</span><a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx"><span style="color:#0000ff" class="auto-style2">this</span></a><span class="auto-style2"> is a good starting point). There are 
+also great community resources, such as </span> <a href="http://powershell.org/wp/tag/dsc/">
+<span style="color:#0000ff" class="auto-style2">PowerShell.org</span></a><span class="auto-style2">, or
+</span>
+<a href="http://www.powershellmagazine.com/tag/dsc/">
+<span style="color:#0000ff" class="auto-style2">PowerShell Magazine</span></a><span class="auto-style2">. For more information on the DSC Resource Kit, check out
+</span> 
+<a href="http://go.microsoft.com/fwlink/?LinkID=389546">
+<span style="color:#0000ff" class="auto-style2">this blog post</span></a>.<br></p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Installation</h1>
+<p><span class="auto-style2">To install <strong >xRemoteDesktopAdmin</strong> module</span> </p>
+<ul style="list-style-type:disc; direction:ltr">
+<li class="auto-style2">Unzip the content under $env:ProgramFiles\WindowsPowerShell\Modules folder</li>
+</ul>
+<p><span class="auto-style2">To confirm installation:</span><br class="auto-style1"></p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><span class="auto-style2">Run </span> <strong class="auto-style3">
+<span class="auto-style2">Get-DSCResource</span></strong><span class="auto-style2"> to see that 
+</span> <strong class="auto-style3"><span class="auto-style2">
+xRemoteDesktopAdmin</span></strong><span class="auto-style2"> is among the DSC Resources listed</span><br class="auto-style1"></li>
+</ul>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Requirements</h1>
+<p><span class="auto-style2">This module requires the latest version of PowerShell (v4.0, which ships in Windows 8.1 or Windows Server 2012R2). To easily use PowerShell 4.0 on older operating systems,
+</span>
+<a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855">
+<span style="color:#0000ff" class="auto-style2">install WMF 4.0</span></a><span class="auto-style2">. Please read the installation instructions 
+that are present on both the download page and the release notes for WMF 4.0.</span></p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Description</h1>
+<p class="auto-style2">The <strong>xRemoteDesktopAdmin</strong> module contains 
+the <strong>xRemoteDesktopAdmin</strong> DSC Resource. This DSC Resource allows 
+you to configure remote desktop settings to either allow or prevent users to 
+setup a remote desktop connection to a specific machine. In addition it can 
+optionally leverage the Windows PowerShell Desired State Configuration (DSC) 
+Resource Kit resources <strong>xFirewall</strong> and <strong>Group</strong>. 
+This allows you to not only configure remote desktop settings, but also to 
+create a firewall rule - which allows a remote session through the firewall – 
+and lets you add a domain user to the local Remote Desktop Users group.</p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Details</h1>
+<p class="auto-style2"><strong>xRemoteDesktopAdmin</strong> resource has following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>
+	<span style="width: 200px; float: left; font-weight: bold;" class="auto-style2">
+	Ensure:</span><span class="auto-style2">Enables or disables “remote 
+	connections to this computer”<b> </b></span>
+</li>
+<li>
+	<span style="width: 200px; float: left; font-weight: bold;" class="auto-style2">
+	UserAuthentication:</span><span class="auto-style2">Enables or disables 
+	“Network Level Authentication” </span>
+</li>
+</ul>
+
+	<p class="auto-style2">The sample configuration files leverages the DSC 
+	Resource Kit resources <strong>xFirewall</strong> and <strong>Group</strong> 
+	to configure the Windows firewall and to add a domain user to the local 
+	Remote Desktop Users group, either with encrypted credentials or credentials 
+	stored in clear text (for testing purposes only).</p>
+	<p>&nbsp;</p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Renaming Requirements</h1>
+<p class="auto-style2">When making changes to these resources, we suggest the following practice:</p>
+<ol style="list-style-type:decimal; direction:ltr">
+<li>
+    <span class="auto-style2">Update the following names by replacing MSFT with your company/community name and replacing the 
+	<strong class="auto-style3">"x"</strong> with <strong class="auto-style3">"c"</strong> (short for "Community") or another prefix of your choice:
+	</span>
+<ul>
+<li class="auto-style2">
+    <strong class="auto-style3">Module name (ex: </strong> 
+    <strong>xRemoteDesktopAdmin</strong> becomes <strong>**cModuleName**</strong>)
+</li>
+<li class="auto-style2">
+    <strong class="auto-style3">Resource folder (ex: </strong> 
+    <strong>MSFT_xRemoteDesktopAdmin</strong> becomes <strong>Contoso_**cResourceName**</strong>)
+</li>
+<li class="auto-style2">
+    <strong class="auto-style3">Resource Name (ex: </strong> 
+    <strong>MSFT_xRemoteDesktopAdmin</strong> becomes <strong>Contoso_**cResourceName**</strong>)
+</li>
+<li class="auto-style2">
+    <strong class="auto-style3">Resource Friendly Name (</strong><strong>ex: 
+	xRemoteDesktopAdmin</strong> becomes <strong>**cResourceName**</strong>)
+</li>
+<li class="auto-style2">
+    <strong class="auto-style3">MOF class name (ex: </strong> 
+    <strong>MSFT_xRemoteDesktopAdmin</strong> becomes <strong>Contoso_**cResourceName**</strong>)
+</li>
+<li class="auto-style2">
+    <strong class="auto-style3">Filename for the &lt;resource&gt;.schema.mof (ex: </strong>
+    <strong>MSFT_xRemoteDesktopAdmin.schema.mof </strong>becomes <strong>Contoso_**cResourceName**.schema.mof</strong>)
+</li>
+</ul>
+</li>
+<li class="auto-style2">
+    Update module and metadata information in the module manifest
+</li>
+<li class="auto-style2">
+    Update any configuration that use these resources
+</li>
+</ol>
+<p><span class="auto-style2">We reserve resource and module names without prefixes ("x" or "c") for future use (e.g. "MSFT_**RealResourceName**" or "**RealResourceName**"). If the next version of Windows Server ships with a "**RealResourceName**" resource, we don't want to break any configurations that use any community modifications. Please keep a prefix such as "c" on all community modifications.</span></p>
+
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Versions</h1>
+<p class="auto-style2">1.0.0.0</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>
+    <span class="auto-style2">Initial release with the following resources
+	</span>
+<ul style="list-style-type:circle">
+<li class="auto-style2">
+    xRemoteDesktopAdmin
+</li>
+</ul>
+</li>
+</ul>
+    <p class="auto-style2">1.0.2.0</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span class="auto-style2">
+                Update to correct issue in Set-TargetResource when checking Ensure
+            </span>
+        </li>
+    </ul>
+
+
+<h1 style="margin-bottom:0pt; " class="auto-style4">
+ExampleConfiguration-RemoteDesktopAdmin.ps1</h1>
+	<span class="auto-style2">This configuration configures the target system to 
+	allow for remote connections (allowing a RDP session being setup), enables 
+	Network Level Authentication and creates a Windows firewall rule to allow 
+	incoming RDP traffic.</span><p></p>
+
+<h1 style="margin-bottom:0pt; " class="auto-style4">
+ExampleConfiguration-RemoteDesktopAdminWithUnEncryptedPassword.ps1</h1>
+	<span class="auto-style2" style="mso-fareast-font-family: &quot;Times New Roman&quot;;">
+	This configuration extends the previous configuration with adding a domain 
+	user to the local Remote Desktop Users group using a credential stored in 
+	clear text (for testing purposes only).<o:p></o:p></span></br>
+	<p></p>
+
+<h1 style="margin-bottom:0pt; " class="auto-style4">
+ExampleConfiguration-RemoteDesktopAdminWithEncryptedPassword.ps1</h1>
+	<span class="auto-style2">This configuration extends the previous 
+	configuration with adding a domain user to the local Remote Desktop Users 
+	group using certificates to encrypt credentials.</span></span></h1>
+	</br>
+	<p></p>
+
+</div>
+</body>

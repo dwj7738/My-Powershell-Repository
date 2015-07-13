@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Create a Shutdown/Restart/Logoff Windows 8 Tile for the Start menu (PowerShell)</title>        
+        <meta name="description" content="This PowerShell Script illustrates how to create a Shutdown ,Restart or Logoff Windows 8 tile to the Start menu." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p><a href="E:\Documents\WindowsPowerShell\Scripts\Create-a-ShutdownRestartLog-37c8111d\Documentation_files\tmp14AAResources.pnglink"><img src="E:\Documents\WindowsPowerShell\Scripts\Create-a-ShutdownRestartLog-37c8111d\Documentation_files\tmp14AAResources.png" alt=""></a></p>
+<p><strong><strong style="color:#000000; text-transform:none; line-height:17px; text-indent:0px; letter-spacing:normal; font-family:Calibri,sans-serif; font-size:15px; font-style:normal; font-variant:normal; word-spacing:0px; white-space:normal; orphans:2; widows:2"><span style="color:black; line-height:21px; letter-spacing:0.25pt; font-family:Cambria,serif; font-size:14pt">Script
+ to create a Shutdown/Restart/Logoff Windows 8 Tile for the Start menu(PowerShell)</span></strong></strong></p>
+<h2><strong>Introduction</strong></h2>
+<p>This PowerShell Script shows how to&nbsp;create a Shutdown, Restart or Logoff Windows 8 tile for the Start menu.</p>
+<h2><strong>Scenarios</strong></h2>
+<p>Many users&nbsp;would like&nbsp;to shut down or reboot Windows&nbsp;8&nbsp;in just one click. This script enables users to click a tile to shut down,&nbsp;reboot or log off Windows on the Start menu.</p>
+<h2><strong>Script</strong></h2>
+<p><strong>Step 1:</strong>&nbsp;Start the PowerShell Console with administrator. To run the script in the Windows PowerShell Console, type the command&lt; Script Path&gt; at the Windows PowerShell Console.</p>
+<p><strong>Step 2:</strong><strong>&nbsp;</strong>If you want to know how to use this script. You can type the<strong>&nbsp;</strong>command<strong>&nbsp;Get-Help&nbsp;</strong><strong>C:</strong><strong>\Script\CreateWindowsTile.ps1&nbsp;</strong><strong>-Full</strong>&nbsp;to
+ display the entire help file for this function, such as the syntax, parameters, or examples.<br>
+<img id="108447" src="E:\Documents\WindowsPowerShell\Scripts\Create-a-ShutdownRestartLog-37c8111d\Documentation_files\tmp14ABResources.png" alt="" width="817" height="528">&nbsp;</p>
+<p><span>Here are some code snippets for your references.<br>
+</span></p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">#create a new shortcut of shutdown
+$ShutdownShortcutPath = &quot;$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Shutdown.lnk&quot;
+$ShutdownShortcut = $WshShell.CreateShortcut($ShutdownShortcutPath)
+$ShutdownShortcut.TargetPath = &quot;$env:SystemRoot\System32\shutdown.exe&quot;
+$ShutdownShortcut.Arguments = &quot;-s -t 0&quot;
+$ShutdownShortcut.Save()
+ 
+#change the default icon of shutdown shortcut
+$ShutdownLnk = $Desktop.ParseName($ShutdownShortcutPath)
+$ShutdownLnkPath = $ShutdownLnk.GetLink
+$ShutdownLnkPath.SetIconLocation(&quot;$env:SystemRoot\System32\SHELL32.dll&quot;,27)
+$ShutdownLnkPath.Save()</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__com">#create&nbsp;a&nbsp;new&nbsp;shortcut&nbsp;of&nbsp;shutdown</span>&nbsp;
+<span class="powerShell__variable">$ShutdownShortcutPath</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;$env:ProgramData\Microsoft\Windows\Start&nbsp;Menu\Programs\Shutdown.lnk&quot;</span>&nbsp;
+<span class="powerShell__variable">$ShutdownShortcut</span>&nbsp;=&nbsp;<span class="powerShell__variable">$WshShell</span>.CreateShortcut(<span class="powerShell__variable">$ShutdownShortcutPath</span>)&nbsp;
+<span class="powerShell__variable">$ShutdownShortcut</span>.TargetPath&nbsp;=&nbsp;<span class="powerShell__string">&quot;$env:SystemRoot\System32\shutdown.exe&quot;</span>&nbsp;
+<span class="powerShell__variable">$ShutdownShortcut</span>.Arguments&nbsp;=&nbsp;<span class="powerShell__string">&quot;-s&nbsp;-t&nbsp;0&quot;</span>&nbsp;
+<span class="powerShell__variable">$ShutdownShortcut</span>.Save()&nbsp;
+&nbsp;&nbsp;
+<span class="powerShell__com">#change&nbsp;the&nbsp;default&nbsp;icon&nbsp;of&nbsp;shutdown&nbsp;shortcut</span>&nbsp;
+<span class="powerShell__variable">$ShutdownLnk</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Desktop</span>.ParseName(<span class="powerShell__variable">$ShutdownShortcutPath</span>)&nbsp;
+<span class="powerShell__variable">$ShutdownLnkPath</span>&nbsp;=&nbsp;<span class="powerShell__variable">$ShutdownLnk</span>.GetLink&nbsp;
+<span class="powerShell__variable">$ShutdownLnkPath</span>.SetIconLocation(<span class="powerShell__string">&quot;$env:SystemRoot\System32\SHELL32.dll&quot;</span>,27)&nbsp;
+<span class="powerShell__variable">$ShutdownLnkPath</span>.Save()</pre>
+</div>
+</div>
+</div>
+<h2><strong>Example</strong></h2>
+<p><strong>Example 1:&nbsp;</strong>Type<strong>&nbsp;</strong><strong>C:</strong><strong>\Script\CreateWindowsTile.ps1&nbsp;</strong>in the Windows PowerShell Console.</p>
+<p>It will create a shutdown, restart and logoff Windows 8 tile to the Start menu.<br>
+<img id="107234" src="E:\Documents\WindowsPowerShell\Scripts\Create-a-ShutdownRestartLog-37c8111d\Documentation_files\tmp14ACResources.png" alt="" width="664" height="166"></p>
+<p>As you can see, in the following figure, the shutdown, restart and logoff Windows 8 tile has been created successfully.<br>
+<img id="107235" src="E:\Documents\WindowsPowerShell\Scripts\Create-a-ShutdownRestartLog-37c8111d\Documentation_files\tmp14ADResources.png" alt="" width="729" height="439"></p>
+<p><strong style="font-size:1.5em">Prerequisite</strong></p>
+<p>Windows PowerShell 3.0</p>
+<p>Windows 8</p>
+<h2><strong>Additional Resources</strong></h2>
+<p><a href="http://technet.microsoft.com/library/hh849885.aspx">New-Object</a></p>
+
+        </div>
+    </body>
+</html>

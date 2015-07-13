@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Export WSUS Approvals per Computer Group to a CSV</title>        
+        <meta name="description" content="&#160;Be sure to set $updateServer to the WSUS server you wish to export from.&#160; This script outputs the data to the screen/console (stdout) and can be piped into a txt file for analysis in Excel or PowerPivot.&#160; The format is a tab-separated file, but
+ this can be easily changed. Ther" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p></p>
+<div class="endscriptcode">&nbsp;</div>
+Be sure to set $updateServer to the WSUS server you wish to export from.&nbsp; This script outputs the data to the screen/console (stdout) and can be piped into a txt file for analysis in Excel or PowerPivot.&nbsp; The format is a tab-separated file, but this
+ can be easily changed. There is also a sample output file attached to this post for reference to what the output looks like. The output can be passed to a script like this one to import the results into ConfigMgr:
+<a href="https://gallery.technet.microsoft.com/scriptcenter/Import-WSUS-Approvals-into-475bff65">
+https://gallery.technet.microsoft.com/scriptcenter/Import-WSUS-Approvals-into-475bff65</a>.
+<p></p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">$updateServer = &quot;localhost&quot;
+$useSecureConnection = $False
+$portNumber = 8530
+
+Add-Type -Path &quot;C:\Program Files\Update Services\Api\Microsoft.UpdateServices.Administration.dll&quot;
+$AdminProxy = New-Object -TypeName Microsoft.UpdateServices.Administration.AdminProxy
+$WSUSServer = $AdminProxy.GetRemoteUpdateServerInstance($updateServer,$useSecureConnection,$portNumber)
+$WSUSServer.PreferredCulture = &quot;en&quot;
+
+$ComputerGroup = $WSUSServer.GetComputerTargetGroups() | ForEach-Object -Process {if ($_.Name -eq $targetComputerGroup) {$_}}
+
+$UpdateScope = New-Object Microsoft.UpdateServices.Administration.UpdateScope
+$UpdateScope.ApprovedStates = &quot;Any&quot;
+$Approvals = $WSUSServer.GetUpdateApprovals($UpdateScope)
+
+&quot;ComputerGroupName`tUpdateTitle`tUpdateGUID`tupdateArticleId&quot;
+
+foreach ($Approval in $Approvals)
+{
+	$ComputerGroup = $WSUSServer.GetComputerTargetGroup($Approval.ComputerTargetGroupId)
+	$Update = $WSUSServer.GetUpdate($Approval.UpdateId)
+	
+	$ComputerGroup.Name&#43;&quot;`t&quot;&#43;$Update.Title&#43;&quot;`t&quot;&#43;$Update.Id.UpdateId&#43;&quot;`t&quot;&#43;$Update.KnowledgeBaseArticles[0]
+	
+}</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__variable">$updateServer</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;localhost&quot;</span>&nbsp;
+<span class="powerShell__variable">$useSecureConnection</span>&nbsp;=&nbsp;<span class="powerShell__variable">$False</span>&nbsp;
+<span class="powerShell__variable">$portNumber</span>&nbsp;=&nbsp;8530&nbsp;
+&nbsp;
+Add<span class="powerShell__operator">-</span><span class="powerShell__alias">Type</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__string">&quot;C:\Program&nbsp;Files\Update&nbsp;Services\Api\Microsoft.UpdateServices.Administration.dll&quot;</span>&nbsp;
+<span class="powerShell__variable">$AdminProxy</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>TypeName&nbsp;Microsoft.UpdateServices.Administration.AdminProxy&nbsp;
+<span class="powerShell__variable">$WSUSServer</span>&nbsp;=&nbsp;<span class="powerShell__variable">$AdminProxy</span>.GetRemoteUpdateServerInstance(<span class="powerShell__variable">$updateServer</span>,<span class="powerShell__variable">$useSecureConnection</span>,<span class="powerShell__variable">$portNumber</span>)&nbsp;
+<span class="powerShell__variable">$WSUSServer</span>.PreferredCulture&nbsp;=&nbsp;<span class="powerShell__string">&quot;en&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$ComputerGroup</span>&nbsp;=&nbsp;<span class="powerShell__variable">$WSUSServer</span>.GetComputerTargetGroups()&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">ForEach</span><span class="powerShell__operator">-</span>Object&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__keyword">Process</span>&nbsp;{<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$_</span>.Name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$targetComputerGroup</span>)&nbsp;{<span class="powerShell__variable">$_</span>}}&nbsp;
+&nbsp;
+<span class="powerShell__variable">$UpdateScope</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;Microsoft.UpdateServices.Administration.UpdateScope&nbsp;
+<span class="powerShell__variable">$UpdateScope</span>.ApprovedStates&nbsp;=&nbsp;<span class="powerShell__string">&quot;Any&quot;</span>&nbsp;
+<span class="powerShell__variable">$Approvals</span>&nbsp;=&nbsp;<span class="powerShell__variable">$WSUSServer</span>.GetUpdateApprovals(<span class="powerShell__variable">$UpdateScope</span>)&nbsp;
+&nbsp;
+<span class="powerShell__string">&quot;ComputerGroupName`tUpdateTitle`tUpdateGUID`tupdateArticleId&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">foreach</span>&nbsp;(<span class="powerShell__variable">$Approval</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$Approvals</span>)&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ComputerGroup</span>&nbsp;=&nbsp;<span class="powerShell__variable">$WSUSServer</span>.GetComputerTargetGroup(<span class="powerShell__variable">$Approval</span>.ComputerTargetGroupId)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Update</span>&nbsp;=&nbsp;<span class="powerShell__variable">$WSUSServer</span>.GetUpdate(<span class="powerShell__variable">$Approval</span>.UpdateId)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ComputerGroup</span>.Name<span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;`t&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$Update</span>.Title<span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;`t&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$Update</span>.Id.UpdateId<span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;`t&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$Update</span>.KnowledgeBaseArticles[0]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}</pre>
+</div>
+</div>
+</div>
+<p><em>This sample is provided as is and is not meant for use on a production environment. It is provided only for illustrative purposes. The end user must test and modify the sample to suit their target environment.</em></p>
+<p><em>Microsoft can make no representation concerning the content of this sample. Microsoft is providing this information only as a convenience to you. This is to inform you that Microsoft has not tested the sample and therefore cannot make any representations
+ regarding the quality, safety, or suitability of any code or information found here.</em></p>
+
+        </div>
+    </body>
+</html>

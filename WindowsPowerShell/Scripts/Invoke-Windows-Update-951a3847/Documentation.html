@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Invoke Windows Update Automatic Updates PowerShell Module Cmdlet</title>        
+        <meta name="description" content="This module and cmdlet is designed to Invoke a Windows Update session." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<h1><span>KBWindowsUpdate Module Description</span></h1>
+<h2>Overview</h2>
+<p>This module and cmdlet is designed to Invoke a Windows Update session. &nbsp;I focused on creating a simple and straightforward module that would still be very useful, especially in an environment that makes use of WSUS or SCCM to accept EULAs. &nbsp;In
+ a nutshell, this module and cmdlet can be used to download and install updates, and output the results of attempted downloads and installs, including successes and failures.</p>
+<h2>Installation</h2>
+<p>Download the <span>KBWindowsUpdate.zip file, and extract the contents into one of the following folders</span>:</p>
+<ul>
+<li>%USERPROFILE%\Documents\WindowsPowerShell\Modules </li><li>%WINDIR%\System32\WindowsPowerShell\v1.0\Modules </li></ul>
+<h3>Note:</h3>
+<p>Extracting the module into &quot;%USERPROFILE%\Documents\WindowsPowerShell\Modules&quot; will only make the module available to one user profile.<br>
+Extracting the module into&nbsp;&quot;%WINDIR%\System32\WindowsPowerShell\v1.0\Modules&quot; will make the module available to all users on the system.</p>
+<h2>Known Issues</h2>
+<p>None at this time.</p>
+<p>Please start a discussion if you find any issues. &nbsp;I have to admit that I didn't test this beyond PowerShell v4.0 and Server 2012 R2 and Windows 7 Ultimate. &nbsp;If you run into any compatibility issues, please let me know what PowerShell version and
+ Operating System you are using and I will attempt to resolve the issue, if possible. &nbsp;My guess is that it will work in PowerShell v3 and v4, but I'm not sure about older versions and older Operating Systems. &nbsp;I will say that I am 100% NOT going to
+ support any Operating Systems that aren't covered under general Windows Support, such as Windows XP.</p>
+<h2>Code Snippet</h2>
+<p></p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">function Invoke-WindowsUpdate
+{
+    &lt;#
+    .EXTERNALHELP KBWindowsUpdate-Help.xml
+    #&gt;
+    [CmdletBinding(
+    DefaultParameterSetName='Install',
+    SupportsShouldProcess=$True,
+    ConfirmImpact='High')]
+
+    PARAM(
+
+        [Parameter(ParameterSetName='Install')]
+        [switch]
+        $Force,
+
+        [Parameter(ParameterSetName='Install')]
+        [switch]
+        $Reboot,
+
+        [Parameter(ParameterSetName='DownloadOnly')]
+        [switch]
+        $DownloadOnly
+
+    )
+
+    Begin
+    {
+        #Check for pending reboot status
+        $RebootRequired = (New-Object -ComObject &quot;Microsoft.Update.SystemInfo&quot;).rebootrequired
+
+        #Admin Rights Check
+        $user = [Security.Principal.WindowsIdentity]::GetCurrent()
+        $isAdmin = (New-Object Security.Principal.WindowsPrincipal $user).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+        if(!$isAdmin){Write-Warning &quot;PHASE 0 (PRE-CHECKS): Cmdlet is not being run with Administrative Priveledges.`n`t`t If the cmdlet does not function as expected, try running with Administrative Rights&quot;}
+
+        #Check if reboot is pending and if parameter set is NOT DownloadOnly
+        if($RebootRequired -and !$DownloadOnly)
+        {
+            Write-Warning &quot;PHASE 0 (PRE-CHECKS): A reboot is currently pending.`n`t`t If the -Force parameter is not set, updates will only be downloaded&quot;
+
+            #Check for -Force switch parameter
+            if($Force)
+            {
+                Write-Verbose &quot;PHASE 0 (PRE-CHECKS): -Force parameter is set.`n`t`t Update installs will be attempted&quot;
+            }
+            else
+            {
+                Write-Warning &quot;PHASE 0 (PRE-CHECKS): -Force parameter is NOT set.`n`t`t Updates will only be downloaded&quot;
+                $DownloadOnly = $True
+            }
+        }
+
+        #Create Windows Update Session, Searcher, Downloader, and Installer Com Objects
+        $WUSession = new-object -ComObject Microsoft.Update.Session
+        $WUSearcher = $WUSession.CreateUpdateSearcher()
+        $WUDownloader = $WUSession.CreateUpdateDownloader() #Bug doesn't allow this to be run remotely
+        $WUInstaller = $WUSession.CreateUpdateInstaller() #Bug doesn't allow this to be run remotely
+        $WUUpdateCollection = New-Object -ComObject Microsoft.Update.UpdateColl
+
+        $Return = New-Object PSObject -Property @{
+            AttemptedDownloads = New-Object -ComObject Microsoft.Update.UpdateColl
+            AttemptedInstalls = New-Object -ComObject Microsoft.Update.UpdateColl
+            SuccessfulDownloads = New-Object -ComObject Microsoft.Update.UpdateColl
+            SuccessfulInstalls = New-Object -ComObject Microsoft.Update.UpdateColl
+            UnsuccessfulDownloads = New-Object -ComObject Microsoft.Update.UpdateColl
+            UnsuccessfulInstalls = New-Object -ComObject Microsoft.Update.UpdateColl
+        }
+        
+        if(!(Get-TypeData ResultCode))
+        {
+            Add-Type -TypeDefinition @&quot;
+            public enum ResultCode
+            {
+               NotStarted = 0,
+               InProgress = 1,
+               Succeeded = 2,
+               SucceededWithErrors = 3,
+               Failed = 4,
+               Aborted = 5
+            }
+&quot;@
+        }
+    }#end Begin</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__keyword">function</span>&nbsp;Invoke<span class="powerShell__operator">-</span>WindowsUpdate&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__mlcom">&lt;#&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.EXTERNALHELP&nbsp;KBWindowsUpdate-Help.xml&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;#&gt;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[CmdletBinding(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;DefaultParameterSetName=<span class="powerShell__string">'Install'</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;SupportsShouldProcess=<span class="powerShell__variable">$True</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;ConfirmImpact=<span class="powerShell__string">'High'</span>)]&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">PARAM</span>(&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(ParameterSetName=<span class="powerShell__string">'Install'</span>)]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="powerShell__keyword">switch</span>]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Force</span>,&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(ParameterSetName=<span class="powerShell__string">'Install'</span>)]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="powerShell__keyword">switch</span>]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Reboot</span>,&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(ParameterSetName=<span class="powerShell__string">'DownloadOnly'</span>)]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="powerShell__keyword">switch</span>]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$DownloadOnly</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Begin</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Check&nbsp;for&nbsp;pending&nbsp;reboot&nbsp;status</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RebootRequired</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;<span class="powerShell__string">&quot;Microsoft.Update.SystemInfo&quot;</span>).rebootrequired&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Admin&nbsp;Rights&nbsp;Check</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$user</span>&nbsp;=&nbsp;[Security.Principal.WindowsIdentity]::GetCurrent()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$isAdmin</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">New-Object</span>&nbsp;Security.Principal.WindowsPrincipal&nbsp;<span class="powerShell__variable">$user</span>).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__operator">!</span><span class="powerShell__variable">$isAdmin</span>){<span class="powerShell__cmdlets">Write-Warning</span>&nbsp;<span class="powerShell__string">&quot;PHASE&nbsp;0&nbsp;(PRE-CHECKS):&nbsp;Cmdlet&nbsp;is&nbsp;not&nbsp;being&nbsp;run&nbsp;with&nbsp;Administrative&nbsp;Priveledges.`n`t`t&nbsp;If&nbsp;the&nbsp;cmdlet&nbsp;does&nbsp;not&nbsp;function&nbsp;as&nbsp;expected,&nbsp;try&nbsp;running&nbsp;with&nbsp;Administrative&nbsp;Rights&quot;</span>}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Check&nbsp;if&nbsp;reboot&nbsp;is&nbsp;pending&nbsp;and&nbsp;if&nbsp;parameter&nbsp;set&nbsp;is&nbsp;NOT&nbsp;DownloadOnly</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$RebootRequired</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__operator">!</span><span class="powerShell__variable">$DownloadOnly</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Warning</span>&nbsp;<span class="powerShell__string">&quot;PHASE&nbsp;0&nbsp;(PRE-CHECKS):&nbsp;A&nbsp;reboot&nbsp;is&nbsp;currently&nbsp;pending.`n`t`t&nbsp;If&nbsp;the&nbsp;-Force&nbsp;parameter&nbsp;is&nbsp;not&nbsp;set,&nbsp;updates&nbsp;will&nbsp;only&nbsp;be&nbsp;downloaded&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Check&nbsp;for&nbsp;-Force&nbsp;switch&nbsp;parameter</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$Force</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;PHASE&nbsp;0&nbsp;(PRE-CHECKS):&nbsp;-Force&nbsp;parameter&nbsp;is&nbsp;set.`n`t`t&nbsp;Update&nbsp;installs&nbsp;will&nbsp;be&nbsp;attempted&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Warning</span>&nbsp;<span class="powerShell__string">&quot;PHASE&nbsp;0&nbsp;(PRE-CHECKS):&nbsp;-Force&nbsp;parameter&nbsp;is&nbsp;NOT&nbsp;set.`n`t`t&nbsp;Updates&nbsp;will&nbsp;only&nbsp;be&nbsp;downloaded&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$DownloadOnly</span>&nbsp;=&nbsp;<span class="powerShell__variable">$True</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Create&nbsp;Windows&nbsp;Update&nbsp;Session,&nbsp;Searcher,&nbsp;Downloader,&nbsp;and&nbsp;Installer&nbsp;Com&nbsp;Objects</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$WUSession</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">new-object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;Microsoft.Update.Session&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$WUSearcher</span>&nbsp;=&nbsp;<span class="powerShell__variable">$WUSession</span>.CreateUpdateSearcher()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$WUDownloader</span>&nbsp;=&nbsp;<span class="powerShell__variable">$WUSession</span>.CreateUpdateDownloader()&nbsp;<span class="powerShell__com">#Bug&nbsp;doesn't&nbsp;allow&nbsp;this&nbsp;to&nbsp;be&nbsp;run&nbsp;remotely</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$WUInstaller</span>&nbsp;=&nbsp;<span class="powerShell__variable">$WUSession</span>.CreateUpdateInstaller()&nbsp;<span class="powerShell__com">#Bug&nbsp;doesn't&nbsp;allow&nbsp;this&nbsp;to&nbsp;be&nbsp;run&nbsp;remotely</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$WUUpdateCollection</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;Microsoft.Update.UpdateColl&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Return</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;PSObject&nbsp;<span class="powerShell__operator">-</span>Property&nbsp;@{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AttemptedDownloads&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;Microsoft.Update.UpdateColl&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AttemptedInstalls&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;Microsoft.Update.UpdateColl&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SuccessfulDownloads&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;Microsoft.Update.UpdateColl&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SuccessfulInstalls&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;Microsoft.Update.UpdateColl&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UnsuccessfulDownloads&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;Microsoft.Update.UpdateColl&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UnsuccessfulInstalls&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;Microsoft.Update.UpdateColl&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__operator">!</span>(Get<span class="powerShell__operator">-</span>TypeData&nbsp;ResultCode))&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add<span class="powerShell__operator">-</span><span class="powerShell__alias">Type</span>&nbsp;<span class="powerShell__operator">-</span>TypeDefinition&nbsp;@&quot;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;enum&nbsp;ResultCode&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NotStarted&nbsp;=&nbsp;0,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InProgress&nbsp;=&nbsp;1,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Succeeded&nbsp;=&nbsp;2,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SucceededWithErrors&nbsp;=&nbsp;3,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Failed&nbsp;=&nbsp;4,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aborted&nbsp;=&nbsp;5&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&quot;@&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}<span class="powerShell__com">#end&nbsp;Begin</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<p></p>
+<h2>License</h2>
+<p><span>1. Definitions</span><br>
+<span>The terms &ldquo;reproduce,&rdquo; &ldquo;reproduction,&rdquo; &ldquo;derivative works,&rdquo; and &ldquo;distribution&rdquo; have the same meaning here as under U.S. copyright law.</span><br>
+<span>A &ldquo;contribution&rdquo; is the original software, or any additions or changes to the software.</span><br>
+<span>A &ldquo;contributor&rdquo; is any person that distributes its contribution under this license.</span><br>
+<span>&ldquo;Licensed patents&rdquo; are a contributor&rsquo;s patent claims that read directly on its contribution.</span><br>
+<br>
+<span>2. Grant of Rights</span><br>
+<span>(A) Copyright Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free copyright license to reproduce its contribution, prepare derivative
+ works of its contribution, and distribute its contribution or any derivative works that you create.</span><br>
+<span>(B) Patent Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free license under its licensed patents to make, have made, use, sell,
+ offer for sale, import, and/or otherwise dispose of its contribution in the software or derivative works of the contribution in the software.</span><br>
+<br>
+<span>3. Conditions and Limitations</span><br>
+<span>(A) No Trademark License- This license does not grant you rights to use any contributors&rsquo; name, logo, or trademarks.</span><br>
+<span>(B) If you bring a patent claim against any contributor over patents that you claim are infringed by the software, your patent license from such contributor to the software ends automatically.</span><br>
+<span>(C) If you distribute any portion of the software, you must retain all copyright, patent, trademark, and attribution notices that are present in the software.</span><br>
+<span>(D) If you distribute any portion of the software in source code form, you may do so only under this license by including a complete copy of this license with your distribution. If you distribute any portion of the software in compiled or object code
+ form, you may only do so under a license that complies with this license.</span><br>
+<span>(E) The software is licensed &ldquo;as-is.&rdquo; You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws which this license cannot change. To
+ the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.</span><br>
+<span>(F) Platform Limitation- The licenses granted in sections 2(A) &amp; 2(B) extend only to the software or derivative works that you create that run on a Microsoft Windows operating system product.</span></p>
+
+        </div>
+    </body>
+</html>

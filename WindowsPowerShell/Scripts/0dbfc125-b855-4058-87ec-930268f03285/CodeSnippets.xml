@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content="Get-PendingUpdate -Computer DC1" />
+  <Code Content="Get-PendingUpdate -Computer DC1" />
+</CodeSnippets>

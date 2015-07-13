@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Get Missing Updates with Powershell and MBSA</title>        
+        <meta name="description" content="Use the Microsoft Baseline Security Analyzer and Powershell to get a list of manageable missing updates on a Windows computer." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>I come across all kinds of situations these days where I think back to myself &quot;Man, this would have been SO much easier with Powershell!&quot;. &nbsp;I just had one of those moment today. &nbsp;I had a need to find all updates that were missing from a group of
+ computers. &nbsp;Back in the day when I didn't have SCCM, I used Microsoft's HFNetChk tool; yea, it's been that long. &nbsp;I remember having to scan dozens of machines and then figure out how to best merge all that data together. &nbsp;It was a nightmare!</p>
+<p><br>
+This time I leveraged my Powershell kung-fu to whip a tiny little function to point at a computer and find all the missing updates. &nbsp;This one's not quite the level that I normally like to share but it gets the job done well.</p>
+<p>Simply type Get-MissingUpdates -Computername YOURCOMPUTER and you're all set!</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">function Get-MissingUpdates {
+	[CmdletBinding()]
+	[OutputType([System.Management.Automation.PSCustomObject])]
+	param (
+		[Parameter(Mandatory,
+		ValueFromPipeline,
+		ValueFromPipelineByPropertyName)]
+		[string]$ComputerName
+	)
+	begin {
+		function Get-32BitProgramFilesPath {
+			if ((Get-Architecture) -eq 'x64') {
+				${ env:ProgramFiles(x86) }
+			} else {
+				$env:ProgramFiles
+			}
+		}
+		
+		function Get-Architecture {
+			if ([System.Environment]::Is64BitOperatingSystem) {
+				'x64'
+			} else {
+				'x86'
+			}
+		}
+		
+		$Output = @{ }
+	}
+	process {
+		try {
+			
+			## Remove any previous reports
+			Get-ChildItem &quot;$($Env:USERPROFILE)\SecurityScans\*&quot; -Recurse -ea 'SilentlyContinue' | Remove-Item -Force -Recurse
+			## Run the report to create the output XML
+			$ExeFilePath = &quot;$(Get-32BitProgramFilesPath)\Microsoft Baseline Security Analyzer 2\mbsacli.exe&quot;
+			if (!(Test-Path $ExeFilePath)) {
+				throw &quot;$ExeFilePath not found&quot;
+			}
+			&amp; $ExeFilePath /target $ComputerName /wi /nvc /o %C% 2&gt;&amp;1&gt; $null
+			## Convert the report to XML so I can use it
+			[xml]$ScanResults = Get-Content &quot;$($Env:USERPROFILE)\SecurityScans\$($Computername.Split('.')[0]).mbsa&quot;
+
+                        $UpdateSeverityLabels = @{
+				'0' = 'Other'
+				'1' = 'Low'
+				'2' = 'Moderate'
+				'3' = 'Important'
+				'4' = 'Critical'
+			}
+			
+			$MissingUpdates = $ScanResults.SelectNodes(&quot;//Check[@Name='Windows Security Updates']/Detail/UpdateData[@IsInstalled='false']&quot;)
+			foreach ($Update in $MissingUpdates) {
+				$Ht = @{ }
+				$Properties = $Update | Get-Member -Type Property
+				foreach ($Prop in $Properties) {
+					$Value = ($Update | select -expandproperty $Prop.Name)
+					if ($Prop.Name -eq 'Severity') {
+						$Value = $UpdateSeverityLabels[$Value]
+					}
+					$Ht[$Prop.Name] = $Value
+				}
+				[pscustomobject]$Ht
+			}
+		} catch {
+			Write-Error &quot;Error: $($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)&quot;
+		}
+	}
+}</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__keyword">function</span>&nbsp;Get<span class="powerShell__operator">-</span>MissingUpdates&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[CmdletBinding()]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[OutputType([System.Management.Automation.PSCustomObject])]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">param</span>&nbsp;(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ValueFromPipeline,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ValueFromPipelineByPropertyName)]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$ComputerName</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">begin</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">function</span>&nbsp;Get<span class="powerShell__operator">-</span>32BitProgramFilesPath&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;((Get<span class="powerShell__operator">-</span>Architecture)&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">'x64'</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$</span>{&nbsp;env:ProgramFiles(x86)&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$env</span>:ProgramFiles&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">function</span>&nbsp;Get<span class="powerShell__operator">-</span>Architecture&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;([System.Environment]::Is64BitOperatingSystem)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'x64'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'x86'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Output</span>&nbsp;=&nbsp;@{&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">process</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">try</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">##&nbsp;Remove&nbsp;any&nbsp;previous&nbsp;reports</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Get-ChildItem</span>&nbsp;<span class="powerShell__string">&quot;$($Env:USERPROFILE)\SecurityScans\*&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Recurse&nbsp;<span class="powerShell__operator">-</span>ea&nbsp;<span class="powerShell__string">'SilentlyContinue'</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Remove-Item</span>&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;<span class="powerShell__operator">-</span>Recurse&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">##&nbsp;Run&nbsp;the&nbsp;report&nbsp;to&nbsp;create&nbsp;the&nbsp;output&nbsp;XML</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ExeFilePath</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;$(Get-32BitProgramFilesPath)\Microsoft&nbsp;Baseline&nbsp;Security&nbsp;Analyzer&nbsp;2\mbsacli.exe&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__operator">!</span>(<span class="powerShell__cmdlets">Test-Path</span>&nbsp;<span class="powerShell__variable">$ExeFilePath</span>))&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">throw</span>&nbsp;<span class="powerShell__string">&quot;$ExeFilePath&nbsp;not&nbsp;found&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">&amp;</span>&nbsp;<span class="powerShell__variable">$ExeFilePath</span>&nbsp;<span class="powerShell__operator">/</span>target&nbsp;<span class="powerShell__variable">$ComputerName</span>&nbsp;<span class="powerShell__operator">/</span>wi&nbsp;<span class="powerShell__operator">/</span>nvc&nbsp;<span class="powerShell__operator">/</span>o&nbsp;%C%&nbsp;2&gt;<span class="powerShell__operator">&amp;</span>1&gt;&nbsp;<span class="powerShell__variable">$null</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">##&nbsp;Convert&nbsp;the&nbsp;report&nbsp;to&nbsp;XML&nbsp;so&nbsp;I&nbsp;can&nbsp;use&nbsp;it</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[xml]<span class="powerShell__variable">$ScanResults</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-Content</span>&nbsp;<span class="powerShell__string">&quot;$($Env:USERPROFILE)\SecurityScans\$($Computername.Split('.')[0]).mbsa&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdateSeverityLabels</span>&nbsp;=&nbsp;@{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'0'</span>&nbsp;=&nbsp;<span class="powerShell__string">'Other'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'1'</span>&nbsp;=&nbsp;<span class="powerShell__string">'Low'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'2'</span>&nbsp;=&nbsp;<span class="powerShell__string">'Moderate'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'3'</span>&nbsp;=&nbsp;<span class="powerShell__string">'Important'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">'4'</span>&nbsp;=&nbsp;<span class="powerShell__string">'Critical'</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$MissingUpdates</span>&nbsp;=&nbsp;<span class="powerShell__variable">$ScanResults</span>.SelectNodes(<span class="powerShell__string">&quot;//Check[@Name='Windows&nbsp;Security&nbsp;Updates']/Detail/UpdateData[@IsInstalled='false']&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;(<span class="powerShell__variable">$Update</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$MissingUpdates</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Ht</span>&nbsp;=&nbsp;@{&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Properties</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Update</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Get-Member</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__alias">Type</span>&nbsp;Property&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;(<span class="powerShell__variable">$Prop</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$Properties</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Value</span>&nbsp;=&nbsp;(<span class="powerShell__variable">$Update</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">select</span>&nbsp;<span class="powerShell__operator">-</span>expandproperty&nbsp;<span class="powerShell__variable">$Prop</span>.Name)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$Prop</span>.Name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">'Severity'</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Value</span>&nbsp;=&nbsp;<span class="powerShell__variable">$UpdateSeverityLabels</span>[<span class="powerShell__variable">$Value</span>]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Ht</span>[<span class="powerShell__variable">$Prop</span>.Name]&nbsp;=&nbsp;<span class="powerShell__variable">$Value</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[pscustomobject]<span class="powerShell__variable">$Ht</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">catch</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Error</span>&nbsp;<span class="powerShell__string">&quot;Error:&nbsp;$($_.Exception.Message)&nbsp;-&nbsp;Line&nbsp;Number:&nbsp;$($_.InvocationInfo.ScriptLineNumber)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+}</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+
+        </div>
+    </body>
+</html>

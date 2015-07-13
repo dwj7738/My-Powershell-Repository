@@ -1,0 +1,1418 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>CleanMgr.exe/KB2852386 Automation Example</title>        
+        <meta name="description" content="This script is an automation example for KB2852386. See snippet/script for details." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>Summary:<br>
+&nbsp;&nbsp;&nbsp; This script requires KB2852386.</p>
+<p>&nbsp;&nbsp;&nbsp; The script itself will perform the following:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Verify the KB is installed <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Install the Desktop Experience feature
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Install a scheduled task that restarts the script 60 seconds after reboot
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Reboot, if necessary <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Update registry keys for cleanmgr.exe to run.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Run cleanmgr.exe <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Reboot <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Remove Desktop Experience <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Reboot <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Remove scheduled task <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Exit</p>
+<p>Updated on 1/2/2015</p>
+<p>Bug fixes:</p>
+<ul>
+<li>If Ink and Handwriting feature was not installed prior to script, it will be removed after cleanmgr runs.
+</li><li>Fix typos regarding KB ID </li><li>Change test method to validate hotfix is installed. </li></ul>
+<p>Thanks to all of the commenters for the valuable feedback!</p>
+<p><span style="color:#006400; font-family:Lucida Console; font-size:xx-small"></p>
+<p>&nbsp;</p>
+</span>
+<p></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color:#006400; font-family:Lucida Console; font-size:xx-small">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color:#006400; font-family:Lucida Console; font-size:xx-small"></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&lt;#----------------------------------------------------------------------------
+LEGAL DISCLAIMER 
+This Sample Code is provided for the purpose of illustration only and is not 
+intended to be used in a production environment.  THIS SAMPLE CODE AND ANY 
+RELATED INFORMATION ARE PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND, EITHER 
+EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF 
+MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.  We grant You a 
+nonexclusive, royalty-free right to use and modify the Sample Code and to 
+reproduce and distribute the object code form of the Sample Code, provided 
+that You agree: (i) to not use Our name, logo, or trademarks to market Your 
+software product in which the Sample Code is embedded; (ii) to include a valid 
+copyright notice on Your software product in which the Sample Code is embedded; 
+and (iii) to indemnify, hold harmless, and defend Us and Our suppliers from and 
+against any claims or lawsuits, including attorneys&rsquo; fees, that arise or result 
+from the use or distribution of the Sample Code. 
+  
+This posting is provided &quot;AS IS&quot; with no warranties, and confers no rights. Use 
+of included script samples are subject to the terms specified 
+at http://www.microsoft.com/info/cpyright.htm. 
+
+
+Author: Tom Moser, PFE
+Date: 5/13/2014
+Update1: 1/2/2015
+
+Version 1.0
+-Initial Release
+
+Version 1.1
+-Bug fixes
+    -Remove Ink and Handwriting Feature
+    -Fix typos in KB
+    -Change test to see if hotfix is installed
+-Thanks to all of the Script Center commenters for feedback!
+
+
+Usage: .\Cleanup-Disk.Ps1 [-NoReboot] [-LogPath &lt;String&gt;]
+
+Switch: NoReboot - Specify this switch ONLY if you DO NOT want the server to reboot
+        post update. It is recommendend that you do NOT use this switch.
+
+        LogPath - Specify this parameter with a log location to write out the script log.
+                  Will default to log.txt in the script directory.
+
+Notes: In order to schedule the script successfully, the name must remain Cleanup-Disk.ps1.
+       The log file will contain all relevent information - no console output should be expected. 
+
+Summary:
+    This script requires KB2852386.
+
+    The script itself will perform the following:
+        -Verify the KB is installed 
+        -Install the Desktop Experience feature 
+        -Install a scheduled task that restarts the script 60 seconds after reboot 
+        -Reboot, if necessary 
+        -Update registry keys for cleanmgr.exe to run. 
+        -Run cleanmgr.exe 
+        -Reboot 
+        -Remove Desktop Experience 
+        -Reboot 
+        -Remove scheduled task 
+        -Exit 
+
+-----------------------------------------------------------------------------#&gt;
+#Requires -RunAsAdministrator 
+#Requires -Module ServerManager
+
+
+Param([string]$LogPath=&quot;$(join-path $(split-path -parent $MyInvocation.MyCommand.Definition) log.txt)&quot;,      
+      [switch]$NoReboot=$false)
+
+
+if((get-hotfix KB2852386).HotFixID -ne &quot;KB2852386&quot;)
+{
+    Write-Error &quot;KB2852386 is required for script. Please install hotfix and re-run.&quot;
+    Exit
+}
+
+
+#Reg Paths/Vars
+Set-Variable -Name ScriptRegKey -Value &quot;HKLM:\Software\WinSXSCleanup&quot; -Option Constant
+Set-Variable -Name ScriptRegValueName -Value &quot;Phase&quot; -Option Constant
+Set-Variable -Name ScriptSageValueName -Value &quot;SageSet&quot; -Option Constant
+Set-Variable -Name ScriptSpaceBeforeValue -Value &quot;SpaceBefore&quot; -Option Constant
+Set-Variable -Name SchTaskName -Value &quot;CleanMgr Task Cleanup&quot; -Option Constant
+Set-Variable -Name ScriptDEStatusatStart -Value &quot;DEInstalledAtStart&quot; -Option Constant
+Set-Variable -Name ScriptInkStatusAtStart -Value &quot;InkInstalledAtStart&quot; -Option Constant
+Set-Variable -Name UpdateCleanupPath -value &quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Update Cleanup&quot; -Option Constant
+Set-Variable -Name ServicePackCleanupPath -Value &quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Service Pack Cleanup&quot; -Option Constant
+Set-Variable -Name VolumeCachesPath -Value &quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches&quot; -Option Constant
+Set-Variable -Name StateFlagClean -Value 2 -Option Constant
+Set-Variable -Name StateFlagNoAction -Value 0 -Option Constant
+
+$ScriptPath = split-path -parent $MyInvocation.MyCommand.Definition
+
+#Phase Constants
+Set-Variable -Name PhaseInit -Value -1 -Option Constant
+Set-Variable -Name PhaseStarted -Value 0 -Option Constant
+Set-Variable -Name PhaseDEInstalled -Value 1 -Option Constant
+Set-Variable -Name PhaseSageSetComplete -Value 2 -Option Constant
+Set-Variable -Name PhaseSageRunStarted -Value 3 -Option Constant
+Set-Variable -Name PhaseSageRunComplete -Value 4 -Option Constant
+Set-Variable -Name PhaseDERemoved -Value 5 -Option Constant
+Set-Variable -Name PhaseTaskRemoved -Value 6 -Option Constant
+
+#import-module
+Import-Module ServerManager
+
+#read state value, use switch statement
+
+Function DateStamp
+{
+    return &quot;$(Get-Date -UFormat %Y%m%d-%H%M%S):&quot;
+}
+
+Function LogEntry([string]$LogData)
+{
+    Add-Content $LogPath &quot;$(DateStamp) $LogData&quot;
+}
+
+Function GetCurrentState
+{
+   return (Get-ItemProperty -Path $ScriptRegKey -Name $ScriptRegValueName -ErrorAction SilentlyContinue).Phase
+}
+
+Function CreateScheduledTask
+{
+    Param([string]$ScriptPath, 
+          [string]$TaskName,
+          [string]$fLogPath,
+          [string]$fNoReboot=$false)
+    try
+    {
+        $Scheduler = New-Object -ComObject &quot;Schedule.Service&quot;
+        $Scheduler.Connect(&quot;Localhost&quot;)
+        $root = $Scheduler.GetFolder(&quot;\&quot;)
+        $newTask = $Scheduler.NewTask(0)
+        $newTask.RegistrationInfo.Author = $TaskName
+        $newTask.RegistrationInfo.Description = &quot;&quot;
+        $newtask.Settings.StartWhenAvailable = $true
+        $trigger = $newTask.Triggers.Create(8) #Trigger at boot
+        $trigger.Delay = &quot;PT60S&quot;
+        $trigger.Id = &quot;LogonTriggerId&quot;
+        $newTask.Principal.UserId = &quot;NT AUTHORITY\SYSTEM&quot;
+        $newTask.Principal.RunLevel = 1
+        $newTask.Principal.LogonType = 5
+
+        $action = $newtask.Actions.Create(0)
+        $action.Path = &quot;C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe&quot;
+        
+        if($fNoReboot -eq $true)
+        {
+            $action.Arguments = &quot;-command `&quot;$(join-path $ScriptPath cleanup-disk.ps1)`&quot; -LogPath `&quot;$fLogPath`&quot; -NoReboot -NonInteractive -NoLogo -Version 2&quot;
+        }
+        else
+        {
+            $action.Arguments = &quot;-command `&quot;$(join-path $ScriptPath cleanup-disk.ps1)`&quot; -LogPath `&quot;$fLogPath`&quot; -NonInteractive -NoLogo -Version 2&quot;
+        }
+
+        $root.RegisterTaskDefinition(&quot;CleanMgr Cleanup Task&quot;, $newTask, 6, &quot;NT AUTHORITY\SYSTEM&quot;, $null , 4)
+    }
+    catch
+    {
+        LogEntry &quot;Failed to register scheduled task.&quot; 
+        LogEntry $Error[0].Exception
+        throw &quot;Failed to register scheduled task...&quot;
+    }
+}
+Function DeleteScheduledTask
+{
+    Param([string]$TaskName)
+    c:\windows\system32\schtasks.exe /delete /TN &quot;CleanMgr Cleanup Task&quot; /f
+}
+
+Function CheckPendingReboot
+{
+    return Test-Path &quot;HKLM:\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending&quot;    
+}
+
+
+if(Test-Path $ScriptRegKey)
+{
+    $CurrentState = GetCurrentState
+}
+else
+{
+    $CurrentState = $PhaseInit
+}
+
+if(($CurrentState -eq $PhaseInit) -and (CheckPendingReboot -eq $true))
+{
+    Write-Host -ForegroundColor 'Red' &quot;Reboot pending. Please reboot system and rerun script.&quot;
+    LogEntry &quot;*** Reboot pending during initial phase. Reboot and rerun script!&quot;
+}
+
+
+LogEntry &quot;CurrentState: $CurrentState&quot;
+LogEntry &quot;NoReboot Flag: $NoReboot&quot;
+
+do
+{
+    LogEntry &quot;**** Current State: $CurrentState&quot;
+
+    #Evalute current state against all possibilities.
+    Switch($CurrentState)
+    {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+    
+    $PhaseInit
+    {        
+        LogEntry &quot;Switch: Null&quot;
+
+        try
+        {   
+            #Calculate and log freespace        
+            $FreeSpace = (Get-WmiObject win32_logicaldisk | where { $_.DeviceID -eq $env:SystemDrive }).FreeSpace
+            if((Test-Path $ScriptRegKey) -eq $false)
+            {
+                New-Item -Path $ScriptRegKey
+            }
+            Set-ItemProperty -Path $ScriptRegKey -Name $ScriptSpaceBeforeValue -Value $FreeSpace
+            LogEntry &quot;PhaseInit: Current Free Space: $([Math]::Round(($FreeSpace / 1GB),2))GB&quot;
+            
+             #Check to see if DE is already installed.
+            #If yes, set reg key to 1, else 0. Used to prevent DE from uninstalling unintentionally.
+            if((Get-WindowsFeature Desktop-Experience).Installed -eq $true)
+            {
+                Set-ItemProperty -Path $ScriptRegKey -name $ScriptDEStatusAtStart -Value 1
+            }
+            else
+            {
+                Set-ItemProperty -Path $ScriptRegKey -name $ScriptDEStatusAtStart -Value 0
+            }
+
+            if((Get-WindowsFeature Ink-Handwriting).Installed -eq $true)
+            {
+                Set-ItemProperty -Path $ScriptRegKey -Name $ScriptInkStatusAtStart -Value 1
+            }
+            else
+            {
+                Set-ItemProperty -Path $ScriptRegKey -Name $ScriptInkStatusAtStart -Value 0
+            }
+
+            
+            #Start Installing DE                        
+            LogEntry &quot;Feature: Installing Desktop Experience.&quot; 
+            $FeatureResult = Add-WindowsFeature Desktop-Experience
+            LogEntry &quot;PhaseInit: Feature: ExitCode: $($FeatureResult.ExitCode)&quot;
+            LogEntry &quot;PhaseInit: Feature: RestartRequired: $($FeatureResult.RestartNeeded)&quot;
+            LogEntry &quot;PhaseInit: Feature: Success: $($FeatureResult.Success)&quot;
+
+            #If DE fails, throw error. 
+            if($FeatureResult.Success -eq $false -and $FeatureResult.RestartNeeded -eq &quot;No&quot;)
+            {
+                throw &quot;PhaseInit: Failed to install Desktop Experience. This is a required feature for WinSXS Cleanup.&quot;
+            }
+           
+            #If DE exists with no change needed or success, update reg keys. Reboot if required. Create task.
+            elseif($FeatureResult.ExitCode -eq &quot;NoChangeNeeded&quot; -or ($FeatureResult.Success))
+            {
+                LogEntry &quot;PhaseInit: Feature: Desktop Experience Installed. Updating $ScriptRegKey\$ScriptRegValueName to $PhaseStarted&quot;
+                #New-Item $ScriptRegKey -Force
+                New-ItemProperty -Path $ScriptRegKey -Name $ScriptRegValueName -Value $PhaseStarted -Force
+                
+                if($NoReboot -eq $false -and $FeatureResult.RestartNeeded -eq &quot;Yes&quot;)
+                {                    
+                    LogEntry &quot;PhastInit: Creating Scheduled Task...&quot;
+                    CreateScheduledTask -ScriptPath $ScriptPath -TaskName $SchTaskName -fLogPath $LogPath 
+                    LogEntry &quot;PhaseInit: Created Scheduled Task $SchTaskName&quot;                    
+                    $CurrentState = GetCurrentState
+                    Restart-Computer
+                    Sleep 10
+                }
+                elseif($FeatureResult.ExitCode -eq &quot;NoChangeNeeded&quot;)
+                {
+                    LogEntry &quot;DE Already Installed. No reboot required.&quot;
+                    LogEntry &quot;PhastInit: Creating Scheduled Task...&quot;
+                    CreateScheduledTask -ScriptPath &quot;$ScriptPath&quot; -TaskName $SchTaskName -fLogPath $LogPath -fNoReboot &quot;`$$NoReboot&quot;
+                    LogEntry &quot;PhaseInit: Created Scheduled Task $SchTaskName&quot;
+
+                    $CurrentState = GetCurrentState
+                }                
+                else
+                {
+                    CreateScheduledTask -ScriptPath &quot;$ScriptPath&quot; -TaskName $SchTaskName -fLogPath $LogPath -fNoReboot &quot;`$$NoReboot&quot;
+                    LogEntry &quot;Phaseinit: Restart switch not specified. Please manually reboot the server to continue cleanup.&quot;
+                    Exit
+                }
+            }
+        }
+        
+        catch
+        {
+            LogEntry $error[0]
+            exit
+        }
+
+        break
+    }           
+
+    $PhaseStarted
+    {
+      LogEntry &quot;PhaseStarted: Verifying DE installation...&quot;
+      if((Get-WindowsFeature Desktop-Experience).Installed -eq $true) #check for pending reboot
+      {
+        LogEntry &quot;PhaseStarted: DE Installed. Moving to PhaseDEInstalled.&quot;
+        Set-ItemProperty -Path $ScriptRegKey -Name $ScriptRegValueName -Value $PhaseDEInstalled
+      }
+      Else
+      {
+        LogEntry &quot;PhaseStarted: DE not installed. Resetting phase to null.&quot;
+        New-ItemProperty -Path $ScriptRegKey -Name $ScriptRegValueName -Value $null
+      }
+
+      $CurrentState = GetCurrentState
+      break
+    }
+
+    $PhaseDEInstalled
+    {
+        try
+        {
+            LogEntry &quot;PhaseDEInstalled: Starting PhaseDEInstalled...&quot;
+            LogEntry &quot;PhaseDEInstalled: Setting SagetSet...&quot;
+            #use static SageSet Value. Insert in to registry.
+            $SageSet = &quot;0010&quot;
+            Set-Variable -Name StateFlags -Value &quot;StateFlags$SageSet&quot; -Option Constant          
+            LogEntry &quot;PhaseDEInstalled: SageSet complete.&quot;
+            LogEntry &quot;PhaseDEInstalled: Setting VolumeCaches reg keys...&quot;
+            #Set all VolumeCache keys to StateFlags = 0 to prevent cleanup. After, set the proper keys to 2 to allow cleanup.
+            $SubKeys = Get-Childitem HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches
+            Foreach ($Key in $SubKeys)
+            {
+                Set-ItemProperty -Path $Key.PSPath -Name $StateFlags -Value $StateFlagNoAction
+            }
+
+            LogEntry &quot;PhaseDEInstalled: VolumeCaches keys set.&quot;
+            LogEntry &quot;PhaseDEInstalled: Setting UPdate and Service Pack Keys...&quot;
+            #Set all script reg values for persistence through reboots.
+            Set-ItemProperty -Path $ScriptRegKey -Name $ScriptSageValueName -Value $SageSet
+            Set-ItemProperty -Path $UpdateCleanUpPath -Name $StateFlags -Value $StateFlagClean
+            Set-ItemProperty -Path $ServicePackCleanUpPath -Name $StateFlags -Value $StateFlagClean                                                                
+            LogEntry &quot;PhaseDEInstalled: Done.&quot; 
+
+            #Update state key
+            Set-ItemProperty -Path $ScriptRegKey -Name $ScriptRegValueName -Value $PhaseSageSetComplete
+            $CurrentState = GetCurrentState
+            LogEntry &quot;PhaseDEInstalled: Complete.&quot;
+        }
+        
+        catch
+        {
+            LogEntry &quot;PhaseDEInstalled: Failed to update reg keys.&quot;
+            LogEntry $Error[0].Exception
+        }
+        break
+    }
+
+    $PhaseSageSetComplete
+    {
+        LogEntry &quot;PhaseSageSetComplete: Starting cleanmgr.&quot;
+        try
+        {
+            $SageSet = (Get-ItemProperty -Path $ScriptRegKey -Name $ScriptSageValueName).SageSet
+                        
+            LogEntry &quot;PhaseSageSetComplete: CleanMgr.exe running... &quot;            
+            $StartTime = Get-Date
+            &amp;&quot;C:\Windows\System32\Cleanmgr.exe&quot; &#43; &quot; /sagerun:$SageSet&quot;            
+            Wait-Process cleanmgr
+            $EndTime = Get-Date
+            LogEntry &quot;PhaseSageSetComplete: CleanMgr.exe complete...&quot;
+            LogEntry &quot;PhaseSageSetComplete: Seconds Elapsed: $((New-TimeSpan $StartTime $EndTime).TotalSeconds)&quot;
+            LogEntry &quot;PhaseSageSetComplete: Updating State...&quot;
+            Set-ItemProperty -Path $ScriptRegKey -Name $ScriptRegValueName -Value $PhaseSageRunComplete
+            $CurrentState = GetCurrentState
+            LogEntry &quot;PhaseSageSetComplete: Complete.&quot;
+        }
+
+        catch
+        {
+            LogEntry &quot;PhaseSageSetComplete: ERROR.&quot;            
+            LogEntry $Error[0].Exception
+        }    
+        break    
+    }
+
+    $PhaseSageRunComplete
+    {
+        try
+        {   
+            $DEStatusInit = (Get-ItemProperty -Path $ScriptRegKey -Name $ScriptDEStatusAtStart).&quot;$ScriptDEStatusAtStart&quot;
+            $InkStatusInit = (Get-ItemProperty -Path $scriptRegKey -Name $ScriptInkStatusAtStart).&quot;$ScriptInkStatusAtStart&quot;
+
+            LogEntry &quot;PhaseSageRunComplete: Starting PhaseSageRunComplete.&quot;
+            LogEntry &quot;PhaseSageRunComplete: Getting DE Status.&quot;
+            
+            $DEStatus = (Get-WindowsFeature Desktop-Experience).Installed
+            $InkStatus = (Get-WindowsFeature Ink-Handwriting).Installed
+
+            if($DEStatus -and $DEStatusInit -eq 0)
+            {
+                $RemoveDE = $true
+            }
+            else
+            {
+                $RemoveDE = $false
+            }
+
+            if($InkStatus -and $InkStatusInit -eq 0)
+            {
+               $RemoveInk = $true
+            }
+            else
+            {
+                $RemoveInk = $false
+            }
+
+            LogEntry &quot;PhaseSageRunComplete: DEInstalled = $DEStatus&quot;
+            LogEntry &quot;PhaseSageRunComplete: DEStatus at Start was $DEStatusInit&quot;
+            LogEntry &quot;PhaseSageRunComplete: RemoveDE is $RemoveDE&quot;
+            LogEntry &quot;PhaseSageRunComplete: InkInstalled = $InkStatus&quot;
+            LogEntry &quot;PhaseSageRunComplete: InkStatus at start was $InkStatusInit&quot;
+            LogEntry &quot;PhaseSageRunComplete: RemoveInk is $RemoveInk&quot;            
+
+
+            #if($DEStatusInit -eq 1)
+            if($RemoveDE -eq $false)
+            {
+                LogEntry &quot;PhaseSageRunComplete: DE removal not required. Continuing...&quot;
+                Set-ItemProperty -Path $ScriptRegKey -Name $ScriptRegValueName -Value $PhaseDERemoved
+                $CurrentState = GetCurrentState
+            }
+
+            #remove DE if it was not installed                       
+            if($RemoveDE -eq $true)
+            {                
+                if($RemoveInk -eq $true)
+                {       
+                    LogEntry &quot;PhaseSageRunComplete: Removing DE and Ink-Handwriting&quot;             
+                    $DEFeatureResult = (Remove-WindowsFeature Desktop-Experience,Ink-Handwriting)                                    
+                }
+                else
+                {
+                    LogEntry &quot;PhaseSageRunComplete: Removing only DE.&quot;
+                    $DEFeatureResult = (Remove-WindowsFeature Desktop-Experience)                   
+                }
+                           
+                if($NoReboot -eq $false -and $DEFeatureResult.Success -and $DEFeatureResult.RestartNeeded -eq &quot;Yes&quot;)
+                {
+                    LogEntry &quot;PhaseSageRunComplete: Result: $($DEFeatureResult.Success)&quot;
+                    LogEntry &quot;PhaseSageRunComplete: RestartNeeded: $($DEFeatureResult.RestartNeeded)&quot;
+                    LogEntry &quot;PhaseSageRunComplete: Feature removed successfully.&quot;
+                   
+                    if($RemoveInk -eq $false)
+                    { 
+                        LogEntry &quot;PhaseSageRunComplete: Rebooting...&quot;
+                        Restart-Computer -Force
+                        Sleep 10
+                    }
+                    else
+                    {
+                        LogEntry &quot;PhaseSageRunComplete: Postponing reboot to remove Ink-Handwriting...&quot;
+                    }
+                   
+                }
+                elseif(($NoReboot -eq $false) -and ($DEFeatureResult.Success -eq $false) -and ($DEFeatureResult.RestartNeeded -eq &quot;Yes&quot;))
+                {
+                    LogEntry &quot;PhaseSageRunComplete: Result: $($DEFeatureResult.Success)&quot;
+                    LogEntry &quot;PhaseSageRunComplete: RestartNeeded: $($DEFeatureResult.RestartNeeded)&quot;
+                    LogEntry &quot;PhaseSageRunComplete: Reboot already pending. Rebooting...&quot;
+                    LogEntry &quot;PhaseSageRunComplete: Rebooting...&quot;
+                    Restart-Computer -Force
+                    Sleep 10
+                }
+                Else
+                {    
+                    LogEntry &quot;PhaseSageRunComplete: Result: $($DEFeatureResult.Success)&quot;
+                    LogEntry &quot;PhaseSageRunComplete: RestartNeeded: $($DEFeatureResult.RestartNeeded)&quot;                
+                    LogEntry &quot;Reboot Required: *** MANUAL REBOOT REQUIRED ***&quot;
+                    Exit
+                }
+            }
+            elseif($DEStatus -eq $false -and $DEStatusInit -eq 0)
+            {
+                #DE removed, update status
+                LogEntry &quot;PhaseSageRunComplete: DE Removed. Updating status...&quot;
+                Set-ItemProperty -Path $ScriptRegKey -Name $ScriptRegValueName -Value $PhaseDERemoved
+            }
+            else
+            {      
+                LogEntry &quot;PhaseSageRunComplete: ERROR.&quot;            
+                LogEntry $Error[0].Exception
+            }
+
+            if($RemoveInk -eq $true -and $RemoveDE -eq $false)
+            {
+                LogEntry &quot;PhaseSageRunComplete: Removing Ink-Handwriting&quot;
+                $InkFeatureResult = (Remove-WindowsFeature Ink-Handwriting)
+
+                if($NoReboot -eq $false -and $InkFeatureResult.Success -and $InkFeatureResult.RestartNeeded -eq &quot;Yes&quot;)
+                {
+                    LogEntry &quot;PhaseSageRunComplete: Result: $($InkFeatureResult.Success)&quot;
+                    LogEntry &quot;PhaseSageRunComplete: RestartNeeded: $($InkFeatureResult.RestartNeeded)&quot;
+                    LogEntry &quot;PhaseSageRunComplete: Feature removed successfully.&quot;
+                    LogEntry &quot;PhaseSageRunComplete: Rebooting...&quot;
+                    Restart-Computer -Force
+                    Sleep 10
+                }
+                
+                elseif(($NoReboot -eq $false) -and ($InkFeatureResult.Success -eq $false) -and ($InkFeatureResult.RestartNeeded -eq &quot;Yes&quot;))
+                {
+                    LogEntry &quot;PhaseSageRunComplete: Result: $($InkFeatureResult.Success)&quot;
+                    LogEntry &quot;PhaseSageRunComplete: RestartNeeded: $($InkFeatureResult.RestartNeeded)&quot;
+                    LogEntry &quot;PhaseSageRunComplete: Reboot already pending. Rebooting...&quot;
+                    LogEntry &quot;PhaseSageRunComplete: Rebooting...&quot;
+                    Restart-Computer -Force
+                    Sleep 10
+                }
+                else
+                {    
+                    LogEntry &quot;PhaseSageRunComplete: Result: $($DEFeatureResult.Success)&quot;
+                    LogEntry &quot;PhaseSageRunComplete: RestartNeeded: $($DEFeatureResult.RestartNeeded)&quot;                
+                    LogEntry &quot;Reboot Required: *** MANUAL REBOOT REQUIRED ***&quot;
+                    Exit
+                }              
+            }
+            elseif(($InkStatus -eq $false -and $InkStatusInit -eq 0) -or ($InkStatus -eq $true -and $InkStatusInit -eq 1))
+            {
+                #Ink removed, update status
+                LogEntry &quot;PhaseSageRunComplete: Ink Removed. Updating status...&quot;
+                Set-ItemProperty -Path $ScriptRegKey -Name $ScriptRegValueName -Value $PhaseDERemoved
+            }          
+            else
+            {      
+                LogEntry &quot;PhaseSageRunComplete: Error removing Ink-Handwriting.&quot;            
+                LogEntry $Error[0].Exception
+            }
+
+            $CurrentState = GetCurrentState
+
+        }
+
+        catch
+        {
+            LogEntry &quot;PhaseSageRunComplete: Caught Exception.&quot;
+            LogEntry &quot;$($Error[0].Exception)&quot;
+        } 
+        break       
+    }
+
+    $PhaseDERemoved
+    {
+        try
+        {
+            #Retrieving initial space
+            $SpaceAtStart = (Get-ItemProperty -Path $ScriptRegKey -Name $ScriptSpaceBeforeValue).&quot;$ScriptSpaceBeforeValue&quot;
+
+            #remove reg key                        
+            LogEntry &quot;PhaseDERemoved: Removing Script Reg Key.&quot;
+            Remove-Item $ScriptRegKey            
+            $CurrentState = $PhaseTaskRemoved
+        }
+
+        catch
+        {
+            LogEntry &quot;PhaseDERemoved: ERROR.&quot;            
+            LogEntry $Error[0].Exception
+        }
+        break
+    }
+
+   
+    }
+
+#Prevents infinite loops consuming resources.
+Sleep 1
+
+} until ($CurrentState -eq $PhaseTaskRemoved)
+
+if($CurrentState -eq $PhaseTaskRemoved)
+{
+    try
+    {
+        LogEntry &quot;PhaseTaskRemoved: Removing Scheduled Task&quot;
+        DeleteScheduledTask -TaskName $SchTaskName
+        LogEntry &quot;PhaseTaskRemoved: Scheduled Task Deleted.&quot;
+        LogEntry &quot;PhaseTaskRemoved: Script Complete.&quot;
+
+        $CurrentSpace = (Get-WmiObject win32_logicaldisk | where { $_.DeviceID -eq $env:SystemDrive }).FreeSpace
+        LogEntry &quot;PhaseTaskRemoved: Current Disk Space: $([Math]::Round(($CurrentSpace / 1GB),2)) GB&quot;
+        
+        $Savings = [Math]::Round(((($CurrentSpace / $SpaceAtStart) - 1) * 100),2)
+
+$message = @&quot;
+****** CleanMgr complete.
+****** Starting Free Space: $SpaceAtStart
+****** Current Free Space: $CurrentSpace
+****** Savings: $Savings%
+****** Exiting.
+&quot;@
+
+        LogEntry $message
+   }
+
+   catch
+   {
+    LogEntry &quot;PhaseTaskRemoved: Error during PhaseTaskRemoved...&quot;
+    LogEntry $Error[0].Exception
+   }
+
+   Exit
+}</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__mlcom">&lt;#----------------------------------------------------------------------------&nbsp;
+LEGAL&nbsp;DISCLAIMER&nbsp;&nbsp;
+This&nbsp;Sample&nbsp;Code&nbsp;is&nbsp;provided&nbsp;for&nbsp;the&nbsp;purpose&nbsp;of&nbsp;illustration&nbsp;only&nbsp;and&nbsp;is&nbsp;not&nbsp;&nbsp;
+intended&nbsp;to&nbsp;be&nbsp;used&nbsp;in&nbsp;a&nbsp;production&nbsp;environment.&nbsp;&nbsp;THIS&nbsp;SAMPLE&nbsp;CODE&nbsp;AND&nbsp;ANY&nbsp;&nbsp;
+RELATED&nbsp;INFORMATION&nbsp;ARE&nbsp;PROVIDED&nbsp;&quot;AS&nbsp;IS&quot;&nbsp;WITHOUT&nbsp;WARRANTY&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;EITHER&nbsp;&nbsp;
+EXPRESSED&nbsp;OR&nbsp;IMPLIED,&nbsp;INCLUDING&nbsp;BUT&nbsp;NOT&nbsp;LIMITED&nbsp;TO&nbsp;THE&nbsp;IMPLIED&nbsp;WARRANTIES&nbsp;OF&nbsp;&nbsp;
+MERCHANTABILITY&nbsp;AND/OR&nbsp;FITNESS&nbsp;FOR&nbsp;A&nbsp;PARTICULAR&nbsp;PURPOSE.&nbsp;&nbsp;We&nbsp;grant&nbsp;You&nbsp;a&nbsp;&nbsp;
+nonexclusive,&nbsp;royalty-free&nbsp;right&nbsp;to&nbsp;use&nbsp;and&nbsp;modify&nbsp;the&nbsp;Sample&nbsp;Code&nbsp;and&nbsp;to&nbsp;&nbsp;
+reproduce&nbsp;and&nbsp;distribute&nbsp;the&nbsp;object&nbsp;code&nbsp;form&nbsp;of&nbsp;the&nbsp;Sample&nbsp;Code,&nbsp;provided&nbsp;&nbsp;
+that&nbsp;You&nbsp;agree:&nbsp;(i)&nbsp;to&nbsp;not&nbsp;use&nbsp;Our&nbsp;name,&nbsp;logo,&nbsp;or&nbsp;trademarks&nbsp;to&nbsp;market&nbsp;Your&nbsp;&nbsp;
+software&nbsp;product&nbsp;in&nbsp;which&nbsp;the&nbsp;Sample&nbsp;Code&nbsp;is&nbsp;embedded;&nbsp;(ii)&nbsp;to&nbsp;include&nbsp;a&nbsp;valid&nbsp;&nbsp;
+copyright&nbsp;notice&nbsp;on&nbsp;Your&nbsp;software&nbsp;product&nbsp;in&nbsp;which&nbsp;the&nbsp;Sample&nbsp;Code&nbsp;is&nbsp;embedded;&nbsp;&nbsp;
+and&nbsp;(iii)&nbsp;to&nbsp;indemnify,&nbsp;hold&nbsp;harmless,&nbsp;and&nbsp;defend&nbsp;Us&nbsp;and&nbsp;Our&nbsp;suppliers&nbsp;from&nbsp;and&nbsp;&nbsp;
+against&nbsp;any&nbsp;claims&nbsp;or&nbsp;lawsuits,&nbsp;including&nbsp;attorneys&rsquo;&nbsp;fees,&nbsp;that&nbsp;arise&nbsp;or&nbsp;result&nbsp;&nbsp;
+from&nbsp;the&nbsp;use&nbsp;or&nbsp;distribution&nbsp;of&nbsp;the&nbsp;Sample&nbsp;Code.&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+This&nbsp;posting&nbsp;is&nbsp;provided&nbsp;&quot;AS&nbsp;IS&quot;&nbsp;with&nbsp;no&nbsp;warranties,&nbsp;and&nbsp;confers&nbsp;no&nbsp;rights.&nbsp;Use&nbsp;&nbsp;
+of&nbsp;included&nbsp;script&nbsp;samples&nbsp;are&nbsp;subject&nbsp;to&nbsp;the&nbsp;terms&nbsp;specified&nbsp;&nbsp;
+at&nbsp;http://www.microsoft.com/info/cpyright.htm.&nbsp;&nbsp;
+&nbsp;
+&nbsp;
+Author:&nbsp;Tom&nbsp;Moser,&nbsp;PFE&nbsp;
+Date:&nbsp;5/13/2014&nbsp;
+Update1:&nbsp;1/2/2015&nbsp;
+&nbsp;
+Version&nbsp;1.0&nbsp;
+-Initial&nbsp;Release&nbsp;
+&nbsp;
+Version&nbsp;1.1&nbsp;
+-Bug&nbsp;fixes&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;-Remove&nbsp;Ink&nbsp;and&nbsp;Handwriting&nbsp;Feature&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;-Fix&nbsp;typos&nbsp;in&nbsp;KB&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;-Change&nbsp;test&nbsp;to&nbsp;see&nbsp;if&nbsp;hotfix&nbsp;is&nbsp;installed&nbsp;
+-Thanks&nbsp;to&nbsp;all&nbsp;of&nbsp;the&nbsp;Script&nbsp;Center&nbsp;commenters&nbsp;for&nbsp;feedback!&nbsp;
+&nbsp;
+&nbsp;
+Usage:&nbsp;.\Cleanup-Disk.Ps1&nbsp;[-NoReboot]&nbsp;[-LogPath&nbsp;&lt;String&gt;]&nbsp;
+&nbsp;
+Switch:&nbsp;NoReboot&nbsp;-&nbsp;Specify&nbsp;this&nbsp;switch&nbsp;ONLY&nbsp;if&nbsp;you&nbsp;DO&nbsp;NOT&nbsp;want&nbsp;the&nbsp;server&nbsp;to&nbsp;reboot&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;post&nbsp;update.&nbsp;It&nbsp;is&nbsp;recommendend&nbsp;that&nbsp;you&nbsp;do&nbsp;NOT&nbsp;use&nbsp;this&nbsp;switch.&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogPath&nbsp;-&nbsp;Specify&nbsp;this&nbsp;parameter&nbsp;with&nbsp;a&nbsp;log&nbsp;location&nbsp;to&nbsp;write&nbsp;out&nbsp;the&nbsp;script&nbsp;log.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Will&nbsp;default&nbsp;to&nbsp;log.txt&nbsp;in&nbsp;the&nbsp;script&nbsp;directory.&nbsp;
+&nbsp;
+Notes:&nbsp;In&nbsp;order&nbsp;to&nbsp;schedule&nbsp;the&nbsp;script&nbsp;successfully,&nbsp;the&nbsp;name&nbsp;must&nbsp;remain&nbsp;Cleanup-Disk.ps1.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;log&nbsp;file&nbsp;will&nbsp;contain&nbsp;all&nbsp;relevent&nbsp;information&nbsp;-&nbsp;no&nbsp;console&nbsp;output&nbsp;should&nbsp;be&nbsp;expected.&nbsp;&nbsp;
+&nbsp;
+Summary:&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;script&nbsp;requires&nbsp;KB2852386.&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;script&nbsp;itself&nbsp;will&nbsp;perform&nbsp;the&nbsp;following:&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Verify&nbsp;the&nbsp;KB&nbsp;is&nbsp;installed&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Install&nbsp;the&nbsp;Desktop&nbsp;Experience&nbsp;feature&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Install&nbsp;a&nbsp;scheduled&nbsp;task&nbsp;that&nbsp;restarts&nbsp;the&nbsp;script&nbsp;60&nbsp;seconds&nbsp;after&nbsp;reboot&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Reboot,&nbsp;if&nbsp;necessary&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Update&nbsp;registry&nbsp;keys&nbsp;for&nbsp;cleanmgr.exe&nbsp;to&nbsp;run.&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Run&nbsp;cleanmgr.exe&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Reboot&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Remove&nbsp;Desktop&nbsp;Experience&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Reboot&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Remove&nbsp;scheduled&nbsp;task&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Exit&nbsp;&nbsp;
+&nbsp;
+-----------------------------------------------------------------------------#&gt;</span>&nbsp;
+<span class="powerShell__com">#Requires&nbsp;-RunAsAdministrator&nbsp;</span>&nbsp;
+<span class="powerShell__com">#Requires&nbsp;-Module&nbsp;ServerManager</span>&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Param</span>([string]<span class="powerShell__variable">$LogPath</span>=<span class="powerShell__string">&quot;$(join-path&nbsp;$(split-path&nbsp;-parent&nbsp;$MyInvocation.MyCommand.Definition)&nbsp;log.txt)&quot;</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="powerShell__keyword">switch</span>]<span class="powerShell__variable">$NoReboot</span>=<span class="powerShell__variable">$false</span>)&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">if</span>((get<span class="powerShell__operator">-</span>hotfix&nbsp;KB2852386).HotFixID&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__string">&quot;KB2852386&quot;</span>)&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Error</span>&nbsp;<span class="powerShell__string">&quot;KB2852386&nbsp;is&nbsp;required&nbsp;for&nbsp;script.&nbsp;Please&nbsp;install&nbsp;hotfix&nbsp;and&nbsp;re-run.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span>&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#Reg&nbsp;Paths/Vars</span>&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;ScriptRegKey&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__string">&quot;HKLM:\Software\WinSXSCleanup&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;ScriptRegValueName&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__string">&quot;Phase&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;ScriptSageValueName&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__string">&quot;SageSet&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;ScriptSpaceBeforeValue&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__string">&quot;SpaceBefore&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;SchTaskName&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__string">&quot;CleanMgr&nbsp;Task&nbsp;Cleanup&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;ScriptDEStatusatStart&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__string">&quot;DEInstalledAtStart&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;ScriptInkStatusAtStart&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__string">&quot;InkInstalledAtStart&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;UpdateCleanupPath&nbsp;<span class="powerShell__operator">-</span>value&nbsp;<span class="powerShell__string">&quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Update&nbsp;Cleanup&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;ServicePackCleanupPath&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__string">&quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Service&nbsp;Pack&nbsp;Cleanup&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;VolumeCachesPath&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__string">&quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;StateFlagClean&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;2&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;StateFlagNoAction&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;0&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+&nbsp;
+<span class="powerShell__variable">$ScriptPath</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">split-path</span>&nbsp;<span class="powerShell__operator">-</span>parent&nbsp;<span class="powerShell__variable">$MyInvocation</span>.MyCommand.Definition&nbsp;
+&nbsp;
+<span class="powerShell__com">#Phase&nbsp;Constants</span>&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;PhaseInit&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__operator">-</span>1&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;PhaseStarted&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;0&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;PhaseDEInstalled&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;1&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;PhaseSageSetComplete&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;2&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;PhaseSageRunStarted&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;3&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;PhaseSageRunComplete&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;4&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;PhaseDERemoved&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;5&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;PhaseTaskRemoved&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;6&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;
+&nbsp;
+<span class="powerShell__com">#import-module</span>&nbsp;
+Import<span class="powerShell__operator">-</span>Module&nbsp;ServerManager&nbsp;
+&nbsp;
+<span class="powerShell__com">#read&nbsp;state&nbsp;value,&nbsp;use&nbsp;switch&nbsp;statement</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;DateStamp&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>&nbsp;<span class="powerShell__string">&quot;$(Get-Date&nbsp;-UFormat&nbsp;%Y%m%d-%H%M%S):&quot;</span>&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;LogEntry([string]<span class="powerShell__variable">$LogData</span>)&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Add-Content</span>&nbsp;<span class="powerShell__variable">$LogPath</span>&nbsp;<span class="powerShell__string">&quot;$(DateStamp)&nbsp;$LogData&quot;</span>&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;GetCurrentState&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>&nbsp;(<span class="powerShell__cmdlets">Get-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptRegValueName</span>&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;SilentlyContinue).Phase&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;CreateScheduledTask&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Param</span>([string]<span class="powerShell__variable">$ScriptPath</span>,&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$TaskName</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$fLogPath</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$fNoReboot</span>=<span class="powerShell__variable">$false</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">try</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Scheduler</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;<span class="powerShell__string">&quot;Schedule.Service&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Scheduler</span>.Connect(<span class="powerShell__string">&quot;Localhost&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$root</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Scheduler</span>.GetFolder(&quot;\&quot;)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$newTask</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Scheduler</span>.NewTask(0)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$newTask</span>.RegistrationInfo.Author&nbsp;=&nbsp;<span class="powerShell__variable">$TaskName</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$newTask</span>.RegistrationInfo.Description&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$newtask</span>.Settings.StartWhenAvailable&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$trigger</span>&nbsp;=&nbsp;<span class="powerShell__variable">$newTask</span>.Triggers.Create(8)&nbsp;<span class="powerShell__com">#Trigger&nbsp;at&nbsp;boot</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$trigger</span>.Delay&nbsp;=&nbsp;<span class="powerShell__string">&quot;PT60S&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$trigger</span>.Id&nbsp;=&nbsp;<span class="powerShell__string">&quot;LogonTriggerId&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$newTask</span>.Principal.UserId&nbsp;=&nbsp;<span class="powerShell__string">&quot;NT&nbsp;AUTHORITY\SYSTEM&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$newTask</span>.Principal.RunLevel&nbsp;=&nbsp;1&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$newTask</span>.Principal.LogonType&nbsp;=&nbsp;5&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$action</span>&nbsp;=&nbsp;<span class="powerShell__variable">$newtask</span>.Actions.Create(0)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$action</span>.Path&nbsp;=&nbsp;<span class="powerShell__string">&quot;C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$fNoReboot</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$action</span>.Arguments&nbsp;=&nbsp;<span class="powerShell__string">&quot;-command&nbsp;`&quot;</span><span class="powerShell__variable">$</span>(<span class="powerShell__cmdlets">join-path</span>&nbsp;<span class="powerShell__variable">$ScriptPath</span>&nbsp;cleanup<span class="powerShell__operator">-</span>disk.ps1)`<span class="powerShell__string">&quot;&nbsp;-LogPath&nbsp;`&quot;</span><span class="powerShell__variable">$fLogPath</span>`<span class="powerShell__string">&quot;&nbsp;-NoReboot&nbsp;-NonInteractive&nbsp;-NoLogo&nbsp;-Version&nbsp;2&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$action</span>.Arguments&nbsp;=&nbsp;<span class="powerShell__string">&quot;-command&nbsp;`&quot;</span><span class="powerShell__variable">$</span>(<span class="powerShell__cmdlets">join-path</span>&nbsp;<span class="powerShell__variable">$ScriptPath</span>&nbsp;cleanup<span class="powerShell__operator">-</span>disk.ps1)`<span class="powerShell__string">&quot;&nbsp;-LogPath&nbsp;`&quot;</span><span class="powerShell__variable">$fLogPath</span>`<span class="powerShell__string">&quot;&nbsp;-NonInteractive&nbsp;-NoLogo&nbsp;-Version&nbsp;2&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$root</span>.RegisterTaskDefinition(<span class="powerShell__string">&quot;CleanMgr&nbsp;Cleanup&nbsp;Task&quot;</span>,&nbsp;<span class="powerShell__variable">$newTask</span>,&nbsp;6,&nbsp;<span class="powerShell__string">&quot;NT&nbsp;AUTHORITY\SYSTEM&quot;</span>,&nbsp;<span class="powerShell__variable">$null</span>&nbsp;,&nbsp;4)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">catch</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;Failed&nbsp;to&nbsp;register&nbsp;scheduled&nbsp;task.&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__variable">$Error</span>[0].Exception&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">throw</span>&nbsp;<span class="powerShell__string">&quot;Failed&nbsp;to&nbsp;register&nbsp;scheduled&nbsp;task...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+}&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;DeleteScheduledTask&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Param</span>([string]<span class="powerShell__variable">$TaskName</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;c:\windows\system32\schtasks.exe&nbsp;<span class="powerShell__operator">/</span>delete&nbsp;<span class="powerShell__operator">/</span>TN&nbsp;<span class="powerShell__string">&quot;CleanMgr&nbsp;Cleanup&nbsp;Task&quot;</span>&nbsp;<span class="powerShell__operator">/</span>f&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;CheckPendingReboot&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">return</span>&nbsp;<span class="powerShell__cmdlets">Test-Path</span>&nbsp;<span class="powerShell__string">&quot;HKLM:\Software\Microsoft\Windows\CurrentVersion\Component&nbsp;Based&nbsp;Servicing\RebootPending&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">if</span>(<span class="powerShell__cmdlets">Test-Path</span>&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>)&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentState</span>&nbsp;=&nbsp;GetCurrentState&nbsp;
+}&nbsp;
+<span class="powerShell__keyword">else</span>&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentState</span>&nbsp;=&nbsp;<span class="powerShell__variable">$PhaseInit</span>&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">if</span>((<span class="powerShell__variable">$CurrentState</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$PhaseInit</span>)&nbsp;<span class="powerShell__operator">-</span>and&nbsp;(CheckPendingReboot&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>))&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;<span class="powerShell__string">'Red'</span>&nbsp;<span class="powerShell__string">&quot;Reboot&nbsp;pending.&nbsp;Please&nbsp;reboot&nbsp;system&nbsp;and&nbsp;rerun&nbsp;script.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;***&nbsp;Reboot&nbsp;pending&nbsp;during&nbsp;initial&nbsp;phase.&nbsp;Reboot&nbsp;and&nbsp;rerun&nbsp;script!&quot;</span>&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+LogEntry&nbsp;<span class="powerShell__string">&quot;CurrentState:&nbsp;$CurrentState&quot;</span>&nbsp;
+LogEntry&nbsp;<span class="powerShell__string">&quot;NoReboot&nbsp;Flag:&nbsp;$NoReboot&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">do</span>&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;****&nbsp;Current&nbsp;State:&nbsp;$CurrentState&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Evalute&nbsp;current&nbsp;state&nbsp;against&nbsp;all&nbsp;possibilities.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Switch</span>(<span class="powerShell__variable">$CurrentState</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$PhaseInit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;Switch:&nbsp;Null&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">try</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Calculate&nbsp;and&nbsp;log&nbsp;freespace&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$FreeSpace</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-WmiObject</span>&nbsp;win32_logicaldisk&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.DeviceID&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$env</span>:SystemDrive&nbsp;}).FreeSpace&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>((<span class="powerShell__cmdlets">Test-Path</span>&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>)&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">New-Item</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptSpaceBeforeValue</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$FreeSpace</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseInit:&nbsp;Current&nbsp;Free&nbsp;Space:&nbsp;$([Math]::Round(($FreeSpace&nbsp;/&nbsp;1GB),2))GB&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Check&nbsp;to&nbsp;see&nbsp;if&nbsp;DE&nbsp;is&nbsp;already&nbsp;installed.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#If&nbsp;yes,&nbsp;set&nbsp;reg&nbsp;key&nbsp;to&nbsp;1,&nbsp;else&nbsp;0.&nbsp;Used&nbsp;to&nbsp;prevent&nbsp;DE&nbsp;from&nbsp;uninstalling&nbsp;unintentionally.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>((Get<span class="powerShell__operator">-</span>WindowsFeature&nbsp;Desktop<span class="powerShell__operator">-</span>Experience).Installed&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>name&nbsp;<span class="powerShell__variable">$ScriptDEStatusAtStart</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;1&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>name&nbsp;<span class="powerShell__variable">$ScriptDEStatusAtStart</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;0&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>((Get<span class="powerShell__operator">-</span>WindowsFeature&nbsp;Ink<span class="powerShell__operator">-</span>Handwriting).Installed&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptInkStatusAtStart</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;1&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptInkStatusAtStart</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;0&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Start&nbsp;Installing&nbsp;DE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;Feature:&nbsp;Installing&nbsp;Desktop&nbsp;Experience.&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$FeatureResult</span>&nbsp;=&nbsp;Add<span class="powerShell__operator">-</span>WindowsFeature&nbsp;Desktop<span class="powerShell__operator">-</span>Experience&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseInit:&nbsp;Feature:&nbsp;ExitCode:&nbsp;$($FeatureResult.ExitCode)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseInit:&nbsp;Feature:&nbsp;RestartRequired:&nbsp;$($FeatureResult.RestartNeeded)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseInit:&nbsp;Feature:&nbsp;Success:&nbsp;$($FeatureResult.Success)&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#If&nbsp;DE&nbsp;fails,&nbsp;throw&nbsp;error.&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$FeatureResult</span>.Success&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$FeatureResult</span>.RestartNeeded&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;No&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">throw</span>&nbsp;<span class="powerShell__string">&quot;PhaseInit:&nbsp;Failed&nbsp;to&nbsp;install&nbsp;Desktop&nbsp;Experience.&nbsp;This&nbsp;is&nbsp;a&nbsp;required&nbsp;feature&nbsp;for&nbsp;WinSXS&nbsp;Cleanup.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#If&nbsp;DE&nbsp;exists&nbsp;with&nbsp;no&nbsp;change&nbsp;needed&nbsp;or&nbsp;success,&nbsp;update&nbsp;reg&nbsp;keys.&nbsp;Reboot&nbsp;if&nbsp;required.&nbsp;Create&nbsp;task.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">elseif</span>(<span class="powerShell__variable">$FeatureResult</span>.ExitCode&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;NoChangeNeeded&quot;</span>&nbsp;<span class="powerShell__operator">-</span>or&nbsp;(<span class="powerShell__variable">$FeatureResult</span>.Success))&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseInit:&nbsp;Feature:&nbsp;Desktop&nbsp;Experience&nbsp;Installed.&nbsp;Updating&nbsp;$ScriptRegKey\$ScriptRegValueName&nbsp;to&nbsp;$PhaseStarted&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#New-Item&nbsp;$ScriptRegKey&nbsp;-Force</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">New-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptRegValueName</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$PhaseStarted</span>&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$NoReboot</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$FeatureResult</span>.RestartNeeded&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;Yes&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhastInit:&nbsp;Creating&nbsp;Scheduled&nbsp;Task...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CreateScheduledTask&nbsp;<span class="powerShell__operator">-</span>ScriptPath&nbsp;<span class="powerShell__variable">$ScriptPath</span>&nbsp;<span class="powerShell__operator">-</span>TaskName&nbsp;<span class="powerShell__variable">$SchTaskName</span>&nbsp;<span class="powerShell__operator">-</span>fLogPath&nbsp;<span class="powerShell__variable">$LogPath</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseInit:&nbsp;Created&nbsp;Scheduled&nbsp;Task&nbsp;$SchTaskName&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentState</span>&nbsp;=&nbsp;GetCurrentState&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Restart<span class="powerShell__operator">-</span>Computer&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">Sleep</span>&nbsp;10&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">elseif</span>(<span class="powerShell__variable">$FeatureResult</span>.ExitCode&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;NoChangeNeeded&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;DE&nbsp;Already&nbsp;Installed.&nbsp;No&nbsp;reboot&nbsp;required.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhastInit:&nbsp;Creating&nbsp;Scheduled&nbsp;Task...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CreateScheduledTask&nbsp;<span class="powerShell__operator">-</span>ScriptPath&nbsp;<span class="powerShell__string">&quot;$ScriptPath&quot;</span>&nbsp;<span class="powerShell__operator">-</span>TaskName&nbsp;<span class="powerShell__variable">$SchTaskName</span>&nbsp;<span class="powerShell__operator">-</span>fLogPath&nbsp;<span class="powerShell__variable">$LogPath</span>&nbsp;<span class="powerShell__operator">-</span>fNoReboot&nbsp;<span class="powerShell__string">&quot;`$$NoReboot&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseInit:&nbsp;Created&nbsp;Scheduled&nbsp;Task&nbsp;$SchTaskName&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentState</span>&nbsp;=&nbsp;GetCurrentState&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CreateScheduledTask&nbsp;<span class="powerShell__operator">-</span>ScriptPath&nbsp;<span class="powerShell__string">&quot;$ScriptPath&quot;</span>&nbsp;<span class="powerShell__operator">-</span>TaskName&nbsp;<span class="powerShell__variable">$SchTaskName</span>&nbsp;<span class="powerShell__operator">-</span>fLogPath&nbsp;<span class="powerShell__variable">$LogPath</span>&nbsp;<span class="powerShell__operator">-</span>fNoReboot&nbsp;<span class="powerShell__string">&quot;`$$NoReboot&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;Phaseinit:&nbsp;Restart&nbsp;switch&nbsp;not&nbsp;specified.&nbsp;Please&nbsp;manually&nbsp;reboot&nbsp;the&nbsp;server&nbsp;to&nbsp;continue&nbsp;cleanup.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">catch</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__variable">$error</span>[0]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">break</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$PhaseStarted</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseStarted:&nbsp;Verifying&nbsp;DE&nbsp;installation...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>((Get<span class="powerShell__operator">-</span>WindowsFeature&nbsp;Desktop<span class="powerShell__operator">-</span>Experience).Installed&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;<span class="powerShell__com">#check&nbsp;for&nbsp;pending&nbsp;reboot</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseStarted:&nbsp;DE&nbsp;Installed.&nbsp;Moving&nbsp;to&nbsp;PhaseDEInstalled.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptRegValueName</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$PhaseDEInstalled</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseStarted:&nbsp;DE&nbsp;not&nbsp;installed.&nbsp;Resetting&nbsp;phase&nbsp;to&nbsp;null.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">New-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptRegValueName</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$null</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentState</span>&nbsp;=&nbsp;GetCurrentState&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">break</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$PhaseDEInstalled</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">try</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseDEInstalled:&nbsp;Starting&nbsp;PhaseDEInstalled...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseDEInstalled:&nbsp;Setting&nbsp;SagetSet...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#use&nbsp;static&nbsp;SageSet&nbsp;Value.&nbsp;Insert&nbsp;in&nbsp;to&nbsp;registry.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SageSet</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;0010&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set<span class="powerShell__operator">-</span>Variable&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;StateFlags&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__string">&quot;StateFlags$SageSet&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Option&nbsp;Constant&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseDEInstalled:&nbsp;SageSet&nbsp;complete.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseDEInstalled:&nbsp;Setting&nbsp;VolumeCaches&nbsp;reg&nbsp;keys...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Set&nbsp;all&nbsp;VolumeCache&nbsp;keys&nbsp;to&nbsp;StateFlags&nbsp;=&nbsp;0&nbsp;to&nbsp;prevent&nbsp;cleanup.&nbsp;After,&nbsp;set&nbsp;the&nbsp;proper&nbsp;keys&nbsp;to&nbsp;2&nbsp;to&nbsp;allow&nbsp;cleanup.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SubKeys</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-Childitem</span>&nbsp;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Foreach</span>&nbsp;(<span class="powerShell__variable">$Key</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$SubKeys</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$Key</span>.PSPath&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$StateFlags</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$StateFlagNoAction</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseDEInstalled:&nbsp;VolumeCaches&nbsp;keys&nbsp;set.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseDEInstalled:&nbsp;Setting&nbsp;UPdate&nbsp;and&nbsp;Service&nbsp;Pack&nbsp;Keys...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Set&nbsp;all&nbsp;script&nbsp;reg&nbsp;values&nbsp;for&nbsp;persistence&nbsp;through&nbsp;reboots.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptSageValueName</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$SageSet</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$UpdateCleanUpPath</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$StateFlags</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$StateFlagClean</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ServicePackCleanUpPath</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$StateFlags</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$StateFlagClean</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseDEInstalled:&nbsp;Done.&quot;</span>&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Update&nbsp;state&nbsp;key</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptRegValueName</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$PhaseSageSetComplete</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentState</span>&nbsp;=&nbsp;GetCurrentState&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseDEInstalled:&nbsp;Complete.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">catch</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseDEInstalled:&nbsp;Failed&nbsp;to&nbsp;update&nbsp;reg&nbsp;keys.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__variable">$Error</span>[0].Exception&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">break</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$PhaseSageSetComplete</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageSetComplete:&nbsp;Starting&nbsp;cleanmgr.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">try</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SageSet</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptSageValueName</span>).SageSet&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageSetComplete:&nbsp;CleanMgr.exe&nbsp;running...&nbsp;&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$StartTime</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-Date</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">&amp;</span><span class="powerShell__string">&quot;C:\Windows\System32\Cleanmgr.exe&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&nbsp;/sagerun:$SageSet&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wait<span class="powerShell__operator">-</span><span class="powerShell__keyword">Process</span>&nbsp;cleanmgr&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$EndTime</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-Date</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageSetComplete:&nbsp;CleanMgr.exe&nbsp;complete...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageSetComplete:&nbsp;Seconds&nbsp;Elapsed:&nbsp;$((New-TimeSpan&nbsp;$StartTime&nbsp;$EndTime).TotalSeconds)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageSetComplete:&nbsp;Updating&nbsp;State...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptRegValueName</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$PhaseSageRunComplete</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentState</span>&nbsp;=&nbsp;GetCurrentState&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageSetComplete:&nbsp;Complete.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">catch</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageSetComplete:&nbsp;ERROR.&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__variable">$Error</span>[0].Exception&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">break</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$PhaseSageRunComplete</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">try</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$DEStatusInit</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptDEStatusAtStart</span>).<span class="powerShell__string">&quot;$ScriptDEStatusAtStart&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$InkStatusInit</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$scriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptInkStatusAtStart</span>).<span class="powerShell__string">&quot;$ScriptInkStatusAtStart&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Starting&nbsp;PhaseSageRunComplete.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Getting&nbsp;DE&nbsp;Status.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$DEStatus</span>&nbsp;=&nbsp;(Get<span class="powerShell__operator">-</span>WindowsFeature&nbsp;Desktop<span class="powerShell__operator">-</span>Experience).Installed&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$InkStatus</span>&nbsp;=&nbsp;(Get<span class="powerShell__operator">-</span>WindowsFeature&nbsp;Ink<span class="powerShell__operator">-</span>Handwriting).Installed&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$DEStatus</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$DEStatusInit</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;0)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RemoveDE</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RemoveDE</span>&nbsp;=&nbsp;<span class="powerShell__variable">$false</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$InkStatus</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$InkStatusInit</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;0)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RemoveInk</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RemoveInk</span>&nbsp;=&nbsp;<span class="powerShell__variable">$false</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;DEInstalled&nbsp;=&nbsp;$DEStatus&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;DEStatus&nbsp;at&nbsp;Start&nbsp;was&nbsp;$DEStatusInit&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;RemoveDE&nbsp;is&nbsp;$RemoveDE&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;InkInstalled&nbsp;=&nbsp;$InkStatus&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;InkStatus&nbsp;at&nbsp;start&nbsp;was&nbsp;$InkStatusInit&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;RemoveInk&nbsp;is&nbsp;$RemoveInk&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#if($DEStatusInit&nbsp;-eq&nbsp;1)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$RemoveDE</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;DE&nbsp;removal&nbsp;not&nbsp;required.&nbsp;Continuing...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptRegValueName</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$PhaseDERemoved</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentState</span>&nbsp;=&nbsp;GetCurrentState&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#remove&nbsp;DE&nbsp;if&nbsp;it&nbsp;was&nbsp;not&nbsp;installed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$RemoveDE</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$RemoveInk</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Removing&nbsp;DE&nbsp;and&nbsp;Ink-Handwriting&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$DEFeatureResult</span>&nbsp;=&nbsp;(Remove<span class="powerShell__operator">-</span>WindowsFeature&nbsp;Desktop<span class="powerShell__operator">-</span>Experience,Ink<span class="powerShell__operator">-</span>Handwriting)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Removing&nbsp;only&nbsp;DE.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$DEFeatureResult</span>&nbsp;=&nbsp;(Remove<span class="powerShell__operator">-</span>WindowsFeature&nbsp;Desktop<span class="powerShell__operator">-</span>Experience)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$NoReboot</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$DEFeatureResult</span>.Success&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$DEFeatureResult</span>.RestartNeeded&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;Yes&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Result:&nbsp;$($DEFeatureResult.Success)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;RestartNeeded:&nbsp;$($DEFeatureResult.RestartNeeded)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Feature&nbsp;removed&nbsp;successfully.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$RemoveInk</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Rebooting...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Restart<span class="powerShell__operator">-</span>Computer&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">Sleep</span>&nbsp;10&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Postponing&nbsp;reboot&nbsp;to&nbsp;remove&nbsp;Ink-Handwriting...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">elseif</span>((<span class="powerShell__variable">$NoReboot</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>)&nbsp;<span class="powerShell__operator">-</span>and&nbsp;(<span class="powerShell__variable">$DEFeatureResult</span>.Success&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>)&nbsp;<span class="powerShell__operator">-</span>and&nbsp;(<span class="powerShell__variable">$DEFeatureResult</span>.RestartNeeded&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;Yes&quot;</span>))&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Result:&nbsp;$($DEFeatureResult.Success)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;RestartNeeded:&nbsp;$($DEFeatureResult.RestartNeeded)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Reboot&nbsp;already&nbsp;pending.&nbsp;Rebooting...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Rebooting...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Restart<span class="powerShell__operator">-</span>Computer&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">Sleep</span>&nbsp;10&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Result:&nbsp;$($DEFeatureResult.Success)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;RestartNeeded:&nbsp;$($DEFeatureResult.RestartNeeded)&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;Reboot&nbsp;Required:&nbsp;***&nbsp;MANUAL&nbsp;REBOOT&nbsp;REQUIRED&nbsp;***&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">elseif</span>(<span class="powerShell__variable">$DEStatus</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$DEStatusInit</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;0)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#DE&nbsp;removed,&nbsp;update&nbsp;status</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;DE&nbsp;Removed.&nbsp;Updating&nbsp;status...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptRegValueName</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$PhaseDERemoved</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;ERROR.&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__variable">$Error</span>[0].Exception&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$RemoveInk</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$RemoveDE</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Removing&nbsp;Ink-Handwriting&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$InkFeatureResult</span>&nbsp;=&nbsp;(Remove<span class="powerShell__operator">-</span>WindowsFeature&nbsp;Ink<span class="powerShell__operator">-</span>Handwriting)&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$NoReboot</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$InkFeatureResult</span>.Success&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$InkFeatureResult</span>.RestartNeeded&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;Yes&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Result:&nbsp;$($InkFeatureResult.Success)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;RestartNeeded:&nbsp;$($InkFeatureResult.RestartNeeded)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Feature&nbsp;removed&nbsp;successfully.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Rebooting...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Restart<span class="powerShell__operator">-</span>Computer&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">Sleep</span>&nbsp;10&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">elseif</span>((<span class="powerShell__variable">$NoReboot</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>)&nbsp;<span class="powerShell__operator">-</span>and&nbsp;(<span class="powerShell__variable">$InkFeatureResult</span>.Success&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>)&nbsp;<span class="powerShell__operator">-</span>and&nbsp;(<span class="powerShell__variable">$InkFeatureResult</span>.RestartNeeded&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;Yes&quot;</span>))&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Result:&nbsp;$($InkFeatureResult.Success)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;RestartNeeded:&nbsp;$($InkFeatureResult.RestartNeeded)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Reboot&nbsp;already&nbsp;pending.&nbsp;Rebooting...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Rebooting...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Restart<span class="powerShell__operator">-</span>Computer&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">Sleep</span>&nbsp;10&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Result:&nbsp;$($DEFeatureResult.Success)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;RestartNeeded:&nbsp;$($DEFeatureResult.RestartNeeded)&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;Reboot&nbsp;Required:&nbsp;***&nbsp;MANUAL&nbsp;REBOOT&nbsp;REQUIRED&nbsp;***&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">elseif</span>((<span class="powerShell__variable">$InkStatus</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$InkStatusInit</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;0)&nbsp;<span class="powerShell__operator">-</span>or&nbsp;(<span class="powerShell__variable">$InkStatus</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$InkStatusInit</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;1))&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Ink&nbsp;removed,&nbsp;update&nbsp;status</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Ink&nbsp;Removed.&nbsp;Updating&nbsp;status...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptRegValueName</span>&nbsp;<span class="powerShell__operator">-</span>Value&nbsp;<span class="powerShell__variable">$PhaseDERemoved</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Error&nbsp;removing&nbsp;Ink-Handwriting.&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__variable">$Error</span>[0].Exception&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentState</span>&nbsp;=&nbsp;GetCurrentState&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">catch</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseSageRunComplete:&nbsp;Caught&nbsp;Exception.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;$($Error[0].Exception)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">break</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$PhaseDERemoved</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">try</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#Retrieving&nbsp;initial&nbsp;space</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SpaceAtStart</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-ItemProperty</span>&nbsp;<span class="powerShell__operator">-</span>Path&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;<span class="powerShell__variable">$ScriptSpaceBeforeValue</span>).<span class="powerShell__string">&quot;$ScriptSpaceBeforeValue&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#remove&nbsp;reg&nbsp;key&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseDERemoved:&nbsp;Removing&nbsp;Script&nbsp;Reg&nbsp;Key.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Remove-Item</span>&nbsp;<span class="powerShell__variable">$ScriptRegKey</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentState</span>&nbsp;=&nbsp;<span class="powerShell__variable">$PhaseTaskRemoved</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">catch</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseDERemoved:&nbsp;ERROR.&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__variable">$Error</span>[0].Exception&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">break</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+<span class="powerShell__com">#Prevents&nbsp;infinite&nbsp;loops&nbsp;consuming&nbsp;resources.</span>&nbsp;
+<span class="powerShell__alias">Sleep</span>&nbsp;1&nbsp;
+&nbsp;
+}&nbsp;<span class="powerShell__keyword">until</span>&nbsp;(<span class="powerShell__variable">$CurrentState</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$PhaseTaskRemoved</span>)&nbsp;
+&nbsp;
+<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$CurrentState</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$PhaseTaskRemoved</span>)&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">try</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseTaskRemoved:&nbsp;Removing&nbsp;Scheduled&nbsp;Task&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DeleteScheduledTask&nbsp;<span class="powerShell__operator">-</span>TaskName&nbsp;<span class="powerShell__variable">$SchTaskName</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseTaskRemoved:&nbsp;Scheduled&nbsp;Task&nbsp;Deleted.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseTaskRemoved:&nbsp;Script&nbsp;Complete.&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentSpace</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-WmiObject</span>&nbsp;win32_logicaldisk&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.DeviceID&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$env</span>:SystemDrive&nbsp;}).FreeSpace&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseTaskRemoved:&nbsp;Current&nbsp;Disk&nbsp;Space:&nbsp;$([Math]::Round(($CurrentSpace&nbsp;/&nbsp;1GB),2))&nbsp;GB&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Savings</span>&nbsp;=&nbsp;[Math]::Round((((<span class="powerShell__variable">$CurrentSpace</span>&nbsp;<span class="powerShell__operator">/</span>&nbsp;<span class="powerShell__variable">$SpaceAtStart</span>)&nbsp;<span class="powerShell__operator">-</span>&nbsp;1)&nbsp;<span class="powerShell__operator">*</span>&nbsp;100),2)&nbsp;
+&nbsp;
+<span class="powerShell__variable">$message</span>&nbsp;=&nbsp;@&quot;&nbsp;
+<span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span>&nbsp;CleanMgr&nbsp;complete.&nbsp;
+<span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span>&nbsp;Starting&nbsp;Free&nbsp;Space:&nbsp;<span class="powerShell__variable">$SpaceAtStart</span>&nbsp;
+<span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span>&nbsp;Current&nbsp;Free&nbsp;Space:&nbsp;<span class="powerShell__variable">$CurrentSpace</span>&nbsp;
+<span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span>&nbsp;Savings:&nbsp;<span class="powerShell__variable">$Savings</span>%&nbsp;
+<span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span><span class="powerShell__operator">*</span>&nbsp;Exiting.&nbsp;
+&quot;@&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__variable">$message</span>&nbsp;
+&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">catch</span>&nbsp;
+&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__string">&quot;PhaseTaskRemoved:&nbsp;Error&nbsp;during&nbsp;PhaseTaskRemoved...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;LogEntry&nbsp;<span class="powerShell__variable">$Error</span>[0].Exception&nbsp;
+&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span>&nbsp;
+}</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<div class="mcePaste" id="_mcePaste" style="left:-10000px; top:0px; width:1px; height:1px; overflow:hidden">
+</div>
+
+        </div>
+    </body>
+</html>

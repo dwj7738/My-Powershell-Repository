@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Decline all updates superseded by a particular update that are not needed</title>        
+        <meta name="description" content="This script connects to WSUS and recursively finds all updates that are superseded by a particular update and declines them. This script was inspired by the sentence &quot;Updates superseded by a service pack that is installed everywhere have no useful value. Decline them.&quot;" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<div>This script connects to WSUS and recursively finds all updates that are superseded by a particular update and declines them.</div>
+<div>This script was inspired by the sentence &quot;Updates superseded by a service pack that is installed everywhere have no useful value. Decline them.&quot; in the following article:
+<a href="http://thwack.solarwinds.com/community/application-and-server_tht/patchzone/blog/2013/01/21/wsus-timeout-errors--removing-unneeded-update-approvals">
+http://thwack.solarwinds.com/community/application-and-server_tht/patchzone/blog/2013/01/21/wsus-timeout-errors--removing-unneeded-update-approvals</a>&nbsp;Thanks Lawrence Garvin (any faults in the script are mine though).</div>
+<div>Firstly you need to find the Guid for the update you are interested in and place this into the $UpdateGUID variable as below:</div>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">$UpdateGUID = &quot;e5077be1-da82-4c15-82d1-e4e8ff0a1264&quot;</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__variable">$UpdateGUID</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;e5077be1-da82-4c15-82d1-e4e8ff0a1264&quot;</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">One way to find the update Guid is to connect to WSUS in Powershell (see this article:
+<a href="http://blogs.technet.com/b/heyscriptingguy/archive/2012/01/17/use-powershell-to-perform-basic-administrative-tasks-on-wsus.aspx">
+http://blogs.technet.com/b/heyscriptingguy/archive/2012/01/17/use-powershell-to-perform-basic-administrative-tasks-on-wsus.aspx</a>)&nbsp;and search for the update. The example below seaches for &quot;Windows XP Service Pack 2&quot; and returns all the updates found,
+ their KB article numbers and their GUIDs. Pick the relevant GUID from the list (there may be more than one update returned!)</div>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">$Updates = $Wsus.SearchUpdates(&lsquo;Windows XP Service Pack 2&rsquo;)
+$Updates | Select Title, KnowledgebaseArticles, @{n=&quot;Guid&quot;;e={$_.ID.UpdateId.Guid}}</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__variable">$Updates</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Wsus</span>.SearchUpdates(&lsquo;Windows&nbsp;XP&nbsp;Service&nbsp;Pack&nbsp;2&rsquo;)&nbsp;
+<span class="powerShell__variable">$Updates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">Select</span>&nbsp;Title,&nbsp;KnowledgebaseArticles,&nbsp;@{n=<span class="powerShell__string">&quot;Guid&quot;</span>;e={<span class="powerShell__variable">$_</span>.ID.UpdateId.Guid}}</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">When the script is run it gets the update you have specified in $UpdateGUID and retrieves all updates superseded by that update.</div>
+<div class="endscriptcode">For each superseded update:</div>
+<ul>
+<li>
+<div class="endscriptcode">if the update is not declined it retrieves the needed count (Downloaded&#43;NotInstalled). If the Needed count is 0 it adds the update to a collection of updates to decline (SupersededUpdatesToDecline). If the Needed count is greater
+ than 0 it doesn't decline the update but adds it to a different collection needed for the output (SupersededUpdatesStillNeeded).</div>
+</li><li>
+<div class="endscriptcode">if the update is declined and you want to see updates that are already declined, the update is added to another collection for the output (DeclinedSupersededUpdates). If you want to see these updates in the output set $ShowDeclinedUpdates
+ to $True (set it to $False if you don't).</div>
+</li><li>
+<div class="endscriptcode">if you set $Recursive to $True the script will recursively retrieve superseded updates of the update you specify in $UpdateGUID as well as all superseded updates.</div>
+</li></ul>
+<div class="endscriptcode">Once the above is complete, if there are updates to decline and $TrialRun is set to $False, the script declines the superseded updates.</div>
+<div class="endscriptcode">The script then e-mails a report from the e-mail address specified in $FromAddress via the SMTP server specified in $SMTPServer to the recipient specified in $Recipients. This report may have up to 3 tables (depending on what was
+ found). These tables are &quot;Updates Declined&quot;, &quot;Updates Still Needed&quot; &amp; &quot;Previously Declined Superseded Updates&quot;. Each table contains the following headings: &quot;Title&quot;, &quot;KB Article&quot;, &quot;Classification&quot;, &quot;Product Title&quot;, &quot;Product Family&quot;, &quot;Arrival Date&quot;, &quot;Needed
+ Count&quot;, &quot;Superseded By KB&quot; &amp; &quot;Superseded By Title&quot;.</div>
+<div class="endscriptcode">The script was more of a proof of concept rather than a fully error checked script so I'd recommend running it with &quot;$TrialRun = $True&quot; for each different Update GUID you give it so you can make sure the script is going to decline
+ the updates you want.</div>
+<div class="endscriptcode">Below are all the variables you need to change for it to work in your environment:<br>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">$UpdateGUID = &quot;&lt;UpdateGUID&gt;&quot;
+
+$WsusServer = &quot;wsus.company.com&quot;
+$UseSSL = $false
+$PortNumber = 80
+$TrialRun = $True
+$ShowDeclinedUpdates = $True
+$Recursive = $True
+
+#E-mail Configuration
+$SMTPServer = &quot;smtp.company.com&quot;
+$FromAddress = &quot;wsus@company.com&quot;
+$Recipients = &quot;wsusadmins@company.com&quot;</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__variable">$UpdateGUID</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&lt;UpdateGUID&gt;&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$WsusServer</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;wsus.company.com&quot;</span>&nbsp;
+<span class="powerShell__variable">$UseSSL</span>&nbsp;=&nbsp;<span class="powerShell__variable">$false</span>&nbsp;
+<span class="powerShell__variable">$PortNumber</span>&nbsp;=&nbsp;80&nbsp;
+<span class="powerShell__variable">$TrialRun</span>&nbsp;=&nbsp;<span class="powerShell__variable">$True</span>&nbsp;
+<span class="powerShell__variable">$ShowDeclinedUpdates</span>&nbsp;=&nbsp;<span class="powerShell__variable">$True</span>&nbsp;
+<span class="powerShell__variable">$Recursive</span>&nbsp;=&nbsp;<span class="powerShell__variable">$True</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#E-mail&nbsp;Configuration</span>&nbsp;
+<span class="powerShell__variable">$SMTPServer</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;smtp.company.com&quot;</span>&nbsp;
+<span class="powerShell__variable">$FromAddress</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;wsus@company.com&quot;</span>&nbsp;
+<span class="powerShell__variable">$Recipients</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;wsusadmins@company.com&quot;</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;The 4 commented out $UpdateGUIDs at the top of the script are NOT recommendations of updates you need to run this script against. They are just examples of GUIDs I had on&nbsp;my server that were fully deployed and I needed
+ to decline the superseded updates for.</div>
+</div>
+
+        </div>
+    </body>
+</html>

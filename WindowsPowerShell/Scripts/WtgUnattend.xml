@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-Shell-Setup" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" processorArchitecture="AMD64" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <OOBE>
+                <HideEULAPage>true</HideEULAPage>
+                <ProtectYourPC>1</ProtectYourPC>
+                <NetworkLocation>Work</NetworkLocation>
+                <HideLocalAccountScreen>true</HideLocalAccountScreen>
+                <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+                <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+            </OOBE>
+            <RegisteredOwner>ViaMonstra</RegisteredOwner>
+            <TimeZone>W. Europe Standard Time</TimeZone>
+            <RegisteredOrganization>ViaMonstra</RegisteredOrganization>
+            <UserAccounts>
+                <AdministratorPassword>
+                    <Value>YLqWvZR1AL</Value>
+                    <PlainText>True</PlainText>
+                </AdministratorPassword>
+            </UserAccounts>
+        </component>
+        <component name="Microsoft-Windows-International-Core" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" processorArchitecture="AMD64">
+          <InputLocale>sv-se</InputLocale>
+          <SystemLocale>sv-se</SystemLocale>
+          <UILanguage>sv-se</UILanguage>
+          <UserLocale>sv-se</UserLocale>
+        </component>
+        <component name="Microsoft-Windows-WinRE-RecoveryAgent" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UninstallWindowsRE>true</UninstallWindowsRE>
+        </component>
+        <component name="Microsoft-Windows-Shell-Setup" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" processorArchitecture="X86" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <OOBE>
+                <HideEULAPage>true</HideEULAPage>
+                <ProtectYourPC>1</ProtectYourPC>
+                <NetworkLocation>Work</NetworkLocation>
+                <HideLocalAccountScreen>true</HideLocalAccountScreen>
+                <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+                <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+            </OOBE>
+            <RegisteredOwner>ViaMonstra</RegisteredOwner>
+            <TimeZone>W. Europe Standard Time</TimeZone>
+            <RegisteredOrganization>ViaMonstra</RegisteredOrganization>
+            <UserAccounts>
+                <AdministratorPassword>
+                    <Value>YLqWvZR1AL</Value>
+                    <PlainText>True</PlainText>
+                </AdministratorPassword>
+            </UserAccounts>
+        </component>
+        <component name="Microsoft-Windows-International-Core" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" processorArchitecture="x86">
+          <InputLocale>sv-se</InputLocale>
+          <SystemLocale>sv-se</SystemLocale>
+          <UILanguage>sv-se</UILanguage>
+          <UserLocale>sv-se</UserLocale>
+        </component>
+        <component name="Microsoft-Windows-WinRE-RecoveryAgent" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UninstallWindowsRE>true</UninstallWindowsRE>
+        </component>
+    </settings>
+    <settings pass="specialize">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         <ComputerName>WTG-1039944611</ComputerName>
+         <CopyProfile>true</CopyProfile>
+        </component>
+        <component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         <RunSynchronous>
+          <RunSynchronousCommand wcm:action="add">
+           <Description>EnableAdmin</Description>
+           <Order>1</Order>
+           <Path>cmd /c net user Administrator /active:yes</Path>
+          </RunSynchronousCommand>
+          <RunSynchronousCommand wcm:action="add">
+           <Description>UnfilterAdministratorToken</Description>
+           <Order>2</Order>
+           <Path>cmd /c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v FilterAdministratorToken /t REG_DWORD /d 0 /f</Path>
+          </RunSynchronousCommand>
+          <RunSynchronousCommand wcm:action="add">
+           <Description>disable user account page</Description>
+           <Order>3</Order>
+           <Path>reg add HKLM\Software\Microsoft\Windows\CurrentVersion\Setup\OOBE /v UnattendCreatedUser /t REG_DWORD /d 1 /f</Path>
+          </RunSynchronousCommand>
+         </RunSynchronous>
+        </component>
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         <ComputerName>WTG-1039944611</ComputerName>
+         <CopyProfile>true</CopyProfile>
+        </component>
+        <component name="Microsoft-Windows-Deployment" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         <RunSynchronous>
+          <RunSynchronousCommand wcm:action="add">
+           <Description>EnableAdmin</Description>
+           <Order>1</Order>
+           <Path>cmd /c net user Administrator /active:yes</Path>
+         </RunSynchronousCommand>
+         <RunSynchronousCommand wcm:action="add">
+           <Description>UnfilterAdministratorToken</Description>
+           <Order>2</Order>
+           <Path>cmd /c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v FilterAdministratorToken /t REG_DWORD /d 0 /f</Path>
+         </RunSynchronousCommand>
+         <RunSynchronousCommand wcm:action="add">
+           <Description>disable user account page</Description>
+           <Order>3</Order>
+           <Path>reg add HKLM\Software\Microsoft\Windows\CurrentVersion\Setup\OOBE /v UnattendCreatedUser /t REG_DWORD /d 1 /f</Path>
+          </RunSynchronousCommand>
+         </RunSynchronous>
+        </component>
+    </settings>
+    <settings pass="offlineServicing">
+        <component language="neutral" name="Microsoft-Windows-PartitionManager" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SanPolicy>4</SanPolicy>
+        </component>
+        <component language="neutral" name="Microsoft-Windows-PartitionManager" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SanPolicy>4</SanPolicy>
+        </component>
+    </settings>
+</unattend>

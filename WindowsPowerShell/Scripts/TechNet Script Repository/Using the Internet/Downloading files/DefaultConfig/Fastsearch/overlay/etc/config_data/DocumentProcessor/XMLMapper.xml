@@ -1,0 +1,11 @@
+<XMLPropertiesCreator>
+  <propset>e80ee0e8-71c0-4d8d-b918-360ad2fd7aa9</propset>
+  <type>31</type>
+  <XMLMappings>
+    <Mapping attr="cpv" path="//vref"/>                   
+    <Mapping attr="cpp" path="//pref"/>
+    <Mapping attr="cpe" path="//eref"/>
+    <Mapping attr="title" path="//Title" />
+  </XMLMappings>
+</XMLPropertiesCreator>
+

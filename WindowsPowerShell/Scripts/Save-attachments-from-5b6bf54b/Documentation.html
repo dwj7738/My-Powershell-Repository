@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Save attachments from multiple selected items in Outlook (VBA)</title>        
+        <meta name="description" content="This VBA sample illustrates how to save attachments from multiple selected items in Outlook." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<h1><strong>Save attachments from multiple selected items in Outlook (VBA)</strong></h1>
+<h2><strong>Introduction</strong></h2>
+<p>This VBA sample illustrates how to save attachments from multiple selected items in Outlook.</p>
+<h2><strong>Scenarios</strong></h2>
+<p>When multiple items are selected, the Save Attachments option in the File menu will be grayed out, and it's inconvenient to save attachments one by one. This script is useful and can be used to save attachments from multiple selected items all at once.</p>
+<h2><strong>Script</strong></h2>
+<p><em>Import the &quot;mAttachmentSaver.bas&quot; file.</em></p>
+<p><strong>Step1. Press Alt&#43;F11 to open the VBE in Outlook.</strong></p>
+<p><strong>Step2. Drag the &quot;mAttachmentSaver.bas&quot; file to the Project Explorer (Press Ctrl&#43;R if you cannot see it) or via File &gt;&gt; Import File... (Ctrl&#43;M).<br>
+<br>
+</strong><em><img id="65120" src="E:\Documents\WindowsPowerShell\Scripts\Save-attachments-from-5b6bf54b\Documentation_files\tmp1E7AResources.png" alt="" width="241" height="130"></em></p>
+<p><em>Run the ExecuteSaving macro to save attachments.</em></p>
+<p><strong>Step3. Go back to Outlook UI, and then press Alt&#43;F8 to open the Macros window.</strong></p>
+<p><strong>Step4. S</strong><strong>elect &quot;<em>ExecuteSaving</em>&quot; in the names list, and then click the Run button (Please remember to select Outlook item(s) before running this macro).</strong></p>
+<p><strong>Step5. Select a specific folder to save attachments from Browse For Folder dialog box, and then click the OK button.<br>
+<br>
+</strong>&nbsp;<img id="65121" src="E:\Documents\WindowsPowerShell\Scripts\Save-attachments-from-5b6bf54b\Documentation_files\tmp1E7BResources.png" alt="" width="347" height="355"></p>
+<p>&nbsp;</p>
+<p>Here are some code snippets for your references. To get the complete script sample, please click the Download button at the beginning of this page.</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>Visual Basic</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">vb</span>
+<pre class="hidden">' ######################################
+' Run this macro for saving attachments.
+' ######################################
+Public Sub ExecuteSaving()
+    Dim lNum As Long
+    
+    lNum = SaveAttachmentsFromSelection
+    
+    If lNum &gt; 0 Then
+        MsgBox CStr(lNum) &amp; &quot; attachment(s) was(were) saved successfully.&quot;, vbInformation, &quot;Message from Attachment Saver&quot;
+    Else
+        MsgBox &quot;No attachment(s) in the selected Outlook items.&quot;, vbInformation, &quot;Message from Attachment Saver&quot;
+    End If
+End Sub</pre>
+<div class="preview">
+<pre class="vb"><span class="visualBasic__com">'&nbsp;######################################</span>&nbsp;
+<span class="visualBasic__com">'&nbsp;Run&nbsp;this&nbsp;macro&nbsp;for&nbsp;saving&nbsp;attachments.</span>&nbsp;
+<span class="visualBasic__com">'&nbsp;######################################</span>&nbsp;
+<span class="visualBasic__keyword">Public</span>&nbsp;<span class="visualBasic__keyword">Sub</span>&nbsp;ExecuteSaving()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Dim</span>&nbsp;lNum&nbsp;<span class="visualBasic__keyword">As</span>&nbsp;<span class="visualBasic__keyword">Long</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;lNum&nbsp;=&nbsp;SaveAttachmentsFromSelection&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">If</span>&nbsp;lNum&nbsp;&gt;&nbsp;<span class="visualBasic__number">0</span>&nbsp;<span class="visualBasic__keyword">Then</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MsgBox&nbsp;<span class="visualBasic__keyword">CStr</span>(lNum)&nbsp;&amp;&nbsp;<span class="visualBasic__string">&quot;&nbsp;attachment(s)&nbsp;was(were)&nbsp;saved&nbsp;successfully.&quot;</span>,&nbsp;vbInformation,&nbsp;<span class="visualBasic__string">&quot;Message&nbsp;from&nbsp;Attachment&nbsp;Saver&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MsgBox&nbsp;<span class="visualBasic__string">&quot;No&nbsp;attachment(s)&nbsp;in&nbsp;the&nbsp;selected&nbsp;Outlook&nbsp;items.&quot;</span>,&nbsp;vbInformation,&nbsp;<span class="visualBasic__string">&quot;Message&nbsp;from&nbsp;Attachment&nbsp;Saver&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">End</span>&nbsp;<span class="visualBasic__keyword">If</span>&nbsp;
+<span class="visualBasic__keyword">End</span>&nbsp;<span class="visualBasic__keyword">Sub</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;&nbsp;</div>
+<h2><em><strong>Note</strong></em></h2>
+<p><strong>1. Please make sure that macros are enabled in Outlook. <br>
+</strong><br>
+<em>For Outlook 2010:<br>
+</em><strong>File &gt;&gt; Options &gt;&gt; Trust Center &gt;&gt; Trust Center Settings &gt;&gt; Macro Settings &gt;&gt; Enable all macros &gt;&gt; OK &gt;&gt; OK &gt;&gt; Restart Outlook<br>
+<br>
+</strong><em>For Outlook 2007:<br>
+</em><strong>Tools &gt;&gt; Macro &gt;&gt; Security... &gt;&gt; Macro &gt;&gt; Security &gt;&gt; No security check for macros &gt;&gt; OK &gt;&gt; Restart Outlook<br>
+<br>
+</strong><em>For Outlook 2003:<br>
+</em><strong>Tools &gt;&gt; Macro &gt;&gt; Security... &gt;&gt; Macro &gt;&gt; Security &gt;&gt; Low &gt;&gt; OK &gt;&gt; Restart Outlook</strong></p>
+<p><strong>2. This macro will save all attachments even those are used in the item body.</strong></p>
+<p><strong>3. If the attachment file to be saved (let's call &quot;FileA.txt&quot;) has already existed in the folder (FileA.txt, FileB.txt, FileC.txt ... and so on), the date time string will be appended to the attachment file name automatically.<br>
+</strong>For example:<br>
+The &quot;FileA.txt&quot; file may be named as &quot;FileA_05201830669.txt&quot;.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&quot;05&quot; means the current month;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;20&quot; means the current day;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;18&quot; means the current hour;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;30&quot; means the current minute;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;669&quot; means the current millisecond.</p>
+<p><strong>4. In Windows file system, the specified path cannot be so long that you cannot create or save a file. The maximum path length limitation is 260 characters. So sometimes some attachments cannot be saved successfully if the specified path is over
+ 260 characters.</strong></p>
+<p>&nbsp;</p>
+<h2>Additional Resources</h2>
+<ul>
+<li><a href="http://msdn.microsoft.com/en-us/library/ff861267.aspx" target="_blank">Explorer.Selection Property (Outlook)</a>
+</li><li><a href="http://msdn.microsoft.com/en-us/library/bb219926(v=office.12).aspx" target="_blank">Attachment.SaveAsFile Method</a>
+</li><li><a href="http://msdn.microsoft.com/en-us/library/ff867615.aspx" target="_blank">Attachment.FileName Property (Outlook)</a>
+</li></ul>
+<p>Related forum threads:</p>
+<ul>
+<li><a href="http://social.technet.microsoft.com/Forums/en-US/outlook/thread/052dffc2-b1b7-4d8b-b931-05f2d96da0e4" target="_blank">http://social.technet.microsoft.com/Forums/en-US/outlook/thread/052dffc2-b1b7-4d8b-b931-05f2d96da0e4</a>
+</li><li><a href="http://answers.microsoft.com/en-us/office/forum/office_2010-outlook/downloading-multiple-attachments-from-multiple/6cbbd6c2-fa9b-4c2c-9499-9eb3c452af84" target="_blank">http://answers.microsoft.com/en-us/office/forum/office_2010-outlook/downloading-multiple-attachments-from-multiple/6cbbd6c2-fa9b-4c2c-9499-9eb3c452af84</a>
+</li><li><a href="https://groups.google.com/forum/#!topic/affixa-support/_8VxRttZ06o" target="_blank">https://groups.google.com/forum/#!topic/affixa-support/_8VxRttZ06o</a>
+</li><li><a href="http://pressf1.pcworld.co.nz/showthread.php?28215-Saving-multiple-attachments-from-multiple-emails" target="_blank">http://pressf1.pcworld.co.nz/showthread.php?28215-Saving-multiple-attachments-from-multiple-emails</a>
+</li></ul>
+<p>&nbsp;</p>
+
+        </div>
+    </body>
+</html>

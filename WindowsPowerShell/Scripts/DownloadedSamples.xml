@@ -1,0 +1,693 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DownloadedSamples>
+  <ScriptSample Name="Lync-Server-2012-9d6fe954" LastUpdated="11-May-2015" Link="https://gallery.technet.microsoft.com/Lync-Server-2012-9d6fe954" Rating="4.642458" Raters="179" Downloads="218472" Title="Microsoft Lync Server 2013 Step By Step for Anyone eBook (pdf) English" Category="Lync" SubCategory="Core" Tags="Lync;  en-US;  Microsoft Lync Server 2013;  " Author="Matt Landis" Summary="Free eBook (pdf) Microsoft Lync Server 2013 Step By Step for Anyone eBook (pdf) by Microsoft Lync MVP Matt Landis. This book gives step by step instructions on how to install Lync Server 2013." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Lync-Server-2012-9d6fe954/file/65788/10/Microsoft%20Lync%20Server%202013%20%20Step%20by%20Step%20for%20Anyone_REV014.pdf" FileName="Microsoft Lync Server 2013  Step by Step for Anyone_REV014.pdf" FileNameWithoutExtension="Microsoft Lync Server 2013  Step by Step for Anyone_REV014" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Lync-Server-2012-9d6fe954\Microsoft Lync Server 2013  Step by Step for Anyone_REV014" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="2d191bcd-3308-4edd-9de2-88dff796b0bc" LastUpdated="18-Dec-2014" Link="https://gallery.technet.microsoft.com/2d191bcd-3308-4edd-9de2-88dff796b0bc" Rating="4.67914438" Raters="187" Downloads="150024" Title="Windows Update PowerShell Module" Category="Windows Update" SubCategory="Client-Side Management" Tags="Powershell;  Module;  windows updates;  " Author="MichalGajda" Summary="This function is a piece of PSWindowsUpdate module to manage Windows Update on a computer system running Windows. Whole module contain set of functions to check, download and install updates from PowerShell. " IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/2d191bcd-3308-4edd-9de2-88dff796b0bc/file/41459/43/PSWindowsUpdate.zip" FileName="PSWindowsUpdate.zip" FileNameWithoutExtension="PSWindowsUpdate" LocalPath="E:\Documents\WindowsPowerShell\Scripts\2d191bcd-3308-4edd-9de2-88dff796b0bc\PSWindowsUpdate" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/2d191bcd-3308-4edd-9de2-88dff796b0bc/file/47807/1/PSWindowsUpdate_1.3.4.zip" FileName="PSWindowsUpdate_1.3.4.zip" FileNameWithoutExtension="PSWindowsUpdate_1.3.4" LocalPath="E:\Documents\WindowsPowerShell\Scripts\2d191bcd-3308-4edd-9de2-88dff796b0bc\PSWindowsUpdate_1.3.4" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/2d191bcd-3308-4edd-9de2-88dff796b0bc/file/56706/1/PSWindowsUpdate_1.4.3.zip" FileName="PSWindowsUpdate_1.4.3.zip" FileNameWithoutExtension="PSWindowsUpdate_1.4.3" LocalPath="E:\Documents\WindowsPowerShell\Scripts\2d191bcd-3308-4edd-9de2-88dff796b0bc\PSWindowsUpdate_1.4.3" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/2d191bcd-3308-4edd-9de2-88dff796b0bc/file/66095/1/PSWindowsUpdate_1.4.5.zip" FileName="PSWindowsUpdate_1.4.5.zip" FileNameWithoutExtension="PSWindowsUpdate_1.4.5" LocalPath="E:\Documents\WindowsPowerShell\Scripts\2d191bcd-3308-4edd-9de2-88dff796b0bc\PSWindowsUpdate_1.4.5" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Log-Parser-Studio-cd458765" LastUpdated="12-Dec-2014" Link="https://gallery.technet.microsoft.com/Log-Parser-Studio-cd458765" Rating="4.55294132" Raters="85" Downloads="130934" Title="Log Parser Studio" Category="Exchange" SubCategory="Exchange 2010" Tags="IIS;  Exchange;  Exchange ActiveSync (EAS);  " Author="The Exchange Team" Summary="Log Parser Studio is a utility that allows you to search through and create reports from your IIS, Event, EXADB and others types of logs. It builds on top of Log Parser 2.2 and has a full user interface for easy creation and management of related SQL queries." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Log-Parser-Studio-cd458765/file/53920/5/LPSV2.D2.zip" FileName="LPSV2.D2.zip" FileNameWithoutExtension="LPSV2.D2" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Log-Parser-Studio-cd458765\LPSV2.D2" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Exchange-2013-Server-Role-f8a61780" LastUpdated="20-Jun-2015" Link="https://gallery.technet.microsoft.com/Exchange-2013-Server-Role-f8a61780" Rating="4.515625" Raters="64" Downloads="99042" Title="Exchange 2013 Server Role Requirements Calculator v7.6" Category="Exchange" SubCategory="Exchange 2013" Tags="Calculator;  EHLO;  Storage Requirements Calculator;  " Author="The Exchange Team" Summary="We've released the Exchange 2013 Mailbox Server Role Requirements Calculator.For more information on this download see: http://aka.ms/E2013Calc For more information on how to use the calculator, see the above link.  If you have issues with the calculator, email strgcalc AT micros" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Exchange-2013-Server-Role-f8a61780/file/139133/1/E2013Calcv7.6.xlsm" FileName="E2013Calcv7.6.xlsm" FileNameWithoutExtension="E2013Calcv7.6" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Exchange-2013-Server-Role-f8a61780\E2013Calcv7.6" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Create-a-ShutdownRestartLog-37c8111d" LastUpdated="18-Nov-2014" Link="https://gallery.technet.microsoft.com/Create-a-ShutdownRestartLog-37c8111d" Rating="4.48717928" Raters="117" Downloads="48395" Title="Create a Shutdown/Restart/Logoff Windows 8 Tile for the Start menu (PowerShell)" Category="Desktop Management" SubCategory="Desktop Settings" Tags="Windows Client;  Powershell;  Windows;  " Author="OneScript Team" Summary="This PowerShell Script illustrates how to create a Shutdown ,Restart or Logoff Windows 8 tile to the Start menu." IsAddedToFavorite="true" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Create-a-ShutdownRestartLog-37c8111d/file/113134/3/CreateWindowsTile.zip" FileName="CreateWindowsTile.zip" FileNameWithoutExtension="CreateWindowsTile" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Create-a-ShutdownRestartLog-37c8111d\CreateWindowsTile" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="PowerShell-Create-Active-7e6a3978" LastUpdated="15-Jun-2015" Link="https://gallery.technet.microsoft.com/PowerShell-Create-Active-7e6a3978" Rating="4.089109" Raters="101" Downloads="61369" Title="PowerShell: Create Active Directory Users Based On Excel Input" Category="Active Directory" SubCategory="User Accounts" Tags="Excel;  Active Directory;  Powershell;  " Author="HicanNL" Summary="This script will create users in Active Directory based on the settings in the input file (see the Excel / CSV file below this script for an example of the input file used). These settings can, of course, be changed or extended (check this&#xD;&#xA;&#xD;&#xA;Microsoft Technet Link to get an over" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/PowerShell-Create-Active-7e6a3978/file/56898/9/create_ad_users.zip" FileName="create_ad_users.zip" FileNameWithoutExtension="create_ad_users" LocalPath="E:\Documents\WindowsPowerShell\Scripts\PowerShell-Create-Active-7e6a3978\create_ad_users" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="DownloadInstall-SharePoint-e6df9eb8" LastUpdated="06-Jun-2014" Link="https://gallery.technet.microsoft.com/DownloadInstall-SharePoint-e6df9eb8" Rating="4.57894754" Raters="95" Downloads="60095" Title="Download and Install SharePoint 2013 Prerequisites on Windows Server 2012" Category="SharePoint" SubCategory="Deployment and Upgrade" Tags="Powershell;  Download;  Install;  " Author="Craig Lussier" Summary="These PowerShell scripts will automate downloading and installing the SharePoint 2013 Prerequisites on Windows Server 2012. The scripts will assist those who need to install SharePoint 2013 'offline' or wish to manually install its Prerequisites on Windows Server 2012." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/DownloadInstall-SharePoint-e6df9eb8/file/71063/5/Download-Install%20Windows%20Server%202012%20Prerequisites%20for%20SharePoint%202013.zip" FileName="Download-Install Windows Server 2012 Prerequisites for SharePoint 2013.zip" FileNameWithoutExtension="Download-Install Windows Server 2012 Prerequisites for SharePoint 2013" LocalPath="E:\Documents\WindowsPowerShell\Scripts\DownloadInstall-SharePoint-e6df9eb8\Download-Install Windows Server 2012 Prerequisites for SharePoint 2013" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Get-product-keys-of-local-83b4ce97" LastUpdated="04-May-2012" Link="https://gallery.technet.microsoft.com/Get-product-keys-of-local-83b4ce97" Rating="3.85294127" Raters="68" Downloads="54649" Title="Get product keys of local and remote systems" Category="Operating System" SubCategory="Registry" Tags="Powershell;  Registry;  ProductKey;  " Author="Boe Prox" Summary="This is an updated version of the Get-ProductKey function that was featured on PowerShell.com's PowerTips. This function expands on the existing code by allowing the querying of multiple remote systems, outputting of objects&#xD;&#xA; that include the system, Operating System and version" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Get-product-keys-of-local-83b4ce97/file/57067/1/Get-ProductKey.ps1" FileName="Get-ProductKey.ps1" FileNameWithoutExtension="Get-ProductKey" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Get-product-keys-of-local-83b4ce97\Get-ProductKey" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="New-User-Creation-tool-14fa73cd" LastUpdated="04-Dec-2012" Link="https://gallery.technet.microsoft.com/New-User-Creation-tool-14fa73cd" Rating="4.211679" Raters="137" Downloads="80014" Title="Active Directory User Creation tool 1.2" Category="Active Directory" SubCategory="User Accounts" Tags="XML;  Active Directory;  Powershell;  " Author="Rich Prescott" Summary="One task that every systems administrator has to go through at some point is the creation of new user accounts.  Powershell makes this process simple and adds additional functionality, such as the ability to set defaults and import users from CSV." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/New-User-Creation-tool-14fa73cd/file/63405/1/ANUC.ps1" FileName="ANUC.ps1" FileNameWithoutExtension="ANUC" LocalPath="E:\Documents\WindowsPowerShell\Scripts\New-User-Creation-tool-14fa73cd\ANUC" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="CleanMgrexeKB2852386-83d7a1ae" LastUpdated="02-Jan-2015" Link="https://gallery.technet.microsoft.com/CleanMgrexeKB2852386-83d7a1ae" Rating="4.125" Raters="16" Downloads="27484" Title="CleanMgr.exe/KB2852386 Automation Example" Category="Windows Update" SubCategory="Server-Side Management" Tags="WinSXS;  Cleanmgr.exe;  KB2852386;  " Author="Tom Moser [MSFT]" Summary="This script is an automation example for KB2852386. See snippet/script for details." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/CleanMgrexeKB2852386-83d7a1ae/file/114572/2/cleanup-disk.ps1" FileName="cleanup-disk.ps1" FileNameWithoutExtension="cleanup-disk" LocalPath="E:\Documents\WindowsPowerShell\Scripts\CleanMgrexeKB2852386-83d7a1ae\cleanup-disk" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="DSC-Resource-Kit-All-c449312d" LastUpdated="01-Apr-2015" Link="https://gallery.technet.microsoft.com/DSC-Resource-Kit-All-c449312d" Rating="4.783784" Raters="37" Downloads="26129" Title="DSC Resource Kit (All Modules)" Category="Scripting Techniques" SubCategory="Writing Scripts" Tags="Powershell;  PowerShell Modules;  Windows PowerShell Desired State Configuration;  " Author="PowerShell Team" Summary="The DSC Resource Kit is a collection of experimental DSC Resources released by the PowerShell Team, designed to help you get started with DSC.   These resources allow you to configure Active Directory, SQL Server, IIS, Hyper-V, RDSH, and more. " IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/DSC-Resource-Kit-All-c449312d/file/131371/4/DSC%20Resource%20Kit%20Wave%2010%2004012015.zip" FileName="DSC Resource Kit Wave 10 04012015.zip" FileNameWithoutExtension="DSC Resource Kit Wave 10 04012015" LocalPath="E:\Documents\WindowsPowerShell\Scripts\DSC-Resource-Kit-All-c449312d\DSC Resource Kit Wave 10 04012015" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Save-attachments-from-5b6bf54b" LastUpdated="28-Jul-2013" Link="https://gallery.technet.microsoft.com/Save-attachments-from-5b6bf54b" Rating="4.851852" Raters="54" Downloads="37699" Title="Save attachments from multiple selected items in Outlook (VBA)" Category="Office" SubCategory="Microsoft Outlook" Tags="VBA;  Outlook;  Office 2010;  " Author="OneScript Team" Summary="This VBA sample illustrates how to save attachments from multiple selected items in Outlook." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="VB.NET" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Save-attachments-from-5b6bf54b/file/65122/1/mAttachmentSaver.zip" FileName="mAttachmentSaver.zip" FileNameWithoutExtension="mAttachmentSaver" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Save-attachments-from-5b6bf54b\mAttachmentSaver" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Remove-Windows-Store-Apps-a00ef4a4" LastUpdated="07-Jan-2015" Link="https://gallery.technet.microsoft.com/Remove-Windows-Store-Apps-a00ef4a4" Rating="4.4594593" Raters="74" Downloads="63744" Title="Remove Windows Store apps in Windows 8" Category="Applications" SubCategory="Client Applications" Tags="Windows;  Windows PowerShell;  Windows 8;  " Author="OneScript Team" Summary="This script can be used to remove multiple Windows Store apps from a user account in Windows 8. It provides a list of installed Windows Store apps.  You can specify the application IDs, and remove them all at once." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Remove-Windows-Store-Apps-a00ef4a4/file/123757/1/RemoveWindowsStoreApp.zip" FileName="RemoveWindowsStoreApp.zip" FileNameWithoutExtension="RemoveWindowsStoreApp" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Remove-Windows-Store-Apps-a00ef4a4\RemoveWindowsStoreApp" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Exchange-Client-Network-8af1bf00" LastUpdated="22-Jun-2012" Link="https://gallery.technet.microsoft.com/Exchange-Client-Network-8af1bf00" Rating="4.49350643" Raters="77" Downloads="70818" Title="Exchange Client Network Bandwidth Calculator" Category="Exchange" SubCategory="Exchange 2010" Tags="Calculator;  EHLO;  Outlook;  " Author="The Exchange Team" Summary="To help reduce the risks involved in Exchange Server network bandwidth planning, the Exchange Client Network Bandwidth Calculator has been designed to help anyone planning an Exchange Server deployment to predict the network bandwidth requirements for a&#xD;&#xA; specific set of clients." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Exchange-Client-Network-8af1bf00/file/49302/4/Exchange%20Client%20Network%20Bandwidth%20Calculator%20-%20Public.0.48BETA4%20-%20TimeZone.v5.xlsx" FileName="Exchange Client Network Bandwidth Calculator - Public.0.48BETA4 - TimeZone.v5.xlsx" FileNameWithoutExtension="Exchange Client Network Bandwidth Calculator - Public.0.48BETA4 - TimeZone.v5" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Exchange-Client-Network-8af1bf00\Exchange Client Network Bandwidth Calculator - Public.0.48BETA4 - TimeZone.v5" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Exchange-2010-SP1-ExFolders-e6bfd405" LastUpdated="27-May-2014" Link="https://gallery.technet.microsoft.com/Exchange-2010-SP1-ExFolders-e6bfd405" Rating="4.6375" Raters="80" Downloads="120956" Title="Exchange 2010 SP1 (and later) ExFolders" Category="Exchange" SubCategory="Exchange 2010" Tags="Exchange;  Exchange Server;  EHLO;  " Author="The Exchange Team" Summary="This new tool is really just a port of PFDAVAdmin to Exchange 2010. We changed the name to ExFolders because it no longer relies on DAV, and it's not just for public folders (even PFDAVAdmin,&#xD;&#xA; in its public release, was not just for public folders). The name just didn't make s" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Exchange-2010-SP1-ExFolders-e6bfd405/file/19081/11/ExFolders-SP1.zip" FileName="ExFolders-SP1+.zip" FileNameWithoutExtension="ExFolders-SP1+" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Exchange-2010-SP1-ExFolders-e6bfd405\ExFolders-SP1+" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Generate-Exchange-2388e7c9" LastUpdated="02-Apr-2015" Link="https://gallery.technet.microsoft.com/Generate-Exchange-2388e7c9" Rating="4.53846169" Raters="104" Downloads="52134" Title="Generate Exchange Environment Reports using Powershell" Category="Exchange" SubCategory="Exchange 2010" Tags="Exchange 2003;  Exchange 2007;  Exchange 2010;  " Author="Steve Goodman" Summary="As an Exchange administrator, there’s times when it’s useful to have a visual, straightforward and concise document that gives you a good overview of your environment. This script generates a HTML report and can be scheduled and emailed. Compatible with Exchange 2003 - 2013" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Generate-Exchange-2388e7c9/file/56699/3/Get-ExchangeEnvironmentReport.ps1" FileName="Get-ExchangeEnvironmentReport.ps1" FileNameWithoutExtension="Get-ExchangeEnvironmentReport" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Generate-Exchange-2388e7c9\Get-ExchangeEnvironmentReport" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Convert-WindowsImageps1-0fe23a8f" LastUpdated="19-Jun-2015" Link="https://gallery.technet.microsoft.com/Convert-WindowsImageps1-0fe23a8f" Rating="4.81300831" Raters="123" Downloads="61094" Title="Convert-WindowsImage.ps1 — WIM2VHD for Windows 10 (also Windows 8 and 8.1)" Category="Storage" SubCategory="Disk Drives and Volumes" Tags="VHD;  Hyper-V;  .vhd;  " Author="Pronichkin" Summary="Convert-WindowsImage is the new version of WIM2VHD designed specifically for Windows 8 and above. Written in PowerShell, this command-line tool allows you to rapidly create sysprepped VHDX and VHDX images from setup media for Windows 7/Server 2008 R2, Windows 8/8.1/Server 2012/R2" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Convert-WindowsImageps1-0fe23a8f/file/59237/7/Convert-WindowsImage.ps1" FileName="Convert-WindowsImage.ps1" FileNameWithoutExtension="Convert-WindowsImage" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Convert-WindowsImageps1-0fe23a8f\Convert-WindowsImage" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Install-Exchange-server-b5cce9e4" LastUpdated="15-Feb-2014" Link="https://gallery.technet.microsoft.com/Install-Exchange-server-b5cce9e4" Rating="4.05882359" Raters="17" Downloads="43744" Title="Install Microsoft Exchange server 2013 step by step with DAG" Category="Exchange" SubCategory="Exchange 2010" Tags="DAG;  Database Availability Groups;  Step by Step;  " Author="Off2work" Summary="Free eBook (pdf) Installing Microsoft Exchange Server 2013 Step By Step with CAS and Mailbox role and DAG, by Off2work. This book gives step by step instructions on how to install Exchange Server 2013 with DAG (Database Availability Group).Also includes how to create new database" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Install-Exchange-server-b5cce9e4/file/108721/1/Installing%20Exchange%202013.pdf" FileName="Installing Exchange 2013.pdf" FileNameWithoutExtension="Installing Exchange 2013" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Install-Exchange-server-b5cce9e4\Installing Exchange 2013" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="SharePoint-2013-The-774a7f5f" LastUpdated="28-Jul-2014" Link="https://gallery.technet.microsoft.com/SharePoint-2013-The-774a7f5f" Rating="4.65853643" Raters="41" Downloads="45590" Title="The WikiNinjas Guide to SharePoint 2013" Category="SharePoint" SubCategory="Content Management" Tags="TechNet Wiki;  SharePoint 2013;  Free ebook;  " Author="Gokan Ozcifci" Summary="I’m proud to present you the first Wiki Ninjas Guide to SharePoint 2013. This eBook is not mine. It's also not yours. But it’s from the community. You can find many articles here written by Joe Davis, Magriet Bruggeman, Craig Lussier, Thuan Soldier,  me and many other SharePoint " IsAddedToFavorite="false" IsAllDownloaded="true">
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/SharePoint-2013-The-774a7f5f/file/100673/1/SharePoint%202013%20The%20excellence%20by%20TechNet%20WIKI.pdf" FileName="SharePoint 2013 The excellence by TechNet WIKI.pdf" FileNameWithoutExtension="SharePoint 2013 The excellence by TechNet WIKI" LocalPath="E:\Documents\WindowsPowerShell\Scripts\SharePoint-2013-The-774a7f5f\SharePoint 2013 The excellence by TechNet WIKI" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="c0c57332-8624-48c0-b4c3-5b31fe641c58" LastUpdated="10-Apr-2015" Link="https://gallery.technet.microsoft.com/c0c57332-8624-48c0-b4c3-5b31fe641c58" Rating="4.482143" Raters="56" Downloads="24753" Title="Search for a string in all tables of SQL Server Database" Category="Databases" SubCategory="SQL Server" Tags="SQL Server;  Search;  " Author="Sorna Kumar Muthuraj" Summary="To search the whole database for a string in the tables. This stored procedure will return the tables and result set with the matching search string.&#xD;&#xA;&#xD;&#xA;" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="SQL" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/c0c57332-8624-48c0-b4c3-5b31fe641c58/file/136233/1/SP_Searchtable.sql" FileName="SP_Searchtable.sql" FileNameWithoutExtension="SP_Searchtable" LocalPath="E:\Documents\WindowsPowerShell\Scripts\c0c57332-8624-48c0-b4c3-5b31fe641c58\SP_Searchtable" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Determine-What-Device-is-325d9720" LastUpdated="18-Nov-2014" Link="https://gallery.technet.microsoft.com/Determine-What-Device-is-325d9720" Rating="3.3" Raters="10" Downloads="5556" Title="Determine What Device is Locking Out an Active Directory User Account" Category="Active Directory" SubCategory="Searching Active Directory" Tags="Active Directory;  Powershell;  Powershell Script;  " Author="Mike F Robbins" Summary="This “Get-LockedOutUser.ps1“ script allows you to specify the following via parameter input to narrow down the results:&#xD;&#xA;Specific userid, defaulting to all locked out userid’s Start time to begin searching records for, defaulting to the last three days Domain name to search for l" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Determine-What-Device-is-325d9720/file/108393/1/Get-LockedOutUser.ps1" FileName="Get-LockedOutUser.ps1" FileNameWithoutExtension="Get-LockedOutUser" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Determine-What-Device-is-325d9720\Get-LockedOutUser" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="List-Share-Permissions-83f8c419" LastUpdated="10-Sep-2012" Link="https://gallery.technet.microsoft.com/List-Share-Permissions-83f8c419" Rating="3.5454545" Raters="11" Downloads="9760" Title="Get-Share Permissions" Category="Storage" SubCategory="Shared Folders" Tags="Share Permission;  " Author="Bigteddy" Summary="This little script will enumerate all the shares on a computer, and list the share-level permissions for each share.  It uses WMI to retrieve the shares, and to list the permissions.  Thanks to Michal Gadja for his input (via the Library)." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/List-Share-Permissions-83f8c419/file/65953/1/Get-SharePermissions.ps1" FileName="Get-SharePermissions.ps1" FileNameWithoutExtension="Get-SharePermissions" LocalPath="E:\Documents\WindowsPowerShell\Scripts\List-Share-Permissions-83f8c419\Get-SharePermissions" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Collection-of-Visio-2013-0283d5f4" LastUpdated="28-Aug-2013" Link="https://gallery.technet.microsoft.com/Collection-of-Visio-2013-0283d5f4" Rating="4.6875" Raters="16" Downloads="8187" Title="Collection of Visio 2013 Stencil for BizTalk Server" Category="Servers" SubCategory="BizTalk" Tags="BizTalk Server;  Visio;  BizTalk;  " Author="Sandro Pereira" Summary="This is a collection of 73 modern flat Visio 2013 shapes for representing BizTalk Server physical architectures, Integration architectures or solutions diagrams in Visio 2013:BizTalk Servers shapes, Common Integration Servers shapes and many more..." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Collection-of-Visio-2013-0283d5f4/file/85628/2/BizTalkServerStencilsForVisio2013.vssx" FileName="BizTalkServerStencilsForVisio2013.vssx" FileNameWithoutExtension="BizTalkServerStencilsForVisio2013" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Collection-of-Visio-2013-0283d5f4\BizTalkServerStencilsForVisio2013" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="All-Management-Packs-for-37d37902" LastUpdated="29-Jun-2015" Link="https://gallery.technet.microsoft.com/All-Management-Packs-for-37d37902" Rating="4.923077" Raters="26" Downloads="6283" Title="Download All Microsoft Management Packs for SCOM 2007, R2 and 2012 in Bulk V3" Category="System Center" SubCategory="Operations Manager" Tags="Powershell;  Management Pack;  system center;  " Author="Stanislav Zhelyazkov" Summary="In short the script grabs the names and the links for all management packs on the site. Than it goes trough every MP link. From every MP page gets the version of it and all download links (msi, guides and etc.). Authors: Stanislav Zhelyazkov, Damian Flynn and Cameron Fuller" IsAddedToFavorite="false" IsAllDownloaded="true" />
+  <ScriptSample Name="SQL-Server-guide-for-8584c403" LastUpdated="23-Jan-2013" Link="https://gallery.technet.microsoft.com/SQL-Server-guide-for-8584c403" Rating="4.60869551" Raters="23" Downloads="13920" Title="SQL Server guide for System Center 2012" Category="System Center" SubCategory="Configuration Manager" Author="Paul Keely" Summary="This is a guide to help you make design decisions and maintenance plans for SQL Server 2008 R2 to support System Center 2012.  In the guide you will learn to make server and instance specific changes to support SQL server for the different workloads that System Center requires. W" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/SQL-Server-guide-for-8584c403/file/75095/1/SQL%20Server%20and%20SC%202012.pdf" FileName="SQL Server and SC 2012.pdf" FileNameWithoutExtension="SQL Server and SC 2012" LocalPath="E:\Documents\WindowsPowerShell\Scripts\SQL-Server-guide-for-8584c403\SQL Server and SC 2012" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Get-Inactive-User-in-78b8db79" LastUpdated="01-Apr-2014" Link="https://gallery.technet.microsoft.com/Get-Inactive-User-in-78b8db79" Rating="4.33333349" Raters="6" Downloads="4631" Title="Get Inactive User in Domain based on Last Logon Time Stamp" Category="Active Directory" SubCategory="User Accounts" Tags="Active Directory;  AD;  checking ad user;  " Author="TSO" Summary="Get inactive / old User (which are still enabled) in your domain as a simple CSV output. Credits tohttp://blog.mattvogt.net/2011/10/06/powershell-last-logon-timestamp-for-single-ho&#xD;&#xA;Run on AD server (2008 or newer)Update the domain and if required the DaysInactiveThis is a simple" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Get-Inactive-User-in-78b8db79/file/95005/1/GetInactiveUser.ps1" FileName="GetInactiveUser.ps1" FileNameWithoutExtension="GetInactiveUser" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Get-Inactive-User-in-78b8db79\GetInactiveUser" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Delete-Temp-files-2f2438f1" LastUpdated="21-Sep-2011" Link="https://gallery.technet.microsoft.com/Delete-Temp-files-2f2438f1" Rating="3.4375" Raters="48" Downloads="16232" Title="Delete Temp files" Category="Desktop Management" SubCategory="Logon Sessions" Tags="delete temp;  temp;  CleanUp Temp files;  " Author="Mohammed Obad" Summary="This script is to delete all User and System Temp files as well as Internet Temp fileswe have one subroutine called &quot;DeleteTemp&quot; to delete temp files and folders and One Function called FindOSType to get the Windows Version to determine the path of Internet Temp filesyou can assi" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="VB Script" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Delete-Temp-files-2f2438f1/file/44281/1/deleteTempFiles.vbs" FileName="deleteTempFiles.vbs" FileNameWithoutExtension="deleteTempFiles" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Delete-Temp-files-2f2438f1\deleteTempFiles" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Enable-email-notifications-390a927c" LastUpdated="25-Jun-2013" Link="https://gallery.technet.microsoft.com/Enable-email-notifications-390a927c" Rating="4.375" Raters="16" Downloads="5833" Title="Enable email notifications for Tasks list in SharePoint 2013" Category="SharePoint" SubCategory="Content Management" Tags="Enable Alerts in SharePoint 2013 task list;  Configure Alerts in sharepoint 2013 Tasks;  sharepoint 2013 task alerts;  " Author="karimSP" Summary="In SharePoint 2013 you will find that the option to enable email notification for Tasks list is no longer there. It used to be under List Settings &gt; Advanced Settings &gt; Send e-mail when ownership is assigned? (Yes/No).&#xD;&#xA; It is still there for Issues list in SharePoint 2013 howeve" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Enable-email-notifications-390a927c/file/85731/1/SharePoint2013TaskAlert.ps1" FileName="SharePoint2013TaskAlert.ps1" FileNameWithoutExtension="SharePoint2013TaskAlert" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Enable-email-notifications-390a927c\SharePoint2013TaskAlert" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Get-PendingReboot-Query-bdb79542" LastUpdated="12-Jun-2013" Link="https://gallery.technet.microsoft.com/Get-PendingReboot-Query-bdb79542" Rating="4.575" Raters="40" Downloads="15352" Title="Get-PendingReboot - Query Computer(s) For Pending Reboot State" Category="Windows Update" SubCategory="Server-Side Management" Tags="WMI;  Powershell;  Windows;  " Author="Brian Wilhite" Summary="This function gets the pending reboot status on a local or remote computer.  Now supports SCCM 2012 Clients." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Get-PendingReboot-Query-bdb79542/file/83980/1/Get-PendingReboot.ps1" FileName="Get-PendingReboot.ps1" FileNameWithoutExtension="Get-PendingReboot" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Get-PendingReboot-Query-bdb79542\Get-PendingReboot" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="0dbfc125-b855-4058-87ec-930268f03285" LastUpdated="27-Sep-2013" Link="https://gallery.technet.microsoft.com/0dbfc125-b855-4058-87ec-930268f03285" Rating="4.05263138" Raters="19" Downloads="10658" Title="Get-PendingUpdate" Category="Windows Update" SubCategory="Client-Side Management" Tags="COM;  Powershell;  windows updates;  " Author="Boe Prox" Summary="This function will allow you to query local or remote computer/s and determine if there are pending WSUS updates that need to be installed." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/0dbfc125-b855-4058-87ec-930268f03285/file/97163/1/Get-PendingUpdate.ps1" FileName="Get-PendingUpdate.ps1" FileNameWithoutExtension="Get-PendingUpdate" LocalPath="E:\Documents\WindowsPowerShell\Scripts\0dbfc125-b855-4058-87ec-930268f03285\Get-PendingUpdate" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="WSUS-Server-Cleanup-f33d2658" LastUpdated="12-Nov-2013" Link="https://gallery.technet.microsoft.com/WSUS-Server-Cleanup-f33d2658" Rating="4.27272749" Raters="11" Downloads="6930" Title="WSUS Server Cleanup against parent server and All downstream servers." Category="Windows Update" SubCategory="Server-Side Management" Tags="WSUS;  WSUS Server;  WSUS Server Cleanup;  " Author="- Mark -" Summary="Automates running the Server Cleanup Wizard against against your parent WSUS server and recursively against all your downstream WSUS servers. It can e-mail a report including WSUS Server, Parent WSUS Server, WSUS Version of each server processed as well as details of the cleanup." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/WSUS-Server-Cleanup-f33d2658/file/57114/4/Start-WsusServerCleanup.ps1" FileName="Start-WsusServerCleanup.ps1" FileNameWithoutExtension="Start-WsusServerCleanup" LocalPath="E:\Documents\WindowsPowerShell\Scripts\WSUS-Server-Cleanup-f33d2658\Start-WsusServerCleanup" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/WSUS-Server-Cleanup-f33d2658/file/100990/1/WSUS_Cleanup_All_Servers.ps1" FileName="WSUS_Cleanup_All_Servers.ps1" FileNameWithoutExtension="WSUS_Cleanup_All_Servers" LocalPath="E:\Documents\WindowsPowerShell\Scripts\WSUS-Server-Cleanup-f33d2658\WSUS_Cleanup_All_Servers" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Automatically-Declining-a4fec7be" LastUpdated="09-Oct-2013" Link="https://gallery.technet.microsoft.com/Automatically-Declining-a4fec7be" Rating="4.4" Raters="5" Downloads="5869" Title="Automatically Declining Itanium Updates in WSUS" Category="Windows Update" SubCategory="Server-Side Management" Tags="Powershell;  Powershell Script;  windows updates;  " Author="- Mark -" Summary="Declining Itanium Updates ... Schedule the following script to decline all Itanium updates. It then e-mails an HTML report with the following column headings: Title, KB Article, Classification, Product Title, Product Family" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Automatically-Declining-a4fec7be/file/68288/2/Decline-WsusItaniumUpdates.ps1" FileName="Decline-WsusItaniumUpdates.ps1" FileNameWithoutExtension="Decline-WsusItaniumUpdates" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Automatically-Declining-a4fec7be\Decline-WsusItaniumUpdates" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Automatically-Declining-a4fec7be/file/97652/1/WSUS_Decline_Itanium_Updates.ps1" FileName="WSUS_Decline_Itanium_Updates.ps1" FileNameWithoutExtension="WSUS_Decline_Itanium_Updates" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Automatically-Declining-a4fec7be\WSUS_Decline_Itanium_Updates" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Generate-a-Report-for-f71a6800" LastUpdated="05-Nov-2014" Link="https://gallery.technet.microsoft.com/Generate-a-Report-for-f71a6800" Rating="4.25" Raters="12" Downloads="4931" Title="Generate a Report for installed Hotfix-Update-ServicePack for Bulk Servers" Category="Windows Update" SubCategory="Server-Side Management" Tags="Powershell;  Windows;  Search;  " Author="i.biswajith" Summary="[Version 3-04.08.14]&#xD;&#xA;Run that Script. You will get a report(txt) for installed Hotfix for bulk Computers and get an additional txt output for unreachable computers.Getting the Full Scripts you have to download the ZIP file." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Generate-a-Report-for-f71a6800/file/115875/1/HotFixreport.ps1" FileName="HotFixreport.ps1" FileNameWithoutExtension="HotFixreport" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Generate-a-Report-for-f71a6800\HotFixreport" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Generate-a-Report-for-f71a6800/file/119904/1/HotfixReport.zip" FileName="HotfixReport.zip" FileNameWithoutExtension="HotfixReport" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Generate-a-Report-for-f71a6800\HotfixReport" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="WSUS-DELAY-AUTO-APPROVALS-ba0ea840" LastUpdated="02-Apr-2013" Link="https://gallery.technet.microsoft.com/WSUS-DELAY-AUTO-APPROVALS-ba0ea840" Rating="3.5" Raters="2" Downloads="6882" Title="WSUS delay automatic approvals" Category="Windows Update" SubCategory="Server-Side Management" Tags="delay differ automatic auto approvals updates wsus;  " Author="Veolia Transport" Summary="WSUS DELAY AUTO APPROVALS approve updates after a customable delay" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/WSUS-DELAY-AUTO-APPROVALS-ba0ea840/file/77108/1/WSUS-DELAY-AUTO-APPROVALS_v1.3.ps1" FileName="WSUS-DELAY-AUTO-APPROVALS_v1.3.ps1" FileNameWithoutExtension="WSUS-DELAY-AUTO-APPROVALS_v1.3" LocalPath="E:\Documents\WindowsPowerShell\Scripts\WSUS-DELAY-AUTO-APPROVALS-ba0ea840\WSUS-DELAY-AUTO-APPROVALS_v1.3" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/WSUS-DELAY-AUTO-APPROVALS-ba0ea840/file/77110/1/DELAY-WSUS-AUTO-APPROVALS_2013-03-05_12h50m29s.html" FileName="DELAY-WSUS-AUTO-APPROVALS_2013-03-05_12h50m29s.html" FileNameWithoutExtension="DELAY-WSUS-AUTO-APPROVALS_2013-03-05_12h50m29s" LocalPath="E:\Documents\WindowsPowerShell\Scripts\WSUS-DELAY-AUTO-APPROVALS-ba0ea840\DELAY-WSUS-AUTO-APPROVALS_2013-03-05_12h50m29s" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/WSUS-DELAY-AUTO-APPROVALS-ba0ea840/file/77111/1/DELAY-WSUS-AUTO-APPROVALS_2013-03-05_12h52m08s.html" FileName="DELAY-WSUS-AUTO-APPROVALS_2013-03-05_12h52m08s.html" FileNameWithoutExtension="DELAY-WSUS-AUTO-APPROVALS_2013-03-05_12h52m08s" LocalPath="E:\Documents\WindowsPowerShell\Scripts\WSUS-DELAY-AUTO-APPROVALS-ba0ea840\DELAY-WSUS-AUTO-APPROVALS_2013-03-05_12h52m08s" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/WSUS-DELAY-AUTO-APPROVALS-ba0ea840/file/77114/1/DELAY-WSUS-AUTO-APPROVALS_2013-03-05_14h25m20s.html" FileName="DELAY-WSUS-AUTO-APPROVALS_2013-03-05_14h25m20s.html" FileNameWithoutExtension="DELAY-WSUS-AUTO-APPROVALS_2013-03-05_14h25m20s" LocalPath="E:\Documents\WindowsPowerShell\Scripts\WSUS-DELAY-AUTO-APPROVALS-ba0ea840\DELAY-WSUS-AUTO-APPROVALS_2013-03-05_14h25m20s" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/WSUS-DELAY-AUTO-APPROVALS-ba0ea840/file/77115/1/DELAY-WSUS-AUTO-APPROVALS_2013-03-05_14h05m39s.html" FileName="DELAY-WSUS-AUTO-APPROVALS_2013-03-05_14h05m39s.html" FileNameWithoutExtension="DELAY-WSUS-AUTO-APPROVALS_2013-03-05_14h05m39s" LocalPath="E:\Documents\WindowsPowerShell\Scripts\WSUS-DELAY-AUTO-APPROVALS-ba0ea840\DELAY-WSUS-AUTO-APPROVALS_2013-03-05_14h05m39s" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Get-WSUSClientSetting-e52e4260" LastUpdated="01-Sep-2014" Link="https://gallery.technet.microsoft.com/Get-WSUSClientSetting-e52e4260" Rating="4.83333349" Raters="6" Downloads="5796" Title="Get-ClientWSUSSetting" Category="Windows Update" SubCategory="Client-Side Management" Tags="Powershell;  WSUS;  remote registry;  " Author="Boe Prox" Summary="This script allows you to query a system or systems to find the wsus client settings. This performs a registry lookup for both the Environment and Configuration keys and allows you to specify if you prefer to view one of the&#xD;&#xA; other. By not specifying Environment or Configuratio" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Get-WSUSClientSetting-e52e4260/file/124667/1/Get-ClientWSUSSetting.ps1" FileName="Get-ClientWSUSSetting.ps1" FileNameWithoutExtension="Get-ClientWSUSSetting" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Get-WSUSClientSetting-e52e4260\Get-ClientWSUSSetting" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="e41709b3-0385-4891-aeed-3175c7bbb6d6" LastUpdated="25-Feb-2012" Link="https://gallery.technet.microsoft.com/e41709b3-0385-4891-aeed-3175c7bbb6d6" Rating="3.33333325" Raters="9" Downloads="6194" Title="Install-Patches" Category="Windows Update" SubCategory="Client-Side Management" Tags="Powershell;  patch;  Psexec;  " Author="Boe Prox" Summary="This module uses PSexec,vbscript and PowerShell to install patches on local or remote systems." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/e41709b3-0385-4891-aeed-3175c7bbb6d6/file/50727/1/Install-Patches.psm1" FileName="Install-Patches.psm1" FileNameWithoutExtension="Install-Patches" LocalPath="E:\Documents\WindowsPowerShell\Scripts\e41709b3-0385-4891-aeed-3175c7bbb6d6\Install-Patches" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Uninstall-security-update-76f2dcb7" LastUpdated="08-Oct-2013" Link="https://gallery.technet.microsoft.com/Uninstall-security-update-76f2dcb7" Rating="4" Raters="1" Downloads="2980" Title="Uninstall security update for Windows 7 or 8 (PowerShell)" Category="Windows Update" SubCategory="Client-Side Management" Tags="Windows 7;  Powershell;  Windows;  " Author="OneScript Team" Summary="This script demo shows how to uninstall security update for Windows 7 or 8." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Uninstall-security-update-76f2dcb7/file/85120/1/UninstallHotFix(PowerShell).zip" FileName="UninstallHotFix(PowerShell).zip" FileNameWithoutExtension="UninstallHotFix(PowerShell)" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Uninstall-security-update-76f2dcb7\UninstallHotFix(PowerShell)" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="PowerShell-script-to-list-0955fe87" LastUpdated="16-Dec-2014" Link="https://gallery.technet.microsoft.com/PowerShell-script-to-list-0955fe87" Rating="3" Raters="9" Downloads="5984" Title="PowerShell script to list all installed Microsoft Windows Updates" Category="Windows Update" SubCategory="Client-Side Management" Tags="Windows Update List;  List installed Update;  Installed on;  " Author="Topaz.Paul" Summary="A PowerShell script to list all installed Microsoft Windows Updates.Script Updated:17/12/2014: If command 'wmic qfe list' returns $null or '' then use 'Monday 1 January 0001' as date.Find me on LinkedIN: nz.linkedin.com/pub/topaz-paul/19/275/328/PowerShell Version 2 or Greater re" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/PowerShell-script-to-list-0955fe87/file/131199/1/Get-MSHotfix.ps1" FileName="Get-MSHotfix.ps1" FileNameWithoutExtension="Get-MSHotfix" LocalPath="E:\Documents\WindowsPowerShell\Scripts\PowerShell-script-to-list-0955fe87\Get-MSHotfix" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="WSUS-Clean-Powershell-102f8fc6" LastUpdated="03-Jul-2012" Link="https://gallery.technet.microsoft.com/WSUS-Clean-Powershell-102f8fc6" Rating="5" Raters="1" Downloads="3741" Title="WSUS Clean - Powershell script" Category="Windows Update" SubCategory="Server-Side Management" Tags="WSUS Server Cleanup;  " Author="Bigteddy" Summary="This little script will perform a clean up of declined and superceded updates in the WSUS database.  It uses the .Net class &quot;Microsoft.UpdateServices.Administration&quot; assembly, which should be loaded on your WSUS server. " IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/WSUS-Clean-Powershell-102f8fc6/file/60536/1/WSUS_Clean.ps1" FileName="WSUS_Clean.ps1" FileNameWithoutExtension="WSUS_Clean" LocalPath="E:\Documents\WindowsPowerShell\Scripts\WSUS-Clean-Powershell-102f8fc6\WSUS_Clean" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="fd39c7d4-05bb-4c2d-8a99-f92ca8d08218" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/fd39c7d4-05bb-4c2d-8a99-f92ca8d08218" Rating="4.63636351" Raters="22" Downloads="0" Title="WSUS Cleanup" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="This script performs the cleanup tasks done by the WSUS cleanup wizard. Because it is a script, it can be automated (for example, via the Windows Task Scheduler). It also provides" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="Updates-Downloader-9cca832d" LastUpdated="04-May-2014" Link="https://gallery.technet.microsoft.com/Updates-Downloader-9cca832d" Rating="5" Raters="3" Downloads="2656" Title="Microsoft Updates Downloader PowerShell Module" Category="Windows Update" SubCategory="Server-Side Management" Tags="XML;  Powershell;  HotFIX;  " Author="Alexander Krause" Summary="Allows a much simpler management for all Microsoft Updates, which are registered in the wsusscn2.cab and their download from the official Microsoft Update sites. The Microsoft Updates Downloader PowerShell Module is e.g. perfect for patching of WIM files or Office Installations." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Updates-Downloader-9cca832d/file/106715/1/MS-UPD-LOAD.psm1" FileName="MS-UPD-LOAD.psm1" FileNameWithoutExtension="MS-UPD-LOAD" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Updates-Downloader-9cca832d\MS-UPD-LOAD" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="ba65fb73-b3b7-483f-9e8f-eda19fd051f8" LastUpdated="27-Jan-2012" Link="https://gallery.technet.microsoft.com/ba65fb73-b3b7-483f-9e8f-eda19fd051f8" Rating="5" Raters="7" Downloads="3751" Title="WSUS Admin Module" Category="Windows Update" SubCategory="Server-Side Management" Tags="Powershell;  Module;  WSUS;  " Author="Boe Prox" Summary="A collection of 48 advanced functions that allow you to manage WSUS via PowerShell." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/ba65fb73-b3b7-483f-9e8f-eda19fd051f8/file/48900/1/poshWSUS.psm1" FileName="poshWSUS.psm1" FileNameWithoutExtension="poshWSUS" LocalPath="E:\Documents\WindowsPowerShell\Scripts\ba65fb73-b3b7-483f-9e8f-eda19fd051f8\poshWSUS" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Install-WSUSServerps1-40a8169b" LastUpdated="16-Jan-2012" Link="https://gallery.technet.microsoft.com/Install-WSUSServerps1-40a8169b" Rating="0" Raters="0" Downloads="3297" Title="Install-WSUSServer.ps1" Category="Windows Update" SubCategory="Server-Side Management" Author="Boe Prox" Summary="This script allows you to install a WSUS server locally or remotely using a variety of configuration options. You can also just install the WSUS Administration Console without having to install the entire server! This script&#xD;&#xA; makes use of psexec.exe, which is available to downlo" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Install-WSUSServerps1-40a8169b/file/47058/1/Install-WSUSServer.ps1" FileName="Install-WSUSServer.ps1" FileNameWithoutExtension="Install-WSUSServer" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Install-WSUSServerps1-40a8169b\Install-WSUSServer" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Simple-Windows-Update-Tool-3a505873" LastUpdated="26-Mar-2014" Link="https://gallery.technet.microsoft.com/Simple-Windows-Update-Tool-3a505873" Rating="0" Raters="0" Downloads="1305" Title="Simple Windows Update Tool (PowerShell)" Category="Windows Update" SubCategory="Client-Side Management" Author="Office365_guru" Summary="Search, download and install windows updates using the windows update API. You can sort which updates you wish to install based on the root categories. You can avoid downloading drivers, or BING toolbar and only install what you need. &#xD;&#xA;               " IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Simple-Windows-Update-Tool-3a505873/file/111164/1/WindowsUpdate.ps1" FileName="WindowsUpdate.ps1" FileNameWithoutExtension="WindowsUpdate" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Simple-Windows-Update-Tool-3a505873\WindowsUpdate" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Install-Updates-using-740784eb" LastUpdated="16-Sep-2014" Link="https://gallery.technet.microsoft.com/Install-Updates-using-740784eb" Rating="0" Raters="0" Downloads="1163" Title="Install Microsoft Updates using Powershell" Category="Windows Update" SubCategory="Client-Side Management" Tags="SCCM;  Windows PowerShell;  windows updates;  " Author="Topaz.Paul" Summary="The attached script installs or uninstalls Microsoft Updates in the last 'N' days. PSAppDeploy Toolkit is used to accomplish the task. The script uses whatever update source is made available to the machine to download and install the updates.This can also be deployed using SCCM." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+      <Language Type="Windows Shell Script" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Install-Updates-using-740784eb/file/120151/1/Install-Uninstall-Microsoft-Windows-Updates.zip" FileName="Install-Uninstall-Microsoft-Windows-Updates.zip" FileNameWithoutExtension="Install-Uninstall-Microsoft-Windows-Updates" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Install-Updates-using-740784eb\Install-Uninstall-Microsoft-Windows-Updates" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Synchronize-all-WSUS-00c899c2" LastUpdated="19-Nov-2013" Link="https://gallery.technet.microsoft.com/Synchronize-all-WSUS-00c899c2" Rating="5" Raters="1" Downloads="2248" Title="Synchronize all WSUS servers" Category="Windows Update" SubCategory="Server-Side Management" Tags="Powershell;  Powershell Script;  windows updates;  " Author="- Mark -" Summary="If you want to perform a one-off sync across all your WSUS servers you have to go to every server and force a manual sync. With this you can just open up PowerShell and call the script and it will start a sync against your upstream server and all downstream servers sequentially." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Synchronize-all-WSUS-00c899c2/file/92019/4/Start-WsusServerSync.ps1" FileName="Start-WsusServerSync.ps1" FileNameWithoutExtension="Start-WsusServerSync" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Synchronize-all-WSUS-00c899c2\Start-WsusServerSync" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Synchronize-all-WSUS-00c899c2/file/101367/1/WSUS_Synchronize_All_Servers.ps1" FileName="WSUS_Synchronize_All_Servers.ps1" FileNameWithoutExtension="WSUS_Synchronize_All_Servers" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Synchronize-all-WSUS-00c899c2\WSUS_Synchronize_All_Servers" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="WSUS-HTML-Report-655a8f28" LastUpdated="04-May-2014" Link="https://gallery.technet.microsoft.com/WSUS-HTML-Report-655a8f28" Rating="0" Raters="0" Downloads="1883" Title="WSUS HTML Report" Category="Windows Update" SubCategory="Server-Side Management" Tags="Powershell;  WSUS;  HTML Report;  " Author="Boe Prox" Summary="This is a script that can be run on-demand or as a scheduled job to scan a WSUS server and generate a HTML report. The script can send an email with the report as the body or save to a file and then open it up for viewing. This&#xD;&#xA; is used on a single WSUS server to report on. Mult" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/WSUS-HTML-Report-655a8f28/file/114004/1/WSUSReport.ps1" FileName="WSUSReport.ps1" FileNameWithoutExtension="WSUSReport" LocalPath="E:\Documents\WindowsPowerShell\Scripts\WSUS-HTML-Report-655a8f28\WSUSReport" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Invoke-WSUSDBMaintenance-af2a3a79" LastUpdated="07-Jul-2013" Link="https://gallery.technet.microsoft.com/Invoke-WSUSDBMaintenance-af2a3a79" Rating="0" Raters="0" Downloads="1568" Title="Invoke-WSUSDBMaintenance" Category="Windows Update" SubCategory="Server-Side Management" Tags="Powershell;  API;  WSUS;  " Author="Boe Prox" Summary="This script utilizes the WSUS API to connect to the SUSDB database used by WSUS and perform maintenance on the database using a T-SQL script found here.&#xD;&#xA; By doing this, you can avoid dealing with relying on a system that has sqlcmd.exe available and instead run this from the WSU" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Invoke-WSUSDBMaintenance-af2a3a79/file/91967/1/Invoke-WSUSDBMaintenance.ps1" FileName="Invoke-WSUSDBMaintenance.ps1" FileNameWithoutExtension="Invoke-WSUSDBMaintenance" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Invoke-WSUSDBMaintenance-af2a3a79\Invoke-WSUSDBMaintenance" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Export-WSUS-Approvals-per-59b89a53" LastUpdated="17-Feb-2015" Link="https://gallery.technet.microsoft.com/Export-WSUS-Approvals-per-59b89a53" Rating="4.66666651" Raters="3" Downloads="2105" Title="Export WSUS Approvals per Computer Group to a CSV" Category="Windows Update" SubCategory="Server-Side Management" Tags="Powershell;  WSUS;  WSUS Server;  " Author="SaudM" Summary="Be sure to set $updateServer to the WSUS server you wish to export from.  This script outputs the data to the screen/console (stdout) and can be piped into a txt file for analysis in Excel or PowerPivot.  The format is a tab-separated file, but&#xD;&#xA; this can be easily changed. Ther" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Export-WSUS-Approvals-per-59b89a53/file/64790/1/GetApprovals.ps1" FileName="GetApprovals.ps1" FileNameWithoutExtension="GetApprovals" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Export-WSUS-Approvals-per-59b89a53\GetApprovals" />
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Export-WSUS-Approvals-per-59b89a53/file/133897/1/Sample%20Output.txt" FileName="Sample Output.txt" FileNameWithoutExtension="Sample Output" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Export-WSUS-Approvals-per-59b89a53\Sample Output" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Set-ClientWSUSSetting-2e84b805" LastUpdated="01-Sep-2014" Link="https://gallery.technet.microsoft.com/Set-ClientWSUSSetting-2e84b805" Rating="5" Raters="2" Downloads="2984" Title="Set-ClientWSUSSetting" Category="Windows Update" SubCategory="Client-Side Management" Author="Boe Prox" Summary="This function allows you to configure one or more system's automatic updates client by manipulating the registry settings assoicated with each setting. It is recommended that you run this with an account that has Administrative&#xD;&#xA; rights to each client to avoid any potential error" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Set-ClientWSUSSetting-2e84b805/file/124668/1/Set-ClientWSUSSetting.ps1" FileName="Set-ClientWSUSSetting.ps1" FileNameWithoutExtension="Set-ClientWSUSSetting" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Set-ClientWSUSSetting-2e84b805\Set-ClientWSUSSetting" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Force-Install-Updates-on-ef821f9a" LastUpdated="25-Aug-2014" Link="https://gallery.technet.microsoft.com/Force-Install-Updates-on-ef821f9a" Rating="4.33333349" Raters="6" Downloads="2406" Title="Force Install Updates on Remote Computer" Category="Windows Update" SubCategory="Client-Side Management" Tags="Installation;  Remote;  Windows Update;  " Author="Darryl van der Peijl" Summary="This powershell script will give you the ability to install windows updates on a remote computer.&#xD;&#xA;The script will remotely create a scheduled task on the given computer with the needed powershell cmdlets to:&#xD;&#xA;&#xD;&#xA;1. Search for updates&#xD;&#xA;2. Download updates&#xD;&#xA;3. Install updates" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Force-Install-Updates-on-ef821f9a/file/115791/1/ForceInstallUpdatesRemote.zip" FileName="ForceInstallUpdatesRemote.zip" FileNameWithoutExtension="ForceInstallUpdatesRemote" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Force-Install-Updates-on-ef821f9a\ForceInstallUpdatesRemote" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="856aef3b-ab6e-4974-b8cb-307f8fcab357" LastUpdated="02-Sep-2011" Link="https://gallery.technet.microsoft.com/856aef3b-ab6e-4974-b8cb-307f8fcab357" Rating="4.33333349" Raters="3" Downloads="1462" Title="Reset-WSUSClientID" Category="Windows Update" SubCategory="Client-Side Management" Tags="Powershell;  Files;  Registry;  " Author="Rich Prescott" Summary="This script will perform the basic troubleshooting steps for a client that is not reporting into WSUS correctly." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/856aef3b-ab6e-4974-b8cb-307f8fcab357/file/42151/1/Reset-WSUSClientID.ps1" FileName="Reset-WSUSClientID.ps1" FileNameWithoutExtension="Reset-WSUSClientID" LocalPath="E:\Documents\WindowsPowerShell\Scripts\856aef3b-ab6e-4974-b8cb-307f8fcab357\Reset-WSUSClientID" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="WSUS-Reset-and-delete-f626668a" LastUpdated="30-Jul-2012" Link="https://gallery.technet.microsoft.com/WSUS-Reset-and-delete-f626668a" Rating="5" Raters="1" Downloads="1984" Title="WSUS Reset and delete SoftwareDistribution Folder" Category="Windows Update" SubCategory="Client-Side Management" Tags="Powershell;  WSUS;  " Author="signalwarrant" Summary="*** This script has been tested however, USE AT YOUR OWN RISK. *** We recently had to change the name of our WSUS server, actually rebuilt it and used a different naming convention. Once it was up and running we made the change in Group Policy and pushed it out to all our clients" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/WSUS-Reset-and-delete-f626668a/file/62655/1/WSUS_Reset.ps1" FileName="WSUS_Reset.ps1" FileNameWithoutExtension="WSUS_Reset" LocalPath="E:\Documents\WindowsPowerShell\Scripts\WSUS-Reset-and-delete-f626668a\WSUS_Reset" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Uninstall-WSUSServer-218ce694" LastUpdated="16-Jan-2012" Link="https://gallery.technet.microsoft.com/Uninstall-WSUSServer-218ce694" Rating="0" Raters="0" Downloads="1815" Title="Uninstall-WSUSServer" Category="Windows Update" SubCategory="Server-Side Management" Author="Boe Prox" Summary="This script allows you to perform a local or remote WSUS Server uninstall from the convenience of your workstation. You can select to remove the existing Database, logfiles and/or content as well if you decided that you do not&#xD;&#xA; require those files anymore. You can even uninstall" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Uninstall-WSUSServer-218ce694/file/47059/1/Uninstall-WSUSServer.ps1" FileName="Uninstall-WSUSServer.ps1" FileNameWithoutExtension="Uninstall-WSUSServer" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Uninstall-WSUSServer-218ce694\Uninstall-WSUSServer" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Decline-all-updates-f9de0c7d" LastUpdated="09-Sep-2013" Link="https://gallery.technet.microsoft.com/Decline-all-updates-f9de0c7d" Rating="0" Raters="0" Downloads="949" Title="Decline all updates superseded by a particular update that are not needed" Category="Windows Update" SubCategory="Server-Side Management" Tags="Powershell;  WSUS;  WSUS Server;  " Author="- Mark -" Summary="This script connects to WSUS and recursively finds all updates that are superseded by a particular update and declines them. This script was inspired by the sentence &quot;Updates superseded by a service pack that is installed everywhere have no useful value. Decline them.&quot;" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Decline-all-updates-f9de0c7d/file/92213/1/Decline_Superseded_Updates_by_Update_Guid.ps1" FileName="Decline_Superseded_Updates_by_Update_Guid.ps1" FileNameWithoutExtension="Decline_Superseded_Updates_by_Update_Guid" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Decline-all-updates-f9de0c7d\Decline_Superseded_Updates_by_Update_Guid" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="4d70947e-21b1-4a45-9d78-a7198ed55cca" LastUpdated="02-Sep-2009" Link="https://gallery.technet.microsoft.com/4d70947e-21b1-4a45-9d78-a7198ed55cca" Rating="4.22222233" Raters="9" Downloads="0" Title="List last windows update install date / time" Category="Windows Update" SubCategory="Server-Side Management" Author="Gary Hay" Summary="list the last install date and time for windows updates on servers" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="Invoke-WSUSClientFix-fd29e1a8" LastUpdated="28-Mar-2014" Link="https://gallery.technet.microsoft.com/Invoke-WSUSClientFix-fd29e1a8" Rating="3.5" Raters="2" Downloads="1376" Title="Invoke-WSUSClientIDFix" Category="Windows Update" SubCategory="Client-Side Management" Tags="Powershell;  Registry;  WSUS;  " Author="Boe Prox" Summary="This function will allow you to perform a WSUS Client ID fix on both local and remote systems. Sometimes a client will not communicate properly with the WSUS server to due an invalid clientID caused by a system that has been&#xD;&#xA; cloned or an imaged created from it without being sys" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Invoke-WSUSClientFix-fd29e1a8/file/111338/1/Invoke-WSUSClientFixID.ps1" FileName="Invoke-WSUSClientFixID.ps1" FileNameWithoutExtension="Invoke-WSUSClientFixID" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Invoke-WSUSClientFix-fd29e1a8\Invoke-WSUSClientFixID" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Powershell-server-owners-297d2cc7" LastUpdated="25-Apr-2014" Link="https://gallery.technet.microsoft.com/Powershell-server-owners-297d2cc7" Rating="0" Raters="0" Downloads="869" Title="Powershell - server owners email notification automation for scheduled reboot" Category="Windows Update" SubCategory="Server-Side Management" Author="Yassine Souabni" Summary="Automatically send a HTML formatted email (with custom message) &#xD;&#xA;to each server/VM owner with following informations :&#xD;&#xA;&gt; Server name &#xD;&#xA;&gt; What patches are needed that are requiring reboot&#xD;&#xA;&gt; Scheduled reboot time &#xD;&#xA;" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Powershell-server-owners-297d2cc7/file/101481/1/NotifyServerOwnerAboutScheduledReboot%26PatchList.ps1" FileName="NotifyServerOwnerAboutScheduledReboot&amp;PatchList.ps1" FileNameWithoutExtension="NotifyServerOwnerAboutScheduledReboot&amp;PatchList" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Powershell-server-owners-297d2cc7\NotifyServerOwnerAboutScheduledReboot&amp;PatchList" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Add-Parameter-AutoSelectOnl-1d62a499" LastUpdated="23-Apr-2013" Link="https://gallery.technet.microsoft.com/Add-Parameter-AutoSelectOnl-1d62a499" Rating="0" Raters="0" Downloads="911" Title="Add Parameter 'AutoSelectOnly' to Windows Update PowerShell Module" Category="Windows Update" SubCategory="Client-Side Management" Author="Elijah Buck" Summary="Added Parameter 'AutoSelectOnly' to Get-WUInstall from http://gallery.technet.microsoft.com/scriptcenter/2d191bcd-3308-4edd-9de2-88dff796b0bc This parameter filters updates based on the 'AutoSelectOnWebsites' property. Basically, this installs updates that are marked 'important' " IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Add-Parameter-AutoSelectOnl-1d62a499/file/81051/1/Get-WUInstall.ps1" FileName="Get-WUInstall.ps1" FileNameWithoutExtension="Get-WUInstall" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Add-Parameter-AutoSelectOnl-1d62a499\Get-WUInstall" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="xWindowsUpdate-Module-with-5af00a7f" LastUpdated="06-Jun-2014" Link="https://gallery.technet.microsoft.com/xWindowsUpdate-Module-with-5af00a7f" Rating="0" Raters="0" Downloads="647" Title="xWindowsUpdate Module with DSC Resource" Category="Windows Update" SubCategory="Client-Side Management" Tags="Powershell;  PowerShell Modules;  Windows PowerShell 4.0;  " Author="PowerShell Team" Summary="The xWindowsUpdate module contains a DSC resource that can help install an update from a hotfix file location path or a URI in a DSC Configuration." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/xWindowsUpdate-Module-with-5af00a7f/file/116399/1/xWindowsUpdate-1.0.zip" FileName="xWindowsUpdate-1.0.zip" FileNameWithoutExtension="xWindowsUpdate-1.0" LocalPath="E:\Documents\WindowsPowerShell\Scripts\xWindowsUpdate-Module-with-5af00a7f\xWindowsUpdate-1.0" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Force-WSUS-Check-in-c169d3b7" LastUpdated="31-Jul-2012" Link="https://gallery.technet.microsoft.com/Force-WSUS-Check-in-c169d3b7" Rating="4.5" Raters="4" Downloads="1326" Title="Force WSUS Check-in" Category="Windows Update" SubCategory="Client-Side Management" Tags="Powershell;  WSUS;  " Author="signalwarrant" Summary="This script will make sure the wuauserv service is started and if it is it will force WSUS checkin. I have tested this script on Windows Server 2K8 and 2K8 R2 as well as Windows 7 x64 and x32 and Windows Vista. All That said, USE AT YOUR OWN RISK. I hacked this&#xD;&#xA; thing together t" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Force-WSUS-Check-in-c169d3b7/file/62406/1/Force_WSUS_checkin.ps1" FileName="Force_WSUS_checkin.ps1" FileNameWithoutExtension="Force_WSUS_checkin" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Force-WSUS-Check-in-c169d3b7\Force_WSUS_checkin" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="How-to-fix-error-80073712-d7c2ace1" LastUpdated="19-Jun-2014" Link="https://gallery.technet.microsoft.com/How-to-fix-error-80073712-d7c2ace1" Rating="5" Raters="1" Downloads="473" Title="How to fix error 80073712 when installing Windows 8.1 update KB2919355" Category="Windows Update" SubCategory="Client-Side Management" Tags="fix error 80073712;  installing Windows 8.1 update;  KB2919355;  " Author="OneScript Team" Summary="How to fix error 80073712 when installing Windows 8.1 update KB2919355" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/How-to-fix-error-80073712-d7c2ace1/file/117069/1/Powershell.zip" FileName="Powershell.zip" FileNameWithoutExtension="Powershell" LocalPath="E:\Documents\WindowsPowerShell\Scripts\How-to-fix-error-80073712-d7c2ace1\Powershell" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="288e8603-7073-4b2b-b369-55dc5c4eea25" LastUpdated="14-Feb-2012" Link="https://gallery.technet.microsoft.com/288e8603-7073-4b2b-b369-55dc5c4eea25" Rating="0" Raters="0" Downloads="1654" Title="Get-ComputerUpdateReport" Category="Windows Update" SubCategory="Server-Side Management" Tags="Updates;  WSUS;  " Author="Jeffrey S. Patton" Summary="This script uses two functions to get a list of computers from ActiveDirectory and then query each computer for a list of pending updates. It then returns selected fields from that function to create the report." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/288e8603-7073-4b2b-b369-55dc5c4eea25/file/49419/1/Get-ComputerUpdateRport.ps1" FileName="Get-ComputerUpdateRport.ps1" FileNameWithoutExtension="Get-ComputerUpdateRport" LocalPath="E:\Documents\WindowsPowerShell\Scripts\288e8603-7073-4b2b-b369-55dc5c4eea25\Get-ComputerUpdateRport" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Get-RebootRequired-f77800e5" LastUpdated="16-Jul-2013" Link="https://gallery.technet.microsoft.com/Get-RebootRequired-f77800e5" Rating="5" Raters="1" Downloads="777" Title="Test-RebootRequired" Category="Windows Update" SubCategory="Server-Side Management" Tags="restart;  Pending Reboot;  Restart Required;  " Author="R Jason Morgan" Summary="Hello and Welcome,So this script isn't particularly fancy but I use it all the time in line with other scripts.  It returns a simple boolean true or false to indicate if a server requires a reboot.  Thanks for stopping by!" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Get-RebootRequired-f77800e5/file/92381/1/Get-RebootRequired.ps1" FileName="Get-RebootRequired.ps1" FileNameWithoutExtension="Get-RebootRequired" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Get-RebootRequired-f77800e5\Get-RebootRequired" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="How-to-force-automatic-195fbe07" LastUpdated="20-Oct-2013" Link="https://gallery.technet.microsoft.com/How-to-force-automatic-195fbe07" Rating="0" Raters="0" Downloads="775" Title="How to force automatic restarts after finish installing updates (PowerShell)" Category="Windows Update" SubCategory="Server-Side Management" Tags="Powershell;  automatic restarts;  " Author="OneScript Team" Summary="This script can help to force automatic restarts to finish installing important updates." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/How-to-force-automatic-195fbe07/file/100003/1/ForceAutomaticRestarts%20(PowerShell).zip" FileName="ForceAutomaticRestarts (PowerShell).zip" FileNameWithoutExtension="ForceAutomaticRestarts (PowerShell)" LocalPath="E:\Documents\WindowsPowerShell\Scripts\How-to-force-automatic-195fbe07\ForceAutomaticRestarts (PowerShell)" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Invoke-Windows-Update-951a3847" LastUpdated="30-Apr-2014" Link="https://gallery.technet.microsoft.com/Invoke-Windows-Update-951a3847" Rating="0" Raters="0" Downloads="718" Title="Invoke Windows Update Automatic Updates PowerShell Module Cmdlet" Category="Windows Update" SubCategory="Client-Side Management" Tags="Server Core;  Updates;  Windows PowerShell;  " Author="kberger" Summary="This module and cmdlet is designed to Invoke a Windows Update session." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Invoke-Windows-Update-951a3847/file/113859/1/KBWindowsUpdate.zip" FileName="KBWindowsUpdate.zip" FileNameWithoutExtension="KBWindowsUpdate" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Invoke-Windows-Update-951a3847\KBWindowsUpdate" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Remove-Update-f00e42e9" LastUpdated="26-Feb-2014" Link="https://gallery.technet.microsoft.com/Remove-Update-f00e42e9" Rating="4.5" Raters="2" Downloads="770" Title="Remove-Update" Category="Windows Update" SubCategory="Client-Side Management" Tags="patch;  Remove;  uninstall;  " Author="R Jason Morgan" Summary="### Update ###Got some help from Adil Hindistan, he added whatif support and fixed some issues with case sensitivity.You can see more from Adil Hindistan by following him on twitter @AdilHindistanYou can also find this function on Github:https://github.com/JasonMorgan/Remove-Upda" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Remove-Update-f00e42e9/file/109248/2/Remove-Update.ps1" FileName="Remove-Update.ps1" FileNameWithoutExtension="Remove-Update" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Remove-Update-f00e42e9\Remove-Update" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="WSUS-Delayed-Automatic-6e35f1b0" LastUpdated="12-Aug-2014" Link="https://gallery.technet.microsoft.com/WSUS-Delayed-Automatic-6e35f1b0" Rating="0" Raters="0" Downloads="391" Title="WSUS Delayed Automatic Approval" Category="Windows Update" SubCategory="Server-Side Management" Tags="WSUS;  Automatic approval;  " Author="RM de Jong" Summary="Execute the WSUS build-in &quot;automatic approvals&quot; with a delay." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/WSUS-Delayed-Automatic-6e35f1b0/file/123666/1/WSUSDelayedAutomaticApprovalv1.ps1" FileName="WSUSDelayedAutomaticApprovalv1.ps1" FileNameWithoutExtension="WSUSDelayedAutomaticApprovalv1" LocalPath="E:\Documents\WindowsPowerShell\Scripts\WSUS-Delayed-Automatic-6e35f1b0\WSUSDelayedAutomaticApprovalv1" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="d86cd93b-2428-40a1-a430-26bd3caed36f" LastUpdated="28-Nov-2012" Link="https://gallery.technet.microsoft.com/d86cd93b-2428-40a1-a430-26bd3caed36f" Rating="4" Raters="2" Downloads="0" Title="Invoke-WindowsUpdate" Category="Windows Update" SubCategory="Server-Side Management" Author="Jan Egil Ring" Summary="Script to download and install updates from Windows Update/WSUS. Reporting and rebooting may be customized." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="5c01defe-1da0-4003-80b1-a653e789dbf5" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/5c01defe-1da0-4003-80b1-a653e789dbf5" Rating="3" Raters="3" Downloads="0" Title="WSUS Approved Updates Status Report" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="Provides a status report for approved updates. Every update approved on your server is shown, with a list of the target groups for which it was approved. Within each group, counts" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="90ca6976-d441-4a10-89b0-30a7103d55db" LastUpdated="31-Mar-2010" Link="https://gallery.technet.microsoft.com/90ca6976-d441-4a10-89b0-30a7103d55db" Rating="4.2" Raters="5" Downloads="0" Title="Run WSUS Cleanup (from the Scripting Guys) on all Replica Servers" Category="Windows Update" SubCategory="Server-Side Management" Tags="CleanUp;  Wizard;  WSUS;  " Author="Thomas Schlachter" Summary="Running the CleanUp Wizard on all replica Servers" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="e3a7cccb-5bcd-498c-9e35-d59a3bc73559" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/e3a7cccb-5bcd-498c-9e35-d59a3bc73559" Rating="4" Raters="1" Downloads="0" Title="WSUS: Server Status Summary for All Computers and Updates" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="Provides overall server status counts for a Windows Server Update Services (WSUS) server, presenting information shown at the “Update Services” node of the WSUS console for a spec" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="6d4dbcea-cf07-46be-9d39-49469c8eefea" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/6d4dbcea-cf07-46be-9d39-49469c8eefea" Rating="4.66666651" Raters="3" Downloads="0" Title="WSUS List Computers that Need to Reboot" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="This script shows a list of computers that need to be rebooted to finish installing updates. The output shows a computer followed by titles of updates that need rebooting on that " IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="47de741b-b64a-4d8a-8bc1-53e6bf7f7792" LastUpdated="24-Jun-2011" Link="https://gallery.technet.microsoft.com/47de741b-b64a-4d8a-8bc1-53e6bf7f7792" Rating="4.5" Raters="2" Downloads="0" Title="WSUS Patch Approval Script" Category="Windows Update" SubCategory="Server-Side Management" Author="Jace F" Summary="This script was created where approval of patches may be required in advance, it allows for the approval of a list of patches to WSUS containers." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="86df3505-65c5-40f5-9ff0-925590ccb3e7" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/86df3505-65c5-40f5-9ff0-925590ccb3e7" Rating="3" Raters="3" Downloads="0" Title="WSUS: Server Status for Approved Updates" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="Provides overall server status counts for approved Microsoft updates on a Windows Server Update Services (WSUS) server, similar to information shown at the “Update S" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="c5b8af8c-5655-48a3-98f2-48489ec6fa86" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/c5b8af8c-5655-48a3-98f2-48489ec6fa86" Rating="0" Raters="0" Downloads="0" Title="Publish an MSP Package into a WSUS Server" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="This script provides an example of publishing an MSI application into the Windows Server Update Services (WSUS) server. Note that such “locally published” content will not be visi" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="25a2f574-feee-480f-9850-918f0edf3c50" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/25a2f574-feee-480f-9850-918f0edf3c50" Rating="1" Raters="1" Downloads="0" Title="Download Status" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="This script provides status on updates that have not finished downloading to the WSUS server, and it retries failed downloads (rather than waiting for the next WSUS sync)." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="723423ca-00ea-43b5-ba8b-2aae66c58518" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/723423ca-00ea-43b5-ba8b-2aae66c58518" Rating="5" Raters="1" Downloads="0" Title="Start a WSUS 3.0 Server Synchronization" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="Start a Windows Server Update Services (WSUS) 3.0 server synchronization. This script was contributed by the Microsoft WSUS team.This script connects to a WSUS 3.0 server on the m" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="e3b33372-1e7f-41ea-ad83-ecc10ba5f0f6" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/e3b33372-1e7f-41ea-ad83-ecc10ba5f0f6" Rating="0" Raters="0" Downloads="0" Title="Approve Needed Updates" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="This script approves updates needed by a particular computer to one of the target groups to which the computer belongs." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="c6786fdb-3e8a-431a-88d8-6fb5c2e392d8" LastUpdated="04-Apr-2010" Link="https://gallery.technet.microsoft.com/c6786fdb-3e8a-431a-88d8-6fb5c2e392d8" Rating="5" Raters="2" Downloads="0" Title="Hotfix inventory or Find AD comps with or without a certian hotfix" Category="Windows Update" SubCategory="Server-Side Management" Tags="AD;  Get-hotfix;  HotFIX;  " Author="Mohamed Garrana" Summary="This scripts connects to AD and outputs a hotfix (updates) inventory including updateID,OS andservicepack and osversion or can be used to search for comps having or missing a certian hotfix" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="7ffd5265-530f-4b86-bb84-09275542f2ea" LastUpdated="15-Sep-2010" Link="https://gallery.technet.microsoft.com/7ffd5265-530f-4b86-bb84-09275542f2ea" Rating="0" Raters="0" Downloads="0" Title="Import WindowsUpdate.log" Category="Windows Update" SubCategory="Client-Side Management" Tags="Windows;  log;  Update;  " Author="Nomadtales" Summary="Imports the Windows Update log file from the system drive on a PC and parses it generate a list of updates waiting to be installed. It checks the name of the update against a WSUS server." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="List-WSUS-computer-groups-824c484f" LastUpdated="12-Aug-2014" Link="https://gallery.technet.microsoft.com/List-WSUS-computer-groups-824c484f" Rating="0" Raters="0" Downloads="0" Title="List WSUS computer groups" Category="Windows Update" SubCategory="Server-Side Management" Author="Gleb Yourchenko" Summary="This simple script lists all computer groups defined on the local WSUS server displaying name and number of members in each group. &#xD;&#xA;&#xD;&#xA; &#xD;&#xA;  The script can be easily modified to write output to a file or include more details in the output. For more information on using WSUS interf" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="27cb5d6b-ef99-47ac-aa60-97227bfb7d93" LastUpdated="19-Jan-2011" Link="https://gallery.technet.microsoft.com/27cb5d6b-ef99-47ac-aa60-97227bfb7d93" Rating="1" Raters="3" Downloads="0" Title="Get Windows Updates Reboots Or Installs for your servers" Category="Windows Update" SubCategory="Server-Side Management" Tags="windows updates;  " Author="John Grenfell" Summary="Parse all your servers windowsupdate logs to find pending reboots or installs awaiting action and email the results" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="874e350c-8b38-4cc3-8ad4-c3e2a8909c67" LastUpdated="20-May-2011" Link="https://gallery.technet.microsoft.com/874e350c-8b38-4cc3-8ad4-c3e2a8909c67" Rating="2" Raters="1" Downloads="0" Title="Read the WindowsUpdate.log on remote systems and filter results" Category="Windows Update" SubCategory="Client-Side Management" Tags="WindowsUpdate.log;  " Author="Ben Wilkinson" Summary="Need to check for the results of the backup log against remote machines, then use this script. Need to filter the results for particular KB or Software, use the -Filter parameter." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="48e39caa-7cfc-439b-86e7-45618f25ee85" LastUpdated="02-Jul-2010" Link="https://gallery.technet.microsoft.com/48e39caa-7cfc-439b-86e7-45618f25ee85" Rating="4" Raters="2" Downloads="0" Title="Configure WSUS Replica Server" Category="Windows Update" SubCategory="Server-Side Management" Tags="Configuration;  Replica;  WSUS Server;  " Author="Goschy" Summary="The script will configure a WSUS server install to become a replica server, useful when you need to automate the deployment of multiple replica WSUS servers or to standardise your config and use it to easily revert a server to the default config." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="1c99d1d7-d5ee-4d84-ac76-72b04e0baca3" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/1c99d1d7-d5ee-4d84-ac76-72b04e0baca3" Rating="0" Raters="0" Downloads="0" Title="Delete Empty WSUS 3.0 Target Groups" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="Deletes any target group that has no computers associated with it. This script contributed by the Microsoft Windows Server Update Services (WSUS) team.This script connects to a WS" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="0c716c9e-6326-42a3-b674-d6e22fdb30e5" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/0c716c9e-6326-42a3-b674-d6e22fdb30e5" Rating="0" Raters="0" Downloads="0" Title="WSUS Active Directory Group Import" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="Enumerates the Active Directory structure for your domain, and imports it as nested groups into your local Windows Server Update Services (WSUS) server.This script will fail to cr" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="2a07592c-628b-4d2a-a665-b7b103acf4fe" LastUpdated="02-Sep-2009" Link="https://gallery.technet.microsoft.com/2a07592c-628b-4d2a-a665-b7b103acf4fe" Rating="0" Raters="0" Downloads="0" Title="Find servers with Manual WSUS schedule" Category="Windows Update" SubCategory="Server-Side Management" Author="Gary Hay" Summary="Find servers with Manual WSUS schedule, requires Quest AD plugin" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="147a76ee-049a-413c-9e01-531caadcab3a" LastUpdated="08-Sep-2009" Link="https://gallery.technet.microsoft.com/147a76ee-049a-413c-9e01-531caadcab3a" Rating="0" Raters="0" Downloads="0" Title="WSUS Move Approvals from Out-of-Date Revisions" Category="Windows Update" SubCategory="Server-Side Management" Author="The Scripting Guys" Summary="Use this script if you have turned off the option to auto-reapprove revisions. If you have turned off this option, you will need to manage update revisions manually. By default, t" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="Remove-Target-Nodes-from-910868c7" LastUpdated="26-Jul-2013" Link="https://gallery.technet.microsoft.com/Remove-Target-Nodes-from-910868c7" Rating="0" Raters="0" Downloads="0" Title="Remove Target Nodes from WSUS Group" Category="Windows Update" SubCategory="Server-Side Management" Tags="WSUS;  " Author="n4pd3f" Summary="Removing systems from WSUS groups using the Update Services console is not very intuitive when making changes to multiple systems at once.  Often, I need to dump a large list of systems out of a specific group - this becomes a problem when systems have&#xD;&#xA; other unique group member" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="Sort-WSUS-Nodes-By-Timezone-be15a80f" LastUpdated="21-Feb-2014" Link="https://gallery.technet.microsoft.com/Sort-WSUS-Nodes-By-Timezone-be15a80f" Rating="0" Raters="0" Downloads="0" Title="Sort WSUS Nodes By Timezone into WSUS Groups" Category="Windows Update" SubCategory="Server-Side Management" Author="n4pd3f" Summary="This script can be used to move and/or organize WSUS nodes into WSUS groups based on local timezone of node." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="Check-system-for-a-bfe1d1bc" LastUpdated="19-Sep-2014" Link="https://gallery.technet.microsoft.com/Check-system-for-a-bfe1d1bc" Rating="0" Raters="0" Downloads="199" Title="Check system for a specific patch" Category="Windows Update" SubCategory="Server-Side Management" Tags="KB;  Microsoft Update;  Powershell Script;  " Author="Holger Habermehl" Summary="You can use this scrit to identify if a special patch is installed on a system listed in the servers.txt file. you have to create a text file with the server names to be checked. Insert the server name as shown below, followed by a CR/LF at the end and save it as servers.txt in t" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Check-system-for-a-bfe1d1bc/file/125667/1/CheckForSpecificPatch.ps1" FileName="CheckForSpecificPatch.ps1" FileNameWithoutExtension="CheckForSpecificPatch" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Check-system-for-a-bfe1d1bc\CheckForSpecificPatch" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Configure-Windows-Updates-cd6c674a" LastUpdated="21-Sep-2014" Link="https://gallery.technet.microsoft.com/Configure-Windows-Updates-cd6c674a" Rating="5" Raters="1" Downloads="580" Title="Configure Windows Updates on many computers" Category="Windows Update" SubCategory="Client-Side Management" Tags="Powershell;  windows updates;  Configure Windows Updates;  " Author="Sam Boutros" Summary="This Powershell function will change Windows Updates configuration on many computers to either disable updates, check only, download only, or download and automatically install updates.To use it, download it, run it in Powershell_ISE for example, then run: To set Windows Automati" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Configure-Windows-Updates-cd6c674a/file/125759/1/Set-WindowsUpdates.ps1" FileName="Set-WindowsUpdates.ps1" FileNameWithoutExtension="Set-WindowsUpdates" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Configure-Windows-Updates-cd6c674a\Set-WindowsUpdates" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Get-Missing-Updates-with-ab80bf4e" LastUpdated="06-Oct-2014" Link="https://gallery.technet.microsoft.com/Get-Missing-Updates-with-ab80bf4e" Rating="4" Raters="1" Downloads="445" Title="Get Missing Updates with Powershell and MBSA" Category="Windows Update" SubCategory="Client-Side Management" Tags="Powershell;  MBSA;  Security Updates;  " Author="Adam Bertram" Summary="Use the Microsoft Baseline Security Analyzer and Powershell to get a list of manageable missing updates on a Windows computer." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Get-Missing-Updates-with-ab80bf4e/file/126447/1/Get-MissingUpdates.ps1" FileName="Get-MissingUpdates.ps1" FileNameWithoutExtension="Get-MissingUpdates" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Get-Missing-Updates-with-ab80bf4e\Get-MissingUpdates" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Resolve-the-date-for-a18fa856" LastUpdated="20-Oct-2014" Link="https://gallery.technet.microsoft.com/Resolve-the-date-for-a18fa856" Rating="0" Raters="0" Downloads="0" Title="Resolve the date for Patching Calendar" Category="Windows Update" SubCategory="Server-Side Management" Author="Karunanidhi Mishra" Summary="Hi All,The below script is capable of resolving dates based on Patching calendar,Eg. 2nd saturday of October-2014 is 10/11/2014.Will be helpful for windows Admins to prepare pathcing dates:  #Weekdays= Starts sunday=0,mon=1,tue=2....sat=6Eg. Get-WeekDayInMonth 10 2014 2 610/11/20" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+  </ScriptSample>
+  <ScriptSample Name="Update-CauSchedule-83dfe9db" LastUpdated="21-Jan-2015" Link="https://gallery.technet.microsoft.com/Update-CauSchedule-83dfe9db" Rating="5" Raters="1" Downloads="78" Title="Update-CauSchedule" Category="Windows Update" SubCategory="Server-Side Management" Tags="Hyper-V;  Updates;  Cluster Aware Updating;  " Author="RustyJusty" Summary="This script automates the updating of the Cluster-Aware Updating Self Updating mode schedule to run on the Thursday following Microsoft Update Tuesday, which is sometimes week 2, sometimes week 3 of the month.This script was created to address the shortcomings of the inbuilt CAU " IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Update-CauSchedule-83dfe9db/file/132852/1/Update-CauSchedule.ps1" FileName="Update-CauSchedule.ps1" FileNameWithoutExtension="Update-CauSchedule" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Update-CauSchedule-83dfe9db\Update-CauSchedule" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Get-WindowsUpdate-Retrieve-e53aea50" LastUpdated="09-Feb-2015" Link="https://gallery.technet.microsoft.com/Get-WindowsUpdate-Retrieve-e53aea50" Rating="0" Raters="0" Downloads="143" Title="Get-WindowsUpdate - Retrieve All Windows Updates from a Local Computer" Category="Windows Update" SubCategory="Client-Side Management" Tags="Microsoft Update;  Update;  Updates;  " Author="Andrew Saraceni" Summary="This script contains a function (Get-WindowsUpdate) which is used to retrieve all Windows updates from a local computer.  Specifically, this includes updates to both native components of the OS, and non-native (e.g. Microsoft Office)." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Get-WindowsUpdate-Retrieve-e53aea50/file/133616/1/Get-WindowsUpdate.ps1" FileName="Get-WindowsUpdate.ps1" FileNameWithoutExtension="Get-WindowsUpdate" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Get-WindowsUpdate-Retrieve-e53aea50\Get-WindowsUpdate" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="Get-list-of-installed-2183cc57" LastUpdated="31-Mar-2015" Link="https://gallery.technet.microsoft.com/Get-list-of-installed-2183cc57" Rating="0" Raters="0" Downloads="35" Title="Get list of installed hotfixes on remote servers and mail the output files" Category="Windows Update" SubCategory="Client-Side Management" Tags="Powershell;  HotFIX;  send e-mail;  " Author="Tim Buntrock" Summary="Get list of installed hotfixes on remote servers and mail the output to a specified mail addresses. &#xD;&#xA;&#xD;&#xA;" IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/Get-list-of-installed-2183cc57/file/135658/1/Files_GetRemoteInstalledHotfixMailReport.zip" FileName="Files_GetRemoteInstalledHotfixMailReport.zip" FileNameWithoutExtension="Files_GetRemoteInstalledHotfixMailReport" LocalPath="E:\Documents\WindowsPowerShell\Scripts\Get-list-of-installed-2183cc57\Files_GetRemoteInstalledHotfixMailReport" />
+    </SamplePackages>
+  </ScriptSample>
+  <ScriptSample Name="CleanMgrexe-Automation-for-931cd970" LastUpdated="02-Jun-2015" Link="https://gallery.technet.microsoft.com/CleanMgrexe-Automation-for-931cd970" Rating="0" Raters="0" Downloads="43" Title="CleanMgr.exe Automation for Servers" Category="Windows Update" SubCategory="Server-Side Management" Author="PLantella" Summary="Invoke Disk cleanup on local or remote Windows Server 2008R2. Run Disk Cleanup Manager (Cleanmgr.exe) on Servers without the need to Install the Desktop Experience feature. No reboot required." IsAddedToFavorite="false" IsAllDownloaded="true">
+    <Languages>
+      <Language Type="PowerShell" />
+    </Languages>
+    <SamplePackages>
+      <SamplePackage LastUpdated="08-Jul-2015" DownloadLink="https://gallery.technet.microsoft.com/CleanMgrexe-Automation-for-931cd970/file/138462/1/Invoke-LHSDiskCleanup.ps1" FileName="Invoke-LHSDiskCleanup.ps1" FileNameWithoutExtension="Invoke-LHSDiskCleanup" LocalPath="E:\Documents\WindowsPowerShell\Scripts\CleanMgrexe-Automation-for-931cd970\Invoke-LHSDiskCleanup" />
+    </SamplePackages>
+  </ScriptSample>
+</DownloadedSamples>

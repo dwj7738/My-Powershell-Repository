@@ -1,0 +1,1125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>DSC Resource Kit (All Modules)</title>        
+        <meta name="description" content="The DSC Resource Kit is a collection of experimental DSC Resources released by the PowerShell Team, designed to help you get started with DSC.   These resources allow you to configure Active Directory, SQL Server, IIS, Hyper-V, RDSH, and more. " />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<div id="longDesc">
+<div id="longDesc">
+<div id="longDesc">
+<div id="longDesc">
+<div id="longDesc">
+<h1 style="font-family:Calibri Light; color:#2e74b5; font-size:large">Introduction</h1>
+<p class="MsoNormal" style="line-height:normal"><span style="font-size:12pt; color:black">Interested in trying out Windows PowerShell Desired State Configuration (DSC)? Looking for DSC Resources to help you configure your environment? The
+<strong>DSC Resource Kit </strong>is a collection of experimental DSC Resources and sample configurations released by the PowerShell Team, designed to help you get started with DSC. These resources and samples allow you to configure Active Directory, SQL Server,
+ IIS, Hyper-V, Remote Desktop, and more. The zip attached to this page contains the latest version of each resource.
+</span></p>
+<p class="MsoNormal" style="line-height:normal"><strong><span style="font-size:12pt; color:black">All of the resources and examples in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program or service.
+ The &quot;x&quot; prefix on each module and resource stands for experimental </span></strong><span style="font-size:12pt; color:black">, which means that these resources may be maintained and monitored by the module owner(s) moving forward.</span></p>
+<p class="MsoNormal" style="line-height:normal"><strong><span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">Questions or Comments</span></strong></p>
+<p class="MsoNormal" style="line-height:normal"><span style="font-size:12pt; color:black">Please leave comments, feature requests, and bug reports for the overall DSC Resource Kit in the Q &amp; A tab for this module.&nbsp; If your question pertains to a
+ specific resource, please leave it on that resource's Script Center page.<br>
+</span></p>
+<p class="MsoNormal" style="line-height:normal"><span style="font-size:12pt; color:black">If you would like to modify any resources or examples in the Resource Kit, feel free. When modifying, please update the module name, resource friendly name, and MOF
+ class name (instructions below). As specified in the license, you may copy or modify this resource as long as they are used on the Windows Platform.
+</span></p>
+<p class="MsoNormal" style="line-height:normal"><span style="font-size:12pt; color:black">For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+<a href="http://blogs.msdn.com/b/powershell/">PowerShell Blog</a> (<a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx">this</a> is a good starting point). There
+ are also great community resources, such as <a href="http://powershell.org/wp/tag/dsc/">
+PowerShell.org </a>, or <a href="http://www.powershellmagazine.com/tag/dsc/">PowerShell Magazine</a>. For more information on the DSC Resource Kit, check out
+<a href="http://go.microsoft.com/fwlink/?LinkID=389546">this blog post</a>. </span>
+</p>
+<p class="MsoNormal" style="line-height:normal"><strong><span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">Installation</span></strong></p>
+<p class="MsoNormal" style="line-height:normal"><span style="font-size:12pt; color:black">To install all DSC Resource Kit Modules
+</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:Symbol; color:black">&middot;<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12pt; color:black">Unzip the content under $env:ProgramFiles\WindowsPowerShell\Modules folder</span></p>
+<p class="MsoNormal" style="line-height:normal"><span style="font-size:12pt; color:black">To confirm installation:</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:Symbol; color:black">&middot;<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:12pt; color:black">Run <strong>Get-DSCResource</strong> to see that all of the resources on this page are among the DSC Resources listed</span></p>
+<p class="MsoNormal" style="line-height:normal"><strong><span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">Requirements</span></strong></p>
+<p class="MsoNormal" style="line-height:normal"><span style="font-size:12pt; color:black">Most items in this release require the latest version of PowerShell (v4.0, which ships in Windows 8.1 or Windows Server 2012R2). To easily use PowerShell 4.0 on older
+ operating systems, <a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855">
+install WMF 4.0 </a>. Please read the installation instructions that are present on both the download page and the release notes for WMF 4.0.
+</span></p>
+<p class="MsoNormal" style="line-height:normal"><span style="font-size:12pt; color:black">Some samples and resources in this release require the latest Windows Management Framework (WMF) 5.0 Preview release, which contains functionality that has been updated
+ from WMF 4.0. Each module with this requirement will be clearly identified. The WMF 5.0 Preview release is available for installation on Windows 8.1 and Windows Server 2012 R2. More information about the content of the WMF 5.0 Preview is available in its dedicated
+ release notes, included in the download links below. <br>
+<br>
+<strong>Notice: </strong>the WMF 5.0 Preview Release delivered as an MSU installation package via the links below. Installing this will update the PowerShell, WMI, and WinRM components of your Windows installation. change the state of your machine, as opposed
+ to the scripts in Resource Kit. If you choose &ldquo;Open&rdquo; from either the x64 or x86 direct download links, the package will be downloaded, and the install will update your system with these new components.<br>
+<br>
+<strong>Disclaimer:</strong> There are some scenarios in the WMF 5.0 Preview Release that are stable, while others are experimenta and have incomplete or missing functionality. The definition of we mean by &quot;stable&quot; and experimental are described in
+<a href="http://blogs.msdn.com/b/powershell/archive/2014/12/10/wmf-5-0-preview-defining-quot-experimental-designs-quot-and-quot-stable-designs-quot.aspx">
+<span style="color:#0000ff">this blog topic.</span></a> The details for which features are in which state are also included in the dedicated release notes for each WMF 5 Preview Release.
+</span><br>
+<br>
+Here is the link to the latest version of the WMF 5 Preview Release, as of this release of the DSC Resource Kit:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><a href="http://go.microsoft.com/fwlink/?LinkId=398175"><span style="color:#0000ff">Windows Management Framework 5.0 Preview February 2015</span></a>
+</li></ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p class="MsoNormal" style="line-height:normal"><strong><span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">Description</span></strong></p>
+<p class="MsoNormal" style="line-height:normal"><span lang="EN" style="font-size:12pt; color:black">The DSC Resource Kit consists of the following modules, which in turn contain the nested resources:</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;</span></span><span style="font-size:12pt; color:black">
+<a href="http://gallery.technet.microsoft.com/scriptcenter/xActiveDirectory-f2d573f3">
+xActiveDirectory </a>: Allows configuration of Active Directory components. </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xADDomain </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xADDomainController </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xADDomainTrust </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xADUser </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWaitForADDomain </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;</span></span><span style="font-size:12pt; color:black">
+<a href="http://gallery.technet.microsoft.com/xAdcsDeployment-PowerShell-cc0622fa">
+xAdcsDeployment </a>: is used to configure Certificate Services after the role is enabled on a Windows Server.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAdcsCertificationAuthority</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAdcsWebEnrollment</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;</span></span><span style="font-size:12pt; color:black">
+<a href="https://gallery.technet.microsoft.com/xAzure-PowerShell-Module-7dbf43b4">
+xAzure </a>: Provides a method of depoying virtual machines in Microsoft Azure. </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzureAffinityGroup </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzureQuickVM </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzureService </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzureSqlDatabase </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzureSqlDatabaseServerFirewallRule
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzureStorageAccount </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzureSubscription </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzureVM </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzureVMDSCConfiguration </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzureVMDscExtension </span>
+</p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;</span></span><span style="font-size:12pt; color:black">
+<a href="https://gallery.technet.microsoft.com/xAzurePack-PowerShell-b25ed05f">xAzurePack
+</a>: Contains resources for installation and configuration of Windows Azure Pack.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzurePackSetup </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzureQuickVM </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzurePackAdmin </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzurePackFQDN </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzurePackDatabaseSetting
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzurePackIdentityProvider
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzurePackRelyingParty </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xAzurePackResourceProvider
+</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;</span></span><span style="font-size:12pt; color:black">
+<a href="https://gallery.technet.microsoft.com/xBitlocker-Module-794c4bf8">xBitlocker
+</a>: Allows you to configure Bitlocker. </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xBLAutoBitlocker </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xBLBitlocker </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xBLTpm </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black">&nbsp;</span><span style="font-size:12pt; color:black">
+<a href="http://gallery.technet.microsoft.com/xChrome-PowerShell-Module-9e56d087">
+xChrome </a>: Installs the Chrome browser </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xChrome </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black">&nbsp;</span><span style="font-size:12pt; color:black">
+<a href="http://gallery.technet.microsoft.com/scriptcenter/xComputerManagement-Module-3ad911cc">
+xComputerManagement </a>: Allows configuration of a nodes's computer name and workgroup/domain
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xComputer </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black">&nbsp;</span><span style="font-size:12pt; color:black">
+<a href="http://gallery.technet.microsoft.com/xCredSSP-PowerShell-Module-81414139">
+xCredSSP </a>: xCredSSP resource, which enables, disables, and configures Credential Security Support Provider (CredSSP).
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xCredSSP </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black">&nbsp;</span><span style="font-size:12pt; color:black">
+<a href="http://gallery.technet.microsoft.com/scriptcenter/xDatabase-PowerShell-0db6cdaf">
+xDatabase </a>: Allows configuration of databases </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xDatabase</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xDBPackage</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xDhcpServer-PowerShell-f739cf90">xDHCPServer</a>: Enables configuration of a DHCP Server.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xDhcpServerOption </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xDhcpServerReservation </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xDhcpServerScope </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xDisk-Module-PowerShell-6b7870ed">xDisk</a>: Enables management of a disk drive
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xDisk</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWaitforDisk</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xDismFeature-PowerShell-90615ff7">xDismFeature</a>: Enables or disables Windows optional features.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xDismFeature</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xDNSServer-Module-d9739d3a">xDnsServer</a>: Enables configuration of a DNS Server
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xDnsServerSecondaryZone </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xDnsServerZoneTransfer </span>
+</p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xDscDiagnostics-PowerShell-abb6bcaa">xDscDiagnostics</a>: Allows simple diagnostics of DSC Logs.
+</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xDscResourceDesigne-Module-22eddb29"></a></span><span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xDscResourceDesigne-Module-22eddb29">xDscResourceDesigner</a>:
+ Allows easy creation and testing of DSC Resources </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xExchange-PowerShell-1dd18388">xExchange</a>: allows you to configure many different properties of Exchange 2013 servers, including individual server properties, databases
+ and mount points, and Database Availability Groups. </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchActiveSyncVirtualDirectory
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchAutodiscoverVirtualDirectory
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchAutoMountPoint </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchClientAccessServer </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchDatabaseAvailabilityGroup
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchDatabaseAvailabilityGroupMember
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchDatabaseAvailabilityGroupNetwork
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchEcpVirtualDirectory </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchExchangeCertificate </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchExchangeServer </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchImapSettings </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchMailboxDatabase </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchMailboxDatabaseCopy </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchMapiVirtualDirectory
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchOabVirtualDirectory </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchOutlookAnywhere </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchOwaVirtualDirectory </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchPopSettings </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchPowershellVirtualDirectory
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchReceiveConnector </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchUMService </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchWaitForDAG </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchWaitForMailboxDatabase
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchWebServicesVirtualDirectory
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchInstall </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchJetstress </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchJetstressCleanup </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchUMCallRouterSettings
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xExchWaitForADPrep </span>
+</p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xFailOverCluster-b5530c34">xFailOverCluster</a>: Allows configuration of a Failover Cluster.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xCluster </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWaitForCluster </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xFirefox-PowerShell-Module-8af6e921">xFirefox</a>: Allows installation of the latest Firefox browser.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xFirefox </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xHyperV-Module-PowerShell-a646ad1a">xHyper-V</a>: Allows configuration of the Hyper-V host.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xVhd </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xVhdFileDirectory </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xVMHyperV </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xVMSwitch </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xInternetExplorerHomePage-8dd59db2">xInternetExplorerHomePage
+</a>: This resource enables you to set one or more IE homepages using PowerShell DSC.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xInternetExplorerHomePage
+</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xJEA-PowerShell-Module-DSC-7bbc7bd3">xJEA</a>: Defines and configures constrained PowerShell Endpoints to enable Just Enough Admin scenarios</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xJeaEndPoint </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xJeaToolKit </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xMySql-PowerShell-Module-3ce4510c">xMySql</a> &nbsp;: allows you to setup a mysql server, database, user, and create a grant for the user. This resource requires WMF 5.0
+ Experimental July 2014. </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xMySqlDatabase</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xMySqlGrant</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xMySqlProvision</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xMySqlServer</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xMySqlUser</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xNetworking-Module-818b3583">xNetworking</a>: Allows configuration of a node's IP Address, DNS Address, and Firewall Rules.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xDnsServerAddress </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xFirewall </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xIPAddress </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xOU-PowerShell-Module-DSC-be133067 ">xOU</a>: Allows creation and configuration of an Active Directory Organizational Unit (OU)
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xADOrganizationalUnit </span>
+</p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xPendingReboot-PowerShell-b269f154">xPendingReboot</a>: Checks to see if a reboot is pending and allows DSC to predictably handle the condition</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xPendingReboot</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xPhp-PowerShell-Module-DSC-7230775c">xPhp</a>: allows you to setup php in iis.</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xPhp</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xPowerShellExecutionPolicy-588fa27d">xPowerShellExecutionPolicy</a>: allows you to setup php in iis.</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xPowerShellExecutionPolicy</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xPSDesiredStateConfiguratio-417dc71d">xPSDesiredStateConfiguration</a>: Contains improvements to built-in DSC Resources, as well as a resource for configuring a DSC &quot;Pull
+ Server.&quot; </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xArchive</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xDscWebService</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span>xFileUpload </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span>xGroup </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xPackage </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWindowsProcess </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xPSSessionConfiguration </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xRemoteFile</span> </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xServiceResource </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWindowsOptionalFeature</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<a href="https://gallery.technet.microsoft.com/xReleaseManagement-db1baef1 ">xReleaseManagement</a>: Resources created to work with the Release Management features of Visual Studio</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xTokenize </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<a href="http://gallery.technet.microsoft.com/xRemoteDesktopAdmin-dfc2f5a3">xRemoteDesktopAdmin</a>: Allows configuration of remote desktop and the related Windows firewall settings</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xRemoteDesktopAdmin</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xRemoteDesktopSessionHost-4a11f27d"></a></span><span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xRemoteDesktopSessionHost-4a11f27d">xRemoteDesktopSessionHost</a>:
+ Allows configuration of RDSH components. </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xRDRemoteApp</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xRDSessionCollection</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xRDSessionCollectionConfiguration</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xRDSessionDeployment</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xSafeHarbor-Module-bd705379"></a></span><span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xSafeHarbor-Module-bd705379">xSafeHarbor</a>:
+ This module contains the configurations that allow you to setup the SafeHarbor example. No new resources are included.
+</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCDPM-PowerShell-Desired-f86f6777"></a></span><span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCDPM-PowerShell-Desired-f86f6777">xSCDPM
+</a>: Contains resources for installation of System Center Service Management Automation (DPM).
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCDPMConsoleSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCDPMDatabaseServerSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCDPMServerSetup</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCOM-PowerShell-Desired-052fc73c"></a></span><span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCOM-PowerShell-Desired-052fc73c">xSCOM
+</a>: Contains resources for installation of System Center Operations Manager (OM).
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCOMConsoleSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCOMManagementServerSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCOMReportingServerSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCOMWebConsoleServerSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCOMManagementServerUpdate</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCOMWebConsoleServerUpdate</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCOMConsoleUpdate</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCOMAdmin</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCOMManagementPack</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCSMA-PowerShell-Desired-ee9ed838"></a></span><span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCSMA-PowerShell-Desired-ee9ed838">xSCSMA
+</a>: Contains resources for resources for installation of System Center Service Management Automation (SMA).
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCSMAPowerShellSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCSMARunbookWorkerServerSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCSMAWebServiceServerSetup</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCSPF-PowerShell-Desired-128739a5"></a></span><span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCSPF-PowerShell-Desired-128739a5">xSCSPF
+</a>: Contains resources for resources for installation of System Center Service Provider Foundation (SPF).
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCSPFServer</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCSPFServerSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCSPFServerUpdate</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCSPFSetting</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCSPFStamp</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCSR-PowerShell-Desired-195ad3c3"></a></span><span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCSR-PowerShell-Desired-195ad3c3">xSCSR
+</a>: Contains resources for installation of System Center Service Reporting (SR).
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCSRServerSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCSRServerUpdate</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCVMM-PowerShell-Desired-0025abcc"></a></span><span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSCVMM-PowerShell-Desired-0025abcc">xSCVMM
+</a>: Contains resources for installation of System Center Virtual Machine Manager (VMM).
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCVMMAdmin</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCVMMConsoleSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCVMMConsoleUpdate</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCVMMManagementServerSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCVMManagementServerUpdate</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSCVMMOperationsManagerServer</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xSmbShare-PowerShell-cafb8ba6"></a></span><span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xSmbShare-PowerShell-cafb8ba6">xSmbShare</a>:
+ Allow's configuration of a SMB Share. </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSmbShare </span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xSqlps-PowerShell-Module-aed9426c">xSqlPs</a>: Allows configuration of SQL Server</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSqlHAEndPoint </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSqlHAGroup </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSqlHAService </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSqlServerInstall </span>
+</p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWaitForSqlHAGroup </span>
+</p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xSQLServer-PowerShell-12d76584">xSqlServer</a>: Resources for System Center-compliant setup of SQL Server
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSQLServerFirewall</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSQLServerRSSecureConnectionLevel</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSQLServerSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSQLServerFailoverClusterSetup</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSQLServerRSConfig</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xSystemSecurity-PowerShell-42ad87eb">xSystemSecurity</a>: Allows configuration of User Account Control prompts and IE Enhanced Security Configuration.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xUAC</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xIEEsc</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xTimeZone-PowerShell-2f807209">xTimeZone</a>: Allows setting the system time zone in Windows using PowerShell DSC
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xTimeZone</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/scriptcenter/xWebAdministration-Module-3c8bb6be">xWebAdministration</a>: Allows configuration of IIS.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xIisModule</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWebApplication</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWebAppPool</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWebConfigKeyValue</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWebsite</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWebVirtualDirectory</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xWindowsUpdate-Module-with-5af00a7f">xWindowsupdate
+</a>: Handles installation of&nbsp; a windows update or hotfix. </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xHotfix</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/xWindowsRestore-PowerShell-3cef691b">xWindowsRestore
+</a>: Use PowerShell DSC to configure system restore, create or remove a restore point.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSystemRestore</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xSystemRestorePoint</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xWinEventLog-PowerShell-76e49243">xWinEventLog</a>: Allows configuration of the Windows Event Logs.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWinEventLog</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="http://gallery.technet.microsoft.com/xWordPress-Module-5d007ff9">xWordPress</a>: Resources and sample configurations to show end-to-end deployment of the common wordpress site. This resource requires WMF 5.0
+ Experimental July 2014. </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">xWordPressSite</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span>xIisWordPressSite<br>
+</span></p>
+<p class="MsoNormal" style="margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><a href="https://gallery.technet.microsoft.com/cFileShare-Module-ALM-312732e8">cFileShare</a>: Allow configuration of a file share and share permission rules.
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><span style="font-size:12pt; color:black">cCreateFileShare</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:12pt; color:black"><span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span>cSetSharePermissions<br>
+</span></p>
+<p class="MsoNormal" style="line-height:normal"><strong><span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">Renaming Requirements</span></strong></p>
+<p class="MsoNormal" style="line-height:normal"><span lang="EN" style="font-size:12.0pt; color:#424242">When making changes to these resources, we suggest the following practice:</span></p>
+<p class="MsoNormal" style="margin-top:0in; margin-right:0in; margin-bottom:.0001pt; margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:7.5pt; color:black">1.<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;&nbsp;&nbsp;
+</span></span><span lang="EN" style="font-size:12.0pt; color:black">Update the following names by replacing MSFT with your company/community name and replacing the
+<strong>&ldquo;x&rdquo;</strong> with <strong>&quot;c&quot;</strong> (short for &quot;Community&quot;) or another prefix of your choice:
+</span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><strong><span lang="EN" style="font-size:12.0pt; color:black">Module Name (ex: xNetworking</span></strong><span style="font-size:12.0pt; color:black"> becomes
+<strong>cNetworking</strong>) </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><strong><span lang="EN" style="font-size:12.0pt; color:black">Resource Folder (ex: MSFT_xIPAddress</span></strong><span style="font-size:12.0pt; color:black"> becomes
+<strong>Contoso_cIPAddress</strong>) </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><strong><span lang="EN" style="font-size:12.0pt; color:black">Resource Name (ex: MSFT_xIPAddress</span></strong><span style="font-size:12.0pt; color:black"> becomes
+<strong>Contoso_cIPAddress</strong>) </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><strong><span lang="EN" style="font-size:12.0pt; color:black">Resource Friendly Name (ex: xIPAddress</span></strong><span style="font-size:12.0pt; color:black"> becomes
+<strong>cIPAddress</strong>) </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><strong><span lang="EN" style="font-size:12.0pt; color:black">MOF class name (ex: MSFT_xIPAddress</span></strong><span style="font-size:12.0pt; color:black"> becomes
+<strong>Contoso_cIPAddress</strong>) </span></p>
+<p class="MsoNormal" style="margin-left:78.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:10.0pt; font-family:&quot;Courier New&quot;; color:black">o<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;
+</span></span><strong><span lang="EN" style="font-size:12.0pt; color:black">Filename for the &lt;resource&gt;.schema.mof (ex: MSFT_xIPAddress</span></strong><span style="font-size:12.0pt; color:black"> .schema.mof becomes
+<strong>Contoso_cIPAddress</strong>.schema.mof) </span></p>
+<p class="MsoNormal" style="margin-top:0in; margin-right:0in; margin-bottom:.0001pt; margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:7.5pt; color:black">2.<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;&nbsp;&nbsp;
+</span></span><span lang="EN" style="font-size:12.0pt; color:black">Update module and metadata information in the module manifest</span></p>
+<p class="MsoNormal" style="margin-top:0in; margin-right:0in; margin-bottom:.0001pt; margin-left:42.0pt; text-indent:-.25in; line-height:normal">
+<span style="font-size:7.5pt; color:black">3.<span style="font:7.0pt &quot;Times New Roman&quot;"> &nbsp;&nbsp;&nbsp;
+</span></span><span lang="EN" style="font-size:12.0pt; color:black">Update any configuration that use these resources</span></p>
+<p class="MsoNormal" style="line-height:normal"><em><span lang="EN" style="font-size:12.0pt; color:#424242">We reserve resource and module names without prefixes (&quot;x&quot; or &quot;c&quot;) for future use (e.g. &quot;MSFT_xIPAddress&quot; or &quot;IPAddress&quot;).&nbsp; If the next version
+ of Windows Server ships with a &quot;IPAddress&quot; resource, we don't want to break any configurations that use any community modifications.&nbsp; Please keep a prefix such as &quot;c&quot; on all community modifications.
+</span></em></p>
+<p class="MsoNormal" style="line-height:normal"><strong><span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">An Example Configuration</span></strong></p>
+<p class="MsoNormal">This example demonstrates how to use the xWebsite resource to set up a new IIS website.&nbsp; You&rsquo;ll find many more examples in download, or on each module&rsquo;s Script Center page.</p>
+<p class="MsoNormal">&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">configuration Sample_xWebsite_NewWebsite 
+{ 
+    param 
+    ( 
+        # Target nodes to apply the configuration 
+        [string[]]$NodeName = 'localhost', 
+ 
+        # Name of the website to create 
+        [Parameter(Mandatory)] 
+        [ValidateNotNullOrEmpty()] 
+        [String]$WebSiteName, 
+ 
+        # Source Path for Website content 
+        [Parameter(Mandatory)] 
+        [ValidateNotNullOrEmpty()] 
+        [String]$SourcePath, 
+ 
+        # Destination path for Website content 
+        [Parameter(Mandatory)] 
+        [ValidateNotNullOrEmpty()] 
+        [String]$DestinationPath 
+    ) 
+ 
+    # Import the module that defines custom resources 
+    Import-DscResource -Module xWebAdministration 
+ 
+    Node $NodeName 
+    { 
+        # Install the IIS role 
+        WindowsFeature IIS 
+        { 
+            Ensure          = &quot;Present&quot; 
+            Name            = &quot;Web-Server&quot; 
+        } 
+ 
+        # Install the ASP .NET 4.5 role 
+        WindowsFeature AspNet45 
+        { 
+            Ensure          = &quot;Present&quot; 
+            Name            = &quot;Web-Asp-Net45&quot; 
+        } 
+ 
+        # Stop the default website 
+        xWebsite DefaultSite  
+        { 
+            Ensure          = &quot;Present&quot; 
+            Name            = &quot;Default Web Site&quot; 
+            State           = &quot;Stopped&quot; 
+            PhysicalPath    = &quot;C:\inetpub\wwwroot&quot; 
+            DependsOn       = &quot;[WindowsFeature]IIS&quot; 
+        } 
+ 
+        # Copy the website content 
+        File WebContent 
+        { 
+            Ensure          = &quot;Present&quot; 
+            SourcePath      = $SourcePath 
+            DestinationPath = $DestinationPath 
+            Recurse         = $true 
+            Type            = &quot;Directory&quot; 
+            DependsOn       = &quot;[WindowsFeature]AspNet45&quot; 
+        }        
+ 
+        # Create the new Website with HTTPS 
+        xWebsite NewWebsite 
+        { 
+            Ensure          = &quot;Present&quot; 
+            Name            = $WebSiteName 
+            State           = &quot;Started&quot; 
+            PhysicalPath    = $DestinationPath 
+            BindingInfo     = MSFT_xWebBindingInformation 
+                             { 
+                               Protocol              = &quot;HTTPS&quot; 
+                               Port                  = 8443 
+                               CertificateThumbprint =&quot;71AD93562316F21F74606F1096B85D66289ED60F&quot; 
+                               CertificateStoreName  = &quot;WebHosting&quot; 
+                             } 
+            DependsOn       = &quot;[File]WebContent&quot; 
+        } 
+    } 
+} </pre>
+<div class="preview">
+<pre class="powershell">configuration&nbsp;Sample_xWebsite_NewWebsite&nbsp;&nbsp;
+{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">param</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Target&nbsp;nodes&nbsp;to&nbsp;apply&nbsp;the&nbsp;configuration&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[string[]]<span class="powerShell__variable">$NodeName</span>&nbsp;=&nbsp;<span class="powerShell__string">'localhost'</span>,&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Name&nbsp;of&nbsp;the&nbsp;website&nbsp;to&nbsp;create&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory)]&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ValidateNotNullOrEmpty()]&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String]<span class="powerShell__variable">$WebSiteName</span>,&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Source&nbsp;Path&nbsp;for&nbsp;Website&nbsp;content&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory)]&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ValidateNotNullOrEmpty()]&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String]<span class="powerShell__variable">$SourcePath</span>,&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Destination&nbsp;path&nbsp;for&nbsp;Website&nbsp;content&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory)]&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ValidateNotNullOrEmpty()]&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String]<span class="powerShell__variable">$DestinationPath</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Import&nbsp;the&nbsp;module&nbsp;that&nbsp;defines&nbsp;custom&nbsp;resources&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Import<span class="powerShell__operator">-</span>DscResource&nbsp;<span class="powerShell__operator">-</span>Module&nbsp;xWebAdministration&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Node&nbsp;<span class="powerShell__variable">$NodeName</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Install&nbsp;the&nbsp;IIS&nbsp;role&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WindowsFeature&nbsp;IIS&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ensure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;Present&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;Web-Server&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Install&nbsp;the&nbsp;ASP&nbsp;.NET&nbsp;4.5&nbsp;role&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WindowsFeature&nbsp;AspNet45&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ensure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;Present&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;Web-Asp-Net45&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Stop&nbsp;the&nbsp;default&nbsp;website&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xWebsite&nbsp;DefaultSite&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ensure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;Present&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;Default&nbsp;Web&nbsp;Site&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;Stopped&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PhysicalPath&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;C:\inetpub\wwwroot&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DependsOn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;[WindowsFeature]IIS&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Copy&nbsp;the&nbsp;website&nbsp;content&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;File&nbsp;WebContent&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ensure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;Present&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SourcePath&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$SourcePath</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DestinationPath&nbsp;=&nbsp;<span class="powerShell__variable">$DestinationPath</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Recurse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">Type</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;Directory&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DependsOn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;[WindowsFeature]AspNet45&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Create&nbsp;the&nbsp;new&nbsp;Website&nbsp;with&nbsp;HTTPS&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xWebsite&nbsp;NewWebsite&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ensure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;Present&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$WebSiteName</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;Started&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PhysicalPath&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$DestinationPath</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BindingInfo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;MSFT_xWebBindingInformation&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Protocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;HTTPS&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Port&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;8443&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CertificateThumbprint&nbsp;=<span class="powerShell__string">&quot;71AD93562316F21F74606F1096B85D66289ED60F&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CertificateStoreName&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;WebHosting&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DependsOn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;[File]WebContent&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+}&nbsp;</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+        </div>
+    </body>
+</html>

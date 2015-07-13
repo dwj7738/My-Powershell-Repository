@@ -1,0 +1,947 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>WSUS Patch Approval Script</title>        
+        <meta name="description" content="This script was created where approval of patches may be required in advance, it allows for the approval of a list of patches to WSUS containers." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<h2>Description</h2>
+<p>The following script is for applying multiple approved patches to different WSUS containers if required it&rsquo;s a menu driven script that will do the following:</p>
+<p>1. Display WSUS patch summary</p>
+<p>2. Output text file and report of unapproved patches &ndash; The text file of unapproved patches is used to apply multiple patches to target container groups, the report is &ldquo;@&rdquo; delimited.</p>
+<p>3. Output text file of approved patches &ndash; This is useful if you believe a container does not have all of the currently approved patches applied.</p>
+<p>4. Select Target Group &ndash; this selects a target group</p>
+<p>5. Select Patch approval file &ndash; Text files of approved or unapproved patches placed in the upload folder can be selected.</p>
+<p>6. Email Patch approval Report &ndash; used to email the &ldquo;@&rdquo; delimited file for review.</p>
+<p>7. Apply Selected patch file to target group &ndash; this will approve all of the patches in the selected patch file to the selected target group.</p>
+<p>To use the script create the following directory structure on your WSUS server:</p>
+<p>C:\Program Files\wsus-operations\Log\</p>
+<p>C:\Program Files\wsus-operations\Upload\</p>
+<p>C:\Program Files\wsus-operations\Report\</p>
+<p>C:\Program Files\wsus-operations\Script\</p>
+<p>Copy the script below into the script folder and call it operations.ps1</p>
+<p>Create a batch file called operations.bat in the wsus-operations folder with the following contents:</p>
+<p>%windir%\system32\WindowsPowerShell\v1.0\powershell.exe -command &quot;Script\Operations.ps1&quot;</p>
+<p>Script</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">########## Functions
+function menu
+{
+$date1 = [DateTime]::UtcNow.ToShortDateString() | % { $_.split(&quot;/&quot;)[0] }
+$date2 = [DateTime]::UtcNow.ToShortDateString() | % { $_.split(&quot;/&quot;)[1] }
+$date3 = [DateTime]::UtcNow.ToShortDateString() | % { $_.split(&quot;/&quot;)[2] }
+$date4 = (get-date -displayhint time).tostring()
+$date5 = $date4 | % { $_.split(&quot; &quot;)[1] }
+$date6 = $date5 | % { $_.split(&quot;:&quot;)[0] }
+$date7 = $date5 | % { $_.split(&quot;:&quot;)[1] }
+$datestamp = $date1&#43;&quot;&quot;&#43;$date2&#43;&quot;-&quot;&#43;$date3&#43;&quot;-&quot;&#43;$date6&#43;&quot;&quot;&#43;$date7;
+cls
+write-host &quot;-------------------------------------------------------------&quot;
+write-host &quot;-------------------------------------------------------------&quot;
+write-host &quot;-------------------------------------------------------------&quot;
+write-host &quot;welcome to the WSUS approval system on&quot; $datestamp
+write-host &quot;Please select an option&quot;
+write-host &quot;&quot;
+write-host &quot;       1. Display WSUS patch summary&quot;
+write-host &quot;       2. Output text file and report of unapproved patches&quot;
+write-host &quot;       3. Output text file of approved patches&quot;
+write-host &quot;       4. Select Target Group&quot;
+write-host &quot;       5. Select Patch approval file&quot;
+write-host &quot;       6. Email Patch approval Report&quot;
+write-host &quot;       7. Apply Selected patch file to target group&quot;
+write-host &quot;       8. Clear selections&quot;
+write-host &quot;       9. View log of recent approvals&quot;
+write-host &quot;       10. Exit&quot;
+write-host &quot;&quot;
+write-host &quot;-------------------------------------------------------------&quot;
+write-host &quot;Selcted group: $selectedgroup&quot;
+write-host &quot;Selcted file: $selectedfile&quot;
+#write-host &quot;Target Group: &quot; $targetgroup.name
+write-host &quot;-------------------------------------------------------------&quot;
+$elect = read-host &quot;Please make a selection&quot;
+ switch ($elect)
+    {
+        1 {patchsummary $wsus}
+        2 {unapprovedreport $DirectoryR}
+        3 {approvedreport $DirectoryR}
+        4 {groupselect}
+        5 {fileselect $Directory}
+        6 {emailreport}
+        7 {approvepatches}
+        8 {clearselect}
+        9 {viewlog}
+        10 {exit}
+        default {&quot;Sorry $elect is not a valid selection&quot;; sleep 4; $elect = read-host &quot;Do you wish to continue y/n&quot;; escape $elect}
+         
+    }
+}
+
+function patchsummary ($wsus)
+{
+cls
+$wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::GetUpdateServer();
+$wsus.GetStatus()
+$elect = read-host &quot;Do you wish to continue y/n&quot;; escape $elect
+sleep 2
+menu
+}
+
+function unapprovedreport
+{
+cls
+write-host &quot;creating filess please wait&quot;
+
+$updateScope = new-object Microsoft.UpdateServices.Administration.UpdateScope;
+$updateScope.ApprovedStates = [Microsoft.UpdateServices.Administration.ApprovedStates]::NotApproved;
+$updateScope.UpdateSources = [Microsoft.UpdateServices.Administration.UpdateSources]::MicrosoftUpdate;
+$updateScope.UpdateApprovalActions = [Microsoft.UpdateServices.Administration.UpdateApprovalActions]::All;
+$title = &quot;Unapproved-&quot;
+$title2 = &quot;ForResourceApproval&quot;
+$approvedlist = $DirectoryR&#43;&quot;&quot;&#43;$title&#43;&quot;&quot;&#43;$datestamp&#43;&quot;.txt&quot;
+$approvedlist2 = $DirectoryR&#43;&quot;&quot;&#43;$title2&#43;&quot;&quot;&#43;$datestamp&#43;&quot;.csv&quot;
+$theupdates = $wsus.GetUpdates($updateScope);
+                    $theupdates | foreach-object { 
+                        $update = $_
+                        echo $update.Title | out-file $approvedlist -append
+                        }
+$theupdates = $wsus.GetUpdates($updateScope);
+                    $theupdates | foreach-object { 
+                        $update = $_
+                        $titles = $update.Title
+                        $desc = $update.Description
+                        $kbno = $update.KnowledgebaseArticles
+                        $bulno = $update.SecurityBulletins
+                        echo &quot;$kbno@$bulno@$titles@$desc&quot; | out-file $approvedlist2 -append 
+                        }
+                        cls
+                        write-host &quot;&quot;
+                        write-host &quot;Two files have been created in $DirectoryR&quot;
+                        write-host &quot;The file that can be used as the upload file is&quot;
+                        write-host $approvedlist
+                        write-host &quot;&quot;
+                        write-host &quot;&quot;
+                        write-host &quot;The @ delimited report CSV file is&quot;
+                        write-host $approvedlist2
+                        write-host &quot;&quot;
+                        write-host &quot;&quot;
+                        $elect = read-host &quot;Do you wish to continue y/n&quot;
+                        escape $elect
+                        write-host &quot;&quot;
+                        menu
+}
+
+function approvedreport
+{
+cls
+write-host &quot;creating files please wait&quot;
+$updateScope = new-object Microsoft.UpdateServices.Administration.UpdateScope;
+$updateScope.ApprovedStates = [Microsoft.UpdateServices.Administration.ApprovedStates]::LatestRevisionApproved;
+$updateScope.UpdateSources = [Microsoft.UpdateServices.Administration.UpdateSources]::MicrosoftUpdate;
+$updateScope.UpdateApprovalActions = [Microsoft.UpdateServices.Administration.UpdateApprovalActions]::All;
+$title = &quot;Approvals-&quot;
+$approvedlist = $DirectoryR&#43;&quot;&quot;&#43;$title&#43;&quot;&quot;&#43;$datestamp&#43;&quot;.txt&quot;
+$theupdates = $wsus.GetUpdates($updateScope);
+                    $theupdates | foreach-object { 
+                        $update = $_
+                        echo $update.Title | out-file $approvedlist  -append
+                        }
+                        cls
+                        write-host &quot;&quot;
+                        write-host &quot;The list of approved updates can be used as an upload file&quot;
+                        write-host $approvedlist
+                        write-host &quot;&quot;
+                        write-host &quot;&quot;
+                        $elect = read-host &quot;Do you wish to continue y/n&quot;
+                        escape $elect
+                        write-host &quot;&quot;
+                        menu
+}
+
+
+function groupselect
+{
+write-host &quot;Please select a target group number&quot;
+sleep 1 
+$thelist
+$selection = read-host &quot;Please select a target group number&quot;
+sleep 2
+write-host &quot;You have selected group $selection&quot;
+groupcheck $selection
+}
+
+function groupcheck ($selection, $all)
+{
+    $all = $wsus.getcomputertargetgroups()
+    $grouplist = $all | foreach-object {$_.name}
+    $counter = 0
+    $thelist = $grouplist | foreach {
+    $group = $_
+    $counter&#43;&#43;
+    &quot;$delim$counter$delim$group&quot;
+     }
+    $nogroups = $thelist.count
+    cls
+    write-host &quot;selection is $selection&quot;
+    write-host &quot;No Groups is $nogroups&quot;
+    #if ($selection -gt $nogroups){
+    #write-host &quot;this is not a valid selection please re-run selecting a valid group&quot;; sleep 6; menu}
+    $select = &quot;$delim$selection$delim&quot;
+    $selectedgroup = $thelist | where { $_ -match $select} 
+    $selectedgroup2 = $selectedgroup | % { $_.split(&quot;:&quot;)[2]}
+    $selectedgroup = $selectedgroup2
+    sleep 3
+    targetgroup $all $selectedgroup
+    
+}
+
+function targetgroup ($all, $selectedgroup)
+{
+    $targetgroup = $all | where { $_.name -eq $selectedgroup } 
+    childcheck $targetgroup  
+}
+
+function childcheck ($targetgroup)
+{
+    $targetgroup.GetChildTargetGroups()
+    $childgroups = $targetgroup.GetChildTargetGroups()
+    $childgroupcount = $childgroups.count
+    if ($childgroupcount -gt 0){
+    write-host &quot;The selected group has $childgroupcount sub folders patches applied at this level will apply to all sub folders&quot;
+    $elect = read-host &quot;Do you wish to continue y/n&quot;
+    escape $elect}
+    write-host &quot;group has $childgroupcount sub folders&quot;
+    sleep 3
+    menu
+}
+
+function escape ($elect)
+{
+    switch ($elect)
+    {
+        y {&quot;the selection was $elect&quot;}
+        n {&quot;the selection was $elect the script will now exit&quot;; exit}
+        default {&quot;Sorry $elect is not a valid selection&quot;; sleep 4; $elect = read-host &quot;Do you wish to continue y/n&quot;; escape $elect}
+         
+    }
+}  
+
+function fileselect ($Directory)
+{
+write-host &quot;Please select a file&quot;
+sleep 1 
+$counter = 0
+$delim = &quot;:&quot;
+$thefilelist = ls $Directory | foreach {
+    $filename = $_
+    $counter&#43;&#43;
+    &quot;$delim$counter$delim$filename&quot;
+     }
+$thefilelist  
+$selection = read-host &quot;Please select a target approval file&quot;
+$select = &quot;$delim$selection$delim&quot;
+if ($selection -gt $counter){
+    write-host &quot;this is not a valid selection please re-run selecting a valid file&quot;; sleep 6; menu}
+sleep 2
+$selectedfile2 = $thefilelist | where { $_ -match $select} | % { $_.split(&quot;:&quot;)[2]}
+$selectedfile = $Directory&#43;&quot;&quot;&#43;$selectedfile2
+sleep 2
+menu
+}
+
+function emailreport
+{
+cls
+write-host &quot;Please select a report file&quot;
+sleep 1 
+$counter = 0
+$delim = &quot;:&quot;
+$thefilelist = ls $DirectoryR &quot;ForResourceApproval*&quot;| foreach {
+    $filename = $_
+    $counter&#43;&#43;
+    &quot;$counter$delim$filename&quot;
+     }
+$thefilelist     
+$selection = read-host &quot;Please select a target report file&quot;
+$select = $selection&#43;&quot;_&quot;
+sleep 2
+$selectedfile2 = $thefilelist | where { $_ -match $select} | % { $_.split(&quot;:&quot;)[1]}
+$selectedfiler = $DirectoryR&#43;&quot;&quot;&#43;$selectedfile2
+
+$smtpServer = &quot;slcexhtcas1&quot;
+
+$msg = new-object Net.Mail.MailMessage
+$att = new-object Net.Mail.Attachment($selectedfiler)
+$smtp = new-object Net.Mail.SmtpClient($smtpServer)
+
+$msg.From = &quot;&quot; #FROM ADDRESS
+$msg.To.Add(&quot;xx@xx.xx.xx&quot;)
+$msg.Subject = &quot;WSUS Report File&quot;
+$msg.Body = &quot;Report File Attached&quot;
+$msg.Attachments.Add($att)
+
+$smtp.Send($msg)
+
+$att.Dispose()
+
+
+sleep 2
+menu
+
+}
+
+function approvepatches
+{
+cls
+write-host &quot;You have selected to apply patches listed in $selectedfile&quot;
+write-host &quot;to the selected group $selectedgroup&quot;
+$thefile = cat $selectedfile
+$filesummary = $thefile.count
+write-host &quot;Number of patches in file : $filesummary&quot;
+$elect = read-host &quot;Are you 100% happy you wish to continue y/n&quot;
+cls
+$action = [Microsoft.UpdateServices.Administration.UpdateApprovalAction]::Install;
+$allupdates = $wsus.GetUpdates()
+$selection = cat $selectedfile
+$allupdates | foreach {
+    $update = $_
+        $selection | foreach {
+            $patchname = $_
+            $patchcheck = &quot;$patchname&quot;
+            $updatecheck = $update.Title
+            #$patchmatch = $allupdates | where { $_ -match $patchname}
+            if ($updatecheck -contains $patchcheck){$patchmatch = $update
+            write-host &quot;--------------------------------Yes&quot; $patchmatch.Title 
+            $patchmatch.Approve($action,$targetgroup)
+            }
+            }   
+            }
+            logging
+            menu
+}
+
+function clearselect
+{
+$selectedgroup = &quot;&quot;
+$selectedfile = &quot;&quot;
+$targetgroup = &quot;&quot;
+menu
+}
+
+function viewlog
+{
+cls
+$directoryl = &quot;C:\Program Files\wsus-operations\Log\&quot;
+write-host &quot;Please select a file&quot;
+sleep 1 
+$counter = 0
+$delim = &quot;:&quot;
+$thefilelist = ls $Directoryl | foreach {
+    $filename = $_
+    $counter&#43;&#43;
+    &quot;$counter$delim$filename&quot;
+     }
+$thefilelist     
+$selection = read-host &quot;Please select a target file&quot;
+$select = $selection&#43;&quot;_&quot;
+sleep 2
+$selectedfile2 = $thefilelist | where { $_ -match $select} | % { $_.split(&quot;:&quot;)[1]}
+$selectedfilel = $directoryl&#43;&quot;&quot;&#43;$selectedfile2
+write-host &quot;Log file&quot;
+cat $selectedfilel
+$elect = read-host &quot;Do you wish to continue y/n&quot;; 
+escape $elect
+sleep 2
+menu
+}
+
+function logging 
+{
+$who = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+$whoisit = $who.Name
+$groupis = $targetgroup.name
+$emailFrom = &quot;&quot; #ADD A FROM ADDRESS
+$emailTo = &quot;&quot; #ADD AN EMAIL RECIPIENT 
+$subject = &quot;WSUS Install log&quot;
+$body = &quot;$whoisit has applied $filesummary patches to $groupis&quot;
+$body2 = $datestamp&#43;&quot;-&quot;&#43;$body
+echo $body2 | out-file &quot;C:\Program Files\wsus-operations\Log\activitylog.txt&quot; -append
+$smtpServer = &quot;&quot; # YOUR MAIL SERVER HERE
+$smtp = new-object Net.Mail.SmtpClient($smtpServer)
+$smtp.Send($emailFrom, $emailTo, $subject, $body)
+}
+
+###################################################################################################################################
+######### Main Script for WSUS patch approval #####################################################################################
+
+[reflection.assembly]::LoadWithPartialName(&quot;Microsoft.UpdateServices.Administration&quot;) | out-null
+$wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::GetUpdateServer();
+
+$updateScope = new-object Microsoft.UpdateServices.Administration.UpdateScope;
+$updateScope.UpdateSources = [Microsoft.UpdateServices.Administration.UpdateSources]::MicrosoftUpdate;
+$updateScope.UpdateApprovalActions = [Microsoft.UpdateServices.Administration.UpdateApprovalActions]::All;
+
+
+$all = $wsus.getcomputertargetgroups()
+$grouplist = $all | foreach-object {$_.name}
+
+
+$date1 = [DateTime]::UtcNow.ToShortDateString() | % { $_.split(&quot;/&quot;)[0] }
+$date2 = [DateTime]::UtcNow.ToShortDateString() | % { $_.split(&quot;/&quot;)[1] }
+$date3 = [DateTime]::UtcNow.ToShortDateString() | % { $_.split(&quot;/&quot;)[2] }
+$date4 = (get-date -displayhint time).tostring()
+$date5 = $date4 | % { $_.split(&quot; &quot;)[1] }
+$date6 = $date5 | % { $_.split(&quot;:&quot;)[0] }
+$date7 = $date5 | % { $_.split(&quot;:&quot;)[1] }
+$datestamp = $date1&#43;&quot;&quot;&#43;$date2&#43;&quot;-&quot;&#43;$date3&#43;&quot;-&quot;&#43;$date6&#43;&quot;&quot;&#43;$date7;
+
+
+
+$counter = 0
+$delim = &quot;:&quot;
+$thelist = $grouplist | foreach {
+            $group = $_
+            $counter&#43;&#43;
+             &quot;$delim$counter$delim$group&quot;
+            }
+$Directory = &quot;C:\Program Files\wsus-operations\Upload\&quot;
+$DirectoryR = &quot;C:\Program Files\wsus-operations\Report\&quot;
+$selectedgroup = &quot;&quot;
+$selectedfile = &quot;&quot;
+
+write-host &quot;-------------------------------------------------------------&quot;
+write-host &quot;-------------------------------------------------------------&quot;
+write-host &quot;----------------WSUS PATCH OPERATIONS------------------------&quot;
+menu $selectedgroup
+</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__com">##########&nbsp;Functions</span>&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;menu&nbsp;
+{&nbsp;
+<span class="powerShell__variable">$date1</span>&nbsp;=&nbsp;[DateTime]::UtcNow.ToShortDateString()&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;/&quot;</span>)[0]&nbsp;}&nbsp;
+<span class="powerShell__variable">$date2</span>&nbsp;=&nbsp;[DateTime]::UtcNow.ToShortDateString()&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;/&quot;</span>)[1]&nbsp;}&nbsp;
+<span class="powerShell__variable">$date3</span>&nbsp;=&nbsp;[DateTime]::UtcNow.ToShortDateString()&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;/&quot;</span>)[2]&nbsp;}&nbsp;
+<span class="powerShell__variable">$date4</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">get-date</span>&nbsp;<span class="powerShell__operator">-</span>displayhint&nbsp;time).tostring()&nbsp;
+<span class="powerShell__variable">$date5</span>&nbsp;=&nbsp;<span class="powerShell__variable">$date4</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;&nbsp;&quot;</span>)[1]&nbsp;}&nbsp;
+<span class="powerShell__variable">$date6</span>&nbsp;=&nbsp;<span class="powerShell__variable">$date5</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;:&quot;</span>)[0]&nbsp;}&nbsp;
+<span class="powerShell__variable">$date7</span>&nbsp;=&nbsp;<span class="powerShell__variable">$date5</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;:&quot;</span>)[1]&nbsp;}&nbsp;
+<span class="powerShell__variable">$datestamp</span>&nbsp;=&nbsp;<span class="powerShell__variable">$date1</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$date2</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;-&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$date3</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;-&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$date6</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$date7</span>;&nbsp;
+<span class="powerShell__alias">cls</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;-------------------------------------------------------------&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;-------------------------------------------------------------&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;-------------------------------------------------------------&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;welcome&nbsp;to&nbsp;the&nbsp;WSUS&nbsp;approval&nbsp;system&nbsp;on&quot;</span>&nbsp;<span class="powerShell__variable">$datestamp</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Please&nbsp;select&nbsp;an&nbsp;option&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.&nbsp;Display&nbsp;WSUS&nbsp;patch&nbsp;summary&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;Output&nbsp;text&nbsp;file&nbsp;and&nbsp;report&nbsp;of&nbsp;unapproved&nbsp;patches&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;Output&nbsp;text&nbsp;file&nbsp;of&nbsp;approved&nbsp;patches&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.&nbsp;Select&nbsp;Target&nbsp;Group&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.&nbsp;Select&nbsp;Patch&nbsp;approval&nbsp;file&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.&nbsp;Email&nbsp;Patch&nbsp;approval&nbsp;Report&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.&nbsp;Apply&nbsp;Selected&nbsp;patch&nbsp;file&nbsp;to&nbsp;target&nbsp;group&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.&nbsp;Clear&nbsp;selections&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9.&nbsp;View&nbsp;log&nbsp;of&nbsp;recent&nbsp;approvals&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.&nbsp;Exit&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;-------------------------------------------------------------&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Selcted&nbsp;group:&nbsp;$selectedgroup&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Selcted&nbsp;file:&nbsp;$selectedfile&quot;</span>&nbsp;
+<span class="powerShell__com">#write-host&nbsp;&quot;Target&nbsp;Group:&nbsp;&quot;&nbsp;$targetgroup.name</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;-------------------------------------------------------------&quot;</span>&nbsp;
+<span class="powerShell__variable">$elect</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Please&nbsp;make&nbsp;a&nbsp;selection&quot;</span>&nbsp;
+&nbsp;<span class="powerShell__keyword">switch</span>&nbsp;(<span class="powerShell__variable">$elect</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;{patchsummary&nbsp;<span class="powerShell__variable">$wsus</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;{unapprovedreport&nbsp;<span class="powerShell__variable">$DirectoryR</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;{approvedreport&nbsp;<span class="powerShell__variable">$DirectoryR</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;{groupselect}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;{fileselect&nbsp;<span class="powerShell__variable">$Directory</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;{emailreport}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7&nbsp;{approvepatches}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8&nbsp;{clearselect}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9&nbsp;{viewlog}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10&nbsp;{<span class="powerShell__keyword">exit</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;{<span class="powerShell__string">&quot;Sorry&nbsp;$elect&nbsp;is&nbsp;not&nbsp;a&nbsp;valid&nbsp;selection&quot;</span>;&nbsp;<span class="powerShell__alias">sleep</span>&nbsp;4;&nbsp;<span class="powerShell__variable">$elect</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Do&nbsp;you&nbsp;wish&nbsp;to&nbsp;continue&nbsp;y/n&quot;</span>;&nbsp;escape&nbsp;<span class="powerShell__variable">$elect</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;patchsummary&nbsp;(<span class="powerShell__variable">$wsus</span>)&nbsp;
+{&nbsp;
+<span class="powerShell__alias">cls</span>&nbsp;
+<span class="powerShell__variable">$wsus</span>&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.AdminProxy]::GetUpdateServer();&nbsp;
+<span class="powerShell__variable">$wsus</span>.GetStatus()&nbsp;
+<span class="powerShell__variable">$elect</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Do&nbsp;you&nbsp;wish&nbsp;to&nbsp;continue&nbsp;y/n&quot;</span>;&nbsp;escape&nbsp;<span class="powerShell__variable">$elect</span>&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;2&nbsp;
+menu&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;unapprovedreport&nbsp;
+{&nbsp;
+<span class="powerShell__alias">cls</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;creating&nbsp;filess&nbsp;please&nbsp;wait&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$updateScope</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">new-object</span>&nbsp;Microsoft.UpdateServices.Administration.UpdateScope;&nbsp;
+<span class="powerShell__variable">$updateScope</span>.ApprovedStates&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.ApprovedStates]::NotApproved;&nbsp;
+<span class="powerShell__variable">$updateScope</span>.UpdateSources&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.UpdateSources]::MicrosoftUpdate;&nbsp;
+<span class="powerShell__variable">$updateScope</span>.UpdateApprovalActions&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.UpdateApprovalActions]::All;&nbsp;
+<span class="powerShell__variable">$title</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Unapproved-&quot;</span>&nbsp;
+<span class="powerShell__variable">$title2</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;ForResourceApproval&quot;</span>&nbsp;
+<span class="powerShell__variable">$approvedlist</span>&nbsp;=&nbsp;<span class="powerShell__variable">$DirectoryR</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$title</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$datestamp</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;.txt&quot;</span>&nbsp;
+<span class="powerShell__variable">$approvedlist2</span>&nbsp;=&nbsp;<span class="powerShell__variable">$DirectoryR</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$title2</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$datestamp</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;.csv&quot;</span>&nbsp;
+<span class="powerShell__variable">$theupdates</span>&nbsp;=&nbsp;<span class="powerShell__variable">$wsus</span>.GetUpdates(<span class="powerShell__variable">$updateScope</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$theupdates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span><span class="powerShell__operator">-</span>object&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$update</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">echo</span>&nbsp;<span class="powerShell__variable">$update</span>.Title&nbsp;<span class="powerShell__operator">|</span>&nbsp;out<span class="powerShell__operator">-</span>file&nbsp;<span class="powerShell__variable">$approvedlist</span>&nbsp;<span class="powerShell__operator">-</span>append&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+<span class="powerShell__variable">$theupdates</span>&nbsp;=&nbsp;<span class="powerShell__variable">$wsus</span>.GetUpdates(<span class="powerShell__variable">$updateScope</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$theupdates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span><span class="powerShell__operator">-</span>object&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$update</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$titles</span>&nbsp;=&nbsp;<span class="powerShell__variable">$update</span>.Title&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$desc</span>&nbsp;=&nbsp;<span class="powerShell__variable">$update</span>.Description&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$kbno</span>&nbsp;=&nbsp;<span class="powerShell__variable">$update</span>.KnowledgebaseArticles&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$bulno</span>&nbsp;=&nbsp;<span class="powerShell__variable">$update</span>.SecurityBulletins&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">echo</span>&nbsp;<span class="powerShell__string">&quot;$kbno@$bulno@$titles@$desc&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;out<span class="powerShell__operator">-</span>file&nbsp;<span class="powerShell__variable">$approvedlist2</span>&nbsp;<span class="powerShell__operator">-</span>append&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">cls</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Two&nbsp;files&nbsp;have&nbsp;been&nbsp;created&nbsp;in&nbsp;$DirectoryR&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;The&nbsp;file&nbsp;that&nbsp;can&nbsp;be&nbsp;used&nbsp;as&nbsp;the&nbsp;upload&nbsp;file&nbsp;is&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__variable">$approvedlist</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;The&nbsp;@&nbsp;delimited&nbsp;report&nbsp;CSV&nbsp;file&nbsp;is&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__variable">$approvedlist2</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$elect</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Do&nbsp;you&nbsp;wish&nbsp;to&nbsp;continue&nbsp;y/n&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;escape&nbsp;<span class="powerShell__variable">$elect</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;menu&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;approvedreport&nbsp;
+{&nbsp;
+<span class="powerShell__alias">cls</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;creating&nbsp;files&nbsp;please&nbsp;wait&quot;</span>&nbsp;
+<span class="powerShell__variable">$updateScope</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">new-object</span>&nbsp;Microsoft.UpdateServices.Administration.UpdateScope;&nbsp;
+<span class="powerShell__variable">$updateScope</span>.ApprovedStates&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.ApprovedStates]::LatestRevisionApproved;&nbsp;
+<span class="powerShell__variable">$updateScope</span>.UpdateSources&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.UpdateSources]::MicrosoftUpdate;&nbsp;
+<span class="powerShell__variable">$updateScope</span>.UpdateApprovalActions&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.UpdateApprovalActions]::All;&nbsp;
+<span class="powerShell__variable">$title</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Approvals-&quot;</span>&nbsp;
+<span class="powerShell__variable">$approvedlist</span>&nbsp;=&nbsp;<span class="powerShell__variable">$DirectoryR</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$title</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$datestamp</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;.txt&quot;</span>&nbsp;
+<span class="powerShell__variable">$theupdates</span>&nbsp;=&nbsp;<span class="powerShell__variable">$wsus</span>.GetUpdates(<span class="powerShell__variable">$updateScope</span>);&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$theupdates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span><span class="powerShell__operator">-</span>object&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$update</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">echo</span>&nbsp;<span class="powerShell__variable">$update</span>.Title&nbsp;<span class="powerShell__operator">|</span>&nbsp;out<span class="powerShell__operator">-</span>file&nbsp;<span class="powerShell__variable">$approvedlist</span>&nbsp;&nbsp;<span class="powerShell__operator">-</span>append&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">cls</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;The&nbsp;list&nbsp;of&nbsp;approved&nbsp;updates&nbsp;can&nbsp;be&nbsp;used&nbsp;as&nbsp;an&nbsp;upload&nbsp;file&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__variable">$approvedlist</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$elect</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Do&nbsp;you&nbsp;wish&nbsp;to&nbsp;continue&nbsp;y/n&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;escape&nbsp;<span class="powerShell__variable">$elect</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;menu&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;groupselect&nbsp;
+{&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Please&nbsp;select&nbsp;a&nbsp;target&nbsp;group&nbsp;number&quot;</span>&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;1&nbsp;&nbsp;
+<span class="powerShell__variable">$thelist</span>&nbsp;
+<span class="powerShell__variable">$selection</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Please&nbsp;select&nbsp;a&nbsp;target&nbsp;group&nbsp;number&quot;</span>&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;2&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;You&nbsp;have&nbsp;selected&nbsp;group&nbsp;$selection&quot;</span>&nbsp;
+groupcheck&nbsp;<span class="powerShell__variable">$selection</span>&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;groupcheck&nbsp;(<span class="powerShell__variable">$selection</span>,&nbsp;<span class="powerShell__variable">$all</span>)&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$all</span>&nbsp;=&nbsp;<span class="powerShell__variable">$wsus</span>.getcomputertargetgroups()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$grouplist</span>&nbsp;=&nbsp;<span class="powerShell__variable">$all</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span><span class="powerShell__operator">-</span>object&nbsp;{<span class="powerShell__variable">$_</span>.name}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$counter</span>&nbsp;=&nbsp;0&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$thelist</span>&nbsp;=&nbsp;<span class="powerShell__variable">$grouplist</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$group</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$counter</span><span class="powerShell__operator">&#43;</span><span class="powerShell__operator">&#43;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;$delim$counter$delim$group&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$nogroups</span>&nbsp;=&nbsp;<span class="powerShell__variable">$thelist</span>.count&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">cls</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;selection&nbsp;is&nbsp;$selection&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;No&nbsp;Groups&nbsp;is&nbsp;$nogroups&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#if&nbsp;($selection&nbsp;-gt&nbsp;$nogroups){</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#write-host&nbsp;&quot;this&nbsp;is&nbsp;not&nbsp;a&nbsp;valid&nbsp;selection&nbsp;please&nbsp;re-run&nbsp;selecting&nbsp;a&nbsp;valid&nbsp;group&quot;;&nbsp;sleep&nbsp;6;&nbsp;menu}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$select</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;$delim$selection$delim&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$selectedgroup</span>&nbsp;=&nbsp;<span class="powerShell__variable">$thelist</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>&nbsp;<span class="powerShell__operator">-</span>match&nbsp;<span class="powerShell__variable">$select</span>}&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$selectedgroup2</span>&nbsp;=&nbsp;<span class="powerShell__variable">$selectedgroup</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;:&quot;</span>)[2]}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$selectedgroup</span>&nbsp;=&nbsp;<span class="powerShell__variable">$selectedgroup2</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">sleep</span>&nbsp;3&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;targetgroup&nbsp;<span class="powerShell__variable">$all</span>&nbsp;<span class="powerShell__variable">$selectedgroup</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;targetgroup&nbsp;(<span class="powerShell__variable">$all</span>,&nbsp;<span class="powerShell__variable">$selectedgroup</span>)&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$targetgroup</span>&nbsp;=&nbsp;<span class="powerShell__variable">$all</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$selectedgroup</span>&nbsp;}&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;childcheck&nbsp;<span class="powerShell__variable">$targetgroup</span>&nbsp;&nbsp;&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;childcheck&nbsp;(<span class="powerShell__variable">$targetgroup</span>)&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$targetgroup</span>.GetChildTargetGroups()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$childgroups</span>&nbsp;=&nbsp;<span class="powerShell__variable">$targetgroup</span>.GetChildTargetGroups()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$childgroupcount</span>&nbsp;=&nbsp;<span class="powerShell__variable">$childgroups</span>.count&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$childgroupcount</span>&nbsp;<span class="powerShell__operator">-</span>gt&nbsp;0){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;The&nbsp;selected&nbsp;group&nbsp;has&nbsp;$childgroupcount&nbsp;sub&nbsp;folders&nbsp;patches&nbsp;applied&nbsp;at&nbsp;this&nbsp;level&nbsp;will&nbsp;apply&nbsp;to&nbsp;all&nbsp;sub&nbsp;folders&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$elect</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Do&nbsp;you&nbsp;wish&nbsp;to&nbsp;continue&nbsp;y/n&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;escape&nbsp;<span class="powerShell__variable">$elect</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;group&nbsp;has&nbsp;$childgroupcount&nbsp;sub&nbsp;folders&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__alias">sleep</span>&nbsp;3&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;menu&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;escape&nbsp;(<span class="powerShell__variable">$elect</span>)&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">switch</span>&nbsp;(<span class="powerShell__variable">$elect</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;{<span class="powerShell__string">&quot;the&nbsp;selection&nbsp;was&nbsp;$elect&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;{<span class="powerShell__string">&quot;the&nbsp;selection&nbsp;was&nbsp;$elect&nbsp;the&nbsp;script&nbsp;will&nbsp;now&nbsp;exit&quot;</span>;&nbsp;<span class="powerShell__keyword">exit</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;{<span class="powerShell__string">&quot;Sorry&nbsp;$elect&nbsp;is&nbsp;not&nbsp;a&nbsp;valid&nbsp;selection&quot;</span>;&nbsp;<span class="powerShell__alias">sleep</span>&nbsp;4;&nbsp;<span class="powerShell__variable">$elect</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Do&nbsp;you&nbsp;wish&nbsp;to&nbsp;continue&nbsp;y/n&quot;</span>;&nbsp;escape&nbsp;<span class="powerShell__variable">$elect</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+}&nbsp;&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;fileselect&nbsp;(<span class="powerShell__variable">$Directory</span>)&nbsp;
+{&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Please&nbsp;select&nbsp;a&nbsp;file&quot;</span>&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;1&nbsp;&nbsp;
+<span class="powerShell__variable">$counter</span>&nbsp;=&nbsp;0&nbsp;
+<span class="powerShell__variable">$delim</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;:&quot;</span>&nbsp;
+<span class="powerShell__variable">$thefilelist</span>&nbsp;=&nbsp;<span class="powerShell__alias">ls</span>&nbsp;<span class="powerShell__variable">$Directory</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$filename</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$counter</span><span class="powerShell__operator">&#43;</span><span class="powerShell__operator">&#43;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;$delim$counter$delim$filename&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+<span class="powerShell__variable">$thefilelist</span>&nbsp;&nbsp;&nbsp;
+<span class="powerShell__variable">$selection</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Please&nbsp;select&nbsp;a&nbsp;target&nbsp;approval&nbsp;file&quot;</span>&nbsp;
+<span class="powerShell__variable">$select</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;$delim$selection$delim&quot;</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$selection</span>&nbsp;<span class="powerShell__operator">-</span>gt&nbsp;<span class="powerShell__variable">$counter</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;this&nbsp;is&nbsp;not&nbsp;a&nbsp;valid&nbsp;selection&nbsp;please&nbsp;re-run&nbsp;selecting&nbsp;a&nbsp;valid&nbsp;file&quot;</span>;&nbsp;<span class="powerShell__alias">sleep</span>&nbsp;6;&nbsp;menu}&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;2&nbsp;
+<span class="powerShell__variable">$selectedfile2</span>&nbsp;=&nbsp;<span class="powerShell__variable">$thefilelist</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>&nbsp;<span class="powerShell__operator">-</span>match&nbsp;<span class="powerShell__variable">$select</span>}&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;:&quot;</span>)[2]}&nbsp;
+<span class="powerShell__variable">$selectedfile</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Directory</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$selectedfile2</span>&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;2&nbsp;
+menu&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;emailreport&nbsp;
+{&nbsp;
+<span class="powerShell__alias">cls</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Please&nbsp;select&nbsp;a&nbsp;report&nbsp;file&quot;</span>&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;1&nbsp;&nbsp;
+<span class="powerShell__variable">$counter</span>&nbsp;=&nbsp;0&nbsp;
+<span class="powerShell__variable">$delim</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;:&quot;</span>&nbsp;
+<span class="powerShell__variable">$thefilelist</span>&nbsp;=&nbsp;<span class="powerShell__alias">ls</span>&nbsp;<span class="powerShell__variable">$DirectoryR</span>&nbsp;<span class="powerShell__string">&quot;ForResourceApproval*&quot;</span><span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$filename</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$counter</span><span class="powerShell__operator">&#43;</span><span class="powerShell__operator">&#43;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;$counter$delim$filename&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+<span class="powerShell__variable">$thefilelist</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="powerShell__variable">$selection</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Please&nbsp;select&nbsp;a&nbsp;target&nbsp;report&nbsp;file&quot;</span>&nbsp;
+<span class="powerShell__variable">$select</span>&nbsp;=&nbsp;<span class="powerShell__variable">$selection</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;_&quot;</span>&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;2&nbsp;
+<span class="powerShell__variable">$selectedfile2</span>&nbsp;=&nbsp;<span class="powerShell__variable">$thefilelist</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>&nbsp;<span class="powerShell__operator">-</span>match&nbsp;<span class="powerShell__variable">$select</span>}&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;:&quot;</span>)[1]}&nbsp;
+<span class="powerShell__variable">$selectedfiler</span>&nbsp;=&nbsp;<span class="powerShell__variable">$DirectoryR</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$selectedfile2</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$smtpServer</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;slcexhtcas1&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$msg</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">new-object</span>&nbsp;Net.Mail.MailMessage&nbsp;
+<span class="powerShell__variable">$att</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">new-object</span>&nbsp;Net.Mail.Attachment(<span class="powerShell__variable">$selectedfiler</span>)&nbsp;
+<span class="powerShell__variable">$smtp</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">new-object</span>&nbsp;Net.Mail.SmtpClient(<span class="powerShell__variable">$smtpServer</span>)&nbsp;
+&nbsp;
+<span class="powerShell__variable">$msg</span>.<span class="powerShell__keyword">From</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;<span class="powerShell__com">#FROM&nbsp;ADDRESS</span>&nbsp;
+<span class="powerShell__variable">$msg</span>.To.Add(<span class="powerShell__string">&quot;xx@xx.xx.xx&quot;</span>)&nbsp;
+<span class="powerShell__variable">$msg</span>.Subject&nbsp;=&nbsp;<span class="powerShell__string">&quot;WSUS&nbsp;Report&nbsp;File&quot;</span>&nbsp;
+<span class="powerShell__variable">$msg</span>.Body&nbsp;=&nbsp;<span class="powerShell__string">&quot;Report&nbsp;File&nbsp;Attached&quot;</span>&nbsp;
+<span class="powerShell__variable">$msg</span>.Attachments.Add(<span class="powerShell__variable">$att</span>)&nbsp;
+&nbsp;
+<span class="powerShell__variable">$smtp</span>.Send(<span class="powerShell__variable">$msg</span>)&nbsp;
+&nbsp;
+<span class="powerShell__variable">$att</span>.Dispose()&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;2&nbsp;
+menu&nbsp;
+&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;approvepatches&nbsp;
+{&nbsp;
+<span class="powerShell__alias">cls</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;You&nbsp;have&nbsp;selected&nbsp;to&nbsp;apply&nbsp;patches&nbsp;listed&nbsp;in&nbsp;$selectedfile&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;to&nbsp;the&nbsp;selected&nbsp;group&nbsp;$selectedgroup&quot;</span>&nbsp;
+<span class="powerShell__variable">$thefile</span>&nbsp;=&nbsp;cat&nbsp;<span class="powerShell__variable">$selectedfile</span>&nbsp;
+<span class="powerShell__variable">$filesummary</span>&nbsp;=&nbsp;<span class="powerShell__variable">$thefile</span>.count&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Number&nbsp;of&nbsp;patches&nbsp;in&nbsp;file&nbsp;:&nbsp;$filesummary&quot;</span>&nbsp;
+<span class="powerShell__variable">$elect</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Are&nbsp;you&nbsp;100%&nbsp;happy&nbsp;you&nbsp;wish&nbsp;to&nbsp;continue&nbsp;y/n&quot;</span>&nbsp;
+<span class="powerShell__alias">cls</span>&nbsp;
+<span class="powerShell__variable">$action</span>&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.UpdateApprovalAction]::Install;&nbsp;
+<span class="powerShell__variable">$allupdates</span>&nbsp;=&nbsp;<span class="powerShell__variable">$wsus</span>.GetUpdates()&nbsp;
+<span class="powerShell__variable">$selection</span>&nbsp;=&nbsp;cat&nbsp;<span class="powerShell__variable">$selectedfile</span>&nbsp;
+<span class="powerShell__variable">$allupdates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$update</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$selection</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$patchname</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$patchcheck</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;$patchname&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$updatecheck</span>&nbsp;=&nbsp;<span class="powerShell__variable">$update</span>.Title&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$patchmatch&nbsp;=&nbsp;$allupdates&nbsp;|&nbsp;where&nbsp;{&nbsp;$_&nbsp;-match&nbsp;$patchname}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$updatecheck</span>&nbsp;<span class="powerShell__operator">-</span>contains&nbsp;<span class="powerShell__variable">$patchcheck</span>){<span class="powerShell__variable">$patchmatch</span>&nbsp;=&nbsp;<span class="powerShell__variable">$update</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;--------------------------------Yes&quot;</span>&nbsp;<span class="powerShell__variable">$patchmatch</span>.Title&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$patchmatch</span>.Approve(<span class="powerShell__variable">$action</span>,<span class="powerShell__variable">$targetgroup</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logging&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;menu&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;clearselect&nbsp;
+{&nbsp;
+<span class="powerShell__variable">$selectedgroup</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+<span class="powerShell__variable">$selectedfile</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+<span class="powerShell__variable">$targetgroup</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+menu&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;viewlog&nbsp;
+{&nbsp;
+<span class="powerShell__alias">cls</span>&nbsp;
+<span class="powerShell__variable">$directoryl</span>&nbsp;=&nbsp;&quot;C:\Program&nbsp;Files\wsus<span class="powerShell__operator">-</span>operations\Log\&quot;&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Please&nbsp;select&nbsp;a&nbsp;file&quot;</span>&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;1&nbsp;&nbsp;
+<span class="powerShell__variable">$counter</span>&nbsp;=&nbsp;0&nbsp;
+<span class="powerShell__variable">$delim</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;:&quot;</span>&nbsp;
+<span class="powerShell__variable">$thefilelist</span>&nbsp;=&nbsp;<span class="powerShell__alias">ls</span>&nbsp;<span class="powerShell__variable">$Directoryl</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$filename</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$counter</span><span class="powerShell__operator">&#43;</span><span class="powerShell__operator">&#43;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;$counter$delim$filename&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+<span class="powerShell__variable">$thefilelist</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="powerShell__variable">$selection</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Please&nbsp;select&nbsp;a&nbsp;target&nbsp;file&quot;</span>&nbsp;
+<span class="powerShell__variable">$select</span>&nbsp;=&nbsp;<span class="powerShell__variable">$selection</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;_&quot;</span>&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;2&nbsp;
+<span class="powerShell__variable">$selectedfile2</span>&nbsp;=&nbsp;<span class="powerShell__variable">$thefilelist</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>&nbsp;<span class="powerShell__operator">-</span>match&nbsp;<span class="powerShell__variable">$select</span>}&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;:&quot;</span>)[1]}&nbsp;
+<span class="powerShell__variable">$selectedfilel</span>&nbsp;=&nbsp;<span class="powerShell__variable">$directoryl</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$selectedfile2</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Log&nbsp;file&quot;</span>&nbsp;
+cat&nbsp;<span class="powerShell__variable">$selectedfilel</span>&nbsp;
+<span class="powerShell__variable">$elect</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">read-host</span>&nbsp;<span class="powerShell__string">&quot;Do&nbsp;you&nbsp;wish&nbsp;to&nbsp;continue&nbsp;y/n&quot;</span>;&nbsp;&nbsp;
+escape&nbsp;<span class="powerShell__variable">$elect</span>&nbsp;
+<span class="powerShell__alias">sleep</span>&nbsp;2&nbsp;
+menu&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;logging&nbsp;&nbsp;
+{&nbsp;
+<span class="powerShell__variable">$who</span>&nbsp;=&nbsp;[System.Security.Principal.WindowsIdentity]::GetCurrent()&nbsp;
+<span class="powerShell__variable">$whoisit</span>&nbsp;=&nbsp;<span class="powerShell__variable">$who</span>.Name&nbsp;
+<span class="powerShell__variable">$groupis</span>&nbsp;=&nbsp;<span class="powerShell__variable">$targetgroup</span>.name&nbsp;
+<span class="powerShell__variable">$emailFrom</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;<span class="powerShell__com">#ADD&nbsp;A&nbsp;FROM&nbsp;ADDRESS</span>&nbsp;
+<span class="powerShell__variable">$emailTo</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;<span class="powerShell__com">#ADD&nbsp;AN&nbsp;EMAIL&nbsp;RECIPIENT&nbsp;</span>&nbsp;
+<span class="powerShell__variable">$subject</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;WSUS&nbsp;Install&nbsp;log&quot;</span>&nbsp;
+<span class="powerShell__variable">$body</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;$whoisit&nbsp;has&nbsp;applied&nbsp;$filesummary&nbsp;patches&nbsp;to&nbsp;$groupis&quot;</span>&nbsp;
+<span class="powerShell__variable">$body2</span>&nbsp;=&nbsp;<span class="powerShell__variable">$datestamp</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;-&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$body</span>&nbsp;
+<span class="powerShell__alias">echo</span>&nbsp;<span class="powerShell__variable">$body2</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;out<span class="powerShell__operator">-</span>file&nbsp;<span class="powerShell__string">&quot;C:\Program&nbsp;Files\wsus-operations\Log\activitylog.txt&quot;</span>&nbsp;<span class="powerShell__operator">-</span>append&nbsp;
+<span class="powerShell__variable">$smtpServer</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;<span class="powerShell__com">#&nbsp;YOUR&nbsp;MAIL&nbsp;SERVER&nbsp;HERE</span>&nbsp;
+<span class="powerShell__variable">$smtp</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">new-object</span>&nbsp;Net.Mail.SmtpClient(<span class="powerShell__variable">$smtpServer</span>)&nbsp;
+<span class="powerShell__variable">$smtp</span>.Send(<span class="powerShell__variable">$emailFrom</span>,&nbsp;<span class="powerShell__variable">$emailTo</span>,&nbsp;<span class="powerShell__variable">$subject</span>,&nbsp;<span class="powerShell__variable">$body</span>)&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__com">###################################################################################################################################</span>&nbsp;
+<span class="powerShell__com">#########&nbsp;Main&nbsp;Script&nbsp;for&nbsp;WSUS&nbsp;patch&nbsp;approval&nbsp;#####################################################################################</span>&nbsp;
+&nbsp;
+[reflection.assembly]::LoadWithPartialName(<span class="powerShell__string">&quot;Microsoft.UpdateServices.Administration&quot;</span>)&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">out-null</span>&nbsp;
+<span class="powerShell__variable">$wsus</span>&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.AdminProxy]::GetUpdateServer();&nbsp;
+&nbsp;
+<span class="powerShell__variable">$updateScope</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">new-object</span>&nbsp;Microsoft.UpdateServices.Administration.UpdateScope;&nbsp;
+<span class="powerShell__variable">$updateScope</span>.UpdateSources&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.UpdateSources]::MicrosoftUpdate;&nbsp;
+<span class="powerShell__variable">$updateScope</span>.UpdateApprovalActions&nbsp;=&nbsp;[Microsoft.UpdateServices.Administration.UpdateApprovalActions]::All;&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__variable">$all</span>&nbsp;=&nbsp;<span class="powerShell__variable">$wsus</span>.getcomputertargetgroups()&nbsp;
+<span class="powerShell__variable">$grouplist</span>&nbsp;=&nbsp;<span class="powerShell__variable">$all</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span><span class="powerShell__operator">-</span>object&nbsp;{<span class="powerShell__variable">$_</span>.name}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__variable">$date1</span>&nbsp;=&nbsp;[DateTime]::UtcNow.ToShortDateString()&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;/&quot;</span>)[0]&nbsp;}&nbsp;
+<span class="powerShell__variable">$date2</span>&nbsp;=&nbsp;[DateTime]::UtcNow.ToShortDateString()&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;/&quot;</span>)[1]&nbsp;}&nbsp;
+<span class="powerShell__variable">$date3</span>&nbsp;=&nbsp;[DateTime]::UtcNow.ToShortDateString()&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;/&quot;</span>)[2]&nbsp;}&nbsp;
+<span class="powerShell__variable">$date4</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">get-date</span>&nbsp;<span class="powerShell__operator">-</span>displayhint&nbsp;time).tostring()&nbsp;
+<span class="powerShell__variable">$date5</span>&nbsp;=&nbsp;<span class="powerShell__variable">$date4</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;&nbsp;&quot;</span>)[1]&nbsp;}&nbsp;
+<span class="powerShell__variable">$date6</span>&nbsp;=&nbsp;<span class="powerShell__variable">$date5</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;:&quot;</span>)[0]&nbsp;}&nbsp;
+<span class="powerShell__variable">$date7</span>&nbsp;=&nbsp;<span class="powerShell__variable">$date5</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;%&nbsp;{&nbsp;<span class="powerShell__variable">$_</span>.split(<span class="powerShell__string">&quot;:&quot;</span>)[1]&nbsp;}&nbsp;
+<span class="powerShell__variable">$datestamp</span>&nbsp;=&nbsp;<span class="powerShell__variable">$date1</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$date2</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;-&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$date3</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;-&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$date6</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">&quot;&quot;</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$date7</span>;&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__variable">$counter</span>&nbsp;=&nbsp;0&nbsp;
+<span class="powerShell__variable">$delim</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;:&quot;</span>&nbsp;
+<span class="powerShell__variable">$thelist</span>&nbsp;=&nbsp;<span class="powerShell__variable">$grouplist</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$group</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$counter</span><span class="powerShell__operator">&#43;</span><span class="powerShell__operator">&#43;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;$delim$counter$delim$group&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+<span class="powerShell__variable">$Directory</span>&nbsp;=&nbsp;&quot;C:\Program&nbsp;Files\wsus<span class="powerShell__operator">-</span>operations\Upload\&quot;&nbsp;
+<span class="powerShell__variable">$DirectoryR</span>&nbsp;=&nbsp;&quot;C:\Program&nbsp;Files\wsus<span class="powerShell__operator">-</span>operations\Report\&quot;&nbsp;
+<span class="powerShell__variable">$selectedgroup</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+<span class="powerShell__variable">$selectedfile</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;-------------------------------------------------------------&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;-------------------------------------------------------------&quot;</span>&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;----------------WSUS&nbsp;PATCH&nbsp;OPERATIONS------------------------&quot;</span>&nbsp;
+menu&nbsp;<span class="powerShell__variable">$selectedgroup</span>&nbsp;
+</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+        </div>
+    </body>
+</html>

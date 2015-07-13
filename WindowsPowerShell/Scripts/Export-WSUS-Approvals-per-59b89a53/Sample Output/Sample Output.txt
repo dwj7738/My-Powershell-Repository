@@ -1,0 +1,11 @@
+ComputerGroupName	UpdateTitle	UpdateGUID	updateArticleId
+All Computers	Update for Background Intelligent Transfer Service (BITS) 2.0 and WinHTTP 5.1 (KB842773)	aee355db-da85-4938-b396-161dfa1a6b43	842773
+All Computers	Microsoft Windows Installer 3.1	b166a6a9-398b-4c81-b8db-2043cf0672a1	893803
+All Computers	Update for Windows Server 2003 (KB938759)	c2cdd066-7a03-4e7f-976c-139b5de943ed	938759
+All Computers	Update for Windows Server 2003 for Itanium-based Systems (KB938759)	c15d6602-0aeb-4dca-9bad-9ffe31cd0394	938759
+All Computers	Update for Windows Server 2003 x64 Edition (KB938759)	2d2085a9-0ece-403d-8e55-b3008651714c	938759
+All Computers	Update for Windows 8.1 for x64-based Systems (KB2969817)	a9091ef3-c257-4be8-816b-5ae2bd7f32a9	2969817
+All Computers	Update for Windows 7 (KB3024777)	b14205a9-2910-4021-b00b-32c982f6e3c5	3024777
+All Computers	Update for Windows Server 2008 R2 for x64-based Systems (KB3024777)	cf352be7-e7c3-4cf1-895d-6e7a3e359c9c	3024777
+All Computers	Update for Windows Server 2008 R2 for Itanium-based Systems (KB3024777)	9618a3d9-67f1-4fb0-8263-760d8648914b	3024777
+All Computers	Update for Windows 7 for x64-based Systems (KB3024777)	80fef50b-f349-4bdc-b781-ff8cd6d913f6	3024777

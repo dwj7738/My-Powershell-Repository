@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Get Windows Updates Reboots Or Installs for your servers</title>        
+        <meta name="description" content="Parse all your servers windowsupdate logs to find pending reboots or installs awaiting action and email the results" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<h2>Description</h2>
+<p>Parse all your servers windowsupdate logs to find pending reboots or installs awaiting action and email the results</p>
+<p>Replace &quot;OU=Servers,DC=company,DC=com&quot; with the location of your servers<br>
+Replace <a href="mailto:serveradmin@company.com">serveradmin@company.com</a> for who gets the email<br>
+Replace <a href="mailto:itscript@company.com">itscript@company.com</a> with a vaild sending address (and make sure your email server accepts smtp fro the host running the script)</p>
+<p>&nbsp;</p>
+<h2>Script</h2>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title">PowerShell</div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">#Windows PowerShellCopy Code###########################################################################
+#
+# NAME: Get-WURebootsOrInstalls.ps1
+#
+# AUTHOR: John Grenfell
+# EMAIL: john.grenfell@wiltshire.ac.uk
+#
+# COMMENT: Scan your servers for WU status and send an email
+#
+# 
+# Replace &quot;OU=Servers,DC=company,DC=com&quot; with the location of your servers
+# Replace serveradmin@company.com for who gets the email
+# Replace itscript@company.com with a vaild sending address (and make sure your email server accepts smtp fro the host running the script)
+#
+# You have a royalty-free right to use, modify, reproduce, and
+# distribute this script file in any way you find useful, provided that
+# you agree that the creator, owner above has no warranty, obligations,
+# or liability for such use.
+#
+# VERSION HISTORY:
+# 1.1 19.01.2011 - Beta release
+#
+#
+###########################################################################
+
+Import-Module ActiveDirectory
+
+$date = get-date
+
+$date = $date.GetDateTimeFormats()[4]
+
+Function Send-Email(){
+Param($ToAddress = &quot;.&quot;,$MessageType = &quot;.&quot;,$MessageContent = &quot;.&quot;)
+
+trap [Exception] { 
+write-host &quot;Trapped Sending Email to $ToAddress on $server&quot; -ForegroundColor Red
+continue}
+
+    $FromAddress = &ldquo;itscript@company.com&rdquo;
+    $Subject = &quot;Servers requiring $MessageType&quot;
+    $MessageBody = &quot;Hi,
+    &lt;p&gt;We have detected a number of servers require $MessageType. Please check $MessageContent&lt;br&gt;&lt;br&gt;
+    Kind Regards,&lt;br&gt;&lt;/p&gt;
+    ICT Network Services.&quot;
+       
+    Send-MailMessage -To $ToAddress `
+                    -Subject $Subject `
+                    -From $FromAddress `
+                    -Body $MessageBody `
+                    -SmtpServer mail.company.com `
+                    -BodyAsHtml
+
+}
+
+$RebootsNeeded = @()
+$InstallsPending = @()
+
+$Servers= Get-ADComputer -Filter * -SearchBase &quot;OU=Servers,DC=company,DC=com&quot;| Select-Object -expandproperty Name
+foreach($Server in $servers){
+        If (Test-Connection $server -count 1 -quiet){
+            Write-Host &quot;Getting Session State for $server&quot;
+            If (Test-Path &quot;\\$server\c$\windows\WindowsUpdate.log&quot;){
+                Write-Host &quot;Scanning File on $Server&quot;
+                $RebootPattern = Get-ChildItem &quot;\\$server\c$\windows\WindowsUpdate.log&quot; | Select-String -Pattern $date | Select-String -Pattern 'Reboot Pending'
+                $InstallPattern = Get-ChildItem &quot;\\$server\c$\windows\WindowsUpdate.log&quot; | Select-String -Pattern $date | Select-String -Pattern &quot;AU setting pending client directive to 'Install Approval'&quot;
+                Write-Host $RebootPattern
+                Write-Host $InstallPattern
+                If ($RebootPattern){
+                    Write-Host &quot;$Server needs a reboot&quot;
+                    $RebootsNeeded = $RebootsNeeded &#43; $Server
+                }
+                ElseIf ($InstallPattern){
+                     Write-Host &quot;$Server requires a WU install&quot;
+                    $InstallsPending = $InstallsPending &#43; $Server
+                Write-Host &quot;Finished $File&quot;
+                }
+            }
+            
+        }
+        
+} 
+
+$RebootsNeeded | FL
+
+Send-Email serveradmin@company.com Reboots $RebootsNeeded
+
+$InstallsPending | FL
+
+Send-Email serveradmin@company.com Installs $InstallsPending
+</pre>
+<pre id="codePreview" class="powershell"><span class="powerShell__com">#Windows&nbsp;PowerShellCopy&nbsp;Code###########################################################################</span>&nbsp;<br><span class="powerShell__com">#</span>&nbsp;<br><span class="powerShell__com">#&nbsp;NAME:&nbsp;Get-WURebootsOrInstalls.ps1</span>&nbsp;<br><span class="powerShell__com">#</span>&nbsp;<br><span class="powerShell__com">#&nbsp;AUTHOR:&nbsp;John&nbsp;Grenfell</span>&nbsp;<br><span class="powerShell__com">#&nbsp;EMAIL:&nbsp;john.grenfell@wiltshire.ac.uk</span>&nbsp;<br><span class="powerShell__com">#</span>&nbsp;<br><span class="powerShell__com">#&nbsp;COMMENT:&nbsp;Scan&nbsp;your&nbsp;servers&nbsp;for&nbsp;WU&nbsp;status&nbsp;and&nbsp;send&nbsp;an&nbsp;email</span>&nbsp;<br><span class="powerShell__com">#</span>&nbsp;<br><span class="powerShell__com">#&nbsp;</span>&nbsp;<br><span class="powerShell__com">#&nbsp;Replace&nbsp;&quot;OU=Servers,DC=company,DC=com&quot;&nbsp;with&nbsp;the&nbsp;location&nbsp;of&nbsp;your&nbsp;servers</span>&nbsp;<br><span class="powerShell__com">#&nbsp;Replace&nbsp;serveradmin@company.com&nbsp;for&nbsp;who&nbsp;gets&nbsp;the&nbsp;email</span>&nbsp;<br><span class="powerShell__com">#&nbsp;Replace&nbsp;itscript@company.com&nbsp;with&nbsp;a&nbsp;vaild&nbsp;sending&nbsp;address&nbsp;(and&nbsp;make&nbsp;sure&nbsp;your&nbsp;email&nbsp;server&nbsp;accepts&nbsp;smtp&nbsp;fro&nbsp;the&nbsp;host&nbsp;running&nbsp;the&nbsp;script)</span>&nbsp;<br><span class="powerShell__com">#</span>&nbsp;<br><span class="powerShell__com">#&nbsp;You&nbsp;have&nbsp;a&nbsp;royalty-free&nbsp;right&nbsp;to&nbsp;use,&nbsp;modify,&nbsp;reproduce,&nbsp;and</span>&nbsp;<br><span class="powerShell__com">#&nbsp;distribute&nbsp;this&nbsp;script&nbsp;file&nbsp;in&nbsp;any&nbsp;way&nbsp;you&nbsp;find&nbsp;useful,&nbsp;provided&nbsp;that</span>&nbsp;<br><span class="powerShell__com">#&nbsp;you&nbsp;agree&nbsp;that&nbsp;the&nbsp;creator,&nbsp;owner&nbsp;above&nbsp;has&nbsp;no&nbsp;warranty,&nbsp;obligations,</span>&nbsp;<br><span class="powerShell__com">#&nbsp;or&nbsp;liability&nbsp;for&nbsp;such&nbsp;use.</span>&nbsp;<br><span class="powerShell__com">#</span>&nbsp;<br><span class="powerShell__com">#&nbsp;VERSION&nbsp;HISTORY:</span>&nbsp;<br><span class="powerShell__com">#&nbsp;1.1&nbsp;19.01.2011&nbsp;-&nbsp;Beta&nbsp;release</span>&nbsp;<br><span class="powerShell__com">#</span>&nbsp;<br><span class="powerShell__com">#</span>&nbsp;<br><span class="powerShell__com">###########################################################################</span>&nbsp;<br>&nbsp;<br>Import<span class="powerShell__operator">-</span>Module&nbsp;ActiveDirectory&nbsp;<br>&nbsp;<br><span class="powerShell__variable">$date</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">get-date</span>&nbsp;<br>&nbsp;<br><span class="powerShell__variable">$date</span>&nbsp;=&nbsp;<span class="powerShell__variable">$date</span>.GetDateTimeFormats()[4]&nbsp;<br>&nbsp;<br><span class="powerShell__keyword">Function</span>&nbsp;Send<span class="powerShell__operator">-</span>Email(){&nbsp;<br><span class="powerShell__keyword">Param</span>(<span class="powerShell__variable">$ToAddress</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;.&quot;</span>,<span class="powerShell__variable">$MessageType</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;.&quot;</span>,<span class="powerShell__variable">$MessageContent</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;.&quot;</span>)&nbsp;<br>&nbsp;<br><span class="powerShell__keyword">trap</span>&nbsp;[Exception]&nbsp;{&nbsp;&nbsp;<br>write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Trapped&nbsp;Sending&nbsp;Email&nbsp;to&nbsp;$ToAddress&nbsp;on&nbsp;$server&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;Red&nbsp;<br><span class="powerShell__keyword">continue</span>}&nbsp;<br>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$FromAddress</span>&nbsp;=&nbsp;&ldquo;itscript@company.com&rdquo;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Subject</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Servers&nbsp;requiring&nbsp;$MessageType&quot;</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$MessageBody</span>&nbsp;=&nbsp;&quot;Hi,&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;We&nbsp;have&nbsp;detected&nbsp;a&nbsp;number&nbsp;of&nbsp;servers&nbsp;require&nbsp;<span class="powerShell__variable">$MessageType</span>.&nbsp;Please&nbsp;check&nbsp;<span class="powerShell__variable">$MessageContent</span>&lt;br&gt;&lt;br&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;Kind&nbsp;Regards,&lt;br&gt;&lt;<span class="powerShell__operator">/</span>p&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;ICT&nbsp;Network&nbsp;Services.&quot;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;Send<span class="powerShell__operator">-</span>MailMessage&nbsp;<span class="powerShell__operator">-</span>To&nbsp;<span class="powerShell__variable">$ToAddress</span>&nbsp;`&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>Subject&nbsp;<span class="powerShell__variable">$Subject</span>&nbsp;`&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__keyword">From</span>&nbsp;<span class="powerShell__variable">$FromAddress</span>&nbsp;`&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>Body&nbsp;<span class="powerShell__variable">$MessageBody</span>&nbsp;`&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>SmtpServer&nbsp;mail.company.com&nbsp;`&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>BodyAsHtml&nbsp;<br>&nbsp;<br>}&nbsp;<br>&nbsp;<br><span class="powerShell__variable">$RebootsNeeded</span>&nbsp;=&nbsp;@()&nbsp;<br><span class="powerShell__variable">$InstallsPending</span>&nbsp;=&nbsp;@()&nbsp;<br>&nbsp;<br><span class="powerShell__variable">$Servers</span>=&nbsp;Get<span class="powerShell__operator">-</span>ADComputer&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__keyword">Filter</span>&nbsp;<span class="powerShell__operator">*</span>&nbsp;<span class="powerShell__operator">-</span>SearchBase&nbsp;<span class="powerShell__string">&quot;OU=Servers,DC=company,DC=com&quot;</span><span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Select-Object</span>&nbsp;<span class="powerShell__operator">-</span>expandproperty&nbsp;Name&nbsp;<br><span class="powerShell__keyword">foreach</span>(<span class="powerShell__variable">$Server</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$servers</span>){&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(Test<span class="powerShell__operator">-</span>Connection&nbsp;<span class="powerShell__variable">$server</span>&nbsp;<span class="powerShell__operator">-</span>count&nbsp;1&nbsp;<span class="powerShell__operator">-</span>quiet){&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Getting&nbsp;Session&nbsp;State&nbsp;for&nbsp;$server&quot;</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__cmdlets">Test-Path</span>&nbsp;<span class="powerShell__string">&quot;\\$server\c$\windows\WindowsUpdate.log&quot;</span>){&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Scanning&nbsp;File&nbsp;on&nbsp;$Server&quot;</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RebootPattern</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-ChildItem</span>&nbsp;<span class="powerShell__string">&quot;\\$server\c$\windows\WindowsUpdate.log&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Select-String</span>&nbsp;<span class="powerShell__operator">-</span>Pattern&nbsp;<span class="powerShell__variable">$date</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Select-String</span>&nbsp;<span class="powerShell__operator">-</span>Pattern&nbsp;<span class="powerShell__string">'Reboot&nbsp;Pending'</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$InstallPattern</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-ChildItem</span>&nbsp;<span class="powerShell__string">&quot;\\$server\c$\windows\WindowsUpdate.log&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Select-String</span>&nbsp;<span class="powerShell__operator">-</span>Pattern&nbsp;<span class="powerShell__variable">$date</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Select-String</span>&nbsp;<span class="powerShell__operator">-</span>Pattern&nbsp;<span class="powerShell__string">&quot;AU&nbsp;setting&nbsp;pending&nbsp;client&nbsp;directive&nbsp;to&nbsp;'Install&nbsp;Approval'&quot;</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__variable">$RebootPattern</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__variable">$InstallPattern</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$RebootPattern</span>){&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;$Server&nbsp;needs&nbsp;a&nbsp;reboot&quot;</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$RebootsNeeded</span>&nbsp;=&nbsp;<span class="powerShell__variable">$RebootsNeeded</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$Server</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">ElseIf</span>&nbsp;(<span class="powerShell__variable">$InstallPattern</span>){&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;$Server&nbsp;requires&nbsp;a&nbsp;WU&nbsp;install&quot;</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$InstallsPending</span>&nbsp;=&nbsp;<span class="powerShell__variable">$InstallsPending</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$Server</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Finished&nbsp;$File&quot;</span>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>}&nbsp;&nbsp;<br>&nbsp;<br><span class="powerShell__variable">$RebootsNeeded</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">FL</span>&nbsp;<br>&nbsp;<br>Send<span class="powerShell__operator">-</span>Email&nbsp;serveradmin@company.com&nbsp;Reboots&nbsp;<span class="powerShell__variable">$RebootsNeeded</span>&nbsp;<br>&nbsp;<br><span class="powerShell__variable">$InstallsPending</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">FL</span>&nbsp;<br>&nbsp;<br>Send<span class="powerShell__operator">-</span>Email&nbsp;serveradmin@company.com&nbsp;Installs&nbsp;<span class="powerShell__variable">$InstallsPending</span>&nbsp;<br>&nbsp;<br>&nbsp;<br></pre>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="mcePaste" id="_mcePaste" style="width:1px; height:1px; overflow:hidden; top:0px; left:-10000px">
+&#65279;</div>
+
+        </div>
+    </body>
+</html>

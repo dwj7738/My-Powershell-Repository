@@ -1,0 +1,30 @@
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy for Windows                              
+-------------------------------------------------------------------------------
+
+  Started : October 31, 2014 12:27:32 AM
+2014/10/31 00:27:34 ERROR 53 (0x00000035) Getting File System Type of Source \\axyzfs1\abc\
+The network path was not found.
+
+2014/10/31 00:27:37 ERROR 53 (0x00000035) Getting File System Type of Destination \\abcdfs1\def\
+The network path was not found.
+
+   Source - \\axyzfs1\abc\
+     Dest - \\abcdfs1\def\
+
+    Files : *.*
+	    
+  Options : *.* /V /S /E /DCOPY:DA /COPY:DAT /PURGE /Z /R:5 /W:5 
+
+------------------------------------------------------------------------------
+
+2014/10/31 00:27:37 ERROR 53 (0x00000035) Accessing Source Directory \\axyzfs1\abc\
+The network path was not found.
+Waiting 5 seconds... Retrying...
+2014/10/31 00:27:42 ERROR 53 (0x00000035) Accessing Source Directory \\axyzfs1\abc\
+The network path was not found.
+Waiting 5 seconds... Retrying...
+2014/10/31 00:27:47 ERROR 53 (0x00000035) Accessing Source Directory \\axyzfs1\abc\
+The network path was not found.
+Waiting 5 seconds...

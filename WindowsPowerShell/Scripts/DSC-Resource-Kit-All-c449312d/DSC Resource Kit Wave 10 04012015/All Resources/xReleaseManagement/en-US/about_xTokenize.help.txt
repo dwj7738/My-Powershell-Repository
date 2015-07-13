@@ -1,0 +1,38 @@
+TOPIC
+   about_xTokenize
+
+SHORT DESCRIPTION
+   Describes how to use the xTokenize DSC Resource to transform files based on
+   a token file for use with Release Management for Visual Studio.
+
+LONG DESCRIPTION
+   Tokenization is the process of introducing tokens (any word surrounded by
+   double underscores "__") to a target file to be replaced during deployment.
+
+   Here is an example of how to tokenize a portion of your web.config.  Create
+   a copy of your web.config file and name it web.config.token.  Be sure as you
+   continue development that you keep the files in sync.  Open the
+   web.config.token file and replace values that need to be changed during
+   deployment with tokens.  For example let's tokenize the connection string to
+   the database.  You would change the following line from:
+
+   <add name="DemoDBEntities" connectionString="data source=.\sqlexpress;initial
+      catalog=MyDevDatabase;integrated security=True" />
+
+   to:
+   
+   <add name="DemoDBEntities" connectionString="data source=__Server__;initial
+      catalog=__Database__;integrated security=True" />
+
+   There are two techniques for creating token files.  The first is to simply
+   make a copy of the target file and introduce tokens. This will result in a
+   token file being deployed with your application.  This technique has a couple
+   of advantages.  First it is very simple.  Second it allows the resource to
+   more accurately test if the transformation has been performed or not.
+
+   The second technique described here http://tinyurl.com/tokenization requires
+   more work but results in a cleaner deployment because no second token file is
+   placed in the deployed applications folder.
+
+SEE ALSO
+   Examples folder of this resource

@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Delete Temp files</title>        
+        <meta name="description" content="This script is to delete all User and System Temp files as well as Internet Temp fileswe have one subroutine called &quot;DeleteTemp&quot; to delete temp files and folders and One Function called FindOSType to get the Windows Version to determine the path of Internet Temp filesyou can assi" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<div>This script is to delete all User and System Temp files as well as Internet Temp files</div>
+<div>we have one subroutine called &quot;DeleteTemp&quot; to delete temp files and folders and One Function called FindOSType to get the Windows Version to determine the path of Internet Temp files</div>
+<div>you can assign this script to Login or logoff script in a GPO to cleanup all temp files and folders</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>
+<div class="endscriptcode">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>Visual Basic</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">vb</span>
+<pre class="hidden">'==========================================================================
+'
+' VBScript Source File -- Created with SAPIEN Technologies PrimalScript 2009
+'
+' NAME:  Delete Temp Files
+'
+' AUTHOR: Mohammed Alyafae , 
+' DATE  : 9/21/2011
+'
+' COMMENT: this script delete all user and system temporary files and folder 
+' also delete Internet Temporary files 
+'==========================================================================
+
+Option Explicit
+Dim objShell
+Dim objSysEnv,objUserEnv
+Dim strUserTemp
+Dim strSysTemp
+Dim userProfile,TempInternetFiles
+Dim OSType
+
+Set objShell=CreateObject(&quot;WScript.Shell&quot;)
+
+Set objSysEnv=objShell.Environment(&quot;System&quot;)
+Set objUserEnv=objShell.Environment(&quot;User&quot;)
+
+strUserTemp= objShell.ExpandEnvironmentStrings(objUserEnv(&quot;TEMP&quot;))
+strSysTemp= objShell.ExpandEnvironmentStrings(objSysEnv(&quot;TEMP&quot;))
+userProfile = objShell.ExpandEnvironmentStrings(&quot;%userprofile%&quot;)
+
+DeleteTemp strUserTemp 'delete user temp files
+
+DeleteTemp strSysTemp  'delete system temp files
+
+ 'delete Internet Temp files
+ 'the Internet Temp files path is diffrent according to OS Type
+OSType=FindOSType
+
+If OSType=&quot;Windows 7&quot; Or OSType=&quot;Windows Vista&quot; Then
+TempInternetFiles=userProfile &amp; &quot;\AppData\Local\Microsoft\Windows\Temporary Internet Files&quot;
+ElseIf  OSType=&quot;Windows 2003&quot; Or OSType=&quot;Windows XP&quot; Then
+TempInternetFiles=userProfile &amp; &quot;\Local Settings\Temporary Internet Files&quot;
+End If
+
+DeleteTemp TempInternetFiles
+'this is also to delete Content.IE5 in Internet Temp files
+TempInternetFiles=TempInternetFiles &amp; &quot;\Content.IE5&quot;
+DeleteTemp TempInternetFiles
+
+
+
+
+WScript.Quit
+
+
+Sub DeleteTemp (strTempPath)
+On Error Resume Next
+
+Dim objFSO
+Dim objFolder,objDir
+Dim objFile
+Dim i
+
+Set objFSO=CreateObject(&quot;Scripting.FileSystemObject&quot;)
+Set objFolder=objFSO.GetFolder(strTempPath)
+
+'delete all files
+For Each objFile In objFolder.Files
+objFile.delete True
+Next
+
+'delete all subfolders
+For i=0 To 10
+	For Each objDir In objFolder.SubFolders
+	objDir.Delete True
+	Next
+Next
+
+
+'clear all objects
+
+Set objFSO=Nothing
+Set objFolder=Nothing
+Set objDir=Nothing
+Set objFile=Nothing
+End Sub
+
+Function FindOSType
+    'Defining Variables
+    Dim objWMI, objItem, colItems
+    Dim OSVersion, OSName
+ 	Dim ComputerName
+ 	
+ 	ComputerName=&quot;.&quot;
+ 	
+    'Get the WMI object and query results
+    Set objWMI = GetObject(&quot;winmgmts:\\&quot; &amp; ComputerName &amp; &quot;\root\cimv2&quot;)
+    Set colItems = objWMI.ExecQuery(&quot;Select * from Win32_OperatingSystem&quot;,,48)
+ 
+    'Get the OS version number (first two) and OS product type (server or desktop) 
+    For Each objItem in colItems
+        OSVersion = Left(objItem.Version,3)
+                
+    Next
+ 
+    
+    Select Case OSVersion
+        Case &quot;6.1&quot;
+        	OSName = &quot;Windows 7&quot;
+        Case &quot;6.0&quot; 
+            OSName = &quot;Windows Vista&quot;
+        Case &quot;5.2&quot; 
+            OSName = &quot;Windows 2003&quot;
+        Case &quot;5.1&quot; 
+            OSName = &quot;Windows XP&quot;
+        Case &quot;5.0&quot; 
+            OSName = &quot;Windows 2000&quot;
+   End Select
+ 
+    'Return the OS name
+    FindOSType = OSName
+    
+    'Clear the memory
+    Set colItems = Nothing
+    Set objWMI = Nothing
+End Function
+</pre>
+<div class="preview">
+<pre class="vb"><span class="visualBasic__com">'==========================================================================</span>&nbsp;
+<span class="visualBasic__com">'</span>&nbsp;
+<span class="visualBasic__com">'&nbsp;VBScript&nbsp;Source&nbsp;File&nbsp;--&nbsp;Created&nbsp;with&nbsp;SAPIEN&nbsp;Technologies&nbsp;PrimalScript&nbsp;2009</span>&nbsp;
+<span class="visualBasic__com">'</span>&nbsp;
+<span class="visualBasic__com">'&nbsp;NAME:&nbsp;&nbsp;Delete&nbsp;Temp&nbsp;Files</span>&nbsp;
+<span class="visualBasic__com">'</span>&nbsp;
+<span class="visualBasic__com">'&nbsp;AUTHOR:&nbsp;Mohammed&nbsp;Alyafae&nbsp;,&nbsp;</span>&nbsp;
+<span class="visualBasic__com">'&nbsp;DATE&nbsp;&nbsp;:&nbsp;9/21/2011</span>&nbsp;
+<span class="visualBasic__com">'</span>&nbsp;
+<span class="visualBasic__com">'&nbsp;COMMENT:&nbsp;this&nbsp;script&nbsp;delete&nbsp;all&nbsp;user&nbsp;and&nbsp;system&nbsp;temporary&nbsp;files&nbsp;and&nbsp;folder&nbsp;</span>&nbsp;
+<span class="visualBasic__com">'&nbsp;also&nbsp;delete&nbsp;Internet&nbsp;Temporary&nbsp;files&nbsp;</span>&nbsp;
+<span class="visualBasic__com">'==========================================================================</span>&nbsp;
+&nbsp;
+<span class="visualBasic__keyword">Option</span>&nbsp;Explicit&nbsp;
+<span class="visualBasic__keyword">Dim</span>&nbsp;objShell&nbsp;
+<span class="visualBasic__keyword">Dim</span>&nbsp;objSysEnv,objUserEnv&nbsp;
+<span class="visualBasic__keyword">Dim</span>&nbsp;strUserTemp&nbsp;
+<span class="visualBasic__keyword">Dim</span>&nbsp;strSysTemp&nbsp;
+<span class="visualBasic__keyword">Dim</span>&nbsp;userProfile,TempInternetFiles&nbsp;
+<span class="visualBasic__keyword">Dim</span>&nbsp;OSType&nbsp;
+&nbsp;
+<span class="visualBasic__keyword">Set</span>&nbsp;objShell=CreateObject(<span class="visualBasic__string">&quot;WScript.Shell&quot;</span>)&nbsp;
+&nbsp;
+<span class="visualBasic__keyword">Set</span>&nbsp;objSysEnv=objShell.Environment(<span class="visualBasic__string">&quot;System&quot;</span>)&nbsp;
+<span class="visualBasic__keyword">Set</span>&nbsp;objUserEnv=objShell.Environment(<span class="visualBasic__string">&quot;User&quot;</span>)&nbsp;
+&nbsp;
+strUserTemp=&nbsp;objShell.ExpandEnvironmentStrings(objUserEnv(<span class="visualBasic__string">&quot;TEMP&quot;</span>))&nbsp;
+strSysTemp=&nbsp;objShell.ExpandEnvironmentStrings(objSysEnv(<span class="visualBasic__string">&quot;TEMP&quot;</span>))&nbsp;
+userProfile&nbsp;=&nbsp;objShell.ExpandEnvironmentStrings(<span class="visualBasic__string">&quot;%userprofile%&quot;</span>)&nbsp;
+&nbsp;
+DeleteTemp&nbsp;strUserTemp&nbsp;<span class="visualBasic__com">'delete&nbsp;user&nbsp;temp&nbsp;files</span>&nbsp;
+&nbsp;
+DeleteTemp&nbsp;strSysTemp&nbsp;&nbsp;<span class="visualBasic__com">'delete&nbsp;system&nbsp;temp&nbsp;files</span>&nbsp;
+&nbsp;
+&nbsp;<span class="visualBasic__com">'delete&nbsp;Internet&nbsp;Temp&nbsp;files</span>&nbsp;
+&nbsp;<span class="visualBasic__com">'the&nbsp;Internet&nbsp;Temp&nbsp;files&nbsp;path&nbsp;is&nbsp;diffrent&nbsp;according&nbsp;to&nbsp;OS&nbsp;Type</span>&nbsp;
+OSType=FindOSType&nbsp;
+&nbsp;
+<span class="visualBasic__keyword">If</span>&nbsp;OSType=<span class="visualBasic__string">&quot;Windows&nbsp;7&quot;</span>&nbsp;<span class="visualBasic__keyword">Or</span>&nbsp;OSType=<span class="visualBasic__string">&quot;Windows&nbsp;Vista&quot;</span>&nbsp;<span class="visualBasic__keyword">Then</span>&nbsp;
+TempInternetFiles=userProfile&nbsp;&amp;&nbsp;<span class="visualBasic__string">&quot;\AppData\Local\Microsoft\Windows\Temporary&nbsp;Internet&nbsp;Files&quot;</span>&nbsp;
+<span class="visualBasic__keyword">ElseIf</span>&nbsp;&nbsp;OSType=<span class="visualBasic__string">&quot;Windows&nbsp;2003&quot;</span>&nbsp;<span class="visualBasic__keyword">Or</span>&nbsp;OSType=<span class="visualBasic__string">&quot;Windows&nbsp;XP&quot;</span>&nbsp;<span class="visualBasic__keyword">Then</span>&nbsp;
+TempInternetFiles=userProfile&nbsp;&amp;&nbsp;<span class="visualBasic__string">&quot;\Local&nbsp;Settings\Temporary&nbsp;Internet&nbsp;Files&quot;</span>&nbsp;
+<span class="visualBasic__keyword">End</span>&nbsp;<span class="visualBasic__keyword">If</span>&nbsp;
+&nbsp;
+DeleteTemp&nbsp;TempInternetFiles&nbsp;
+<span class="visualBasic__com">'this&nbsp;is&nbsp;also&nbsp;to&nbsp;delete&nbsp;Content.IE5&nbsp;in&nbsp;Internet&nbsp;Temp&nbsp;files</span>&nbsp;
+TempInternetFiles=TempInternetFiles&nbsp;&amp;&nbsp;<span class="visualBasic__string">&quot;\Content.IE5&quot;</span>&nbsp;
+DeleteTemp&nbsp;TempInternetFiles&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+WScript.Quit&nbsp;
+&nbsp;
+&nbsp;
+<span class="visualBasic__keyword">Sub</span>&nbsp;DeleteTemp&nbsp;(strTempPath)&nbsp;
+<span class="visualBasic__keyword">On</span>&nbsp;<span class="visualBasic__keyword">Error</span>&nbsp;<span class="visualBasic__keyword">Resume</span>&nbsp;<span class="visualBasic__keyword">Next</span>&nbsp;
+&nbsp;
+<span class="visualBasic__keyword">Dim</span>&nbsp;objFSO&nbsp;
+<span class="visualBasic__keyword">Dim</span>&nbsp;objFolder,objDir&nbsp;
+<span class="visualBasic__keyword">Dim</span>&nbsp;objFile&nbsp;
+<span class="visualBasic__keyword">Dim</span>&nbsp;i&nbsp;
+&nbsp;
+<span class="visualBasic__keyword">Set</span>&nbsp;objFSO=CreateObject(<span class="visualBasic__string">&quot;Scripting.FileSystemObject&quot;</span>)&nbsp;
+<span class="visualBasic__keyword">Set</span>&nbsp;objFolder=objFSO.GetFolder(strTempPath)&nbsp;
+&nbsp;
+<span class="visualBasic__com">'delete&nbsp;all&nbsp;files</span>&nbsp;
+<span class="visualBasic__keyword">For</span>&nbsp;<span class="visualBasic__keyword">Each</span>&nbsp;objFile&nbsp;<span class="visualBasic__keyword">In</span>&nbsp;objFolder.Files&nbsp;
+objFile.delete&nbsp;<span class="visualBasic__keyword">True</span>&nbsp;
+<span class="visualBasic__keyword">Next</span>&nbsp;
+&nbsp;
+<span class="visualBasic__com">'delete&nbsp;all&nbsp;subfolders</span>&nbsp;
+<span class="visualBasic__keyword">For</span>&nbsp;i=<span class="visualBasic__number">0</span>&nbsp;<span class="visualBasic__keyword">To</span>&nbsp;<span class="visualBasic__number">10</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">For</span>&nbsp;<span class="visualBasic__keyword">Each</span>&nbsp;objDir&nbsp;<span class="visualBasic__keyword">In</span>&nbsp;objFolder.SubFolders&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;objDir.Delete&nbsp;<span class="visualBasic__keyword">True</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Next</span>&nbsp;
+<span class="visualBasic__keyword">Next</span>&nbsp;
+&nbsp;
+&nbsp;
+<span class="visualBasic__com">'clear&nbsp;all&nbsp;objects</span>&nbsp;
+&nbsp;
+<span class="visualBasic__keyword">Set</span>&nbsp;objFSO=<span class="visualBasic__keyword">Nothing</span>&nbsp;
+<span class="visualBasic__keyword">Set</span>&nbsp;objFolder=<span class="visualBasic__keyword">Nothing</span>&nbsp;
+<span class="visualBasic__keyword">Set</span>&nbsp;objDir=<span class="visualBasic__keyword">Nothing</span>&nbsp;
+<span class="visualBasic__keyword">Set</span>&nbsp;objFile=<span class="visualBasic__keyword">Nothing</span>&nbsp;
+<span class="visualBasic__keyword">End</span>&nbsp;<span class="visualBasic__keyword">Sub</span>&nbsp;
+&nbsp;
+<span class="visualBasic__keyword">Function</span>&nbsp;FindOSType&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__com">'Defining&nbsp;Variables</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Dim</span>&nbsp;objWMI,&nbsp;objItem,&nbsp;colItems&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Dim</span>&nbsp;OSVersion,&nbsp;OSName&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Dim</span>&nbsp;ComputerName&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ComputerName=<span class="visualBasic__string">&quot;.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__com">'Get&nbsp;the&nbsp;WMI&nbsp;object&nbsp;and&nbsp;query&nbsp;results</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Set</span>&nbsp;objWMI&nbsp;=&nbsp;GetObject(<span class="visualBasic__string">&quot;winmgmts:\\&quot;</span>&nbsp;&amp;&nbsp;ComputerName&nbsp;&amp;&nbsp;<span class="visualBasic__string">&quot;\root\cimv2&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Set</span>&nbsp;colItems&nbsp;=&nbsp;objWMI.ExecQuery(<span class="visualBasic__string">&quot;Select&nbsp;*&nbsp;from&nbsp;Win32_OperatingSystem&quot;</span>,,<span class="visualBasic__number">48</span>)&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__com">'Get&nbsp;the&nbsp;OS&nbsp;version&nbsp;number&nbsp;(first&nbsp;two)&nbsp;and&nbsp;OS&nbsp;product&nbsp;type&nbsp;(server&nbsp;or&nbsp;desktop)&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">For</span>&nbsp;<span class="visualBasic__keyword">Each</span>&nbsp;objItem&nbsp;in&nbsp;colItems&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OSVersion&nbsp;=&nbsp;Left(objItem.Version,<span class="visualBasic__number">3</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Next</span>&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Select</span>&nbsp;<span class="visualBasic__keyword">Case</span>&nbsp;OSVersion&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Case</span>&nbsp;<span class="visualBasic__string">&quot;6.1&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OSName&nbsp;=&nbsp;<span class="visualBasic__string">&quot;Windows&nbsp;7&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Case</span>&nbsp;<span class="visualBasic__string">&quot;6.0&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OSName&nbsp;=&nbsp;<span class="visualBasic__string">&quot;Windows&nbsp;Vista&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Case</span>&nbsp;<span class="visualBasic__string">&quot;5.2&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OSName&nbsp;=&nbsp;<span class="visualBasic__string">&quot;Windows&nbsp;2003&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Case</span>&nbsp;<span class="visualBasic__string">&quot;5.1&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OSName&nbsp;=&nbsp;<span class="visualBasic__string">&quot;Windows&nbsp;XP&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Case</span>&nbsp;<span class="visualBasic__string">&quot;5.0&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OSName&nbsp;=&nbsp;<span class="visualBasic__string">&quot;Windows&nbsp;2000&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">End</span>&nbsp;<span class="visualBasic__keyword">Select</span>&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__com">'Return&nbsp;the&nbsp;OS&nbsp;name</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;FindOSType&nbsp;=&nbsp;OSName&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__com">'Clear&nbsp;the&nbsp;memory</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Set</span>&nbsp;colItems&nbsp;=&nbsp;<span class="visualBasic__keyword">Nothing</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="visualBasic__keyword">Set</span>&nbsp;objWMI&nbsp;=&nbsp;<span class="visualBasic__keyword">Nothing</span>&nbsp;
+<span class="visualBasic__keyword">End</span>&nbsp;<span class="visualBasic__keyword">Function</span>&nbsp;
+</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+&nbsp;</div>
+</div>
+
+        </div>
+    </body>
+</html>

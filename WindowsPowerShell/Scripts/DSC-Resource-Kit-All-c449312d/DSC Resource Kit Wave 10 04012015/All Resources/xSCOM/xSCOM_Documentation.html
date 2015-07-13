@@ -1,0 +1,474 @@
+﻿<body>
+<div id="longDesc">
+<span style="font-family:Calibri; font-size:medium">
+<h1 style="font-family:Calibri Light; color:#2e74b5; font-size:large">Introduction</h1>
+    <p>
+        The<strong> xSCOM</strong> module is a part of the Windows PowerShell Desired State Configuration (DSC) Resource Kit, which is
+        a collection of DSC Resources produced by the PowerShell Team. This module contains the following resources for installation of System Center Operations Manager (OM):</p>
+        <ul style="list-style-type:disc; direction:ltr">
+            <li><strong>xSCOMManagementServerSetup</strong> for installation of the OM Management server,
+            </li>
+            <li>
+                <strong>xSCOMReportingServerSetup</strong> for installation of the OM Reporting server,
+            </li>
+            <li>
+                <strong>xSCOMWebConsoleServerSetup</strong> for installation of the OM Web Console server,
+            </li>
+            <li>
+                <strong>xSCOMConsoleSetup</strong> for installation of the OM console,
+            </li>
+            <li>
+                <strong>xSCOMManagementServerUpdate</strong> for updating an OM Management server to Update Rollup 4,
+            </li>
+            <li>
+                <strong>xSCOMWebConsoleServerUpdate</strong> for updating an OM Web Console server to Update Rollup 4,
+            <li>
+                <strong>xSCOMConsoleUpdate</strong> for updating an OM Console to Update Rollup 4,
+            </li>
+            <li>
+                <strong>xSCOMAdmin</strong> for adding OM admins,
+            </li>
+            <li>
+                <strong>xSCOMManagementPack</strong> for installing OM Management Packs.
+            </li>
+        </ul>
+
+<p><strong>All of the resources in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program 
+or service. The ""x" in xSCOM stands for experimental</strong>, which means that these resources will be <strong>fix forward</strong> 
+and monitored by the module owner(s).</p>
+<p>Please leave comments, feature requests, and bug reports in the Q &amp; A tab for this module.</p>
+<p>If you would like to modify <strong>xSCOM</strong> module, feel free. When modifying, please update the module name, resource friendly name, 
+and MOF class name (instructions below). As specified in the license, you may copy or modify this resource as long as they are used on the Windows Platform.</p>
+<p>For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+<a href="http://blogs.msdn.com/b/powershell/"><span style="color:#0000ff">PowerShell Blog</span></a> (</span><a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx"><span style="color:#0000ff">this</span></a> is a good starting point). There are 
+also great community resources, such as <a href="http://powershell.org/wp/tag/dsc/"><span style="color:#0000ff">PowerShell.org</span></a>, or
+<a href="http://www.powershellmagazine.com/tag/dsc/"><span style="color:#0000ff">PowerShell Magazine</span></a>. For more information on the DSC Resource Kit, check out 
+<a href="http://go.microsoft.com/fwlink/?LinkID=389546"><span style="color:#0000ff">this blog post</span></a>.<br></p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Installation</h1>
+<p>To install the <strong >xSCOM</strong> module </p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>If you are using WMF4 / PowerShell Version 4: Unzip the content under $env:ProgramFiles\WindowsPowerShell\Modules folder </li>
+        <li>If you are using WMF5 Preview: From an elevated PowerShell session run ‘Install-Module xScom’</li>
+    </ul>
+<p>To confirm installation:<br></p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>Run <strong>Get-DSCResource</strong> to see that <strong>xSCOMManagementServerSetup, xSCOMReportingServerSetup, xSCOMWebConsoleServerSetup, xSCOMConsoleSetup, and xSCOMManagementPack</strong> are among the DSC Resources listed.<br></li>
+</ul>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Requirements</h1>
+<p>This module requires at least PowerShell v4.0, which ships in Windows 8.1 or Windows Server 2012R2. To easily use PowerShell 4.0 on older operating systems,
+<a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855"><span style="color:#0000ff">install WMF 4.0</span></a>. Please read the installation instructions 
+that are present on both the download page and the release notes for WMF 4.0.</p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Description</h1>
+<p>The <strong >xSCOM </strong> module contains the <strong>- xSCOMManagementServerSetup, xSCOMReportingServerSetup, xSCOMWebConsoleServerSetup, xSCOMConsoleSetup, xSCOMManagementServerUpdate, xSCOMWebConsoleServerUpdate, xSCOMConsoleUpdate, xSCOMAdmin, and xSCOMManagementPack</strong> DSC Resources. This DSC 
+Module enables installation of System Center Operations Manager.</p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Details</h1>
+<p><strong>xSCOMManagementServerSetup</strong> is used for for installation of the OM Management server. <strong>xSCOMManagementServerSetup</strong> has the following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">Ensure:</span> KEY - An enumerated value (Present, Absent) that describes if the OM management server is expected to be installed on the machine.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SourcePath:</span> REQUIRED - UNC path to the root of the source files for installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SourceFolder:</span> Folder within the source path containing the source files for installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SetupCredential:</span> REQUIRED - Credential to be used to perform the installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">ProductKey:</span> Product key for licensed installations.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">InstallPath:</span> Installation path for the software.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">ManagementGroupName:</span> REQUIRED - The name of the management group.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">FirstManagementServer:</span> REQUIRED - Is this a boolean indicating if this is the first Management Server.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">ManagementServicePort:</span> Change the Management Server port on install.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">ActionAccount:</span> The domain and user name of the Management server action account.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">ActionAccountUsername:</span> Output username of the Management server action account.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DASAccount:</span> The domain and user name of the Data Access service account.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DASAccountUsername:</span> Output username of the Data Access service account.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DataReader:</span> REQUIRED - The domain and user name of the data reader account.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DataReaderUsername:</span> Output username of the data reader account.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DataWriter:</span> REQUIRED - The domain and user name of the data Writer account.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DataWriterUsername:</span> Output username of the data writer account.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SqlServerInstance:</span> REQUIRED - The SQL server and instance.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DatabaseName:</span> The name of the Operational database
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DatabaseSize:</span> The size in MB of the Operational database.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DwSqlServerInstance:</span> REQUIRED - The data warehouse server and instance.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DwDatabaseName:</span> The name of the data warehouse database.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DwDatabaseSize:</span> The size in MB of the data warehouse database.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">UseMicrosoftUpdate:</span> Enumerated value - 0: Do not opt in to Microsoft Update. 1: Opt in to Microsoft Update.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SendCEIPReports:</span> Enumerated value - 0: Do not opt in to the Customer Experience Improvement Program (CEIP). 1: Opt in to CEIP.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">EnableErrorReporting:</span> Enumerated value - Never: Do not opt in to sending automatic error reports. Queued: Opt in to sending error reports, but queue the reports for review before sending. Always: Opt in to automatically send error reports.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SendODRReports:</span> Enumerated value - 0: Do not opt in to sending operational data reports. 1: opt in to sending operational data reports.
+    </li>
+</ul>
+
+<p><strong>xSCOMReportingServerSetup</strong> is used for installation of the OM Reporting server. It has the following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value (Present, Absent) that describes if the OM management server is expected to be installed on the machine.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SetupCredential: </span>REQUIRED - Credential to be used to perform the installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">InstallPath: </span>Installation path for the software.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">ManagementServer: </span>REQUIRED - The name of the management server associated with the Reporting server.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SRSInstance: </span>REQUIRED - The reporting server and instance.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DataReader: </span>REQUIRED - The domain and user name of the data reader account.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">DataReaderUsername: </span>Output username of the data reader account.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">UseMicrosoftUpdate: </span>Enumerated value - 0: Do not opt in to Microsoft Update. 1: Opt in to Microsoft Update.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SendCEIPReports: </span>Enumerated value - 0: Do not opt in to the Customer Experience Improvement Program (CEIP). 1: Opt in to CEIP.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">EnableErrorReporting: </span>Enumerated value - Never: Do not opt in to sending automatic error reports. Queued: Opt in to sending error reports, but queue the reports for review before sending. Always: Opt in to automatically send error reports.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SendODRReports: </span>Enumerated value - 0: Do not opt in to sending operational data reports. 1: opt in to sending operational data reports.
+    </li>
+</ul>
+
+    <p><strong>xSCOMWebConsoleServerSetup</strong> is used for installation of the OM Web Console server, and has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value (Present, Absent) that describes if the OM management server is expected to be installed on the machine.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SetupCredential: </span>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">InstallPath: </span>Installation path for the software.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">ManagementServer: </span>REQUIRED - The name of the management server associated with the Reporting server.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">WebSiteName: </span>The name of the website.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">WebConsoleAuthorizationMode: </span>Mixed: Used for intranet scenarios. Network: Used for extranet scenarios.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">WebConsoleUseSSL: </span>Specify only if your website has Secure Sockets Layer (SSL) activated.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">UseMicrosoftUpdate: </span>Enumerated value - 0: Do not opt in to Microsoft Update. 1: Opt in to Microsoft Update.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SendCEIPReports: </span>Enumerated value - 0: Do not opt in to the Customer Experience Improvement Program (CEIP). 1: Opt in to CEIP.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">EnableErrorReporting: </span>Enumerated value - Never: Do not opt in to sending automatic error reports. Queued: Opt in to sending error reports, but queue the reports for review before sending. Always: Opt in to automatically send error reports.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SendODRReports: </span>Enumerated value - 0: Do not opt in to sending operational data reports. 1: opt in to sending operational data reports.
+        </li>
+    </ul>
+
+<p><strong>xSCOMConsoleSetup</strong> is used for installation of the OM console, and has the following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value (Present, Absent) that describes if the OM management server is expected to be installed on the machine.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SetupCredential: </span>REQUIRED - Credential to be used to perform the installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">InstallPath: </span>Installation path for the software.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">UseMicrosoftUpdate: </span>Enumerated value - 0: Do not opt in to Microsoft Update. 1: Opt in to Microsoft Update.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SendCEIPReports: </span>Enumerated value - 0: Do not opt in to the Customer Experience Improvement Program (CEIP). 1: Opt in to CEIP.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">EnableErrorReporting: </span>Enumerated value - Never: Do not opt in to sending automatic error reports. Queued: Opt in to sending error reports, but queue the reports for review before sending. Always: Opt in to automatically send error reports.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SendODRReports: </span>Enumerated value - 0: Do not opt in to sending operational data reports. 1: opt in to sending operational data reports.
+    </li>
+</ul>
+
+    <p><strong>xSCOMManagementServerUpdate</strong> has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value that describes if the update is expected to be installed on the machine.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Credential: </span>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Update: </span>Output display name of the update.
+        </li>
+    </ul>
+    <p><strong>xSCOMWebConsoleServerUpdate</strong> has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value that describes if the update is expected to be installed on the machine.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Credential: </span>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Update: </span>Output display name of the update.
+        </li>
+    </ul>
+    
+    <p><strong>xSCOMConsoleUpdate </strong> has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value that describes if the update is expected to be installed on the machine.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Credential: </span>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Update: </span>Output display name of the update.
+        </li>
+    </ul>
+    <p><strong>xSCOMAdmin</strong> has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>An enumerated value that describes if the principal is an Operations Manager admin.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Principal: </span>KEY - The Operations Manager admin principal.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">UserRole: </span>KEY - The Operations Manager user role.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SCOMAdminCredential: </span>REQUIRED - Credential to be used to perform the operations.
+        </li>
+    </ul>
+    <p><strong>xSCOMManagementPack</strong> has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Name: </span>KEY - Name of the Management Pack.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Version: </span>Specific version of the Management Pack, overrides MinVersion if both set.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">MinVersion: </span>Minimum version of the Management Pack, overridden by Version if both set.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SCOMAdminCredential: </span>REQUIRED - Credential with admin permissions to Operations Manager.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourceFile: </span>Name of the file in the source folder for the Management Pack.
+        </li>
+    </ul>
+
+
+
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Renaming Requirements</h1>
+<p>When making changes to these resources, we suggest the following practice:</p>
+<ol style="list-style-type:decimal; direction:ltr">
+<li>
+    Update the following names by replacing MSFT with your company/community name and replacing the <strong>"x"</strong> with <strong>"c"</strong> (short for "Community") or another prefix of your choice:
+<ul>
+<li>
+    <strong>Module name (ex: xSCOM</strong> becomes <strong>cSCOM</strong>)
+</li>
+<li>
+    <strong>Resource folder (ex: MSFT_xSCOMConsoleSetup</strong> becomes <strong>Contoso_cSCOMConsoleSetup</strong>)
+</li>
+<li>
+    <strong>Resource Name (ex: MSFT_xSCOMConsoleSetup</strong> becomes <strong>Contoso_cSCOMConsoleSetup</strong>)
+</li>
+<li>
+    <strong>Resource Friendly Name (ex: xSCOMConsoleSetup</strong> becomes <strong>cSCOMConsoleSetup</strong>)
+</li>
+<li>
+    <strong>MOF class name (ex: MSFT_xSCOMConsoleSetup</strong> becomes <strong>Contoso_cSCOMConsoleSetup</strong>)
+</li>
+<li>
+    <strong>Filename for the &lt;resource&gt;.schema.mof (ex: MSFT_xSCOMConsoleSetup</strong>.schema.mof becomes <strong>Contoso_cSCOMConsoleSetup</strong>.schema.mof)
+</li>
+</ul>
+</li>
+<li>
+    Update module and metadata information in the module manifest
+</li>
+<li>
+    Update any configuration that use these resources
+</li>
+</ol>
+<p><em>We reserve resource and module names without prefixes ("x" or "c") for future use (e.g. "MSFT_SCOMConsoleSetup" or "SCOMConsoleSetup"). If the next version of Windows Server ships with "MSFT_SCOMConsoleSetup" resources, we don't want to break any configurations that use any community modifications. Please keep a prefix such as "c" on all community modifications.</em></p>
+
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Versions</h1>
+
+
+    <p>1.3.3.0</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            Increased timeout for setup process to start to 60 seconds.
+        </li>
+        <li>
+            Modified MSFT_xSCOMConsoleUpdate, MSFT_xSCOMManagementServerUpdate, and MSFT_xSCOMWebConsoleServerUpdate resources to use /norestart, allowing DSC to control reboots.
+        </li>
+    </ul>
+    <p>1.2.0.0</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            Updated to include following resources:
+            <ul style="list-style-type:circle">
+                <li>
+                    xSCOMManagementServerUpdate
+                </li>
+                <li>
+                    xSCOMWebConsoleServerUpdate
+                <li>
+                    xSCOMConsoleUpdate
+                </li>
+                <li>
+                    xSCOMAdmin
+                </li>
+                <li>
+                    xSCOMManagementPack
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <p>1.1.0.0</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            Initial release with the following resources
+            <ul style="list-style-type:circle">
+                <li>
+                    xSCOMManagementServerSetup
+                </li>
+                <li>
+                    xSCOMConsoleSetup
+                </li>
+                <li>
+                    xSCOMReportingServerSetup,
+                </li>
+                <li>
+                    xSCOMWebConsoleServerSetup
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h1 style="margin-bottom:0pt; font-family:Calibri Light; color:#2e74b5; font-size:large">Examples</h1>
+    <p>
+        Four example configurations are included in the Examples folder within the module.  All four examples also use xCredSSP and xSQLServer modules.
+        Note: the samples require the use of the <a href="http://blogs.msdn.com/b/powershell/archive/2014/09/04/windows-management-framework-5-0-preview-september-2014-is-now-available.aspx"><span style="color:#0000ff">Windows Management Framework (WMF) 5.0 Preview.</span></a>
+    </p>
+
+    <p><strong>Single Server Installation:</strong> SCOM-SingleServer.ps1 installs all OM roles including prerequisites and SQL on a single server.</p>
+    <p><strong>Separate SQL:</strong> SCOM-SeperateSQL.ps1 installs all OM roles on one server and SQL on a seperate server.</p>
+    <p><strong>Multiple Separate SQL Instances:</strong> SCOM-SeperateSQLInstances.ps1 installs all OM roles on one server and SQL in multiple instances on a seperate server.</p>
+    <p><strong>Multiple Management Servers:</strong> SCOM-MultiInstance.ps1 installs all OM roles including multiple Management servers each on their own server with multiple SQL Servers.</p>
+    <p></p>        
+    <p>In the Examples folder you will see a version of each file with "-TP" appended to the name. These are the equivalent examples for deployment of System Center Technical Preview on Windows Server Technical Preview.</p>
+</span>
+</div>
+</body>

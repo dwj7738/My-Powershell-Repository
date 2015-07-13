@@ -1,0 +1,361 @@
+<div id="longDesc"><span style="font-family:Calibri; font-size:medium">
+<h1 style="font-family:Calibri Light; color:#2e74b5; font-size:large">Introduction</h1>
+<p>The <strong>xAzurePack</strong> module contains resources for installation and configuration of Windows Azure Pack.
+<br>
+<br>
+This module includes 8 DSC resources that automate provisioning of resources in Microsoft Azure.</p>
+<ul style="list-style-type:disc; direction:ltr">
+    <li>
+    <strong>xAzurePackSetup:</strong> for installation and initialization of Azure Pack
+    </li>
+    <li>
+    <strong>xAzureQuickVM</strong> simple resource for creating VMs with limited options
+    </li>
+    <li><strong>xAzurePackAdmin: </strong>for adding Azure Pack admins</li>
+    <li><strong>xAzurePackFQDN: </strong>for setting the FQDN of Azure Pack roles</li>
+    <li><strong>xAzurePackDatabaseSetting: </strong>for setting Azure Pack database settings</li>
+    <li><strong>xAzurePackIdentityProvider: </strong>for setting Azure Pack identity provider settings</li>
+    <li><strong>xAzurePackRelyingParty: </strong>for setting Azure Pack relying party settings</li>
+    <li><strong>xAzurePackResourceProvider: </strong>for registering and configuring Azure Pack resource providers</li>
+</ul>
+
+<p><strong>All of the resources in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program or service. The &quot;&quot;x&quot; in xAzure stands for experimental</strong>, which means that these resources will be
+<strong>fix forward</strong> and monitored by the module owner(s).</p>
+<p>Please leave comments, feature requests, and bug reports in the Q &amp; A tab for this module.</p>
+<p>If you would like to modify <strong>xAzurePack</strong> module, feel free. When modifying, please update the module name, resource friendly name, and MOF class name (instructions below). As specified in the license, you may copy or modify this resource as long
+ as they are used on the Windows Platform.</p>
+<p>For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+<a href="http://blogs.msdn.com/b/powershell/"><span style="color:#0000ff">PowerShell Blog</span></a> (<a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx"><span style="color:#0000ff">this</span></a>
+ is a good starting point). There are also great community resources, such as <a href="http://powershell.org/wp/tag/dsc/">
+<span style="color:#0000ff">PowerShell.org</span></a>, or <a href="http://www.powershellmagazine.com/tag/dsc/">
+<span style="color:#0000ff">PowerShell Magazine</span></a>. For more information on the DSC Resource Kit, check out
+<a href="http://go.microsoft.com/fwlink/?LinkID=389546"><span style="color:#0000ff">this blog post</span></a>.</p>
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Installation</h1>
+<p>To install <strong>xAzurePack</strong> module</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>If you are using WMF4 / PowerShell Version 4: Unzip the content under $env:ProgramFiles\WindowsPowerShell\Modules folder </li>
+<li>If you are using WMF5 Preview: From an elevated PowerShell session run ‘Install-Module xAzurePack’</li>
+</ul>
+<p>To confirm installation:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>Run <strong>Get-DSCResource</strong> to see that <strong>xAzurePackSetup</strong>,
+<strong>xAzurePackDatabaseSetting</strong>, and <strong>xAzurePackResourceProvider</strong> are among the DSC Resources listed
+</li></ul>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Requirements</h1>
+<p>
+This module requires at least the latest version of PowerShell (v4.0, which ships in Windows 8.1 or Windows Server 2012R2). To easily use PowerShell 4.0 on older operating systems,
+<a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855"><span style="color:#0000ff">install WMF 4.0</span></a>. Please read the installation instructions that are present on both the download page and the release notes for WMF 4.0.
+</p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Details</h1>
+
+    <p><strong>xAzurePackSetup</strong> resource has following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <strong>Role: </strong>KEY - The Azure Pack role to be installed or initialized.  Valid roles are "Admin API","Tenant API","Tenant Public API","SQL Server Extension","MySQL Extension","Admin Site","Admin Authentication Site","Tenant Site","Tenant Authentication Site".
+        </li>
+        <li>
+            <strong>Action: </strong>KEY - Install or initialize.  Each role must be installed then initialized.
+        </li>
+        <li>
+            <strong>SourcePath: </strong>REQUIRED - UNC path to the root of the source files for installation.
+        </li>
+        <li>
+            <strong>SourceFolder: </strong>Folder within the source path containing the source files for installation.
+        </li>
+        <li>
+            <strong>SetupCredential: </strong>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+            <strong>Passphrase: </strong>Passphrase for the Azure Pack deployment.  If omitted, the password for SetupCredential is used.
+        </li>
+        <li>
+            <strong>SQLServer: </strong>Database server for the Azure Pack databases.
+        </li>
+        <li>
+            <strong>SQLInstance: </strong>Database instance for the Azure Pack databases.
+        </li>
+        <li>
+            <strong>dbUser: </strong>SQL user to be used to create the database if the SetupCredential cannot be used.
+        </li>
+        <li>
+            <strong>EnableCeip: </strong>Enable Customer Experience Improvement Program.
+        </li>
+    </ul>
+    <p><strong>xAzurePackUpdate</strong> resource has following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+        <strong>Role: </strong>KEY - The Azure Pack role to be updated.  Valid roles are "Admin API","Tenant API","Tenant Public API","SQL Server Extension","MySQL Extension","Admin Site","Admin Authentication Site","Tenant Site","Tenant Authentication Site".
+        </li>
+        <li>
+            <strong>SourcePath: </strong>REQUIRED - UNC path to the root of the source files for installation.
+        </li>
+        <li>
+            <strong>SourceFolder: </strong>Folder within the source path containing the source files for installation.
+        </li>
+        <li>
+            <strong>SetupCredential: </strong>REQUIRED - Credential to be used to perform the installation.
+        </li>
+    </ul>
+    <p><strong>xAzurePackAdmin</strong> resource has following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+        <strong>Ensure: </strong>An enumerated value that describes if the principal is an Azure Pack admin.
+        </li>
+        <li>
+        <strong>Principal: </strong>KEY - The Azure Pack admin principal.
+        </li>
+        <li>
+        <strong>AzurePackAdminCredential: </strong>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+            <strong>SQLServer: </strong>REQUIRED - Database server for the Azure Pack databases.
+        </li>
+        <li>
+            <strong>SQLInstance: </strong>Database instance for the Azure Pack databases.
+        </li>
+    </ul>
+    <p><strong>xAzurePackFQDN</strong> resource has following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+        <strong>Namespace: </strong>KEY - Specifies a namespace - "AdminSite", "AuthSite", "TenantSite", or "WindowsAuthSite".
+        </li>
+        <li>
+        <strong>FullyQualifiedDomainName: </strong>REQUIRED - Specifies a Fully Qualified Domain Name (FQDN).
+        </li>
+        <li>
+        <strong>Port: </strong>Specifies a port number.
+        </li>
+        <li>
+        <strong>AzurePackAdminCredential: </strong>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+        <strong>SQLServer: </strong>REQUIRED - Database server for the Azure Pack databases.
+        </li>
+        <li>
+        <strong>SQLInstance: </strong>Database instance for the Azure Pack databases.
+        </li>
+    </ul>
+   
+    <p><strong>xAzurePackDatabaseSetting</strong> resource has following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+        <strong>Namespace: </strong>KEY - Specifies a namespace - "AdminSite" or "TenantSite"
+        </li>
+        <li>
+        <strong>Name: </strong>KEY - Specifies the name of the setting.
+        </li>
+        <li>
+        <strong>Value: </strong>REQUIRED - Specifies the value of the setting.
+        </li>
+        <li>
+        <strong>AzurePackAdminCredential: </strong>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+        <strong>SQLServer: </strong>REQUIRED - Database server for the Azure Pack databases.
+        </li>
+        <li>
+        <strong>SQLInstance: </strong>Database instance for the Azure Pack databases.
+        </li>
+    </ul>
+    <p><strong>xAzurePackIdentityProvider</strong> resource has following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+        <strong>Target: </strong>KEY - Specifies the target site - "Membership" or "Windows".
+        </li>
+        <li>
+        <strong>FullyQualifiedDomainName: </strong>REQUIRED - Specifies a Fully Qualified Domain Name (FQDN).
+        </li>
+        <li>
+        <strong>Port: </strong>Specifies a port number.
+        </li>
+        <li>
+        <strong>AzurePackAdminCredential: </strong>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+        <strong>SQLServer: </strong>REQUIRED - Database server for the Azure Pack databases.
+        </li>
+        <li>
+        <strong>SQLInstance: </strong>Database instance for the Azure Pack databases.
+        </li>
+    </ul>
+    <p><strong>xAzurePackRelyingParty</strong> resource has following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+        <strong>Target: </strong>KEY - Specifies the target site - "Admin" or "Tenant".
+        </li>
+        <li>
+        <strong>FullyQualifiedDomainName: </strong>REQUIRED - Specifies a Fully Qualified Domain Name (FQDN).
+        </li>
+        <li>
+        <strong>Port: </strong>Specifies a port number.
+        </li>
+        <li>
+        <strong>AzurePackAdminCredential: </strong>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+        <strong>SQLServer: </strong>REQUIRED - Database server for the Azure Pack databases.
+        </li>
+        <li>
+        <strong>SQLInstance: </strong>Database instance for the Azure Pack databases.
+        </li>
+    </ul>
+    <p><strong>xAzurePackResourceProvider</strong> resource has following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+        <strong>AuthenticationSite: </strong>REQUIRED - URL of the authentication site.
+        </li>
+        <li>
+        <strong>AdminUri: </strong>REQUIRED - Specifies the URI of the Windows Azure Pack administrator API.
+        </li>
+        <li>
+            <strong>Name: </strong>KEY - Specifies the name of a resource provider.
+        </li>
+        <li>
+            <strong>AzurePackAdminCredential: </strong>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+            <strong>DisplayName: </strong>Specifies the display name of a resource provider.
+        </li>
+        <li>
+            <strong>Enabled: </strong>Enables the resource provider.
+        </li>
+        <li>
+            <strong>PassthroughEnabled: </strong>Indicates whether the resource provider supports API pass-through.
+        </li>
+        <li>
+            <strong>AllowAnonymousAccess: </strong>Specifies the URI of the Windows Azure Pack administrator API.
+        </li>
+        <li>
+            <strong>AllowMultipleInstances: </strong>Indicates that the cmdlet allows multiple instances of the resource provider.
+        </li>
+        <li>
+            <strong>AdminForwardingAddress: </strong>Specifies an administrative forwarding address for a resource provider.
+        </li>
+        <li>
+            <strong>AdminAuthenticationMode: </strong>Specifies the administrative authentication mode for a resource provider - "None", "Basic", or "Windows".
+        </li>
+        <li>
+            <strong>AdminAuthenticationUser: </strong>Specifies, as a PSCredential object, an administrative user name and password to connect to a resource provider.
+        </li>
+        <li>
+            <strong>AdminAuthenticationUsername: </strong>Output for the administrative user name.
+        </li>
+        <li>
+            <strong>TenantForwardingAddress: </strong>Specifies the tenant forwarding address of a resource provider.
+        </li>
+        <li>
+            <strong>TenantAuthenticationMode: </strong>Specifies the tenant authentication mode for a resource provider - "None", "Basic", or "Windows".
+        </li>
+        <li>
+            <strong>TenantAuthenticationUser: </strong>Specifies, as a PSCredential object, a tenant user name and password to connect to a resource provider.
+        </li>
+        <li>
+            <strong>TenantAuthenticationUsername: </strong>Output for the tenant user name.
+        </li>
+        <li>
+            <strong>TenantSourceUriTemplate: </strong>Specifies the tenant source URI template of a resource provider.
+        </li>
+        <li>
+            <strong>TenantTargetUriTemplate: </strong>Specifies the tenant target URI template of a resource provider.
+        </li>
+        <li>
+            <strong>UsageForwardingAddress: </strong>Specifies the tenant forwarding address of a resource provider.
+        </li>
+        <li>
+            <strong>UsageAuthenticationMode: </strong>Specifies the usage authentication mode for a resource provider - "None", "Basic", or "Windows".
+        </li>
+        <li>
+            <strong>UsageAuthenticationUser: </strong>Specifies, as a PSCredential object, a usage user name and password to connect to a resource provider.
+        </li>
+        <li>
+            <strong>UsageAuthenticationUsername: </strong>Output for the usage user name.
+        </li>
+        <li>
+            <strong>HealthCheckForwardingAddress: </strong>Specifies the health check forwarding address for a resource provider.
+        </li>
+        <li>
+            <strong>HealthCheckAuthenticationMode: </strong>Specifies the health check authentication mode for a resource provider - "None", "Basic", or "Windows".
+        </li>
+        <li>
+            <strong>HealthCheckAuthenticationUser: </strong>Specifies, as a PSCredential object, a health check user name and password to connect to a resource provider.
+        </li>
+        <li>
+            <strong>HealthCheckAuthenticationUsername: </strong>Output for the health check user name.
+        </li>
+        <li>
+            <strong>NotificationForwardingAddress: </strong>Specifies the notification forwarding address of a resource provider.
+        </li>
+        <li>
+            <strong>NotificationAuthenticationMode: </strong>Specifies the notification authentication mode for a resource provider - "None", "Basic", or "Windows".
+        </li>
+        <li>
+            <strong>NotificationAuthenticationUser: </strong>Specifies, as a PSCredential object, a notification user name and password to connect to a resource provider.
+        </li>
+        <li>
+            <strong>NotificationAuthenticationUsername: </strong>Output for the notification user name.
+        </li>
+        <li>
+            <strong>InstanceId: </strong>Specifies an ID for an instance of a resource provider.
+        </li>
+        <li>
+            <strong>InstanceDisplayName: </strong>Specifies a display name for an instance of a resource provider.
+        </li>
+        <li>
+            <strong>MaxQuotaUpdateBatchSize: </strong>Specifies the number of subscriptions that can be updated in a single request.
+        </li>
+        <li>
+            <strong>SubscriptionStatusPollingInterval: </strong>Specifies the time interval at which the management service polls the resource provider for subscription status updates.
+        </li>
+        <li>
+            <strong>Type: </strong>Specifies the type of the resource provider - "Standard", "UsageProvider", or "CloudServiceProvider".
+        </li>
+    </ul>
+
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Renaming Requirements</h1>
+<p>When making changes to these resources, we suggest the following practice:</p>
+<ol style="list-style-type:decimal; direction:ltr">
+<li>Update the following names by replacing MSFT with your company/community name and replacing the
+<strong>&quot;x&quot;</strong> with <strong>&quot;c&quot;</strong> (short for &quot;Community&quot;) or another prefix of your choice:
+<ul>
+<li><strong>Module name (ex: xAzurePack</strong> becomes <strong>cAzurePack</strong>) </li><li><strong>Resource folder (ex: MSFT_xAzureQuickVM</strong> becomes <strong>Contoso_cAzureQuickVM</strong>)
+</li><li><strong>Resource file name (ex: MSFT_xAzureQuickVM</strong> becomes <strong>Contoso_cAzureQuickVM</strong>)
+</li><li><strong>Resource Friendly Name (ex: xAzureQuickVM</strong> becomes <strong>cAzureQuickVM</strong>)
+</li><li><strong>MOF class name (ex: MSFT_xAzureQuickVM</strong> becomes <strong>Contoso_cAzureQuickVM</strong>)
+</li><li><strong>Filename for the &lt;resource&gt;.schema.mof (ex: MSFT_xAzureQuickVM</strong>.schema.mof becomes
+<strong>Contoso_cAzureQuickVM</strong>.schema.mof) </li></ul>
+</li><li>Update module and metadata information in the module manifest </li><li>Update any configuration that use these resources </li></ol>
+<p><em>We reserve resource and module names without prefixes (&quot;x&quot; or &quot;c&quot;) for future use (e.g. &quot;MSFT_**RealResourceName**&quot; or &quot;**RealResourceName**&quot;). If the next version of Windows Server ships with a &quot;**RealResourceName**&quot; resource, we don't want to break
+ any configurations that use any community modifications. Please keep a prefix such as &quot;c&quot; on all community modifications.</em></p>
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Versions</h1>
+
+<p>1.0.0.0</p>
+Initial release with the following resources
+<ul style="list-style-type:disc; direction:ltr">
+    <li>
+    <strong>xAzurePackSetup</strong>
+    </li>
+    <li>
+    <strong>xAzureQuickVM</strong>
+    </li>
+    <li><strong>xAzurePackAdmin</strong></li>
+    <li><strong>xAzurePackFQDN</strong></li>
+    <li><strong>xAzurePackDatabaseSetting</strong></li>
+    <li><strong>xAzurePackIdentityProvider</strong></li>
+    <li><strong>xAzurePackRelyingParty</strong></li>
+    <li><strong>xAzurePackResourceProvider</strong></li>
+</ul>
+                       <p>1.1.4.0</p>
+                       Update increased timeout for setup process to start to 60 seconds.
+                       <p> </p>
+                       <p> </p>
+
+<h1 style="margin-bottom:0pt; font-family:Calibri Light; color:#2e74b5; font-size:large">
+Examples</h1>
+<p>An example configuration is included in the Examples folder within the module, which also uses the xSQLServer module and xCredSSP modules</p>
+<p>AzurePack-SeperateSQL.ps1 installs all Azure Pack admin and tenant servers and SQL on a separate server.</p>
+<p></p>
+<p></p>
+</span></div>

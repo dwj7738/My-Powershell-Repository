@@ -1,0 +1,5 @@
+HotFixreport.ps1-You will get two txt output. One is hotfix report & another one is unreachable Server list
+HotFixreport-adv.ps1- Same as above but it is written with an advance function
+
+Feedback needed @mailto<bshwjt@gmail.com>
+

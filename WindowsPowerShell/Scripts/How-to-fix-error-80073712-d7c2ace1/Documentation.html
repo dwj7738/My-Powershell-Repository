@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>How to fix error 80073712 when installing Windows 8.1 update KB2919355</title>        
+        <meta name="description" content="How to fix error 80073712 when installing Windows 8.1 update KB2919355" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p class="MsoNormal"><span><span><span><strong><span lang="EN-US" style="font-size:14.0pt; line-height:115%; font-family:&quot;Cambria&quot;,&quot;serif&quot;">How to
+</span></strong></span></span></span><span><span><span><span><span><strong><span lang="EN-US" style="font-size:14.0pt; line-height:115%; font-family:&quot;Cambria&quot;,&quot;serif&quot;">fix error 80073712 when installing Windows 8.1 update KB2919355</span></strong></span></span></span></span></span><span><span><span><span><strong><span lang="EN-US" style="font-size:14.0pt; line-height:115%; font-family:&quot;Cambria&quot;,&quot;serif&quot;">
+</span></strong></span></span></span></span><span><span><strong><span lang="EN-US" style="font-size:14.0pt; line-height:115%; font-family:&quot;Cambria&quot;,&quot;serif&quot;">(PowerShell)
+</span></strong></span></span></p>
+<p class="MsoNormal"><span><span><strong><span lang="EN-US" style="font-size:13.0pt; line-height:115%; font-family:&quot;Cambria&quot;,&quot;serif&quot;">Introduction</span></strong></span></span><span><span><strong><span lang="EN-US" style="font-size:10.0pt; line-height:115%"><br>
+</span></strong></span></span><span><span><span class="GramE"><span lang="EN-US">This</span></span></span></span><span><span><span lang="EN-US"> script shows how to fix error 80073712 when installing Windows 8.1 update KB2919355.</span></span></span><span><span><span lang="EN-US" style="font-size:10.0pt; line-height:115%">
+</span></span></span></p>
+<p class="MsoNormal"><span><span><strong><span lang="EN-US" style="font-size:13.0pt; line-height:115%; font-family:&quot;Cambria&quot;,&quot;serif&quot;">Scenarios</span><span lang="EN-US"><br>
+</span></strong></span></span><span><span><span lang="EN-US" style="color:black">After Windows 8.1 update released, some customer come across an issue that they will get an error when they install KB2919355. This script is trying to fix that issue. This script
+ is trying to fix that issue. </span></span></span></p>
+<p class="MsoNormal" style="margin-top:10.0pt; margin-right:0cm; margin-bottom:.0001pt; margin-left:0cm">
+<span><span><strong><span lang="EN-US" style="font-size:13.0pt; line-height:115%; font-family:&quot;Cambria&quot;,&quot;serif&quot;">Script</span></strong></span></span><span><span><span lang="EN-US" style="font-size:13.0pt; line-height:115%; font-family:&quot;Cambria&quot;,&quot;serif&quot;">
+</span></span></span></p>
+<p class="MsoNormal" style="margin-top:10.0pt; margin-right:0cm; margin-bottom:.0001pt; margin-left:15.75pt">
+<span><span><strong><span lang="EN-US">Step 1:</span></strong></span></span><span><span><span lang="EN-US"> Right Click the script and select Run with PowerShell.
+</span></span></span></p>
+<p class="MsoNormal" style="margin-top:10.0pt; margin-right:0cm; margin-bottom:.0001pt; margin-left:0cm; text-indent:15.75pt">
+<span><span><span lang="EN-US"><img src="E:\Documents\WindowsPowerShell\Scripts\How-to-fix-error-80073712-d7c2ace1\Documentation_files\tmp6B16Resources.png" alt="" width="378" height="145" align="middle">
+</span></span></span><span><span><span lang="EN-US">&nbsp;</span></span></span></p>
+<p class="MsoNormal" style="margin-top:10.0pt; margin-right:0cm; margin-bottom:.0001pt; margin-left:0cm; text-indent:15.75pt">
+<span><span><strong><span lang="EN-US">Step 2: </span></strong></span></span><span><span><span lang="EN-US">Then there will be a dialog. After it finishes, you can run Windows Update and install KB8919355 again.
+</span></span></span></p>
+<p class="MsoNormal" style="margin-top:10.0pt; margin-right:0cm; margin-bottom:.0001pt; margin-left:0cm; text-indent:15.75pt">
+<span><span><span lang="EN-US"><img src="E:\Documents\WindowsPowerShell\Scripts\How-to-fix-error-80073712-d7c2ace1\Documentation_files\tmp6B17Resources.png" alt="" width="837" height="164" align="middle">
+</span></span></span><span><span></span></span></p>
+<p class="MsoNormal" style="margin-top:10.0pt; margin-right:0cm; margin-bottom:.0001pt; margin-left:0cm">
+<span><span><span lang="EN-US">Here are some code snippets for your references<br>
+</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">If($version.Caption -match &quot;Microsoft Windows 8&quot;)
+{
+    #64Bit
+    If($version.OSArchitecture -eq &quot;64-bit&quot;)
+    {
+        if($item)
+        {
+            Dism /online /remove-package /packagename:Package_for_KB2919355~31bf3856ad364e35~amd64~~6.3.1.14
+        }
+    }
+    #32Bit
+    ElseIf($version.OSArchitecture -eq &quot;64-bit&quot;)
+    {
+        if($item)
+        {
+            Dism /online /remove-package /packagename:Package_for_KB2919355~31bf3856ad364e35~x86~~6.3.1.14
+        }
+    }
+ 
+    Dism /Online /Cleanup-image /Restorehealth
+ 
+    Dism /online /cleanup-image /startcomponentcleanup
+ 
+    Write-Host &quot;Operation Done. Run Windows Update again and try to re-install KB2919355. If this script still fail to resolve your error, please contact Microsoft Support.&quot;
+}</pre>
+<div class="preview">
+<pre class="js">If($version.Caption&nbsp;-match&nbsp;<span class="js__string">&quot;Microsoft&nbsp;Windows&nbsp;8&quot;</span>)&nbsp;
+<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;#64Bit&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;If($version.OSArchitecture&nbsp;-eq&nbsp;<span class="js__string">&quot;64-bit&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__statement">if</span>($item)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dism&nbsp;/online&nbsp;/remove-package&nbsp;/packagename:Package_for_KB2919355~31bf3856ad364e35~amd64~~<span class="js__num">6.3</span><span class="js__num">.1</span><span class="js__num">.14</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;#32Bit&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;ElseIf($version.OSArchitecture&nbsp;-eq&nbsp;<span class="js__string">&quot;64-bit&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__statement">if</span>($item)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">{</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dism&nbsp;/online&nbsp;/remove-package&nbsp;/packagename:Package_for_KB2919355~31bf3856ad364e35~x86~~<span class="js__num">6.3</span><span class="js__num">.1</span><span class="js__num">.14</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="js__brace">}</span>&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Dism&nbsp;/Online&nbsp;/Cleanup-image&nbsp;/Restorehealth&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Dism&nbsp;/online&nbsp;/cleanup-image&nbsp;/startcomponentcleanup&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write-Host&nbsp;<span class="js__string">&quot;Operation&nbsp;Done.&nbsp;Run&nbsp;Windows&nbsp;Update&nbsp;again&nbsp;and&nbsp;try&nbsp;to&nbsp;re-install&nbsp;KB2919355.&nbsp;If&nbsp;this&nbsp;script&nbsp;still&nbsp;fail&nbsp;to&nbsp;resolve&nbsp;your&nbsp;error,&nbsp;please&nbsp;contact&nbsp;Microsoft&nbsp;Support.&quot;</span>&nbsp;
+<span class="js__brace">}</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode"><strong><span lang="EN-US" style="font-size:13.0pt; line-height:115%; font-family:&quot;Cambria&quot;,&quot;serif&quot;; color:black">Prerequisite</span></strong></div>
+</span></span></span>
+<p></p>
+<p class="MsoNormal" style="margin-bottom:.0001pt; line-height:normal"><span><span><span lang="EN-US">Windows 8.1
+</span></span></span></p>
+<p class="MsoNormal" style="margin-bottom:.0001pt; line-height:normal"><strong></strong></p>
+<p style="line-height:0.6pt; color:white">Microsoft All-In-One Script Framework is an automation script sample library for IT Professionals. The key value that All-In-One Script Framework is trying to deliver is Scenario-Focused Script Samples driven by IT
+ Pros' real-world pains and needs. The team is monitoring all TechNet forums, IT Pros' support calls to Microsoft, and script requests submitted to TechNet Script Repository. We collect frequently asked IT scenarios, and create script samples to automate the
+ tasks and save some time for IT Pros. The team of All-In-One Script Framework sincerely hope that these customer-driven automation script samples can help our IT community in this script-centric move.</p>
+
+        </div>
+    </body>
+</html>

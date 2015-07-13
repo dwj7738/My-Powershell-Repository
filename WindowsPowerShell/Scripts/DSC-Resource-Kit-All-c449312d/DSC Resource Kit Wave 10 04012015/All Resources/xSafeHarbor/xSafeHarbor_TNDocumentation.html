@@ -1,0 +1,261 @@
+<body>
+    <div id="longDesc">
+
+        <ul></ul>
+        <h1><span style="font-size:18pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">Introduction</span></h1>
+        <p>
+            <span style="font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;">
+                The<strong>
+                    <span style="font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;">
+                        <span class="SpellE">xSafeHarbor</span>
+                    </span>
+                </strong> module is a part of the Windows PowerShell Desired State Configuration (DSC) Resource Kit, which is a collection of DSC Resources produced by the PowerShell Team. This module contains the configurations
+                that allows you to setup the <span class="SpellE"><strong>SafeHarbor</strong></span><strong>
+                </strong>example.
+            </span>
+        </p>
+        <p>
+            <strong>
+                <span style="font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;">
+                    All of the resources and configurations in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program or service. The &quot;&quot;x&quot; in
+                    <span class="SpellE">xSafeHarbor</span> stands for experimental
+                </span>
+            </strong><span style="font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;">
+                , which means that these configurations will be
+                <strong><span style="font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;">fix forward</span></strong> and monitored by the module owner(s).
+            </span>
+        </p>
+        <p><span style="font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;">Please leave comments, feature requests, and bug reports in the Q &amp; A tab for this module.</span></p>
+        <p>
+            <span style="font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;">
+                If you would like to modify <span class="SpellE">
+                    <strong><span style="font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;">xSafeHarbor</span></strong>
+                </span> module, feel free. When modifying, please update the module name (instructions below). As specified in the license, you may copy or modify this resource as long as they
+                are used on the Windows Platform.
+            </span>
+        </p>
+        <p>
+            <span style="font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;">
+                For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+                <a href="http://blogs.msdn.com/b/powershell/">PowerShell Blog</a> (<a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx">this</a> is a good starting point). There
+                are also great community resources, such as <a href="http://powershell.org/wp/tag/dsc/">
+                    <span class="GramE">PowerShell.org </span>
+                </a>, or <a href="http://www.powershellmagazine.com/tag/dsc/">
+                    PowerShell Magazine
+                </a>. For more information on the DSC Resource Kit, check out
+                <a href="http://go.microsoft.com/fwlink/?LinkID=389546">this blog post</a>.
+            </span>
+        </p>
+        <h1><span style="font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5; font-size:18pt">Installation</span></h1>
+        <p>To install <span class="SpellE"><strong>xSafeHarbor</strong></span> module</p>
+        <ul type="disc">
+            <li class="MsoNormal">
+                <span>
+                    Unzip the content under $<span class="SpellE">env:ProgramFiles</span>\<span class="SpellE">WindowsPowerShell</span>\Modules folder
+                </span>
+            </li>
+        </ul>
+        <p>To confirm installation:</p>
+        <ul>
+            <li>
+                <span>Check the content of the <span class="SpellE"><strong>xSafeHarbor</strong></span> module</span>
+            </li>
+        </ul>
+        <p style="padding-left:60px">
+            Assert-SafeHarborScenario.ps1<br>
+            SafeHarborHelper.psm1<br>
+            xSafeHarbor.psd1
+        </p>
+        <p style="padding-left:60px">
+            Configuration<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SafeHarborConfiguration.psm1<br>
+            <br>
+            ConfigurationData<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SafeHarborConfigurationData.ps1
+        </p>
+        <p style="padding-left:60px">
+            <span>
+                &nbsp;&nbsp;&nbsp; VMData<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ConfigureFSVM.ps1<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ConfigureVM.ps1<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DSCDemo.pfx<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DSCTestRootAuthority.pfx<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FileServerSetup.cmd<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ImportCerts.ps1<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; metaconfigFS.mof<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permission.csv<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ProxyFunctions.psm1<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PullServer.pfx<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SHVmSetup.cmd<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Startup.ps1<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unattend.xml<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unattendFS.xml
+            </span>
+        </p>
+        <h1><span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">Requirements</span></h1>
+        <p>
+            This module requires the Windows Management Framework (WMF) 5.0 Experimental Release July 2014, which contains functionality that has been updated from WMF 4.0.
+            <span class="SpellE">TheWMF</span> 5.0 Experimental Release July 2014 is available for installation on Windows 8.1 and Windows Server 2012 R2. More information about the content of the WMF 5.0 Experimental Release July 2014 is available in its dedicated release
+            notes, included in the download links below.<br>
+            <br>
+            <strong>Notice: </strong>WMF 5.0 Experimental Release July 2014 is delivered as an MSU installation package via the links below. Installing this will update the PowerShell, WMI, and
+            <span class="SpellE">WinRM</span> components of your Windows installation. <span class="GramE">
+                change
+            </span> the state of your machine, as opposed to the scripts in Resource Kit. If you choose &ldquo;Open&rdquo; from either the x64 or x86 direct download links, the package will be downloaded, and the install will update your system with these new components.<br>
+            <br>
+            <strong>Disclaimer:</strong> There is some scenarios in WMF 5.0 Experimental July 2014 with incomplete or missing functionality. This is also included in the dedicated release notes, which are included in the download links below.
+            <br>
+            <br>
+            Direct Download Links:
+        </p>
+        <ul type="disc">
+            <li class="MsoNormal">
+                <span>
+                    <a href="http://download.microsoft.com/download/E/D/B/EDB86AD9-4D26-4C33-A8B2-82BE161682E2/Windows%20Management%20Framework%205.0%20Experimental%20Release%20July%202014%20Release%20Notes.docx">Release Notes</a>
+                </span>
+            </li>
+            <li class="MsoNormal">
+                <span>
+                    <a href="http://download.microsoft.com/download/E/D/B/EDB86AD9-4D26-4C33-A8B2-82BE161682E2/WindowsBlue-KB2969050-x64.msu">x64 MSU</a>
+                </span>
+            </li>
+            <li class="MsoNormal">
+                <span>
+                    <a href="http://download.microsoft.com/download/E/D/B/EDB86AD9-4D26-4C33-A8B2-82BE161682E2/WindowsBlue-KB2969050-x86.msu">x86 MSU</a>
+                </span>
+            </li>
+        </ul>
+        <p><span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">Description</span></p>
+        <p>
+            The <span class="SpellE"><strong>xSafeHarbor</strong></span><strong> </strong>
+            module contains the <strong>Assert-SafeHarborScenario.ps1</strong> script file. This script allows you to exercise the
+            <span class="SpellE"><strong>SafeHarbor</strong></span> example by setting up a secure environment to run a particular application or service inside of an assume-breached network. This substantially reduces the attack surface of the application or service
+            by configuring a highly customized, application specific environment, by limiting user access and by having &quot;Just Enough&quot; administrative control with full auditing.
+        </p>
+        <h1><span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">Details</span></h1>
+        <p class="MsoNormal">
+            <strong>
+                Assert-<span class="SpellE">SafeHarborScenario</span>
+            </strong><strong><span style="font-weight:normal">has following parameters:</span></strong>
+        </p>
+        <ul>
+            <li>
+                <span><strong>BaseVhdFilePath<span>(Mandatory)</span></strong>: Path to Vhd file that would be used as base image for all the VMs</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span><strong>Credentials</strong>: Collection of credentials for following user names. If not specified, script will prompt</span>
+            </li>
+        </ul>
+        <blockquote>
+            <ul>
+                <li><span>DHCPServer\Administrator</span> </li>
+                <li><span>Corporate\Administrator</span> </li>
+                <li><span>Corporate\User1</span> </li>
+                <li><span>Corporate\Papa</span> </li>
+                <li><span>Corporate\DeptHead</span> </li>
+                <li><span>Safeharbor\Administrator</span> </li>
+                <li><span>Safeharbor\Mata</span> </li>
+            </ul>
+        </blockquote>
+        <ul>
+            <li>
+                <strong><span class="SpellE"><span>VhdDestinationPath</span></span></strong><span>
+                    <strong>
+                        :
+                    </strong>Path where differencing VHDs will be stored
+                </span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span><strong>Validate</strong>: If specified, will run the validation steps at the end of example</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong><span class="SpellE"><span>PauseBetweenStages</span></span></strong><span>: If specified, pauses the script execution between various stages of example setup</span>
+            </li>
+        </ul>
+        <p>
+            To learn more details of this example, please see <a href="http://blogs.msdn.com/b/powershell/archive/2014/07/21/creating-a-secure-environment-using-powershell-desired-state-configuration.aspx">
+                this blog
+            </a>.
+        </p>
+        <h1><span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">Renaming Requirements</span></h1>
+        <p>When making changes to these resources, we suggest the following practice:</p>
+        <ol type="1">
+            <li class="MsoNormal">
+                <span>
+                    Update the following names by replacing MSFT with your company/community name and replacing the
+                    <strong>&quot;x&quot;</strong> with <strong>&quot;c&quot;</strong> (short for &quot;Community&quot;) or another prefix of your choice:
+                </span>
+                <ul type="circle">
+                    <li class="MsoNormal">
+                        <strong><span>Module name (ex: <span class="SpellE">xSafeHarbor</span></span></strong><span>
+                            becomes
+                            <span class="SpellE"><strong>cSafeHarbor</strong></span>)
+                        </span>
+                    </li>
+                </ul>
+            </li>
+            <li class="MsoNormal">
+                <span>
+                    Update module and metadata information in the module manifest
+                </span>
+            </li>
+            <li class="MsoNormal">
+                <span>Update any configuration that use these resources </span>
+            </li>
+        </ol>
+        <p>
+            <em>
+                We reserve resource and module names without prefixes (&quot;x&quot; or &quot;c&quot;) for future use (e.g. &quot;<span class="SpellE">MSFT_WordPressSite</span>&quot; or &quot;<span class="SpellE">WordPressSite</span>&quot;). If the next version of Windows Server ships with a &quot;<span class="SpellE">WordPressSite</span>&quot;
+                resource, we don't want to break any configurations that use any community modifications. Please keep a prefix such as &quot;c&quot; on all community modifications.
+            </em>
+        </p>
+        <h1><span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">Versions</span></h1>
+        <p>1.0.0.1</p>
+        <ul type="disc">
+            <li class="MsoNormal">
+                <span>
+                    Minor bug fix: Replaced hardcoded hotfix ID for WMF with test for that version or higher.
+                </span>
+            </li>
+        </ul>
+        <p>1.0.0.0</p>
+        <ul type="disc">
+            <li class="MsoNormal">
+                <span>
+                    Initial release with the <span class="SpellE"><strong>SafeHarbor</strong></span> example
+                </span>
+            </li>
+        </ul>
+        <h1 style="margin-bottom:.0001pt">
+            <span style="font-size:18.0pt; font-family:&quot;Calibri Light&quot;,&quot;sans-serif&quot;; color:#2e74b5">
+                Example: Setup
+                <span class="SpellE">SafeHarbor</span> example on a Hyper-V host
+            </span>
+        </h1>
+        <p class="MsoNormal">&nbsp;</p>
+        <div class="scriptcode">
+            <div class="pluginEditHolder" plugincommand="mceScriptCode">
+                <div class="title"><span>PowerShell</span></div>
+                <div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+                <span class="hidden">powershell</span>
+<pre class="hidden">$baseVhdFilePath = &lsquo;C:\BaseVhd\serverdatacenter_en-us.vhd
+.\Assert-SafeHarborScenario.ps1 -BaseVhdFilePath $baseVhdFilePath -Validate &ndash;PauseBetweenStages 
+</pre>
+                <div class="preview">
+<pre class="powershell"><span class="powerShell__variable">$baseVhdFilePath</span>&nbsp;=&nbsp;&lsquo;C:\BaseVhd\serverdatacenter_en<span class="powerShell__operator">-</span>us.vhd&nbsp;
+&nbsp;
+.\Assert<span class="powerShell__operator">-</span>SafeHarborScenario.ps1&nbsp;<span class="powerShell__operator">-</span>BaseVhdFilePath&nbsp;<span class="powerShell__variable">$baseVhdFilePath</span>&nbsp;<span class="powerShell__operator">-</span>Validate&nbsp;&ndash;PauseBetweenStages&nbsp;&nbsp;
+</pre>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

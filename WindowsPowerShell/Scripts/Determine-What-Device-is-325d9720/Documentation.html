@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Determine What Device is Locking Out an Active Directory User Account</title>        
+        <meta name="description" content="This “Get-LockedOutUser.ps1“ script allows you to specify the following via parameter input to narrow down the results:
+Specific userid, defaulting to all locked out userid’s Start time to begin searching records for, defaulting to the last three days Domain name to search for l" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>This &ldquo;Get-LockedOutUser.ps1&ldquo; script allows you to specify the following via parameter input to narrow down the results:</p>
+<ul>
+<li>Specific userid, defaulting to all locked out userid&rsquo;s </li><li>Start time to begin searching records for, defaulting to the last three days </li><li>Domain name to search for lockouts in, defaulting to the user&rsquo;s domain who is running the script<br>
+<br>
+</li></ul>
+<p>Note: This script uses the &quot;Using&quot; scope modifier which is a feature that was introduced in PowerShell version 3 so that is the minimum requirement. Note that the error: &quot;A null value was encountered in the StartTime hash table key. Null values are not permitted.&quot;
+ will be generated if you attempt to run this script from a machine that is running PowerShell version 2.</p>
+<p>For more information about this script, visit my blog article about it: &quot;<a href="http://mikefrobbins.com/2013/11/29/powershell-script-to-determine-what-device-is-locking-out-an-active-directory-user-account/" target="_blank">PowerShell Script to Determine
+ What Device is Locking Out an Active Directory User Account</a>&quot;.</p>
+<p><a id="108394" href="/scriptcenter/site/view/file/108394/1/Get-LockedOutUser.ps1">Get-LockedOutUser.ps1</a></p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&lt;#
+.SYNOPSIS
+    Get-LockedOutUser.ps1 returns a list of users who were locked out in Active Directory.
+ 
+.DESCRIPTION
+    Get-LockedOutUser.ps1 is an advanced script that returns a list of users who were locked out in Active Directory
+by querying the event logs on the PDC emulation in the domain.
+ 
+.PARAMETER UserName
+    The userid of the specific user you are looking for lockouts for. The default is all locked out users.
+ 
+.PARAMETER StartTime
+    The datetime to start searching from. The default is all datetimes that exist in the event logs.
+ 
+.EXAMPLE
+    Get-LockedOutUser.ps1
+ 
+.EXAMPLE
+    Get-LockedOutUser.ps1 -UserName 'mike'
+ 
+.EXAMPLE
+    Get-LockedOutUser.ps1 -StartTime (Get-Date).AddDays(-1)
+ 
+.EXAMPLE
+    Get-LockedOutUser.ps1 -UserName 'miker' -StartTime (Get-Date).AddDays(-1)
+#&gt;
+
+[CmdletBinding()]
+param (
+    [ValidateNotNullOrEmpty()]
+    [string]$DomainName = $env:USERDOMAIN,
+
+    [ValidateNotNullOrEmpty()]
+    [string]$UserName = &quot;*&quot;,
+
+    [ValidateNotNullOrEmpty()]
+    [datetime]$StartTime = (Get-Date).AddDays(-3)
+)
+
+Invoke-Command -ComputerName (
+
+    [System.DirectoryServices.ActiveDirectory.Domain]::GetDomain((
+        New-Object System.DirectoryServices.ActiveDirectory.DirectoryContext('Domain', $DomainName))
+    ).PdcRoleOwner.name
+
+) {
+
+Get-WinEvent -FilterHashtable @{LogName='Security';Id=4740;StartTime=$Using:StartTime} |
+    Where-Object {$_.Properties[0].Value -like &quot;$Using:UserName&quot;} |
+    Select-Object -Property TimeCreated, 
+        @{Label='UserName';Expression={$_.Properties[0].Value}},
+        @{Label='ClientName';Expression={$_.Properties[1].Value}}
+
+
+} -Credential (Get-Credential) |
+Select-Object -Property TimeCreated, 'UserName', 'ClientName'</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__mlcom">&lt;#&nbsp;
+.SYNOPSIS&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Get-LockedOutUser.ps1&nbsp;returns&nbsp;a&nbsp;list&nbsp;of&nbsp;users&nbsp;who&nbsp;were&nbsp;locked&nbsp;out&nbsp;in&nbsp;Active&nbsp;Directory.&nbsp;
+&nbsp;&nbsp;
+.DESCRIPTION&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Get-LockedOutUser.ps1&nbsp;is&nbsp;an&nbsp;advanced&nbsp;script&nbsp;that&nbsp;returns&nbsp;a&nbsp;list&nbsp;of&nbsp;users&nbsp;who&nbsp;were&nbsp;locked&nbsp;out&nbsp;in&nbsp;Active&nbsp;Directory&nbsp;
+by&nbsp;querying&nbsp;the&nbsp;event&nbsp;logs&nbsp;on&nbsp;the&nbsp;PDC&nbsp;emulation&nbsp;in&nbsp;the&nbsp;domain.&nbsp;
+&nbsp;&nbsp;
+.PARAMETER&nbsp;UserName&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;userid&nbsp;of&nbsp;the&nbsp;specific&nbsp;user&nbsp;you&nbsp;are&nbsp;looking&nbsp;for&nbsp;lockouts&nbsp;for.&nbsp;The&nbsp;default&nbsp;is&nbsp;all&nbsp;locked&nbsp;out&nbsp;users.&nbsp;
+&nbsp;&nbsp;
+.PARAMETER&nbsp;StartTime&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;datetime&nbsp;to&nbsp;start&nbsp;searching&nbsp;from.&nbsp;The&nbsp;default&nbsp;is&nbsp;all&nbsp;datetimes&nbsp;that&nbsp;exist&nbsp;in&nbsp;the&nbsp;event&nbsp;logs.&nbsp;
+&nbsp;&nbsp;
+.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Get-LockedOutUser.ps1&nbsp;
+&nbsp;&nbsp;
+.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Get-LockedOutUser.ps1&nbsp;-UserName&nbsp;'mike'&nbsp;
+&nbsp;&nbsp;
+.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Get-LockedOutUser.ps1&nbsp;-StartTime&nbsp;(Get-Date).AddDays(-1)&nbsp;
+&nbsp;&nbsp;
+.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Get-LockedOutUser.ps1&nbsp;-UserName&nbsp;'miker'&nbsp;-StartTime&nbsp;(Get-Date).AddDays(-1)&nbsp;
+#&gt;</span>&nbsp;
+&nbsp;
+[CmdletBinding()]&nbsp;
+<span class="powerShell__keyword">param</span>&nbsp;(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[ValidateNotNullOrEmpty()]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$DomainName</span>&nbsp;=&nbsp;<span class="powerShell__variable">$env</span>:USERDOMAIN,&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[ValidateNotNullOrEmpty()]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$UserName</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;*&quot;</span>,&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[ValidateNotNullOrEmpty()]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[datetime]<span class="powerShell__variable">$StartTime</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-Date</span>).AddDays(<span class="powerShell__operator">-</span>3)&nbsp;
+)&nbsp;
+&nbsp;
+Invoke<span class="powerShell__operator">-</span>Command&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;(&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[System.DirectoryServices.ActiveDirectory.Domain]::GetDomain((&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;System.DirectoryServices.ActiveDirectory.DirectoryContext(<span class="powerShell__string">'Domain'</span>,&nbsp;<span class="powerShell__variable">$DomainName</span>))&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;).PdcRoleOwner.name&nbsp;
+&nbsp;
+)&nbsp;{&nbsp;
+&nbsp;
+Get<span class="powerShell__operator">-</span>WinEvent&nbsp;<span class="powerShell__operator">-</span>FilterHashtable&nbsp;@{LogName=<span class="powerShell__string">'Security'</span>;Id=4740;StartTime=<span class="powerShell__variable">$Using</span>:StartTime}&nbsp;<span class="powerShell__operator">|</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Where<span class="powerShell__operator">-</span>Object&nbsp;{<span class="powerShell__variable">$_</span>.Properties[0].Value&nbsp;<span class="powerShell__operator">-</span>like&nbsp;<span class="powerShell__string">&quot;$Using:UserName&quot;</span>}&nbsp;<span class="powerShell__operator">|</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Select-Object</span>&nbsp;<span class="powerShell__operator">-</span>Property&nbsp;TimeCreated,&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@{Label=<span class="powerShell__string">'UserName'</span>;Expression={<span class="powerShell__variable">$_</span>.Properties[0].Value}},&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@{Label=<span class="powerShell__string">'ClientName'</span>;Expression={<span class="powerShell__variable">$_</span>.Properties[1].Value}}&nbsp;
+&nbsp;
+&nbsp;
+}&nbsp;<span class="powerShell__operator">-</span>Credential&nbsp;(<span class="powerShell__cmdlets">Get-Credential</span>)&nbsp;<span class="powerShell__operator">|</span>&nbsp;
+<span class="powerShell__cmdlets">Select-Object</span>&nbsp;<span class="powerShell__operator">-</span>Property&nbsp;TimeCreated,&nbsp;<span class="powerShell__string">'UserName'</span>,&nbsp;<span class="powerShell__string">'ClientName'</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+
+        </div>
+    </body>
+</html>

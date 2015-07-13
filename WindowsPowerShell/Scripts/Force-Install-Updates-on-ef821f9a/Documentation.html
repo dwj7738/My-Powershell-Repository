@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Force Install Updates on Remote Computer</title>        
+        <meta name="description" content="This powershell script will give you the ability to install windows updates on a remote computer.
+The script will remotely create a scheduled task on the given computer with the needed powershell cmdlets to:
+
+1. Search for updates
+2. Download updates
+3. Install updates" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>This powershell script will give you the ability to install windows updates on a remote computer.<br>
+The script will remotely create a scheduled task on the given computer with the needed powershell cmdlets to:<br>
+<br>
+1. Search for updates<br>
+2. Download updates<br>
+3. Install updates<br>
+<br>
+Powershell 4.0 is needed for the&nbsp;Register-ScheduledJob cmdlet.</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&lt;#
+.Synopsis
+    Force Install Updates on Remote Computer
+.DESCRIPTION
+    Force Install Updates on Remote Computer using a scheduled task
+.EXAMPLE
+    InstallUpdates -Computer &quot;server1.contoso.com&quot; -User &quot;Contoso\Administrator&quot; -Password &quot;Password&quot;
+.NOTES
+    Version 1.0 - Initial Script
+    Written by Darryl van der Peijl
+    Date: 30.05.2014
+
+    Use at own risk
+#&gt;
+
+Function InstallUpdates {
+param($Computer,$User,$Password)
+
+$SecurePassword = ConvertTo-SecureString &ndash;String $Password &ndash;AsPlainText -Force
+$Credential = New-Object &ndash;TypeName System.Management.Automation.PSCredential &ndash;ArgumentList $User, $SecurePassword
+
+...</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__mlcom">&lt;#&nbsp;
+.Synopsis&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Force&nbsp;Install&nbsp;Updates&nbsp;on&nbsp;Remote&nbsp;Computer&nbsp;
+.DESCRIPTION&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Force&nbsp;Install&nbsp;Updates&nbsp;on&nbsp;Remote&nbsp;Computer&nbsp;using&nbsp;a&nbsp;scheduled&nbsp;task&nbsp;
+.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;InstallUpdates&nbsp;-Computer&nbsp;&quot;server1.contoso.com&quot;&nbsp;-User&nbsp;&quot;Contoso\Administrator&quot;&nbsp;-Password&nbsp;&quot;Password&quot;&nbsp;
+.NOTES&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Version&nbsp;1.0&nbsp;-&nbsp;Initial&nbsp;Script&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Written&nbsp;by&nbsp;Darryl&nbsp;van&nbsp;der&nbsp;Peijl&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Date:&nbsp;30.05.2014&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Use&nbsp;at&nbsp;own&nbsp;risk&nbsp;
+#&gt;</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;InstallUpdates&nbsp;{&nbsp;
+<span class="powerShell__keyword">param</span>(<span class="powerShell__variable">$Computer</span>,<span class="powerShell__variable">$User</span>,<span class="powerShell__variable">$Password</span>)&nbsp;
+&nbsp;
+<span class="powerShell__variable">$SecurePassword</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">ConvertTo-SecureString</span>&nbsp;&ndash;String&nbsp;<span class="powerShell__variable">$Password</span>&nbsp;&ndash;AsPlainText&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;
+<span class="powerShell__variable">$Credential</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;&ndash;TypeName&nbsp;System.Management.Automation.PSCredential&nbsp;&ndash;ArgumentList&nbsp;<span class="powerShell__variable">$User</span>,&nbsp;<span class="powerShell__variable">$SecurePassword</span>&nbsp;
+&nbsp;
+...</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode"></div>
+<p><span>The script can install updates on client and serverside machines.&nbsp;</span></p>
+
+        </div>
+    </body>
+</html>

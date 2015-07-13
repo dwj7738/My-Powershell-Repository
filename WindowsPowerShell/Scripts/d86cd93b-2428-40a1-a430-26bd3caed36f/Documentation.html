@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Invoke-WindowsUpdate</title>        
+        <meta name="description" content="Script to download and install updates from Windows Update/WSUS. Reporting and rebooting may be customized." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p><span>To manage Windows Update in an automated way we can access the&nbsp;</span><a href="http://msdn.microsoft.com/en-us/library/aa387287(v=VS.85).aspx" target="_blank">Windows Update Agent API</a><span>&nbsp;using a COM-object called Microsoft.Update.Session.
+ Using the New-Object cmdlet in Windows PowerShell, it`s easy to work with this COM-object. Based on this COM-object and portions of&nbsp;</span><a href="http://blogs.technet.com/b/jamesone/archive/2009/01/27/managing-windows-update-with-powershell.aspx" target="_blank">James
+ O`Neill`s functions</a><span>&nbsp;for managing Windows Update, I`ve written a PowerShell-script called&nbsp;</span><a href="http://poshcode.org/1932">Invoke-WindowsUpdate</a><span>.</span></p>
+<p>For more details, see the following blog-post: <br>
+<a href="http://blog.powershell.no/2010/06/25/manage-windows-update-installations-using-windows-powershell">http://blog.powershell.no/2010/06/25/manage-windows-update-installations-using-windows-powershell</a></p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">###########################################################################&quot;
+#
+# NAME: Invoke-WindowsUpdate.ps1
+#
+# AUTHOR: Jan Egil Ring
+# EMAIL: jan.egil.ring@powershell.no
+#
+# COMMENT: Script to download and install updates from Windows Update/WSUS. Reporting and rebooting may be customized.
+#          For more details, see the following blog-post: 
+#          http://blog.powershell.no/2010/06/25/manage-windows-update-installations-using-windows-powershell
+#
+# You have a royalty-free right to use, modify, reproduce, and
+# distribute this script file in any way you find useful, provided that
+# you agree that the creator, owner above has no warranty, obligations,
+# or liability for such use.
+#
+# VERSION HISTORY:
+# 1.0 25.06.2010 - Initial release
+#
+###########################################################################&quot;
+
+#Requires -Version 2.0
+
+#Variables to customize
+$EmailReport = $true
+$FileReport = $true
+$To = &quot;it-reports@domain.com&quot;
+$From = &quot;powershell@domain.com&quot;
+$SMTPServer = &quot;smtp.domain.local&quot;
+$FileReportPath = &quot;\\domain.local\IT\Windows Update Reports\&quot;
+$AutoRestart = $true
+$AutoRestartIfPending = $true
+
+$Path = $FileReportPath &#43; &quot;$env:ComputerName&quot; &#43; &quot;_&quot; &#43; (Get-Date -Format dd-MM-yyyy_HH-mm).ToString() &#43; &quot;.html&quot;
+
+#Testing if there are any pending reboots from earlier Windows Update sessions
+if (Test-Path &quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired&quot;){
+
+#Report to e-mail if enabled
+if ($EmailReport -eq $true) {
+$pendingboot = @{$false=&quot;was pending for a restart from an earlier Windows Update session. Due to the reboot preferences in the script, a reboot was not initiated.&quot;; $true=&quot;was restarted due to a pending restart from an earlier Windows Update session.&quot;}
+$status = $pendingboot[$AutoRestartIfPending]
+ $messageParameters = @{                        
+                Subject = &quot;Windows Update report for $env:ComputerName.$env:USERDNSDOMAIN - $((Get-Date).ToShortDateString())&quot;                        
+                Body = &quot;Invoke-WindowsUpdate was run on $env:ComputerName, and the server $status `nPlease run Invoke-WindowsUpdate again when the server is rebooted.&quot;               
+                from = $From                        
+                To = $To                      
+                SmtpServer = $SMTPServer                         
+            }                        
+            Send-MailMessage @messageParameters -BodyAsHtml
+
+#Report to file if enabled
+if ($FileReport -eq $true) {
+&quot;Invoke-WindowsUpdate was run on $env:ComputerName, and the server $status `nPlease run Invoke-WindowsUpdate again when the server is rebooted.&quot; | Out-File -FilePath $path
+}
+
+#Reboot if autorestart for pending updates is enabled
+if ($AutoRestartIfPending) {shutdown.exe /t 0 /r }  }
+exit
+			
+}
+
+#Checking for available updates
+$updateSession = new-object -com &quot;Microsoft.Update.Session&quot;
+write-progress -Activity &quot;Updating&quot; -Status &quot;Checking available updates&quot;
+$criteria=&quot;IsInstalled=0 and Type='Software'&quot; 
+$updates=$updateSession.CreateupdateSearcher().Search($criteria).Updates
+$downloader = $updateSession.CreateUpdateDownloader()          
+$downloader.Updates = $Updates
+
+#If no updates available, do nothing
+if ($downloader.Updates.Count -eq &quot;0&quot;) {
+
+#Report to e-mail if enabled
+if ($EmailReport -eq $true) {
+ $messageParameters = @{                        
+                Subject = &quot;Windows Update report for $env:ComputerName.$env:USERDNSDOMAIN - $((Get-Date).ToShortDateString())&quot;                        
+                Body = &quot;Invoke-WindowsUpdate was run on $env:ComputerName, but no new updates were found. Please try again later.&quot;               
+                from = $From                        
+                To = $To                      
+                SmtpServer = $SMTPServer                         
+            }                        
+            Send-MailMessage @messageParameters -BodyAsHtml
+			}
+			
+#Report to file if enabled
+if ($FileReport -eq $true) {
+&quot;Invoke-WindowsUpdate was run on $env:ComputerName, but no new updates were found. Please try again later.&quot; | Out-File -FilePath $Path
+}
+
+}
+else
+{
+#If updates are available, download and install
+write-progress -Activity 'Updating' -Status &quot;Downloading $($downloader.Updates.count) updates&quot;  
+
+$resultcode= @{0=&quot;Not Started&quot;; 1=&quot;In Progress&quot;; 2=&quot;Succeeded&quot;; 3=&quot;Succeeded With Errors&quot;; 4=&quot;Failed&quot; ; 5=&quot;Aborted&quot; }
+$Result= $downloader.Download()
+
+if (($Result.Hresult -eq 0) &ndash;and (($result.resultCode &ndash;eq 2) -or ($result.resultCode &ndash;eq 3)) ) {
+       $updatesToInstall = New-object -com &quot;Microsoft.Update.UpdateColl&quot;
+       $Updates | where {$_.isdownloaded} | foreach-Object {$updatesToInstall.Add($_) | out-null 
+}
+
+$installer = $updateSession.CreateUpdateInstaller()       
+$installer.Updates = $updatesToInstall
+
+write-progress -Activity 'Updating' -Status &quot;Installing $($Installer.Updates.count) updates&quot;        
+
+$installationResult = $installer.Install()        
+$Global:counter=-1       
+
+$Report = $installer.updates | 
+				Select-Object -property Title,EulaAccepted,@{Name='Result';expression={$ResultCode[$installationResult.GetUpdateResult($Global:Counter&#43;&#43;).resultCode ] }},@{Name='Reboot required';expression={$installationResult.GetUpdateResult($Global:Counter&#43;&#43;).RebootRequired }} |
+				ConvertTo-Html
+
+#Report to e-mail if enabled
+if ($EmailReport -eq $true) {
+ $messageParameters = @{                        
+                Subject = &quot;Windows Update report for $env:ComputerName.$env:USERDNSDOMAIN - $((Get-Date).ToShortDateString())&quot;                        
+                Body =  $Report | Out-String                 
+                from = $From                        
+                To = $To                      
+                SmtpServer = $SMTPServer                         
+            }                        
+            Send-MailMessage @messageParameters -BodyAsHtml
+			}
+
+#Report to file if enabled
+if ($FileReport -eq $true) {
+$Report | Out-File -FilePath $path
+}
+
+#Reboot if autorestart is enabled and one or more updates are requiring a reboot
+if ($autoRestart -and $installationResult.rebootRequired) { shutdown.exe /t 0 /r }       
+}
+}</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__com">###########################################################################&quot;</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#&nbsp;NAME:&nbsp;Invoke-WindowsUpdate.ps1</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#&nbsp;AUTHOR:&nbsp;Jan&nbsp;Egil&nbsp;Ring</span>&nbsp;
+<span class="powerShell__com">#&nbsp;EMAIL:&nbsp;jan.egil.ring@powershell.no</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#&nbsp;COMMENT:&nbsp;Script&nbsp;to&nbsp;download&nbsp;and&nbsp;install&nbsp;updates&nbsp;from&nbsp;Windows&nbsp;Update/WSUS.&nbsp;Reporting&nbsp;and&nbsp;rebooting&nbsp;may&nbsp;be&nbsp;customized.</span>&nbsp;
+<span class="powerShell__com">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For&nbsp;more&nbsp;details,&nbsp;see&nbsp;the&nbsp;following&nbsp;blog-post:&nbsp;</span>&nbsp;
+<span class="powerShell__com">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://blog.powershell.no/2010/06/25/manage-windows-update-installations-using-windows-powershell</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#&nbsp;You&nbsp;have&nbsp;a&nbsp;royalty-free&nbsp;right&nbsp;to&nbsp;use,&nbsp;modify,&nbsp;reproduce,&nbsp;and</span>&nbsp;
+<span class="powerShell__com">#&nbsp;distribute&nbsp;this&nbsp;script&nbsp;file&nbsp;in&nbsp;any&nbsp;way&nbsp;you&nbsp;find&nbsp;useful,&nbsp;provided&nbsp;that</span>&nbsp;
+<span class="powerShell__com">#&nbsp;you&nbsp;agree&nbsp;that&nbsp;the&nbsp;creator,&nbsp;owner&nbsp;above&nbsp;has&nbsp;no&nbsp;warranty,&nbsp;obligations,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;or&nbsp;liability&nbsp;for&nbsp;such&nbsp;use.</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#&nbsp;VERSION&nbsp;HISTORY:</span>&nbsp;
+<span class="powerShell__com">#&nbsp;1.0&nbsp;25.06.2010&nbsp;-&nbsp;Initial&nbsp;release</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">###########################################################################&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#Requires&nbsp;-Version&nbsp;2.0</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#Variables&nbsp;to&nbsp;customize</span>&nbsp;
+<span class="powerShell__variable">$EmailReport</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+<span class="powerShell__variable">$FileReport</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+<span class="powerShell__variable">$To</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;it-reports@domain.com&quot;</span>&nbsp;
+<span class="powerShell__variable">$From</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;powershell@domain.com&quot;</span>&nbsp;
+<span class="powerShell__variable">$SMTPServer</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;smtp.domain.local&quot;</span>&nbsp;
+<span class="powerShell__variable">$FileReportPath</span>&nbsp;=&nbsp;&quot;\\domain.local\IT\Windows&nbsp;Update&nbsp;Reports\&quot;&nbsp;
+<span class="powerShell__variable">$AutoRestart</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+<span class="powerShell__variable">$AutoRestartIfPending</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$Path</span>&nbsp;=&nbsp;<span class="powerShell__variable">$FileReportPath</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;$env:ComputerName&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;_&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;(<span class="powerShell__cmdlets">Get-Date</span>&nbsp;<span class="powerShell__operator">-</span>Format&nbsp;dd<span class="powerShell__operator">-</span>MM<span class="powerShell__operator">-</span>yyyy_HH<span class="powerShell__operator">-</span>mm).ToString()&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;.html&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#Testing&nbsp;if&nbsp;there&nbsp;are&nbsp;any&nbsp;pending&nbsp;reboots&nbsp;from&nbsp;earlier&nbsp;Windows&nbsp;Update&nbsp;sessions</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__cmdlets">Test-Path</span>&nbsp;<span class="powerShell__string">&quot;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto&nbsp;Update\RebootRequired&quot;</span>){&nbsp;
+&nbsp;
+<span class="powerShell__com">#Report&nbsp;to&nbsp;e-mail&nbsp;if&nbsp;enabled</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$EmailReport</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;{&nbsp;
+<span class="powerShell__variable">$pendingboot</span>&nbsp;=&nbsp;@{<span class="powerShell__variable">$false</span>=<span class="powerShell__string">&quot;was&nbsp;pending&nbsp;for&nbsp;a&nbsp;restart&nbsp;from&nbsp;an&nbsp;earlier&nbsp;Windows&nbsp;Update&nbsp;session.&nbsp;Due&nbsp;to&nbsp;the&nbsp;reboot&nbsp;preferences&nbsp;in&nbsp;the&nbsp;script,&nbsp;a&nbsp;reboot&nbsp;was&nbsp;not&nbsp;initiated.&quot;</span>;&nbsp;<span class="powerShell__variable">$true</span>=<span class="powerShell__string">&quot;was&nbsp;restarted&nbsp;due&nbsp;to&nbsp;a&nbsp;pending&nbsp;restart&nbsp;from&nbsp;an&nbsp;earlier&nbsp;Windows&nbsp;Update&nbsp;session.&quot;</span>}&nbsp;
+<span class="powerShell__variable">$status</span>&nbsp;=&nbsp;<span class="powerShell__variable">$pendingboot</span>[<span class="powerShell__variable">$AutoRestartIfPending</span>]&nbsp;
+&nbsp;<span class="powerShell__variable">$messageParameters</span>&nbsp;=&nbsp;@{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject&nbsp;=&nbsp;<span class="powerShell__string">&quot;Windows&nbsp;Update&nbsp;report&nbsp;for&nbsp;$env:ComputerName.$env:USERDNSDOMAIN&nbsp;-&nbsp;$((Get-Date).ToShortDateString())&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Body&nbsp;=&nbsp;<span class="powerShell__string">&quot;Invoke-WindowsUpdate&nbsp;was&nbsp;run&nbsp;on&nbsp;$env:ComputerName,&nbsp;and&nbsp;the&nbsp;server&nbsp;$status&nbsp;`nPlease&nbsp;run&nbsp;Invoke-WindowsUpdate&nbsp;again&nbsp;when&nbsp;the&nbsp;server&nbsp;is&nbsp;rebooted.&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">from</span>&nbsp;=&nbsp;<span class="powerShell__variable">$From</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To&nbsp;=&nbsp;<span class="powerShell__variable">$To</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SmtpServer&nbsp;=&nbsp;<span class="powerShell__variable">$SMTPServer</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Send<span class="powerShell__operator">-</span>MailMessage&nbsp;@messageParameters&nbsp;<span class="powerShell__operator">-</span>BodyAsHtml&nbsp;
+&nbsp;
+<span class="powerShell__com">#Report&nbsp;to&nbsp;file&nbsp;if&nbsp;enabled</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$FileReport</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;{&nbsp;
+<span class="powerShell__string">&quot;Invoke-WindowsUpdate&nbsp;was&nbsp;run&nbsp;on&nbsp;$env:ComputerName,&nbsp;and&nbsp;the&nbsp;server&nbsp;$status&nbsp;`nPlease&nbsp;run&nbsp;Invoke-WindowsUpdate&nbsp;again&nbsp;when&nbsp;the&nbsp;server&nbsp;is&nbsp;rebooted.&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Out<span class="powerShell__operator">-</span>File&nbsp;<span class="powerShell__operator">-</span>FilePath&nbsp;<span class="powerShell__variable">$path</span>&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__com">#Reboot&nbsp;if&nbsp;autorestart&nbsp;for&nbsp;pending&nbsp;updates&nbsp;is&nbsp;enabled</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$AutoRestartIfPending</span>)&nbsp;{shutdown.exe&nbsp;<span class="powerShell__operator">/</span>t&nbsp;0&nbsp;<span class="powerShell__operator">/</span><span class="powerShell__alias">r</span>&nbsp;}&nbsp;&nbsp;}&nbsp;
+<span class="powerShell__keyword">exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__com">#Checking&nbsp;for&nbsp;available&nbsp;updates</span>&nbsp;
+<span class="powerShell__variable">$updateSession</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">new-object</span>&nbsp;<span class="powerShell__operator">-</span>com&nbsp;<span class="powerShell__string">&quot;Microsoft.Update.Session&quot;</span>&nbsp;
+<span class="powerShell__cmdlets">write-progress</span>&nbsp;<span class="powerShell__operator">-</span>Activity&nbsp;<span class="powerShell__string">&quot;Updating&quot;</span>&nbsp;<span class="powerShell__operator">-</span>Status&nbsp;<span class="powerShell__string">&quot;Checking&nbsp;available&nbsp;updates&quot;</span>&nbsp;
+<span class="powerShell__variable">$criteria</span>=<span class="powerShell__string">&quot;IsInstalled=0&nbsp;and&nbsp;Type='Software'&quot;</span>&nbsp;&nbsp;
+<span class="powerShell__variable">$updates</span>=<span class="powerShell__variable">$updateSession</span>.CreateupdateSearcher().Search(<span class="powerShell__variable">$criteria</span>).Updates&nbsp;
+<span class="powerShell__variable">$downloader</span>&nbsp;=&nbsp;<span class="powerShell__variable">$updateSession</span>.CreateUpdateDownloader()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="powerShell__variable">$downloader</span>.Updates&nbsp;=&nbsp;<span class="powerShell__variable">$Updates</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#If&nbsp;no&nbsp;updates&nbsp;available,&nbsp;do&nbsp;nothing</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$downloader</span>.Updates.Count&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;0&quot;</span>)&nbsp;{&nbsp;
+&nbsp;
+<span class="powerShell__com">#Report&nbsp;to&nbsp;e-mail&nbsp;if&nbsp;enabled</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$EmailReport</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;{&nbsp;
+&nbsp;<span class="powerShell__variable">$messageParameters</span>&nbsp;=&nbsp;@{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject&nbsp;=&nbsp;<span class="powerShell__string">&quot;Windows&nbsp;Update&nbsp;report&nbsp;for&nbsp;$env:ComputerName.$env:USERDNSDOMAIN&nbsp;-&nbsp;$((Get-Date).ToShortDateString())&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Body&nbsp;=&nbsp;<span class="powerShell__string">&quot;Invoke-WindowsUpdate&nbsp;was&nbsp;run&nbsp;on&nbsp;$env:ComputerName,&nbsp;but&nbsp;no&nbsp;new&nbsp;updates&nbsp;were&nbsp;found.&nbsp;Please&nbsp;try&nbsp;again&nbsp;later.&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">from</span>&nbsp;=&nbsp;<span class="powerShell__variable">$From</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To&nbsp;=&nbsp;<span class="powerShell__variable">$To</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SmtpServer&nbsp;=&nbsp;<span class="powerShell__variable">$SMTPServer</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Send<span class="powerShell__operator">-</span>MailMessage&nbsp;@messageParameters&nbsp;<span class="powerShell__operator">-</span>BodyAsHtml&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="powerShell__com">#Report&nbsp;to&nbsp;file&nbsp;if&nbsp;enabled</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$FileReport</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;{&nbsp;
+<span class="powerShell__string">&quot;Invoke-WindowsUpdate&nbsp;was&nbsp;run&nbsp;on&nbsp;$env:ComputerName,&nbsp;but&nbsp;no&nbsp;new&nbsp;updates&nbsp;were&nbsp;found.&nbsp;Please&nbsp;try&nbsp;again&nbsp;later.&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Out<span class="powerShell__operator">-</span>File&nbsp;<span class="powerShell__operator">-</span>FilePath&nbsp;<span class="powerShell__variable">$Path</span>&nbsp;
+}&nbsp;
+&nbsp;
+}&nbsp;
+<span class="powerShell__keyword">else</span>&nbsp;
+{&nbsp;
+<span class="powerShell__com">#If&nbsp;updates&nbsp;are&nbsp;available,&nbsp;download&nbsp;and&nbsp;install</span>&nbsp;
+<span class="powerShell__cmdlets">write-progress</span>&nbsp;<span class="powerShell__operator">-</span>Activity&nbsp;<span class="powerShell__string">'Updating'</span>&nbsp;<span class="powerShell__operator">-</span>Status&nbsp;<span class="powerShell__string">&quot;Downloading&nbsp;$($downloader.Updates.count)&nbsp;updates&quot;</span>&nbsp;&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__variable">$resultcode</span>=&nbsp;@{0=<span class="powerShell__string">&quot;Not&nbsp;Started&quot;</span>;&nbsp;1=<span class="powerShell__string">&quot;In&nbsp;Progress&quot;</span>;&nbsp;2=<span class="powerShell__string">&quot;Succeeded&quot;</span>;&nbsp;3=<span class="powerShell__string">&quot;Succeeded&nbsp;With&nbsp;Errors&quot;</span>;&nbsp;4=<span class="powerShell__string">&quot;Failed&quot;</span>&nbsp;;&nbsp;5=<span class="powerShell__string">&quot;Aborted&quot;</span>&nbsp;}&nbsp;
+<span class="powerShell__variable">$Result</span>=&nbsp;<span class="powerShell__variable">$downloader</span>.Download()&nbsp;
+&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;((<span class="powerShell__variable">$Result</span>.Hresult&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;0)&nbsp;&ndash;and&nbsp;((<span class="powerShell__variable">$result</span>.resultCode&nbsp;&ndash;eq&nbsp;2)&nbsp;<span class="powerShell__operator">-</span>or&nbsp;(<span class="powerShell__variable">$result</span>.resultCode&nbsp;&ndash;eq&nbsp;3))&nbsp;)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$updatesToInstall</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-object</span>&nbsp;<span class="powerShell__operator">-</span>com&nbsp;<span class="powerShell__string">&quot;Microsoft.Update.UpdateColl&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Updates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;where&nbsp;{<span class="powerShell__variable">$_</span>.isdownloaded}&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">foreach</span><span class="powerShell__operator">-</span>Object&nbsp;{<span class="powerShell__variable">$updatesToInstall</span>.Add(<span class="powerShell__variable">$_</span>)&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">out-null</span>&nbsp;&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__variable">$installer</span>&nbsp;=&nbsp;<span class="powerShell__variable">$updateSession</span>.CreateUpdateInstaller()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="powerShell__variable">$installer</span>.Updates&nbsp;=&nbsp;<span class="powerShell__variable">$updatesToInstall</span>&nbsp;
+&nbsp;
+<span class="powerShell__cmdlets">write-progress</span>&nbsp;<span class="powerShell__operator">-</span>Activity&nbsp;<span class="powerShell__string">'Updating'</span>&nbsp;<span class="powerShell__operator">-</span>Status&nbsp;<span class="powerShell__string">&quot;Installing&nbsp;$($Installer.Updates.count)&nbsp;updates&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__variable">$installationResult</span>&nbsp;=&nbsp;<span class="powerShell__variable">$installer</span>.Install()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="powerShell__variable">$Global</span>:counter=<span class="powerShell__operator">-</span>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__variable">$Report</span>&nbsp;=&nbsp;<span class="powerShell__variable">$installer</span>.updates&nbsp;<span class="powerShell__operator">|</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Select-Object</span>&nbsp;<span class="powerShell__operator">-</span>property&nbsp;Title,EulaAccepted,@{Name=<span class="powerShell__string">'Result'</span>;expression={<span class="powerShell__variable">$ResultCode</span>[<span class="powerShell__variable">$installationResult</span>.GetUpdateResult(<span class="powerShell__variable">$Global</span>:Counter<span class="powerShell__operator">&#43;</span><span class="powerShell__operator">&#43;</span>).resultCode&nbsp;]&nbsp;}},@{Name=<span class="powerShell__string">'Reboot&nbsp;required'</span>;expression={<span class="powerShell__variable">$installationResult</span>.GetUpdateResult(<span class="powerShell__variable">$Global</span>:Counter<span class="powerShell__operator">&#43;</span><span class="powerShell__operator">&#43;</span>).RebootRequired&nbsp;}}&nbsp;<span class="powerShell__operator">|</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ConvertTo<span class="powerShell__operator">-</span>Html&nbsp;
+&nbsp;
+<span class="powerShell__com">#Report&nbsp;to&nbsp;e-mail&nbsp;if&nbsp;enabled</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$EmailReport</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;{&nbsp;
+&nbsp;<span class="powerShell__variable">$messageParameters</span>&nbsp;=&nbsp;@{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject&nbsp;=&nbsp;<span class="powerShell__string">&quot;Windows&nbsp;Update&nbsp;report&nbsp;for&nbsp;$env:ComputerName.$env:USERDNSDOMAIN&nbsp;-&nbsp;$((Get-Date).ToShortDateString())&quot;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Body&nbsp;=&nbsp;&nbsp;<span class="powerShell__variable">$Report</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Out-String</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">from</span>&nbsp;=&nbsp;<span class="powerShell__variable">$From</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To&nbsp;=&nbsp;<span class="powerShell__variable">$To</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SmtpServer&nbsp;=&nbsp;<span class="powerShell__variable">$SMTPServer</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Send<span class="powerShell__operator">-</span>MailMessage&nbsp;@messageParameters&nbsp;<span class="powerShell__operator">-</span>BodyAsHtml&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+<span class="powerShell__com">#Report&nbsp;to&nbsp;file&nbsp;if&nbsp;enabled</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$FileReport</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;{&nbsp;
+<span class="powerShell__variable">$Report</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Out<span class="powerShell__operator">-</span>File&nbsp;<span class="powerShell__operator">-</span>FilePath&nbsp;<span class="powerShell__variable">$path</span>&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__com">#Reboot&nbsp;if&nbsp;autorestart&nbsp;is&nbsp;enabled&nbsp;and&nbsp;one&nbsp;or&nbsp;more&nbsp;updates&nbsp;are&nbsp;requiring&nbsp;a&nbsp;reboot</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$autoRestart</span>&nbsp;<span class="powerShell__operator">-</span>and&nbsp;<span class="powerShell__variable">$installationResult</span>.rebootRequired)&nbsp;{&nbsp;shutdown.exe&nbsp;<span class="powerShell__operator">/</span>t&nbsp;0&nbsp;<span class="powerShell__operator">/</span><span class="powerShell__alias">r</span>&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}&nbsp;
+}</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,281 @@
+<div id="longDesc"><span style="font-family:Calibri; font-size:medium">
+<h1 style="font-family:Calibri Light; color:#2e74b5; font-size:large">Introduction</h1>
+<p>The <strong>xAzure</strong> module is a set of DSC resources that provide a method of depoying virtual machines in Microsoft Azure by applying a configuration to your local machine. This is primarily intended to enable testing how a new virtual machine can
+ be used to evaluate a scenario or application without consuming resources from the local machine.
+<br>
+<br>
+This module includes 6 DSC resources that automate provisioning of resources in Microsoft Azure.</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>xAzureAffinityGroup</strong> defines the relationship between compute and storage
+</li><li><strong>xAzureQuickVM</strong> simple resource for creating VMs with limited options
+</li><li><strong>xAzureService</strong> creates a cloud service for the VMs </li><li><strong>xAzureStorageAccount</strong> creates the online storage account where the blobs for the test environment will reside
+</li><li><strong>xAzureSubscription</strong> sets the current Azure subscription context
+</li><li><strong>xAzureVM</strong> creates a virtual machine in Azure including access to VM Guest extensions
+</li><li><strong>xAzureVMDscConfiguration</strong> packages and uploads a DSC Configuration for the DSC Extension
+</li><li><strong>xAzureVMDscExtension</strong> uses the DSC Extension to apply a configuration within a VM
+</li><li><strong>xAzureSqlDatabase</strong> creates Azure SQL Database
+</li><li><strong>xAzureSqlDatabaseServerFirewallRule</strong> creates Azure SQL Database Server Firewall Rule
+</li></ul>
+<br>
+<p><strong>All of the resources in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program or service. The &quot;&quot;x&quot; in xAzure stands for experimental</strong>, which means that these resources will be
+<strong>fix forward</strong> and monitored by the module owner(s).</p>
+<p>Please leave comments, feature requests, and bug reports in the Q &amp; A tab for this module.</p>
+<p>If you would like to modify <strong>xAzure</strong> module, feel free. When modifying, please update the module name, resource friendly name, and MOF class name (instructions below). As specified in the license, you may copy or modify this resource as long
+ as they are used on the Windows Platform.</p>
+<p>For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+<a href="http://blogs.msdn.com/b/powershell/"><span style="color:#0000ff">PowerShell Blog</span></a> (<a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx"><span style="color:#0000ff">this</span></a>
+ is a good starting point). There are also great community resources, such as <a href="http://powershell.org/wp/tag/dsc/">
+<span style="color:#0000ff">PowerShell.org</span></a>, or <a href="http://www.powershellmagazine.com/tag/dsc/">
+<span style="color:#0000ff">PowerShell Magazine</span></a>. For more information on the DSC Resource Kit, check out
+<a href="http://go.microsoft.com/fwlink/?LinkID=389546"><span style="color:#0000ff">this blog post</span></a>.</p>
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Installation</h1>
+<p>To install <strong>xAzure</strong> module</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>If you are using WMF4 / PowerShell Version 4: Unzip the content under $env:ProgramFiles\WindowsPowerShell\Modules folder </li>
+<li>If you are using WMF5 Preview: From an elevated PowerShell session run ‘Install-Module xAzure’</li>
+</ul>
+<p>To confirm installation:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>Run <strong>Get-DSCResource</strong> to see that <strong>xAzureAffinityGroup</strong>,
+<strong>xAzureQuickVM</strong>, <strong>xAzureVM</strong>, and <strong>xAzureVMDscExtension</strong> are among the DSC Resources listed
+</li></ul>
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Requirements</h1>
+<p>This module requires the latest version of PowerShell (v4.0, which ships in Windows 8.1 or Windows Server 2012R2). To easily use PowerShell 4.0 on older operating systems,
+<a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855"><span style="color:#0000ff">install WMF 4.0</span></a>. Please read the installation instructions that are present on both the download page and the release notes for WMF 4.0.</p>
+In addition, this module works based on the following assumptions:
+<ul style="list-style-type:disc; direction:ltr">
+<li>You have access to an Azure account. This could be a trial account, a paid subscription, or Azure credit from an MSDN subscription.
+</li><li>You have installed the Windows Azure PowerShell cmdlets package from <a href="http://www.microsoft.com/web/downloads/platform.aspx">
+<span style="color:#0000ff">WebPI</span></a> </li><li>You have downloaded your Publish Settings file (.publishsettings) using Get-AzurePublishSettingsFile and have copied to the working directory set in the Create and SetupSubscription example scripts.
+</li><li>Open .publishsettings in Notepad and copy the name of the subscription to the Clipboard.
+</li><li>Open the .\Create.ps1 script in the ExampleConfigScripts folder and update the name of your subscription and the location of your .publishsettings file in the xAzureSubscription section.
+</li></ul>
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Details</h1>
+<p><strong>xAzureAffinityGroup</strong> resource has following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>Name</strong>: <span>&nbsp;&nbsp;</span>Specifies a name for the new affinity group that is unique to the subscription.
+</li><li><strong>Ensure</strong>: <span>&nbsp;&nbsp;</span>Specifies whether the Azure Affinity Group should be present or absent.
+</li><li><strong>Location</strong>: <span>&nbsp;&nbsp;</span>Specifies the geographical location of the data center where the affinity group will be created. This must match a value from the Name property of objects returned by Get-AzureLocation.
+</li><li><strong>Description</strong>: <span>&nbsp;&nbsp;</span>Specifies a description for the affinity group. The description may be up to 1024 characters in length.
+</li><li><strong>Label</strong>: <span>&nbsp;&nbsp;</span>Specifies a label for the affinity group. The label may be up to 100 characters in length.
+</li></ul>
+<p><strong>xAzureQuickVM</strong> resource has following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>Name</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the virtual machine.
+</li><li><strong>Ensure</strong>: <span>&nbsp;&nbsp;</span>Specifies whether the Azure VM should be present or absent.
+</li><li><strong>ImageName</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the operating system image to use to create the operating system disk.
+</li><li><strong>ServiceName</strong>: <span>&nbsp;&nbsp;</span>Specifies the new or existing service name.
+</li><li><strong>Linux</strong>: <span>&nbsp;&nbsp;</span>Creates a Linux virtual machine.
+</li><li><strong>LinuxUser</strong>: <span>&nbsp;&nbsp;</span>Specifies the Linux administrative account name to create.
+</li><li><strong>Windows</strong>: <span>&nbsp;&nbsp;</span>Creates a Windows virtual machine.
+</li><li><strong>AdminUsername</strong>: <span>&nbsp;&nbsp;</span>Specifies the name for the administrative account to create.
+</li><li><strong>Password</strong>: <span>&nbsp;&nbsp;</span>Specifies the password for the administrative account.
+</li><li><strong>InstanceSize</strong>: <span>&nbsp;&nbsp;</span>Specifies the size of the instance. For a list of virtual machine sizes, see http://msdn.microsoft.com/library/azure/dn197896.aspx
+</li></ul>
+<p><strong>xAzureService</strong> resource has following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>ServiceName</strong>: <span>&nbsp;&nbsp;</span>Specifies a name for the new cloud service that is unique to the subscription.
+</li><li><strong>Ensure</strong>: <span>&nbsp;&nbsp;</span>Specifies whether the Azure VM should be present or absent.
+</li><li><strong>Description</strong>: <span>&nbsp;&nbsp;</span>Specifies the Azure Affinity Group for the service
+</li><li><strong>AffinityGroup</strong>: <span>&nbsp;&nbsp;</span>Specifies a description for the service.
+</li><li><strong>Label</strong>: <span>&nbsp;&nbsp;</span>Specifies a label for the service.
+</li></ul>
+<p><strong>xAzureSqlDatabase</strong> resource has following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>Name</strong>: <span>&nbsp;&nbsp;</span>Name of the database </li>
+<li><strong>MaximumSizeInGB</strong>: <span>&nbsp;&nbsp;</span>Maximum size of the database in GB
+</li><li><strong>Collation</strong>: <span>&nbsp;&nbsp;</span>Collation of the database
+</li><li><strong>Edition</strong>: <span>&nbsp;&nbsp;</span>Edition of the database </li>
+<li><strong>ServerCredential</strong>: <span>&nbsp;&nbsp;</span>Credential to the database server
+</li><li><strong>ServerName</strong>: <span>&nbsp;&nbsp;</span>Name of the database server
+</li><li><strong>AzureSubscriptionName</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the Azure subscription that should be set to Current
+</li><li><strong>AzurePublishSettingsFile</strong>: <span>&nbsp;&nbsp;</span>Specifies the location of the Publish Settings file for the Azure Subscription
+</li><li><strong>Ensure</strong>: <span>&nbsp;&nbsp;</span>Ensure that database is present or absent
+</li></ul>
+<p><strong>xAzureSqlDatabaseServerFirewallRule</strong> resource has following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>RuleName</strong>: <span>&nbsp;&nbsp;</span>Name of the firewall rule </li>
+<li><strong>ServerName</strong>: <span>&nbsp;&nbsp;</span>Name of the database server for which firewall rule should be created
+</li><li><strong>StartIPAddress</strong>: <span>&nbsp;&nbsp;</span>Start IP address of the firewall rule
+</li><li><strong>EndIPAddress</strong>: <span>&nbsp;&nbsp;</span>End IP address of the firewall rule </li>
+<li><strong>AzureSubscriptionName</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the Azure subscription that should be set to Current
+</li><li><strong>AzurePublishSettingsFile</strong>: <span>&nbsp;&nbsp;</span>Specifies the location of the Publish Settings file for the Azure Subscription
+</li><li><strong>Ensure</strong>: <span>&nbsp;&nbsp;</span>Ensure that firewall rule is present or absent
+</li></ul>
+<p><strong>xAzureStorageAccount</strong> resource has following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>StorageAccountName</strong>: <span>&nbsp;&nbsp;</span>Specifies a name for the storage account. The storage account name must be unique to Windows Azure and must be between 3 and 24 characters in length and use lowercase letters and numbers only.
+</li><li><strong>Ensure</strong>: <span>&nbsp;&nbsp;</span>Specifies whether the Azure Storage Account should be present or absent.
+</li><li><strong>AffinityGroup</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of an existing affinity group in the current subscription. You can specify either a Location or an AffinityGroup parameter, but not both.
+</li><li><strong>Container</strong>: <span>&nbsp;&nbsp;</span>Specifies a name for the Container that should be created in the Azure Storage Account.
+</li><li><strong>Folder</strong>: <span>&nbsp;&nbsp;</span>Specifies a local folder. All files in the root of the folder will be uploaded to the new container.
+</li><li><strong>Label</strong>: <span>&nbsp;&nbsp;</span>Specifies a label for the storage account. The label may be up to 100 characters in length.
+</li></ul>
+<p><strong>xAzureSubscription</strong> resource has following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>Ensure</strong>: <span>&nbsp;&nbsp;</span>Specifies whether the subscription should be present or absent.
+</li><li><strong>AzureSubscriptionName</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the Azure subscription that should be set to Current.
+</li><li><strong>AzurePublishSettingsFile</strong>: <span>&nbsp;&nbsp;</span>Specifies the location of the Publish Settings file for the Azure Subscription.
+</li></ul>
+<p><strong>xAzureVM</strong> resource has following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>Name</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the virtual machine.
+</li><li><strong>Ensure</strong>: <span>&nbsp;&nbsp;</span>Specifies whether the Azure VM should be present or absent.
+</li><li><strong>ImageName</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the operating system image to use to create the operating system disk.
+</li><li><strong>ServiceName</strong>: <span>&nbsp;&nbsp;</span>Specifies the new or existing service name.
+</li><li><strong>StorageAccountName</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the storage account for the VM.
+</li><li><strong>InstanceSize</strong>: <span>&nbsp;&nbsp;</span>Specifies the size of the instance. For a list of virtual machine sizes, see http://msdn.microsoft.com/library/azure/dn197896.aspx
+</li><li><strong>Linux</strong>: <span>&nbsp;&nbsp;</span>Creates a Linux virtual machine.
+</li><li><strong>Windows</strong>: <span>&nbsp;&nbsp;</span>Creates a Windows virtual machine.
+</li><li><strong>Credential</strong>: <span>&nbsp;&nbsp;</span>Specifies the credentials for the administrator account.
+</li><li><strong>ExtensionContainerName</strong>: <span>&nbsp;&nbsp;</span>The name of the Container in Azure Blob storage where the script files will reside. Case sensitive
+</li><li><strong>ExtensionFileList</strong>: <span>&nbsp;&nbsp;</span>List of files in Azure Blob container that should be copied in to the VM. Case sensitive.
+</li><li><strong>ExtensionScriptName</strong>: <span>&nbsp;&nbsp;</span>Name of one of the files in the container that will be exectued at startup. Case sensitive.
+</li></ul>
+
+    <p><strong>xAzureVMDscConfiguration</strong> resource has following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <strong>StorageAccountName</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the storage account for the VM.
+        </li>
+        <li>
+            <strong>Ensure</strong>: <span>&nbsp;&nbsp;</span>Specifies whether the Azure VM should be present or absent.
+        </li>
+        <li>
+            <strong>ContainerName</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the Container in the Azure Storage Account.
+        </li>
+        <li>
+            <strong>ConfigurationPath</strong>: <span>&nbsp;&nbsp;</span>Specifies location of the Dsc Configuration document.
+        </li>
+        <li>
+            <strong>AzureSubscriptionName</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the Azure subscription that should be set to Current.
+        </li>
+        <li>
+            <strong>AzurePublishSettingsFile</strong>: <span>&nbsp;&nbsp;</span>Specifies the location of the Publish Settings file for the Azure Subscription.
+        </li>
+        <li>
+            <strong>BlobURI</strong>: <span>&nbsp;&nbsp;</span>Absolute Uri of the Blob.
+        </li></ul>
+
+        <p><strong>xAzureVMDscExtension</strong> resource has following properties:</p>
+        <ul style="list-style-type:disc; direction:ltr">
+            <li>
+                <strong>VmName</strong>: <span>&nbsp;&nbsp;</span>Specifies name of the VM.  This is used together with ServiceName to construct a persistent vm object.
+            </li>
+            <li>
+                <strong>ServiceName</strong>: <span>&nbsp;&nbsp;</span>Specifies name of the Service where the VM is deployed.
+            </li>
+            <li>
+                <strong>ConfigurationArchive</strong>: <span>&nbsp;&nbsp;</span>The name of the configuration package .zip file that was previously uploaded by Publish-AzureVMDscConfiguration. This parameter must specify only the name of the file, without any path.
+            </li>
+            <li>
+                <strong>StorageAccountName</strong>: <span>&nbsp;&nbsp;</span>Specifies the name of the Storage Account used to create the Storage Context.  The Azure Storage Context provides the security settings used to access the configuration script. This context should provide read access to the container specified by ContainerName.
+            </li>
+            <li>
+                <strong>ConfigurationArgument</strong>: <span>&nbsp;&nbsp;</span>A hashtable specifying the arguments to the configuration function. The keys correspond to the parameter names and the values to the parameter values.
+            </li>
+            <li>
+                <strong>ConfigurationDataPath</strong>: <span>&nbsp;&nbsp;</span>The path to a .psd1 file that specifies the data for the configuration function.
+            </li>
+            <li>
+                <strong>Configuration</strong>: <span>&nbsp;&nbsp;</span>SName of the configuration script or module that will be invoked by the DSC Extension.
+            </li>
+            <li>
+                <strong>ContainerName</strong>: <span>&nbsp;&nbsp;</span>Name of the Azure Storage Container where the ConfigurationArchive is located.
+            </li>
+            <li>
+                <strong>Force</strong>: <span>&nbsp;&nbsp;</span>By default xAzureVMDscExtension will not overwrite any existing blobs. Use -Force to overwrite them.
+            </li>
+            <li>
+                <strong>ReferenceName</strong>: <span>&nbsp;&nbsp;</span>The Extension Reference Name
+            </li>
+            <li>
+                <strong>StorageEndpointSuffix</strong>: <span>&nbsp;&nbsp;</span>The DNS endpoint suffix for all storage services, e.g. core.windows.net.
+            </li>
+            <li>
+                <strong>Version</strong>: <span>&nbsp;&nbsp;</span>The specific version of the DSC Extension to use. If not given, it will default to 1.*
+            </li>
+            <li>
+                <strong>TimeStamp</strong>: <span>&nbsp;&nbsp;</span>Returns the timestamp of the last DSC Extension execution.
+            </li>
+            <li>
+                <strong>Code</strong>: <span>&nbsp;&nbsp;</span>Returns the message code for the latest oepration by the DSC Extension.
+            </li>
+            <li>
+                <strong>Message</strong>: <span>&nbsp;&nbsp;</span>Returns the formatted message string for the latest operation by the DSC Extension.
+            </li>
+            <li>
+                <strong>Status</strong>: <span>&nbsp;&nbsp;</span>Returns the state of the DSC Extension from Azure.
+            </li>
+
+
+        </ul>
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Renaming Requirements</h1>
+<p>When making changes to these resources, we suggest the following practice:</p>
+<ol style="list-style-type:decimal; direction:ltr">
+<li>Update the following names by replacing MSFT with your company/community name and replacing the
+<strong>&quot;x&quot;</strong> with <strong>&quot;c&quot;</strong> (short for &quot;Community&quot;) or another prefix of your choice:
+<ul>
+<li><strong>Module name (ex: xAzure</strong> becomes <strong>cAzure</strong>) </li><li><strong>Resource folder (ex: MSFT_xAzureVM</strong> becomes <strong>Contoso_cAzureVM</strong>)
+</li><li><strong>Resource file name (ex: MSFT_xAzureVM</strong> becomes <strong>Contoso_cAzureVM</strong>)
+</li><li><strong>Resource Friendly Name (ex: xAzureVM</strong> becomes <strong>cAzureVM</strong>)
+</li><li><strong>MOF class name (ex: MSFT_xAzureVM</strong> becomes <strong>Contoso_cAzureVM</strong>)
+</li><li><strong>Filename for the &lt;resource&gt;.schema.mof (ex: MSFT_xAzureVM</strong>.schema.mof becomes
+<strong>Contoso_cAzureVM</strong>.schema.mof) </li></ul>
+</li><li>Update module and metadata information in the module manifest </li><li>Update any configuration that use these resources </li></ol>
+<p><em>We reserve resource and module names without prefixes (&quot;x&quot; or &quot;c&quot;) for future use (e.g. &quot;MSFT_**RealResourceName**&quot; or &quot;**RealResourceName**&quot;). If the next version of Windows Server ships with a &quot;**RealResourceName**&quot; resource, we don't want to break
+ any configurations that use any community modifications. Please keep a prefix such as &quot;c&quot; on all community modifications.</em></p>
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Versions</h1>
+
+<p>0.1.3</p>
+    <ul style="list-style-type:disc; direction:ltr">
+    <li>Introduce <strong>xAzureDSCExtension</strong>, <strong>xAzureVMDscConfiguration</strong> </li>
+    <li>Minor bug fix in <strong>xAzureStorageAccount</strong> to make Folder no longer a mandatory propert</li>
+    </ul>
+
+<p>0.1.2</p>
+Release with the following resources
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>xAzureSqlDatabase</strong> creates Azure SQL Database</li>
+<li><strong>xAzureSqlDatabaseServerFirewallRule</strong> creates Azure SQL Database Server Firewall Rule</li>
+</ul>
+
+<p>0.1.0</p>
+Initial release with the following resources
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>xAzureAffinityGroup</strong> defines the relationship between compute and storage
+</li><li><strong>xAzureQuickVM</strong> simple resource for creating VMs with limited options
+</li><li><strong>xAzureService</strong> creates a cloud service for the VMs </li><li><strong>xAzureStorageAccount</strong> creates the online storage account where the blobs for the test environment will reside
+</li><li><strong>xAzureSubscription</strong> sets the current Azure subscription context
+</li><li><strong>xAzureVM</strong>creates a virtual machine in Azure including access to VM Guest extensions
+</li></ul>
+<h1 style="margin-bottom:0pt; font-family:Calibri Light; color:#2e74b5; font-size:large">
+Examples</h1>
+<p>The 'Examples' folder within the payload includes example configurations for common work streams:</p>
+<ul style="list-style-type:disc; direction:ltr">
+<li><strong>LCMApplyOnly</strong> - Set the local DSC configuration to only apply configurations and not monitor or re-apply automatically
+</li><li><strong>Create</strong> - Create environment including virtual machine </li>
+<li><strong>Create_SqlDatabase</strong> - Create Azure SQL Database </li>
+<li><strong>Create_FirwallRule</strong> - Create Azure SQL Database Server Firewall Rule </li>
+<li><strong>Destroy</strong> - Destroy everything created in by the Create script
+</li><li><strong>Remove</strong> - Remove just the VM's and their VHD files from the test environment but leave the Affinity Group, Storage Account, and Cloud Service (quick re-provision scenario)
+</li><li><strong>SetupSubscription</strong> - Setup the Azure subscription (remember that DSC is running as Local System)
+</li><li><strong>Status</strong> - Retrieve information about a VM and optionally download the .rdp file, install the certificate, and create a reference PS remote file
+</li></ul>
+<p>&nbsp;</p>
+<p><strong>Understanding the INSTANCE ID: </strong><br>
+Instance ID - The Create script uses the last 10 places of the .NET time format named 'Ticks' to create a unique identifer for the accounts. This is required because storage and service names must be globally unique - not just for your account - across all
+ Azure customers. The last step of the Create script is to return this number to the pipeline (along with the DSC output).
+<br>
+You can capture the Instance ID by copying and pasting it from the PowerShell window, by copying and pasting it from the Azure website by opening the Cloud Service and selecting it from the title text, or you can automatically capture it from the pipeline using
+ a variable.<br>
+$test = .\Create.ps1 * In this example, the Instance ID would be returned as $test[1]<br>
+.\Status.ps1 $test[1] -ConnectionFiles * In this example, the status of the VM is checked using the pipeline value.</p>
+<p><strong>Note on credentials: </strong><br>
+When running the .\Create.ps1 script, there is an immediate prompt for credentials. The value collected here will be used to create the account inside the VM that is added to the local administrators group.<br>
+<strong>Note</strong> - the password will be stored in clear text inside the MOF file in the example, however the resource has been designed to work with encrypted credentials. For more information see: http://blogs.msdn.com/b/powershell/archive/2014/01/31/want-to-secure-credentials-in-windows-powershell-desired-state-configuration.aspx</p>
+<p><strong>Understanding HOW TO TEST JEA:</strong><br>
+As a side benefit of this solution it is possible to test PowerShell Just Enough Administration. Within the ScriptExtensionFiles folder you will find a script named InstallJEA.ps1. This delivers prerequisites for testing including downloads of the xJEA resource
+ and WMF5, installing them both, and enabling remote access. You have the option to remove comment blocks that would also execute steps inside the VM to configure JEA. This provides flexibility to either test JEA on your own or have the script build out an
+ endpoint automatically.</p>
+</span></div>

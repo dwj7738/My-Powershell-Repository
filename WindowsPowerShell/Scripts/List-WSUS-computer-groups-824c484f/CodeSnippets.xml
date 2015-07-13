@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content="[reflection.assembly]::LoadWithPartialName(&quot;Microsoft.UpdateServices.Administration&quot;)&#xD;&#xA;&#xD;&#xA;$wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer()&#xD;&#xA;&#xD;&#xA;foreach( $group in $wsus.GetComputerTargetGroups() )&#xD;&#xA;{&#xD;&#xA;    Write-Host &quot;Group: &quot; $group.Name &quot; - &quot; $group.GetComputerTargets().Count &quot; member(s)&quot;&#xD;&#xA;}" />
+</CodeSnippets>

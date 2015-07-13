@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FilterCategories>
+  <Category    Title="Result Type"    Description="The file extension of the item"    Type="Microsoft.Office.Server.Search.WebControls.ManagedPropertyFilterGenerator"    MetadataThreshold="1"    NumberOfFiltersToDisplay="4"    MaxNumberOfFilters="20"    ShowMoreLink="True"    MappedProperty="format"    MoreLinkText="show more"    LessLinkText="show fewer"    ShowCounts="Count" />
+  <Category    Title="Site"    Description="Which site this document is from"    Type="Microsoft.Office.Server.Search.WebControls.ManagedPropertyFilterGenerator"    MetadataThreshold="1"    NumberOfFiltersToDisplay="4"    MaxNumberOfFilters="20"    ShowMoreLink="True"    MappedProperty="sitename"    MoreLinkText="show more"    LessLinkText="show fewer"    ShowCounts="Count" />
+  <Category    Title="Author"    Description="Use this filter to restrict results authored by a specific author"    Type="Microsoft.Office.Server.Search.WebControls.ManagedPropertyFilterGenerator"    MetadataThreshold="1"    NumberOfFiltersToDisplay="4"    MaxNumberOfFilters="20"    ShowMoreLink="True"    MappedProperty="author"    MoreLinkText="show more"    LessLinkText="show fewer"    ShowCounts="Count" />
+  <Category    Title="Modified Date"    Description="When the item was last updated"    Type="Microsoft.Office.Server.Search.WebControls.ManagedPropertyFilterGenerator"    MetadataThreshold="1"    NumberOfFiltersToDisplay="6"    SortBy="Custom"    ShowMoreLink="False"    MappedProperty="write"    ShowCounts="Count" >
+    <CustomFilters MappingType="RangeMapping" DataType="Date" ValueReference="Relative" ShowAllInMore="False">
+      <CustomFilter CustomValue="Past 24 Hours">
+        <OriginalValue>-1..</OriginalValue>
+      </CustomFilter>
+      <CustomFilter CustomValue="Past Week">
+        <OriginalValue>-7..</OriginalValue>
+      </CustomFilter>
+      <CustomFilter CustomValue="Past Month">
+        <OriginalValue>-30..</OriginalValue>
+      </CustomFilter>
+      <CustomFilter CustomValue="Past Six Months">
+        <OriginalValue>-183..</OriginalValue>
+      </CustomFilter>
+      <CustomFilter CustomValue="Past Year">
+        <OriginalValue>-365..</OriginalValue>
+      </CustomFilter>
+      <CustomFilter CustomValue="Earlier">
+        <OriginalValue>..-365</OriginalValue>
+      </CustomFilter>
+    </CustomFilters>
+  </Category>
+  <Category    Title="Company"    Description="Use this filter to restrict results by company"    Type="Microsoft.Office.Server.Search.WebControls.ManagedPropertyFilterGenerator"    MetadataThreshold="1"    NumberOfFiltersToDisplay="4"    MaxNumberOfFilters="20"    ShowMoreLink="True"    MappedProperty="companies"    MoreLinkText="show more"    LessLinkText="show fewer"    ShowCounts="Count" />
+  <Category    Title="Refiner V"    Description="Refiner V"    Type="Microsoft.Office.Server.Search.WebControls.ManagedPropertyFilterGenerator"    MetadataThreshold="1"    NumberOfFiltersToDisplay="4"    MaxNumberOfFilters="20"    ShowMoreLink="True"    MappedProperty="pbjmpv"    MoreLinkText="show more"    LessLinkText="show fewer"    ShowCounts="Count" />
+  <Category    Title="Refiner P"    Description="Refiner P"    Type="Microsoft.Office.Server.Search.WebControls.ManagedPropertyFilterGenerator"    MetadataThreshold="1"    NumberOfFiltersToDisplay="4"    MaxNumberOfFilters="20"    ShowMoreLink="True"    MappedProperty="pbjmpp"    MoreLinkText="show more"    LessLinkText="show fewer"    ShowCounts="Count" />
+  <Category    Title="Refiner E"    Description="Refiner E"    Type="Microsoft.Office.Server.Search.WebControls.ManagedPropertyFilterGenerator"    MetadataThreshold="1"    NumberOfFiltersToDisplay="4"    MaxNumberOfFilters="20"    ShowMoreLink="True"    MappedProperty="pbjmpe"    MoreLinkText="show more"    LessLinkText="show fewer"    ShowCounts="Count" />
+  <Category    Title="Managed Metadata Columns"    Description="Managed metadata of the documents"    Type="Microsoft.Office.Server.Search.WebControls.TaxonomyFilterGenerator"    MetadataThreshold="3"    NumberOfFiltersToDisplay="3"    MaxNumberOfFilters="20"    ShowMoreLink="True"    MappedProperty="owsmetadatafacetinfo"    MoreLinkText="show more"    LessLinkText="show fewer" />
+  <Category    Title="Tags"    Description="All managed metadata of the documents and social tags"    Type="Microsoft.Office.Server.Search.WebControls.TaxonomyFilterGenerator"    MetadataThreshold="3"    NumberOfFiltersToDisplay="3"    MaxNumberOfFilters="20"    ShowMoreLink="True"    MappedProperty="owsmetadatafacetinfo"    MoreLinkText="show more"    LessLinkText="show fewer"    ShowCounts="Count" />
+</FilterCategories>

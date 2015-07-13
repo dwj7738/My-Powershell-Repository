@@ -1,0 +1,10 @@
+[ClassVersion("1.0.0.0"), FriendlyName("xHotfix")]
+class MSFT_xWindowsUpdate : OMI_BaseResource
+{
+	[Write] String Path;
+	[Write] String Uri;
+	[Key] String Id;
+	[Write] String Log;
+	[Write, ValueMap{"Present","Absent"}, Values{"Present","Absent"}] String Ensure;
+};
+

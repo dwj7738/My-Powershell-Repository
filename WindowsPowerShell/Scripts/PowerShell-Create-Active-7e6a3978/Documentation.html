@@ -1,0 +1,692 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>PowerShell: Create Active Directory Users Based On Excel Input</title>        
+        <meta name="description" content="This script will create users in Active Directory based on the settings in the input file (see the Excel / CSV file below this script for an example of the input file used). These settings can, of course, be changed or extended (check this
+
+Microsoft Technet Link to get an over" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>This script will create users in Active Directory based on the settings in the input file (see the Excel / CSV file below this script for an example of the input file used). These settings can, of course, be changed or extended (check this
+<a href="http://technet.microsoft.com/en-us/library/ee617253.aspx" target="_blank">
+Microsoft Technet Link</a> to get an overview of all the settings that can be set with the PowerShell New-ADUser Cmdlet).<br>
+<br>
+Not only can the file be extended (or decreased) it can also be altered. The column names can be changed (note that you also need to change it in the PowerShell script), the columns can be re-ordered, etc. The script will keep working, because it uses the column
+ names!<br>
+<br>
+<strong>Note #1: </strong>This script makes use of the Active Directory Module for PowerShell.
+<strong><br>
+Note #2: </strong>The script has been written in regard of a customer project. So some values might be of less value for you than others and will not work 'out of the box'<strong><br>
+Note #3: </strong>This script is tailored for the project I used it in. It should work out of the box, but sometimes it doesn't (because of the configuration of Active Directory, missing of the AD Module, etc. etc). I added Error Handling for most (common)
+ errors that might arise. Most of the times when it doesn't work, it requires minor adjustments. Please just ask me to help you out, instead of giving a 1 star rating right away, because you can't get it to work or you don't understand the code (or PowerShell
+ at all)! Thanks!</p>
+<p><strong><br>
+</strong></p>
+<p><strong>Update 07-08-2014: </strong>Made version 1.3 of the script. Added a lot of extra functionality and better handling. See the Changelog below (which is also in the code):</p>
+<p># CHANGELOG<br>
+# Version 1.2: 15-04-2014 - Changed the code for better<br>
+# - Added better Error Handling and Reporting.<br>
+# - Changed input file with more logical headers.<br>
+# - Added functionality for account Enabled,<br>
+#&nbsp;&nbsp; PasswordNeverExpires, ProfilePath, ScriptPath,<br>
+#&nbsp;&nbsp; HomeDirectory and HomeDrive<br>
+# - Added the option to move every user to a different OU.<br>
+# Version 1.3: 08-07-2014<br>
+# - Added functionality for ProxyAddresses</p>
+<p>&nbsp;</p>
+<p><strong>create_ad_users.ps1</strong></p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">###########################################################
+# AUTHOR  : Marius / Hican - http://www.hican.nl - @hicannl 
+# DATE    : 26-04-2012 
+# EDIT    : 07-08-2014
+# COMMENT : This script creates new Active Directory users,
+#           including different kind of properties, based
+#           on an input_create_ad_users.csv.
+# VERSION : 1.3
+###########################################################
+
+# CHANGELOG
+# Version 1.2: 15-04-2014 - Changed the code for better
+# - Added better Error Handling and Reporting.
+# - Changed input file with more logical headers.
+# - Added functionality for account Enabled,
+#   PasswordNeverExpires, ProfilePath, ScriptPath,
+#   HomeDirectory and HomeDrive
+# - Added the option to move every user to a different OU.
+# Version 1.3: 08-07-2014
+# - Added functionality for ProxyAddresses
+
+# ERROR REPORTING ALL
+Set-StrictMode -Version latest
+
+#----------------------------------------------------------
+# LOAD ASSEMBLIES AND MODULES
+#----------------------------------------------------------
+Try
+{
+  Import-Module ActiveDirectory -ErrorAction Stop
+}
+Catch
+{
+  Write-Host &quot;[ERROR]`t ActiveDirectory Module couldn't be loaded. Script will stop!&quot;
+  Exit 1
+}
+
+#----------------------------------------------------------
+#STATIC VARIABLES
+#----------------------------------------------------------
+$path     = Split-Path -parent $MyInvocation.MyCommand.Definition
+$newpath  = $path &#43; &quot;\import_create_ad_users.csv&quot;
+$log      = $path &#43; &quot;\create_ad_users.log&quot;
+$date     = Get-Date
+$addn     = (Get-ADDomain).DistinguishedName
+$dnsroot  = (Get-ADDomain).DNSRoot
+$i        = 1
+
+#----------------------------------------------------------
+#START FUNCTIONS
+#----------------------------------------------------------
+Function Start-Commands
+{
+  Create-Users
+}
+
+Function Create-Users
+{
+  &quot;Processing started (on &quot; &#43; $date &#43; &quot;): &quot; | Out-File $log -append
+  &quot;--------------------------------------------&quot; | Out-File $log -append
+  Import-CSV $newpath | ForEach-Object {
+    If (($_.Implement.ToLower()) -eq &quot;yes&quot;)
+    {
+      If (($_.GivenName -eq &quot;&quot;) -Or ($_.LastName -eq &quot;&quot;) -Or ($_.Initials -eq &quot;&quot;))
+      {
+        Write-Host &quot;[ERROR]`t Please provide valid GivenName, LastName and Initials. Processing skipped for line $($i)`r`n&quot;
+        &quot;[ERROR]`t Please provide valid GivenName, LastName and Initials. Processing skipped for line $($i)`r`n&quot; | Out-File $log -append
+      }
+      Else
+      {
+        # Set the target OU
+        $location = $_.TargetOU &#43; &quot;,$($addn)&quot;
+
+        # Set the Enabled and PasswordNeverExpires properties
+        If (($_.Enabled.ToLower()) -eq &quot;true&quot;) { $enabled = $True } Else { $enabled = $False }
+        If (($_.PasswordNeverExpires.ToLower()) -eq &quot;true&quot;) { $expires = $True } Else { $expires = $False }
+
+        # A check for the country, because those were full names and need 
+        # to be land codes in order for AD to accept them. I used Netherlands 
+        # as example
+        If($_.Country -eq &quot;Netherlands&quot;)
+        {
+          $_.Country = &quot;NL&quot;
+        }
+        Else
+        {
+          $_.Country = &quot;EN&quot;
+        }
+        # Replace dots / points (.) in names, because AD will error when a 
+        # name ends with a dot (and it looks cleaner as well)
+        $replace = $_.Lastname.Replace(&quot;.&quot;,&quot;&quot;)
+        If($replace.length -lt 4)
+        {
+          $lastname = $replace
+        }
+        Else
+        {
+          $lastname = $replace.substring(0,4)
+        }
+        # Create sAMAccountName according to this 'naming convention':
+        # &lt;FirstLetterInitials&gt;&lt;FirstFourLettersLastName&gt; for example
+        # htehp
+        $sam = $_.Initials.substring(0,1).ToLower() &#43; $lastname.ToLower()
+        Try   { $exists = Get-ADUser -LDAPFilter &quot;(sAMAccountName=$sam)&quot; }
+        Catch { }
+        If(!$exists)
+        {
+          # Set all variables according to the table names in the Excel 
+          # sheet / import CSV. The names can differ in every project, but 
+          # if the names change, make sure to change it below as well.
+          $setpass = ConvertTo-SecureString -AsPlainText $_.Password -force
+
+          Try
+          {
+            Write-Host &quot;[INFO]`t Creating user : $($sam)&quot;
+            &quot;[INFO]`t Creating user : $($sam)&quot; | Out-File $log -append
+            New-ADUser $sam -GivenName $_.GivenName -Initials $_.Initials `
+            -Surname $_.LastName -DisplayName ($_.LastName &#43; &quot;,&quot; &#43; $_.Initials &#43; &quot; &quot; &#43; $_.GivenName) `
+            -Office $_.OfficeName -Description $_.Description -EmailAddress $_.Mail `
+            -StreetAddress $_.StreetAddress -City $_.City -State $_.State `
+            -PostalCode $_.PostalCode -Country $_.Country -UserPrincipalName ($sam &#43; &quot;@&quot; &#43; $dnsroot) `
+            -Company $_.Company -Department $_.Department -EmployeeID $_.EmployeeID `
+            -Title $_.Title -OfficePhone $_.Phone -AccountPassword $setpass -Manager $_.Manager
+
+#[SNAP]DOWNLOAD THE SCRIPT FOR THE REST OF THE CODE[/SNAP]
+
+  }
+  &quot;--------------------------------------------&quot; &#43; &quot;`r`n&quot; | Out-File $log -append
+}
+
+Write-Host &quot;STARTED SCRIPT`r`n&quot;
+Start-Commands
+Write-Host &quot;STOPPED SCRIPT&quot;</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__com">###########################################################</span>&nbsp;
+<span class="powerShell__com">#&nbsp;AUTHOR&nbsp;&nbsp;:&nbsp;Marius&nbsp;/&nbsp;Hican&nbsp;-&nbsp;http://www.hican.nl&nbsp;-&nbsp;@hicannl&nbsp;</span>&nbsp;
+<span class="powerShell__com">#&nbsp;DATE&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;26-04-2012&nbsp;</span>&nbsp;
+<span class="powerShell__com">#&nbsp;EDIT&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;07-08-2014</span>&nbsp;
+<span class="powerShell__com">#&nbsp;COMMENT&nbsp;:&nbsp;This&nbsp;script&nbsp;creates&nbsp;new&nbsp;Active&nbsp;Directory&nbsp;users,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;including&nbsp;different&nbsp;kind&nbsp;of&nbsp;properties,&nbsp;based</span>&nbsp;
+<span class="powerShell__com">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;an&nbsp;input_create_ad_users.csv.</span>&nbsp;
+<span class="powerShell__com">#&nbsp;VERSION&nbsp;:&nbsp;1.3</span>&nbsp;
+<span class="powerShell__com">###########################################################</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;CHANGELOG</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Version&nbsp;1.2:&nbsp;15-04-2014&nbsp;-&nbsp;Changed&nbsp;the&nbsp;code&nbsp;for&nbsp;better</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Added&nbsp;better&nbsp;Error&nbsp;Handling&nbsp;and&nbsp;Reporting.</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Changed&nbsp;input&nbsp;file&nbsp;with&nbsp;more&nbsp;logical&nbsp;headers.</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Added&nbsp;functionality&nbsp;for&nbsp;account&nbsp;Enabled,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;&nbsp;&nbsp;PasswordNeverExpires,&nbsp;ProfilePath,&nbsp;ScriptPath,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;&nbsp;&nbsp;HomeDirectory&nbsp;and&nbsp;HomeDrive</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Added&nbsp;the&nbsp;option&nbsp;to&nbsp;move&nbsp;every&nbsp;user&nbsp;to&nbsp;a&nbsp;different&nbsp;OU.</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Version&nbsp;1.3:&nbsp;08-07-2014</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Added&nbsp;functionality&nbsp;for&nbsp;ProxyAddresses</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;ERROR&nbsp;REPORTING&nbsp;ALL</span>&nbsp;
+Set<span class="powerShell__operator">-</span>StrictMode&nbsp;<span class="powerShell__operator">-</span>Version&nbsp;latest&nbsp;
+&nbsp;
+<span class="powerShell__com">#----------------------------------------------------------</span>&nbsp;
+<span class="powerShell__com">#&nbsp;LOAD&nbsp;ASSEMBLIES&nbsp;AND&nbsp;MODULES</span>&nbsp;
+<span class="powerShell__com">#----------------------------------------------------------</span>&nbsp;
+<span class="powerShell__keyword">Try</span>&nbsp;
+{&nbsp;
+&nbsp;&nbsp;Import<span class="powerShell__operator">-</span>Module&nbsp;ActiveDirectory&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;Stop&nbsp;
+}&nbsp;
+<span class="powerShell__keyword">Catch</span>&nbsp;
+{&nbsp;
+&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;[ERROR]`t&nbsp;ActiveDirectory&nbsp;Module&nbsp;couldn't&nbsp;be&nbsp;loaded.&nbsp;Script&nbsp;will&nbsp;stop!&quot;</span>&nbsp;
+&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span>&nbsp;1&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__com">#----------------------------------------------------------</span>&nbsp;
+<span class="powerShell__com">#STATIC&nbsp;VARIABLES</span>&nbsp;
+<span class="powerShell__com">#----------------------------------------------------------</span>&nbsp;
+<span class="powerShell__variable">$path</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__cmdlets">Split-Path</span>&nbsp;<span class="powerShell__operator">-</span>parent&nbsp;<span class="powerShell__variable">$MyInvocation</span>.MyCommand.Definition&nbsp;
+<span class="powerShell__variable">$newpath</span>&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$path</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;\import_create_ad_users.csv&quot;</span>&nbsp;
+<span class="powerShell__variable">$log</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$path</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;\create_ad_users.log&quot;</span>&nbsp;
+<span class="powerShell__variable">$date</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-Date</span>&nbsp;
+<span class="powerShell__variable">$addn</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;(Get<span class="powerShell__operator">-</span>ADDomain).DistinguishedName&nbsp;
+<span class="powerShell__variable">$dnsroot</span>&nbsp;&nbsp;=&nbsp;(Get<span class="powerShell__operator">-</span>ADDomain).DNSRoot&nbsp;
+<span class="powerShell__variable">$i</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1&nbsp;
+&nbsp;
+<span class="powerShell__com">#----------------------------------------------------------</span>&nbsp;
+<span class="powerShell__com">#START&nbsp;FUNCTIONS</span>&nbsp;
+<span class="powerShell__com">#----------------------------------------------------------</span>&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;Start<span class="powerShell__operator">-</span>Commands&nbsp;
+{&nbsp;
+&nbsp;&nbsp;Create<span class="powerShell__operator">-</span>Users&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Function</span>&nbsp;Create<span class="powerShell__operator">-</span>Users&nbsp;
+{&nbsp;
+&nbsp;&nbsp;<span class="powerShell__string">&quot;Processing&nbsp;started&nbsp;(on&nbsp;&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$date</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;):&nbsp;&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Out<span class="powerShell__operator">-</span>File&nbsp;<span class="powerShell__variable">$log</span>&nbsp;<span class="powerShell__operator">-</span>append&nbsp;
+&nbsp;&nbsp;<span class="powerShell__string">&quot;--------------------------------------------&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Out<span class="powerShell__operator">-</span>File&nbsp;<span class="powerShell__variable">$log</span>&nbsp;<span class="powerShell__operator">-</span>append&nbsp;
+&nbsp;&nbsp;<span class="powerShell__cmdlets">Import-CSV</span>&nbsp;<span class="powerShell__variable">$newpath</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">ForEach</span><span class="powerShell__operator">-</span>Object&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;((<span class="powerShell__variable">$_</span>.Implement.ToLower())&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;yes&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;((<span class="powerShell__variable">$_</span>.GivenName&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;&quot;</span>)&nbsp;<span class="powerShell__operator">-</span>Or&nbsp;(<span class="powerShell__variable">$_</span>.LastName&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;&quot;</span>)&nbsp;<span class="powerShell__operator">-</span>Or&nbsp;(<span class="powerShell__variable">$_</span>.Initials&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;&quot;</span>))&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;[ERROR]`t&nbsp;Please&nbsp;provide&nbsp;valid&nbsp;GivenName,&nbsp;LastName&nbsp;and&nbsp;Initials.&nbsp;Processing&nbsp;skipped&nbsp;for&nbsp;line&nbsp;$($i)`r`n&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;[ERROR]`t&nbsp;Please&nbsp;provide&nbsp;valid&nbsp;GivenName,&nbsp;LastName&nbsp;and&nbsp;Initials.&nbsp;Processing&nbsp;skipped&nbsp;for&nbsp;line&nbsp;$($i)`r`n&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Out<span class="powerShell__operator">-</span>File&nbsp;<span class="powerShell__variable">$log</span>&nbsp;<span class="powerShell__operator">-</span>append&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Set&nbsp;the&nbsp;target&nbsp;OU</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$location</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>.TargetOU&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;,$($addn)&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Set&nbsp;the&nbsp;Enabled&nbsp;and&nbsp;PasswordNeverExpires&nbsp;properties</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;((<span class="powerShell__variable">$_</span>.Enabled.ToLower())&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;true&quot;</span>)&nbsp;{&nbsp;<span class="powerShell__variable">$enabled</span>&nbsp;=&nbsp;<span class="powerShell__variable">$True</span>&nbsp;}&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;{&nbsp;<span class="powerShell__variable">$enabled</span>&nbsp;=&nbsp;<span class="powerShell__variable">$False</span>&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;((<span class="powerShell__variable">$_</span>.PasswordNeverExpires.ToLower())&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;true&quot;</span>)&nbsp;{&nbsp;<span class="powerShell__variable">$expires</span>&nbsp;=&nbsp;<span class="powerShell__variable">$True</span>&nbsp;}&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;{&nbsp;<span class="powerShell__variable">$expires</span>&nbsp;=&nbsp;<span class="powerShell__variable">$False</span>&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;A&nbsp;check&nbsp;for&nbsp;the&nbsp;country,&nbsp;because&nbsp;those&nbsp;were&nbsp;full&nbsp;names&nbsp;and&nbsp;need&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;to&nbsp;be&nbsp;land&nbsp;codes&nbsp;in&nbsp;order&nbsp;for&nbsp;AD&nbsp;to&nbsp;accept&nbsp;them.&nbsp;I&nbsp;used&nbsp;Netherlands&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;as&nbsp;example</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>(<span class="powerShell__variable">$_</span>.Country&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;Netherlands&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$_</span>.Country&nbsp;=&nbsp;<span class="powerShell__string">&quot;NL&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$_</span>.Country&nbsp;=&nbsp;<span class="powerShell__string">&quot;EN&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Replace&nbsp;dots&nbsp;/&nbsp;points&nbsp;(.)&nbsp;in&nbsp;names,&nbsp;because&nbsp;AD&nbsp;will&nbsp;error&nbsp;when&nbsp;a&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;name&nbsp;ends&nbsp;with&nbsp;a&nbsp;dot&nbsp;(and&nbsp;it&nbsp;looks&nbsp;cleaner&nbsp;as&nbsp;well)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$replace</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>.Lastname.Replace(<span class="powerShell__string">&quot;.&quot;</span>,<span class="powerShell__string">&quot;&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>(<span class="powerShell__variable">$replace</span>.length&nbsp;<span class="powerShell__operator">-</span>lt&nbsp;4)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$lastname</span>&nbsp;=&nbsp;<span class="powerShell__variable">$replace</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Else</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$lastname</span>&nbsp;=&nbsp;<span class="powerShell__variable">$replace</span>.substring(0,4)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Create&nbsp;sAMAccountName&nbsp;according&nbsp;to&nbsp;this&nbsp;'naming&nbsp;convention':</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;&lt;FirstLetterInitials&gt;&lt;FirstFourLettersLastName&gt;&nbsp;for&nbsp;example</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;htehp</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$sam</span>&nbsp;=&nbsp;<span class="powerShell__variable">$_</span>.Initials.substring(0,1).ToLower()&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$lastname</span>.ToLower()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Try</span>&nbsp;&nbsp;&nbsp;{&nbsp;<span class="powerShell__variable">$exists</span>&nbsp;=&nbsp;Get<span class="powerShell__operator">-</span>ADUser&nbsp;<span class="powerShell__operator">-</span>LDAPFilter&nbsp;<span class="powerShell__string">&quot;(sAMAccountName=$sam)&quot;</span>&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Catch</span>&nbsp;{&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>(<span class="powerShell__operator">!</span><span class="powerShell__variable">$exists</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Set&nbsp;all&nbsp;variables&nbsp;according&nbsp;to&nbsp;the&nbsp;table&nbsp;names&nbsp;in&nbsp;the&nbsp;Excel&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;sheet&nbsp;/&nbsp;import&nbsp;CSV.&nbsp;The&nbsp;names&nbsp;can&nbsp;differ&nbsp;in&nbsp;every&nbsp;project,&nbsp;but&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;if&nbsp;the&nbsp;names&nbsp;change,&nbsp;make&nbsp;sure&nbsp;to&nbsp;change&nbsp;it&nbsp;below&nbsp;as&nbsp;well.</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$setpass</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">ConvertTo-SecureString</span>&nbsp;<span class="powerShell__operator">-</span>AsPlainText&nbsp;<span class="powerShell__variable">$_</span>.Password&nbsp;<span class="powerShell__operator">-</span>force&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Try</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;[INFO]`t&nbsp;Creating&nbsp;user&nbsp;:&nbsp;$($sam)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;[INFO]`t&nbsp;Creating&nbsp;user&nbsp;:&nbsp;$($sam)&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Out<span class="powerShell__operator">-</span>File&nbsp;<span class="powerShell__variable">$log</span>&nbsp;<span class="powerShell__operator">-</span>append&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New<span class="powerShell__operator">-</span>ADUser&nbsp;<span class="powerShell__variable">$sam</span>&nbsp;<span class="powerShell__operator">-</span>GivenName&nbsp;<span class="powerShell__variable">$_</span>.GivenName&nbsp;<span class="powerShell__operator">-</span>Initials&nbsp;<span class="powerShell__variable">$_</span>.Initials&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>Surname&nbsp;<span class="powerShell__variable">$_</span>.LastName&nbsp;<span class="powerShell__operator">-</span>DisplayName&nbsp;(<span class="powerShell__variable">$_</span>.LastName&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;,&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$_</span>.Initials&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&nbsp;&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$_</span>.GivenName)&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>Office&nbsp;<span class="powerShell__variable">$_</span>.OfficeName&nbsp;<span class="powerShell__operator">-</span>Description&nbsp;<span class="powerShell__variable">$_</span>.Description&nbsp;<span class="powerShell__operator">-</span>EmailAddress&nbsp;<span class="powerShell__variable">$_</span>.Mail&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>StreetAddress&nbsp;<span class="powerShell__variable">$_</span>.StreetAddress&nbsp;<span class="powerShell__operator">-</span>City&nbsp;<span class="powerShell__variable">$_</span>.City&nbsp;<span class="powerShell__operator">-</span>State&nbsp;<span class="powerShell__variable">$_</span>.State&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>PostalCode&nbsp;<span class="powerShell__variable">$_</span>.PostalCode&nbsp;<span class="powerShell__operator">-</span>Country&nbsp;<span class="powerShell__variable">$_</span>.Country&nbsp;<span class="powerShell__operator">-</span>UserPrincipalName&nbsp;(<span class="powerShell__variable">$sam</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;@&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__variable">$dnsroot</span>)&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>Company&nbsp;<span class="powerShell__variable">$_</span>.Company&nbsp;<span class="powerShell__operator">-</span>Department&nbsp;<span class="powerShell__variable">$_</span>.Department&nbsp;<span class="powerShell__operator">-</span>EmployeeID&nbsp;<span class="powerShell__variable">$_</span>.EmployeeID&nbsp;`&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__operator">-</span>Title&nbsp;<span class="powerShell__variable">$_</span>.Title&nbsp;<span class="powerShell__operator">-</span>OfficePhone&nbsp;<span class="powerShell__variable">$_</span>.Phone&nbsp;<span class="powerShell__operator">-</span>AccountPassword&nbsp;<span class="powerShell__variable">$setpass</span>&nbsp;<span class="powerShell__operator">-</span>Manager&nbsp;<span class="powerShell__variable">$_</span>.Manager&nbsp;
+&nbsp;
+<span class="powerShell__com">#[SNAP]DOWNLOAD&nbsp;THE&nbsp;SCRIPT&nbsp;FOR&nbsp;THE&nbsp;REST&nbsp;OF&nbsp;THE&nbsp;CODE[/SNAP]</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;<span class="powerShell__string">&quot;--------------------------------------------&quot;</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;`r`n&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Out<span class="powerShell__operator">-</span>File&nbsp;<span class="powerShell__variable">$log</span>&nbsp;<span class="powerShell__operator">-</span>append&nbsp;
+}&nbsp;
+&nbsp;
+Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;STARTED&nbsp;SCRIPT`r`n&quot;</span>&nbsp;
+Start<span class="powerShell__operator">-</span>Commands&nbsp;
+Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;STOPPED&nbsp;SCRIPT&quot;</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<p>In the Excel file / Input CSV the following (general) structure was used (the values are example values).<br>
+<br>
+<strong>import_create_ad_users.csv</strong></p>
+<p><strong>&nbsp; <br>
+</strong></p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden"># LINE1 (the table headings in the Excel)
+ 
+# Implement,GivenName,LastName,Initials,OfficeName,
+# Description,Mail,StreetAddress,City,PostalCode,
+# State,Country,Company,Department,EmployeeID,
+# ExtensionAttribute1,Title,Phone,Manager,ProfilePath,
+# ScriptPath,HomeDirectory,HomeDrive,Password,
+# PasswordNeverExpires,Enabled,TargetOU,ProxyAddresses
+
+# LINE2 (first entry, all other entries look the same. As you can see
+# there are also tables which aren't used, but are no problem for
+# the script to work!
+ 
+# Yes,Hican,TehPwn,H.,Hican Building,Hican Net,
+# your@email.com,Hicanstreet 1,Hicancity,1337,
+# TheStateOfHican,Netherlands,Hican.nl,*,HIC1337,,
+# CEO,&#43;0000000000,Hican,\\profile\path,\\script\path,\\home\\dir,H:,IDDQD_1337#,
+# False,True,&quot;OU=Users,OU=Lab&quot;,&quot;SMTP:CHECK;SMTP:CHECK2&quot;</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__com">#&nbsp;LINE1&nbsp;(the&nbsp;table&nbsp;headings&nbsp;in&nbsp;the&nbsp;Excel)</span>&nbsp;
+&nbsp;&nbsp;
+<span class="powerShell__com">#&nbsp;Implement,GivenName,LastName,Initials,OfficeName,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Description,Mail,StreetAddress,City,PostalCode,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;State,Country,Company,Department,EmployeeID,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;ExtensionAttribute1,Title,Phone,Manager,ProfilePath,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;ScriptPath,HomeDirectory,HomeDrive,Password,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;PasswordNeverExpires,Enabled,TargetOU,ProxyAddresses</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;LINE2&nbsp;(first&nbsp;entry,&nbsp;all&nbsp;other&nbsp;entries&nbsp;look&nbsp;the&nbsp;same.&nbsp;As&nbsp;you&nbsp;can&nbsp;see</span>&nbsp;
+<span class="powerShell__com">#&nbsp;there&nbsp;are&nbsp;also&nbsp;tables&nbsp;which&nbsp;aren't&nbsp;used,&nbsp;but&nbsp;are&nbsp;no&nbsp;problem&nbsp;for</span>&nbsp;
+<span class="powerShell__com">#&nbsp;the&nbsp;script&nbsp;to&nbsp;work!</span>&nbsp;
+&nbsp;&nbsp;
+<span class="powerShell__com">#&nbsp;Yes,Hican,TehPwn,H.,Hican&nbsp;Building,Hican&nbsp;Net,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;your@email.com,Hicanstreet&nbsp;1,Hicancity,1337,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;TheStateOfHican,Netherlands,Hican.nl,*,HIC1337,,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;CEO,&#43;0000000000,Hican,\\profile\path,\\script\path,\\home\\dir,H:,IDDQD_1337#,</span>&nbsp;
+<span class="powerShell__com">#&nbsp;False,True,&quot;OU=Users,OU=Lab&quot;,&quot;SMTP:CHECK;SMTP:CHECK2&quot;</span></pre>
+</div>
+</div>
+</div>
+<div class="mcePaste" id="_mcePaste" style="left:-10000px; top:27px; width:1px; height:1px; overflow:hidden">
+###########################################################<br>
+# AUTHOR&nbsp; : Marius / Hican - http://www.hican.nl - @hicannl <br>
+# DATE&nbsp;&nbsp;&nbsp; : 26-04-2012 <br>
+# EDIT&nbsp;&nbsp;&nbsp; : 07-08-2014<br>
+# COMMENT : This script creates new Active Directory users,<br>
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; including different kind of properties, based<br>
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; on an input_create_ad_users.csv.<br>
+# VERSION : 1.3<br>
+###########################################################<br>
+<br>
+# CHANGELOG<br>
+# Version 1.2: 15-04-2014 - Changed the code for better<br>
+# - Added better Error Handling and Reporting.<br>
+# - Changed input file with more logical headers.<br>
+# - Added functionality for account Enabled,<br>
+#&nbsp;&nbsp; PasswordNeverExpires, ProfilePath, ScriptPath,<br>
+#&nbsp;&nbsp; HomeDirectory and HomeDrive<br>
+# - Added the option to move every user to a different OU.<br>
+# Version 1.3: 08-07-2014<br>
+# - Added functionality for ProxyAddresses<br>
+<br>
+# ERROR REPORTING ALL<br>
+Set-StrictMode -Version latest<br>
+<br>
+#----------------------------------------------------------<br>
+# LOAD ASSEMBLIES AND MODULES<br>
+#----------------------------------------------------------<br>
+Try<br>
+{<br>
+&nbsp; Import-Module ActiveDirectory -ErrorAction Stop<br>
+}<br>
+Catch<br>
+{<br>
+&nbsp; Write-Host &quot;[ERROR]`t ActiveDirectory Module couldn't be loaded. Script will stop!&quot;<br>
+&nbsp; Exit 1<br>
+}<br>
+<br>
+#----------------------------------------------------------<br>
+#STATIC VARIABLES<br>
+#----------------------------------------------------------<br>
+$path&nbsp;&nbsp;&nbsp;&nbsp; = Split-Path -parent $MyInvocation.MyCommand.Definition<br>
+$newpath&nbsp; = $path &#43; &quot;\import_create_ad_users.csv&quot;<br>
+$log&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = $path &#43; &quot;\create_ad_users.log&quot;<br>
+$date&nbsp;&nbsp;&nbsp;&nbsp; = Get-Date<br>
+$addn&nbsp;&nbsp;&nbsp;&nbsp; = (Get-ADDomain).DistinguishedName<br>
+$dnsroot&nbsp; = (Get-ADDomain).DNSRoot<br>
+$i&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 1<br>
+<br>
+#----------------------------------------------------------<br>
+#START FUNCTIONS<br>
+#----------------------------------------------------------<br>
+Function Start-Commands<br>
+{<br>
+&nbsp; Create-Users<br>
+}<br>
+<br>
+Function Create-Users<br>
+{<br>
+&nbsp; &quot;Processing started (on &quot; &#43; $date &#43; &quot;): &quot; | Out-File $log -append<br>
+&nbsp; &quot;--------------------------------------------&quot; | Out-File $log -append<br>
+&nbsp; Import-CSV $newpath | ForEach-Object {<br>
+&nbsp;&nbsp;&nbsp; If (($_.Implement.ToLower()) -eq &quot;yes&quot;)<br>
+&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (($_.GivenName -eq &quot;&quot;) -Or ($_.LastName -eq &quot;&quot;) -Or ($_.Initials -eq &quot;&quot;))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write-Host &quot;[ERROR]`t Please provide valid GivenName, LastName and Initials. Processing skipped for line $($i)`r`n&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;[ERROR]`t Please provide valid GivenName, LastName and Initials. Processing skipped for line $($i)`r`n&quot; | Out-File $log -append<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Set the target OU<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $location = $_.TargetOU &#43; &quot;,$($addn)&quot;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Set the Enabled and PasswordNeverExpires properties<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (($_.Enabled.ToLower()) -eq &quot;true&quot;) { $enabled = $True } Else { $enabled = $False }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If (($_.PasswordNeverExpires.ToLower()) -eq &quot;true&quot;) { $expires = $True } Else { $expires = $False }<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # A check for the country, because those were full names and need
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # to be land codes in order for AD to accept them. I used Netherlands
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # as example<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If($_.Country -eq &quot;Netherlands&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $_.Country = &quot;NL&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $_.Country = &quot;EN&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Replace dots / points (.) in names, because AD will error when a
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # name ends with a dot (and it looks cleaner as well)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $replace = $_.Lastname.Replace(&quot;.&quot;,&quot;&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If($replace.length -lt 4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $lastname = $replace<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $lastname = $replace.substring(0,4)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Create sAMAccountName according to this 'naming convention':<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # &lt;FirstLetterInitials&gt;&lt;FirstFourLettersLastName&gt; for example<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # htehp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $sam = $_.Initials.substring(0,1).ToLower() &#43; $lastname.ToLower()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Try&nbsp;&nbsp; { $exists = Get-ADUser -LDAPFilter &quot;(sAMAccountName=$sam)&quot; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Catch { }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If(!$exists)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Set all variables according to the table names in the Excel
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # sheet / import CSV. The names can differ in every project, but
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # if the names change, make sure to change it below as well.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $setpass = ConvertTo-SecureString -AsPlainText $_.Password -force<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Try<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write-Host &quot;[INFO]`t Creating user : $($sam)&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;[INFO]`t Creating user : $($sam)&quot; | Out-File $log -append<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; New-ADUser $sam -GivenName $_.GivenName -Initials $_.Initials `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Surname $_.LastName -DisplayName ($_.LastName &#43; &quot;,&quot; &#43; $_.Initials &#43; &quot; &quot; &#43; $_.GivenName) `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Office $_.OfficeName -Description $_.Description -EmailAddress $_.Mail `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -StreetAddress $_.StreetAddress -City $_.City -State $_.State `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -PostalCode $_.PostalCode -Country $_.Country -UserPrincipalName ($sam &#43; &quot;@&quot; &#43; $dnsroot) `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Company $_.Company -Department $_.Department -EmployeeID $_.EmployeeID `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Title $_.Title -OfficePhone $_.Phone -AccountPassword $setpass -Manager $_.Manager `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -profilePath $_.ProfilePath -scriptPath $_.ScriptPath -homeDirectory $_.HomeDirectory `<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -homeDrive $_.homeDrive -Enabled $enabled -PasswordNeverExpires $expires<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write-Host &quot;[INFO]`t Created new user : $($sam)&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;[INFO]`t Created new user : $($sam)&quot; | Out-File $log -append<br>
+&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $dn = (Get-ADUser $sam).DistinguishedName<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Set an ExtensionAttribute<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If ($_.ExtensionAttribute1 -ne &quot;&quot; -And $_.ExtensionAttribute1 -ne $Null)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $ext = [ADSI]&quot;LDAP://$dn&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $ext.Put(&quot;extensionAttribute1&quot;, $_.ExtensionAttribute1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Try&nbsp;&nbsp; { $ext.SetInfo() }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Catch { Write-Host &quot;[ERROR]`t Couldn't set the Extension Attribute : $($_.Exception.Message)&quot; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Set ProxyAdresses<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Try { $dn | Set-ADUser -Add @{proxyAddresses = ($_.ProxyAddresses -split &quot;;&quot;)} }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Catch { Write-Host &quot;[ERROR]`t Couldn't set the ProxyAddresses Attributes : $($_.Exception.Message)&quot; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Move the user to the OU ($location) you set above. If you don't<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # want to move the user(s) and just create them in the global Users<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # OU, comment the string below<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If ([adsi]::Exists(&quot;LDAP://$($location)&quot;))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Move-ADObject -Identity $dn -TargetPath $location<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write-Host &quot;[INFO]`t User $sam moved to target OU : $($location)&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;[INFO]`t User $sam moved to target OU : $($location)&quot; | Out-File $log -append<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write-Host &quot;[ERROR]`t Targeted OU couldn't be found. Newly created user wasn't moved!&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;[ERROR]`t Targeted OU couldn't be found. Newly created user wasn't moved!&quot; | Out-File $log -append<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Rename the object to a good looking name (otherwise you see<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # the 'ugly' shortened sAMAccountNames as a name in AD. This<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # can't be set right away (as sAMAccountName) due to the 20<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # character restriction<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $newdn = (Get-ADUser $sam).DistinguishedName<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rename-ADObject -Identity $newdn -NewName ($_.GivenName &#43; &quot; &quot; &#43; $_.LastName)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write-Host &quot;[INFO]`t Renamed $($sam) to $($_.GivenName) $($_.LastName)`r`n&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;[INFO]`t Renamed $($sam) to $($_.GivenName) $($_.LastName)`r`n&quot; | Out-File $log -append<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Catch<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write-Host &quot;[ERROR]`t Oops, something went wrong: $($_.Exception.Message)`r`n&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write-Host &quot;[SKIP]`t User $($sam) ($($_.GivenName) $($_.LastName)) already exists or returned an error!`r`n&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;[SKIP]`t User $($sam) ($($_.GivenName) $($_.LastName)) already exists or returned an error!&quot; | Out-File $log -append<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; Else<br>
+&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write-Host &quot;[SKIP]`t User $($sam) ($($_.GivenName) $($_.LastName)) will be skipped for processing!`r`n&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;[SKIP]`t User $($sam) ($($_.GivenName) $($_.LastName)) will be skipped for processing!&quot; | Out-File $log -append<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; $i&#43;&#43;<br>
+&nbsp; }<br>
+&nbsp; &quot;--------------------------------------------&quot; &#43; &quot;`r`n&quot; | Out-File $log -append<br>
+}<br>
+<br>
+Write-Host &quot;STARTED SCRIPT`r`n&quot;<br>
+Start-Commands<br>
+Write-Host &quot;STOPPED SCRIPT&quot;</div>
+
+        </div>
+    </body>
+</html>

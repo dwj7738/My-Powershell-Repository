@@ -1,0 +1,271 @@
+﻿<body>
+    <div id="longDesc">
+        <span style="font-family:Calibri; font-size:medium">
+            <h1 style="font-family:Calibri Light; color:#2e74b5; font-size:large">Introduction</h1>
+            <p>
+                The<strong> xSCSMA</strong> module is a part of the Windows PowerShell Desired State Configuration (DSC) Resource Kit, which is a collection of DSC Resources produced by the PowerShell Team.
+                This module contains resources for installation of System Center Service Management Automation (SMA). The <strong>xSCSMA</strong> module
+                contains three resources - <strong>xSCSMAPowerShellSetup </strong>for installation of the SMA PowerShell, <strong>xSCSMAWebServiceServerSetup </strong> for installation of the SMA Web Service server,
+                and <strong>xSCSMARunbookWorkerServerSetup</strong> for installation of the SMA Runbook Worker server.
+            <p>
+                <strong>
+                    All of the resources in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program
+                    or service. The ""x" in xSCSMA stands for experimental
+                </strong>, which means that these resources will be <strong>fix forward</strong>
+                and monitored by the module owner(s).
+            </p>
+            <p>Please leave comments, feature requests, and bug reports in the Q &amp; A tab for this module.</p>
+            <p>
+                If you would like to modify <strong>xSCSMA</strong> module, feel free. When modifying, please update the module name, resource friendly name,
+                and MOF class name (instructions below). As specified in the license, you may copy or modify this resource as long as they are used on the Windows Platform.
+            </p>
+            <p>
+                For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+                <a href="http://blogs.msdn.com/b/powershell/"><span style="color:#0000ff">PowerShell Blog</span></a> (
+        </span><a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx"><span style="color:#0000ff">this</span></a> is a good starting point). There are
+        also great community resources, such as <a href="http://powershell.org/wp/tag/dsc/"><span style="color:#0000ff">PowerShell.org</span></a>, or
+        <a href="http://www.powershellmagazine.com/tag/dsc/"><span style="color:#0000ff">PowerShell Magazine</span></a>. For more information on the DSC Resource Kit, check out
+        <a href="http://go.microsoft.com/fwlink/?LinkID=389546"><span style="color:#0000ff">this blog post</span></a>.<br></p>
+
+        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Installation</h1>
+        <p>To install the <strong>xSCSMA</strong> module </p>
+        <ul style="list-style-type:disc; direction:ltr">
+            <li>Unzip the content under $env:ProgramFiles\WindowsPowerShell\Modules folder</li>
+        </ul>
+        <p>To confirm installation:<br></p>
+        <ul style="list-style-type:disc; direction:ltr">
+            <li>
+                Run <strong>Get-DSCResource</strong> to see that <strong>xSCSMAPowerShellSetup, xSCSMAWebServiceServerSetup and xSCSMARunbookWorkerServerSetup</strong> are among the DSC Resources listed.<br>
+            </li>
+        </ul>
+
+        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Requirements</h1>
+        <p>
+            This module requires the latest version of PowerShell (v4.0, which ships in Windows 8.1 or Windows Server 2012R2). To easily use PowerShell 4.0 on older operating systems,
+            <a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855"><span style="color:#0000ff">install WMF 4.0</span></a>. Please read the installation instructions
+            that are present on both the download page and the release notes for WMF 4.0.
+        </p>
+
+        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Description</h1>
+
+        <p>
+            The <strong>xSCSMA</strong> module contains the <strong>xSCSMAPowerShellSetup, xSCSMAWebServiceServerSetup and xSCSMARunbookWorkerServerSetup</strong> DSC Resources. This DSC
+            Module enables installation of System Center Service Management Automation (SMA).
+        </p>
+
+
+        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Details</h1>
+        <p><strong>xSCSMAPowerShellSetup</strong> is used for installation of the SMA PowerShell components, and has the following properties:</p>
+        <ul style="list-style-type:disc; direction:ltr">
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value (Present, Absent) that describes if the SMA PowerShell components are expected to be installed on the machine.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SetupCredential: </span>REQUIRED - Credential to be used to perform the installation.
+            </li>
+        </ul>
+        <p><strong>xSCSMAWebServiceServerSetup</strong> is used for installation of the SMA Web Service server, and has the following properties:</p>
+        <ul style="list-style-type:disc; direction:ltr">
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">Ensure:</span> KEY - An enumerated value (Present, Absent) that describes if the SCSCMA Web Service server is expected to be installed on the machine.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SourcePath:</span> REQUIRED - UNC path to the root of the source files for installation.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SourceFolder:</span> Folder within the source path containing the source files for installation.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SetupCredential:</span> REQUIRED - Credential to be used to perform the installation.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">FirstWebServiceServer: </span>REQUIRED - Binary value defining if this the first Management Server
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">ApPool: </span>REQUIRED - Service account of the web service application pool.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">ApPoolUsername: </span>Output username of the web service application pool.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">AdminGroupMembers: </span>A comma-separated list of users to add to the IIS Administrators group.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SqlServer: </span>REQUIRED - Name of the SQL Server for the SMA database.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SqlInstance: </span>REQUIRED - Name of the SQL Instance for the SMA database.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SqlDatabase: </span>Name of the SMA database.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SiteName: </span>Name of the SMA web site.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">WebServicePort: </span>Port of the SMA web site.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">InstallFolder: </span>Installation folder for SMA.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">UseSSL: </span>Binary value defining whether or not to use SSL
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SpecifyCertificate: </span>Specify an existing certificate for the SMA web site.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">CertificateName: </span>Name of the existing certificate to use.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">ETWManifest: </span>Log to ETW.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SendCEIPReports: </span>Send Customer Experience Improvement Program.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">MSUpdate: </span>Enumerated value - 0: Do not opt in to Microsoft Update. 1: Opt in to Microsoft Update.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">ProductKey: </span>Product key for licensed installations.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">RunbookWorkerServers: </span>Array of Runbook Worker servers in this deployment.
+            </li>
+        </ul>
+
+        <p><strong>xSCSMARunbookWorkerServerSetup </strong> is used for installation of the SMA Runbook Worker server, and has the following properties:</p>
+        <ul style="list-style-type:disc; direction:ltr">
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value (Present, Absent) that describes if the SMA RunbookWorker server is expected to be installed on the machine.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SetupCredential: </span>REQUIRED - Credential to be used to perform the installation.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">Service: </span>REQUIRED - Service account of the web service application pool.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">ServiceUserName: </span>Output username of the Service account of the web service application pool.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SqlServer: </span>REQUIRED - Name of the SQL Server for the SMA database.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SqlInstance: </span>REQUIRED - Name of the SQL Instance for the SMA database.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SqlDatabase: </span>Name of the SMA database.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">InstallFolder: </span>Installation folder for SMA.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">ETWManifest: </span>Log to ETW.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">SendCEIPReports: </span>Send Customer Experience Improvement Program.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">MSUpdate: </span>Enumerated value - 0: Do not opt in to Microsoft Update. 1: Opt in to Microsoft Update.
+            </li>
+            <li>
+                <span style="width: 250px; float: left; font-weight: bold;">ProductKey: </span>Product key for licensed installations.
+            </li>
+        </ul>
+
+
+
+
+        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Renaming Requirements</h1>
+        <p>When making changes to these resources, we suggest the following practice:</p>
+        <ol style="list-style-type:decimal; direction:ltr">
+            <li>
+                Update the following names by replacing MSFT with your company/community name and replacing the <strong>"x"</strong> with <strong>"c"</strong> (short for "Community") or another prefix of your choice:
+                <ul>
+                    <li>
+                        <strong>Module name (ex: xSCSMA</strong> becomes <strong>cSCSMA</strong>)
+                    </li>
+                    <li>
+                        <strong>Resource folder (ex: MSFT_xSCSMAWebServiceServerSetup</strong> becomes <strong>Contoso_cSCSMAWebServiceServerSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>Resource Name (ex: MSFT_xSCSMAWebServiceServerSetup</strong> becomes <strong>Contoso_cSCSMAWebServiceServerSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>Resource Friendly Name (ex: xSCSMAWebServiceServerSetup</strong> becomes <strong>cSCSMAWebServiceServerSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>MOF class name (ex: MSFT_xSCSMAWebServiceServerSetup</strong> becomes <strong>Contoso_cSCSMAWebServiceServerSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>Filename for the &lt;resource&gt;.schema.mof (ex: MSFT_xSCSMAWebServiceServerSetup</strong>.schema.mof becomes <strong>Contoso_cSCSMAWebServiceServerSetup</strong>.schema.mof)
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Update module and metadata information in the module manifest
+            </li>
+            <li>
+                Update any configuration that use these resources
+            </li>
+        </ol>
+        <p><em>We reserve resource and module names without prefixes ("x" or "c") for future use (e.g. "MSFT_SCSMAWebServiceServerSetup" or "SCSMAWebServiceServerSetup"). If the next version of Windows Server ships with "MSFT_SCSMAWebServiceServerSetup" resources, we don't want to break any configurations that use any community modifications. Please keep a prefix such as "c" on all community modifications.</em></p>
+
+
+        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Versions</h1>
+        <p>1.2.1.0</p>
+        <ul style="list-style-type:disc; direction:ltr">
+            <li>Increased timeout for setup process to start to 60 seconds.</li>
+            <li>xSCSMAWebServiceServerSetup – fixed bug when using named SQL instance, added SMA service account to admin group.</li>
+            <li>xSCSMARunbookWorkerSetup – fixed bug when using named SQL instance.</li>
+        </ul>
+                <p>1.1.0.0</p>
+                <ul style="list-style-type:disc; direction:ltr">
+                    <li>
+                        Initial release with the following resources
+                        <ul style="list-style-type:circle">
+                            <li>
+                                xSCSMAPowerShellSetup
+                            </li>
+                            <li>
+                                xSCSMAWebServiceServerSetup
+                            </li>
+                            <li>
+                                xSCSMARunbookWorkerServerSetup
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <h1 style="margin-bottom:0pt; font-family:Calibri Light; color:#2e74b5; font-size:large">Examples</h1>
+                <p>Three example configurations are included in the Examples folder.  All three examples also use the xSQLServer module.</p>
+
+                <p><strong>Single Server Installation:</strong> SCSMA-SingleServer.ps1 installs all SMA roles including prerequisites and SQL on a single server.</p>
+                <p><strong>Separate SQL:</strong> SCSMA-SeperateSQL.ps1 installs all SMA roles on one server and SQL on a seperate server.</p>
+                <p><strong>Multiple Instances:</strong> SCSMA-MultiInstance.ps1 installs all SMA roles including multiple instances of both Web Service and Runbook Worker servers and SQL on a seperate server.</p>
+
+                <p>Notes:</p>
+                <p>All three examples use the exact same Configuration and just modify the behavior based on input ConfigurationData.</p>
+                <p>In the Examples folder you will see a version of each file with "-TP" appended to the name. These are the equivalent examples for deployment of System Center Technical Preview on Windows Server Technical Preview.</p>
+                <p>The samples require the use of the <a href="http://blogs.msdn.com/b/powershell/archive/2014/09/04/windows-management-framework-5-0-preview-september-2014-is-now-available.aspx"><span style="color:#0000ff">Windows Management Framework (WMF) 5.0 Preview.</span></a></p>
+                <p>
+                    System Center 2012 R2 Service Management Automation Web Service and Runbook Worker installers have a hard check for PowerShell 4.0.
+                    If you are using these resources to install on a system that has WMF5 preview installed, you must copy the transform (MST) files from
+                    the Web Service and Runbook Worker DSC resource folders to the SMA installation folder.
+                </p>
+                <p></p><p></p>
+                </span>
+    </div>
+</body>

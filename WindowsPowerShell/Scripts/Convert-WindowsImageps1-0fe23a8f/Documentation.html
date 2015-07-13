@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Convert-WindowsImage.ps1 — WIM2VHD for Windows 10 (also Windows 8 and 8.1)</title>        
+        <meta name="description" content="Convert-WindowsImage is the new version of WIM2VHD designed specifically for Windows 8 and above. Written in PowerShell, this command-line tool allows you to rapidly create sysprepped VHDX and VHDX images from setup media for Windows 7/Server 2008 R2, Windows 8/8.1/Server 2012/R2" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<h2>Description&nbsp;</h2>
+<div class="endscriptcode"><span style="font-size:small"><strong>Convert-WindowsImage</strong> is the new version of WIM2VHD designed specifically for Windows 10. It also works&nbsp;fine with Windows&nbsp;8 and Windows 8.1. Completely rewritten in PowerShell,
+ the <strong>Convert-WindowsImage </strong>command-line tool allows you to create generalized (&ldquo;sysprepped&rdquo;) VHD and VHDX images from any official build (ISO or WIM image) of Windows 7, Windows Server 2008 R2, Windows 8, Windows Server 2012, Windows
+ 8.1 and Windows Server 2012 R2</span><span style="font-size:small">.</span></div>
+<div class="endscriptcode"><span style="font-size:small"><br>
+</span></div>
+<div class="endscriptcode"><span style="font-size:small"><span style="color:#ff0000"><strong>New
+</strong></span>in version&nbsp;<strong>10</strong> is support for <strong>Windows 10 (and Windows Server 2016)
+</strong>VMs and images. Full change log is below.<br>
+</span></div>
+<div class="endscriptcode"><span style="font-size:small">&nbsp;</span></div>
+<div class="endscriptcode"><span style="font-size:small">Images created by <strong>
+Convert-WindowsImage </strong>will boot directly to the Out Of Box Experience (OOBE), ready for your first-use customizations. So you can think of it as of replacement&nbsp;for your daddy's &ldquo;Deploy-Sysprep-and-Capture&rdquo; approach. You can also use
+ these images for automation by supplying your own <strong>unattend.xml </strong>
+file, making the possibilities limitless. Fresh squeezed, organically grown, free-range VHDs&mdash;just like Mom used to make&mdash;that work with Virtual PC (Windows 7 only), Virtual Server (Windows 7 only), Microsoft Hyper-V, or Windows' Native VHD-Boot functionality!</span></div>
+<div class="endscriptcode"><span style="font-size:small"><br>
+</span></div>
+<div class="endscriptcode"><span style="font-size:small"><strong>Convert-WindowsImage
+</strong>(just like its precessor, WIM2VHD tool) was originally created by <strong>
+Mike Kolitz</strong> (<a href="http://social.technet.microsoft.com/profile/mike kolitz">http://social.technet.microsoft.com/profile/mike kolitz</a>)&nbsp;while he was a&nbsp;Microsoft Employee and worked&nbsp;on Windows. The tool is now maintained and evolved
+ by his friends from Microsoft Consulting Services (MCS).</span></div>
+<h2 class="endscriptcode">Change Log</h2>
+<h3>Version <span style="color:#ff0000">10 </span>(June 2015) Note: Multiple<span style="color:#ff0000"> breaking changes!</span></h3>
+<ul>
+<li><span style="font-size:small"><strong>Works on (and with)&nbsp;<span style="color:#ff0000">Windows 10!
+</span></strong>(Also fully tested on&nbsp;Windows 8.1 with August 2014 and November 2014 updates).</span>
+</li><li><span style="font-size:small"><span>The script is <strong>now a Function!</strong> You have to load it first (aka &ldquo;dot-source&rdquo;) and then call by its name, without extension.Please refer to the Examples section below for a code sample.</span></span>
+</li><li><span style="font-size:small"><strong>-Feature</strong> parameter now supports multiple input&nbsp;(array of strings).</span>
+</li><li><span style="font-size:small"><strong>-Edition </strong>parameter now supports multiple input&nbsp;(array of stings). Output will be multiple separate VHD(x)'es.</span>
+</li><li><span style="font-size:small"><strong>-Package.&nbsp;</strong>New parameter to inject Windows packages (e.g. updates or language packs) into the image.</span>
+</li><li><span style="font-size:small"><strong>-RassThru </strong>returns object(s) instead of a path.</span>
+</li><li><span style="font-size:small"><strong>Fix. </strong>If the source is remote (UNC path), the script copies it locally into the user's temp directory. Previously the local copy was not removed afterwards. Now we correctly delete it when no longer needed.</span>
+</li><li><span style="font-size:small"><strong>Fix. </strong>The&nbsp;function now works as expected with Powershell's Strict Mode.</span>
+</li><li><span style="font-size:small"><strong>VHDX </strong>is the new default <em>(Sorry Azure!).
+</em>Use <strong>-VhdFormat</strong> to explicitly specify &ldquo;VHD&rdquo;.</span>
+</li><li><span style="font-size:small"><strong>GPT </strong>is the new default <em>(Sorry Generation 1 virtual machines!).
+</em>Use <strong>-VhdPartitionStyle </strong>to explicitly specify &ldquo;MBR&rdquo;.</span>
+</li><li><span style="font-size:small">UI is <strong>deprecated.&nbsp;</strong>This was a tough decition but I don't have enough skills and time to maintain it and support with the new features I added over time. Probably the old
+<strong>-ShowUi</strong> option still works. But I cannot commit it to work with any of the new features or at all. Sorry about this folks. If anyone has suggestions and ready to help, please reach out to me and I will be happy to include your contributions.</span>
+</li></ul>
+<h3>Version 6.3 QFE 7 (February 17, 2014)</h3>
+<ul>
+<li><span style="font-size:small"><strong>Fix.</strong> QFE5 has introduced&nbsp;a bug in GTP handling.</span>
+</li></ul>
+<h3>Version 6.3 QFE 6 (February 16, 2014)</h3>
+<ul>
+<li><span style="font-size:small"><strong>New.</strong> Option to enable Windows Features for the OS inside the VHD(x). Use the
+<strong>-Feature </strong>parameter. <span style="color:#ff0000">Note</span> that you need to specify the
+<em>internal </em>names as understood by DISM and DISM CmdLets (e.g. <em>NetFx3),
+</em>instead of the &quot;friendly&quot; names from Server Manager CmdLets (e.g. <em>NET-Framework-Core).
+</em>There's no need to specify the source since we already have full sources&nbsp;inside the ISO.</span>
+</li></ul>
+<h3>Version 6.3 QFE 5</h3>
+<ul>
+<li><span style="font-size:small"><strong>Fix. </strong>VM Provisioning with VMM using the&nbsp;Differencing Disk feature was failing. A&nbsp;particular case of this scenario is provisioning a VM Role Gallery Item with Windows Azure Pack. (Note that so-called
+ Standalone VMs were not affected since they're not using Differencing disks).</span>
+</li></ul>
+<h3>Version 6.3 for Windows 8.1 and Windows Server 2012 R2</h3>
+<ul>
+<li><span style="font-size:small"><strong>Fix </strong>Now works correctly on UEFI-based systems (like your modern laptop or new server, as well as inside Generation 2 VMs).
+</span></li><li><span style="font-size:small"><strong>New </strong>Support for GPT partitioning inside VHD(x)es. This is particularly handful for the following two scenarios. Use the new
+<strong>-VHDPartitionStyle</strong> parameter. By default we still create MBR-partitioned VHD(x)es for backward compatibility. (I.e. your older commands will produce the same effect as before).
+</span>
+<ul>
+<li><span style="font-size:small">Native VHD(x) Boot on UEFI-based system. </span>
+</li><li><span style="font-size:small"><strong><span style="color:#ff0000">Generation 2 Virtual Machines
+</span></strong>in Hyper-V with Windows Server 2012 R2 (more details at <a href="http://blogs.technet.com/b/jhoward/archive/2013/10/24/hyper-v-generation-2-virtual-machines-part-1.aspx">
+http://blogs.technet.com/b/jhoward/archive/2013/10/24/hyper-v-generation-2-virtual-machines-part-1.aspx</a>).
+</span></li></ul>
+</li><li><span style="font-size:small"><strong>New </strong>Specific features to better support Native VHD(x) Boot scenarios.
+</span>
+<ul>
+<li><span style="font-size:small">An option to skip BCD store creation inside the VHD(x). That&rsquo;s because with Native Boot, the BCD store and the boot loader itself should be stored off the VHD(x), on the physical disk. Thus no need to pollute the root
+ of your C:\ drive.&nbsp;Use the new&nbsp;<strong>-BCDinVHD</strong> parameter. </span>
+</li><li><span style="font-size:small">A switch to disable automatic expansion of VHD(x) in case of Native Boot. For usage guidance, see
+<strong>-ExpandOnNativeBoot</strong> in the help section. </span></li><li><span style="font-size:small">An option to inject drivers into the OS inside the VHD(x). Good for OEM mass storage drivers which are required for native boot on common server-class hardware.&nbsp;Use the new&nbsp;<strong>-Driver
+</strong>parameter. </span></li></ul>
+</li><li><span style="font-size:small"><strong>New </strong>A switch to enable Remote Desktop for the OS inside the VHD(x). Use the new
+<strong>-RemoteDesktopEnable </strong>switch. </span>
+<ul>
+<li><span style="font-size:small">Note that you still need to enable relevant Firewall rules (using Group Policy or manually). That might be a subject for further improvements.
+</span></li></ul>
+</li><li><span style="font-size:small"><strong>Improvement </strong>Added link to online help (this page). Use the
+<strong>-Online </strong>switch for Get-Help. </span></li><li><span style="font-size:small"><strong>Obvious </strong>Support for Windows 8.1 and Windows Server 2012 R2.
+</span></li></ul>
+<h3>Version 6.2 for Windows 8 and Windows Server 2012</h3>
+<ul>
+<li><span style="font-size:small">First, we should stop calling it &quot;WIM2VHD&quot;.&nbsp; The WIM2VHD name has been discontinued with this version of the script.&nbsp; Because it's been completely rewritten in PowerShell, I opted to give it a more PowerShell-esque
+ name, that name being <strong>&quot;Convert-WindowsImage&quot;</strong>.&nbsp; &quot;WIM2VHD8&quot; has been the working codename for the project during development.</span>
+</li><li><span style="font-size:small">As mentioned earlier, Convert-WindowsImage has been
+<strong>completely rewritten in PowerShell</strong>.</span> </li><li><span style="font-size:small">Support for the new <strong>VHDX</strong> file format has been added!</span>
+</li><li><span style="font-size:small">Support for creating VHD and VHDX images from <strong>
+.ISO</strong> files has been added!</span> </li><li><span style="font-size:small">A new (and completely optional) <strong>graphical user interface</strong> has been added, making the creation of VHD and VHDX images as simple as a few mouse clicks!</span>
+</li><li><span style="font-size:small"><strong>Closer integration with the storage stack</strong>, so there's no more need to automate DISKPART.EXE and hope that it works!</span>
+</li><li><span style="font-size:small"><strong>Fewer binary dependencies!</strong></span>
+<ul>
+<li><span style="font-size:small">WIM2VHD required the use of up to <strong>8 external binaries</strong>, some of which were only available as part of the Windows AIK/OPK,
+<strong>requiring a 1.7GB download</strong> just to get a few EXE files.</span> </li><li><span style="font-size:small">Convert-WindowsImage requires the use of only <strong>
+3 external binaries</strong>, all of which are <strong>included in-box with Windows 8</strong>.</span>
+</li></ul>
+</li></ul>
+<h2>System Requirements</h2>
+<ul>
+<li><span style="font-size:small"><strong>What OSes can I run Convert-WindowsImage on?<br>
+</strong></span><span style="font-size:small">Convert-WindowsImage supports pre-release versions of Windows 8 and higher. Windows 8.1 and Windows Server 2012 R2 is the recommended and most tested platform. Convert-WindowsImage cannot be run on Windows 7 or
+ Windows Server 2008 R2<em>.</em></span> </li><li><span style="font-size:small"><strong>What OSes can Convert-WindowsImage make VHDs and VHDXs of?<br>
+</strong>Convert-WindowsImage only supports creating VHD and VHDX images from Windows 7/R2 and higher. Windows Vista/Windows Server 2008 and previous versions of Windows are not supported.</span>
+</li><li><span style="font-size:small"><strong>Which OSes can I use VHDX files with?<br>
+</strong>The new VHDX file format can only be used with Windows 8/Server 2012 and above, and the version of Hyper-V that ships with those platforms. You can create a VHDX which has Windows 7 or Windows Server 2008 R2 installed in it, but they will only run
+ on Windows 8/Server 2012 Hyper-V and above.</span> </li></ul>
+<h2>FAQ</h2>
+<h3>Are there any changes from the way WIM2VHD worked?</h3>
+<div><span style="font-size:small">Yes.&nbsp; Here's a list of WIM2VHD features that have not been implemented in Convert-WindowsImage.ps1.&nbsp;</span></div>
+<ul>
+<li><span style="font-size:small">/QFE*&nbsp;<br>
+<em>Provided support for hotfix installation into the VHD during creation.<br>
+</em></span></li><li><span style="font-size:small">/REF&nbsp;<br>
+<em>Provided support for multi-part WIM files.<br>
+</em></span></li><li><span style="font-size:small">/MergeFolder*&nbsp;<br>
+<em>Merged a specified folder structure into the root of the VHD.<br>
+</em></span></li><li><span style="font-size:small">/SignDisk&nbsp;<br>
+<em>Created a file with the creation date, time, and Convert-WindowsImage version used to create the VHD in the root of the VHD file system.&nbsp; This is now the default behavior, so the switch has been removed.<br>
+</em></span></li><li><span style="font-size:small">/Trace <br>
+<em>Displayed verbose output.&nbsp; This is now handled by the -Verbose switch.<br>
+</em></span></li><li><span style="font-size:small">FastFixed is no longer a valid value for the -DiskType parameter.<br>
+</span></li><li><span style="font-size:small">/CopyLocal <br>
+<em>Copied all necessary EXEs to a single directory.&nbsp; No longer needed in Convert-WindowsImage.<br>
+</em></span></li><li><span style="font-size:small">/Metadata<br>
+</span></li><li><span style="font-size:small">/HyperV<br>
+</span></li><li><span style="font-size:small">/ClassicMount<br>
+<em>Specified that WIM2VHD should use drive letters instead of the NTFS mount points.&nbsp; This is now the default behavior, so the switch has been removed.</em></span>
+</li></ul>
+<div><em><span style="font-size:small">* These features may be implemented in a later release.</span></em></div>
+<h3>Are there any known issues?</h3>
+<div><span style="font-size:small">In the initial release of Convert-WindowsImage.ps1, there was a bug which prevented the creation of Hyper-V Server VHD and VHDX files.&nbsp; This bug has since been fixed in the .1 revision which was released on 6/12/2012.&nbsp;
+ If you are not affected by this issue, there is no need for you to upgrade to the current release.<br>
+<br>
+<span style="font-size:small">There are currently no known issues with this build of Convert-WindowsImage.ps1.</span><br>
+</span></div>
+<h3>How do I use this thing?</h3>
+<p><span>Use the function (New in version 10). Also highlights some of the new features.</span></p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden"># Load (aka &quot;dot-source) the Function
+. .\Convert-WindowsImage.ps1
+# Prepare all the variables in advance (optional)
+$ConvertWindowsImageParam = @{ 
+    SourcePath          = &quot;9600.17053.WINBLUE_REFRESH.141120-0031_X64FRE_SERVER_EN-US_VL-IR5_SSS_X64FREV_EN-US_DV9.ISO&quot; 
+    RemoteDesktopEnable = $True 
+    Passthru            = $True 
+    Edition    = @( 
+        &quot;ServerDataCenter&quot; 
+        &quot;ServerDataCenterCore&quot; 
+    ) 
+    Package = @( 
+        &quot;C:\Users\artemp\Downloads\November\Windows8.1-KB3012997-x64-en-us-server.cab&quot; 
+        &quot;C:\Users\artemp\Downloads\VMguest\windows6.2-hypervintegrationservices-x64.cab&quot; 
+    ) 
+} 
+# Produce the images
+$VHDx = Convert-WindowsImage @ConvertWindowsImageParam</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__com">#&nbsp;Load&nbsp;(aka&nbsp;&quot;dot-source)&nbsp;the&nbsp;Function</span>&nbsp;
+&nbsp;
+.&nbsp;.\Convert<span class="powerShell__operator">-</span>WindowsImage.ps1&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Prepare&nbsp;all&nbsp;the&nbsp;variables&nbsp;in&nbsp;advance&nbsp;(optional)</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$ConvertWindowsImageParam</span>&nbsp;=&nbsp;@{&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;SourcePath&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__string">&quot;9600.17053.WINBLUE_REFRESH.141120-0031_X64FRE_SERVER_EN-US_VL-IR5_SSS_X64FREV_EN-US_DV9.ISO&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;RemoteDesktopEnable&nbsp;=&nbsp;<span class="powerShell__variable">$True</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Passthru&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;<span class="powerShell__variable">$True</span>&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Edition&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;@(&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;ServerDataCenter&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;ServerDataCenterCore&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Package&nbsp;=&nbsp;@(&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;C:\Users\artemp\Downloads\November\Windows8.1-KB3012997-x64-en-us-server.cab&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;C:\Users\artemp\Downloads\VMguest\windows6.2-hypervintegrationservices-x64.cab&quot;</span>&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;&nbsp;
+}&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Produce&nbsp;the&nbsp;images</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$VHDx</span>&nbsp;=&nbsp;Convert<span class="powerShell__operator">-</span>WindowsImage&nbsp;@ConvertWindowsImageParam</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">Create a VHDX using GPT partition layout (for UEFI boot and Hyper-V Generation 2 VMs).</div>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">.\Convert-WindowsImage.ps1 -SourcePath &quot;9477.0.FBL_PARTNER_OUT31.130803-0736_X64FRE_SERVER_EN-US-IRM_SSS_X64FRE_EN-US_DV5.ISO&quot; -VHDFormat VHDX -Edition ServerDataCenterCore -VHDPartitionStyle GPT -Verbose</pre>
+<div class="preview">
+<pre class="windowsshell">.\<span class="windowsshell__command">Convert</span><span class="windowsshell__commandext">-WindowsImage</span>.ps1&nbsp;<span class="windowsshell__commandext">-SourcePath</span>&nbsp;<span class="windowsshell__string">&quot;9477.0.FBL_PARTNER_OUT31.130803-0736_X64FRE_SERVER_EN-US-IRM_SSS_X64FRE_EN-US_DV5.ISO&quot;</span>&nbsp;<span class="windowsshell__commandext">-VHDFormat</span>&nbsp;VHDX&nbsp;<span class="windowsshell__commandext">-Edition</span>&nbsp;ServerDataCenterCore&nbsp;<span class="windowsshell__commandext">-VHDPartitionStyle</span>&nbsp;GPT&nbsp;<span class="windowsshell__commandext">-Verbose</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">Create a VHDX using MBR (old school) partition layout (which is still the default). Prepare the VHDX for Native Boot on&nbsp;BIOS-based computer: skip BCD creation, disable VHDX expansion on Native Boot, enable Remote Desktop and
+ add a custom driver.</div>
+<div class="endscriptcode">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">.\Convert-WindowsImage.ps1 -SourcePath &quot;9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EN-US-IRM_SSS_X64FRE_EN-US_DV5.ISO&quot; -VHDFormat VHDX -Edition &quot;ServerDataCenterCore&quot; -SizeBytes 8GB -VHDPartitionStyle MBR -BCDinVHD NativeBoot -ExpandOnNativeBoot:$false -RemoteDesktopEnable -Driver &quot;F:\Custom Driver&quot; -Verbose</pre>
+<div class="preview">
+<pre class="windowsshell">.\<span class="windowsshell__command">Convert</span><span class="windowsshell__commandext">-WindowsImage</span>.ps1&nbsp;<span class="windowsshell__commandext">-SourcePath</span>&nbsp;<span class="windowsshell__string">&quot;9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EN-US-IRM_SSS_X64FRE_EN-US_DV5.ISO&quot;</span>&nbsp;<span class="windowsshell__commandext">-VHDFormat</span>&nbsp;VHDX&nbsp;<span class="windowsshell__commandext">-Edition</span>&nbsp;<span class="windowsshell__string">&quot;ServerDataCenterCore&quot;</span>&nbsp;<span class="windowsshell__commandext">-SizeBytes</span>&nbsp;8GB&nbsp;<span class="windowsshell__commandext">-VHDPartitionStyle</span>&nbsp;MBR&nbsp;<span class="windowsshell__commandext">-BCDinVHD</span>&nbsp;NativeBoot&nbsp;<span class="windowsshell__commandext">-ExpandOnNativeBoot</span><span class="windowsshell__commandext">:</span><span class="windowsshell__number">$false</span>&nbsp;<span class="windowsshell__commandext">-RemoteDesktopEnable</span>&nbsp;<span class="windowsshell__commandext">-Driver</span>&nbsp;<span class="windowsshell__string">&quot;F:\Custom&nbsp;Driver&quot;</span>&nbsp;<span class="windowsshell__commandext">-Verbose</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">Show the graphical user interface. Note that this feature does not support all of the options that present in command-line interface:</div>
+</div>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">.\Convert-WindowsImage.ps1 -ShowUI</pre>
+<div class="preview">
+<pre class="powershell">.\Convert<span class="powerShell__operator">-</span>WindowsImage.ps1&nbsp;<span class="powerShell__operator">-</span>ShowUI</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">Create a VHD using all default settings from D:\sources\install.wim.</div>
+<div class="endscriptcode">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">.\Convert-WindowsImage.ps1 -SourcePath D:\sources\install.wim
+# Since no edition is being specified, the command will succeed if there is only one image in the specified WIM file.  If there are multiple images, the command will fail and it will list the possible editions.</pre>
+<div class="preview">
+<pre class="powershell">.\Convert<span class="powerShell__operator">-</span>WindowsImage.ps1&nbsp;<span class="powerShell__operator">-</span>SourcePath&nbsp;D:\sources\install.wim&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Since&nbsp;no&nbsp;edition&nbsp;is&nbsp;being&nbsp;specified,&nbsp;the&nbsp;command&nbsp;will&nbsp;succeed&nbsp;if&nbsp;there&nbsp;is&nbsp;only&nbsp;one&nbsp;image&nbsp;in&nbsp;the&nbsp;specified&nbsp;WIM&nbsp;file.&nbsp;&nbsp;If&nbsp;there&nbsp;are&nbsp;multiple&nbsp;images,&nbsp;the&nbsp;command&nbsp;will&nbsp;fail&nbsp;and&nbsp;it&nbsp;will&nbsp;list&nbsp;the&nbsp;possible&nbsp;editions.</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">Create a VHD using all default settings from D:\sources\install.wim while specifying an edition.</div>
+<div class="endscriptcode">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">.\Convert-WindowsImage.ps1 -SourcePath D:\sources\install.wim -Edition Professional</pre>
+<div class="preview">
+<pre class="powershell">.\Convert<span class="powerShell__operator">-</span>WindowsImage.ps1&nbsp;<span class="powerShell__operator">-</span>SourcePath&nbsp;D:\sources\install.wim&nbsp;<span class="powerShell__operator">-</span>Edition&nbsp;Professional</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">Create a 60GB VHDX, using all default settings, from D:\Windows8RPx64.iso.</div>
+<div class="endscriptcode">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">.\Convert-WindowsImage.ps1 -SourcePath D:\Windows8RPx64.iso -VHDFormat VHDX -SizeBytes 60GB</pre>
+<div class="preview">
+<pre class="powershell">.\Convert<span class="powerShell__operator">-</span>WindowsImage.ps1&nbsp;<span class="powerShell__operator">-</span>SourcePath&nbsp;D:\Windows8RPx64.iso&nbsp;<span class="powerShell__operator">-</span>VHDFormat&nbsp;VHDX&nbsp;<span class="powerShell__operator">-</span>SizeBytes&nbsp;60GB</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">Create a 48TB VHDX from D:\WindowsRPx64.iso with a custom file name.</div>
+<div class="endscriptcode">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">.\Convert-WindowsImage.ps1 -SourcePath D:\Windows8RPx64.iso -VHDFormat VHDX -SizeBytes 48TB -VHDPath .\MyCustomName.vhdx</pre>
+<div class="preview">
+<pre class="powershell">.\Convert<span class="powerShell__operator">-</span>WindowsImage.ps1&nbsp;<span class="powerShell__operator">-</span>SourcePath&nbsp;D:\Windows8RPx64.iso&nbsp;<span class="powerShell__operator">-</span>VHDFormat&nbsp;VHDX&nbsp;<span class="powerShell__operator">-</span>SizeBytes&nbsp;48TB&nbsp;<span class="powerShell__operator">-</span>VHDPath&nbsp;.\MyCustomName.vhdx</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">Use WIM2VHD-style argument names to create a 20GB fixed VHDX with a custom name and an unattend file from D:\foo.wim, and return the path to the created VHDX on the pipeline.</div>
+<div class="endscriptcode">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">.\Convert-WindowsImage.ps1 -WIM D:\foo.wim -Size 20GB -DiskType Fixed -VHDFormat VHDX -Unattend D:\myUnattend.xml -VHD D:\scratch\foo.vhdx -passthru</pre>
+<div class="preview">
+<pre class="powershell">.\Convert<span class="powerShell__operator">-</span>WindowsImage.ps1&nbsp;<span class="powerShell__operator">-</span>WIM&nbsp;D:\foo.wim&nbsp;<span class="powerShell__operator">-</span>Size&nbsp;20GB&nbsp;<span class="powerShell__operator">-</span>DiskType&nbsp;Fixed&nbsp;<span class="powerShell__operator">-</span>VHDFormat&nbsp;VHDX&nbsp;<span class="powerShell__operator">-</span>Unattend&nbsp;D:\myUnattend.xml&nbsp;<span class="powerShell__operator">-</span>VHD&nbsp;D:\scratch\foo.vhdx&nbsp;<span class="powerShell__operator">-</span>passthru</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">Enable serial debugging in the VHD, using COM2 at 19200bps.</div>
+<div class="endscriptcode">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&quot;D:\foo.wim&quot; | .\Convert-WindowsImage.ps1 -Edition Professional -EnableDebugger Serial -ComPort 2 -BaudRate 19200</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__string">&quot;D:\foo.wim&quot;</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;.\Convert<span class="powerShell__operator">-</span>WindowsImage.ps1&nbsp;<span class="powerShell__operator">-</span>Edition&nbsp;Professional&nbsp;<span class="powerShell__operator">-</span>EnableDebugger&nbsp;Serial&nbsp;<span class="powerShell__operator">-</span>ComPort&nbsp;2&nbsp;<span class="powerShell__operator">-</span>BaudRate&nbsp;19200</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+        </div>
+    </body>
+</html>

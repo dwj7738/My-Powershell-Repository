@@ -1,0 +1,802 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Install Microsoft Updates using Powershell</title>        
+        <meta name="description" content="The attached script installs or uninstalls Microsoft Updates in the last &#39;N&#39; days. PSAppDeploy Toolkit is used to accomplish the task. The script uses whatever update source is made available to the machine to download and install the updates.This can also be deployed using SCCM." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p style="text-align:center"><span style="text-decoration:underline; color:#800000"><strong>Please dont forget to RATE this article.</strong></span></p>
+<p><strong><span style="text-decoration:underline">Find me on LinkedIN:&nbsp;</span></strong></p>
+<p><a class="view-public-profile" title="View public profile" name="webProfileURL" href="http://nz.linkedin.com/pub/topaz-paul/19/275/328/">nz.linkedin.com/pub/topaz-paul/19/275/328/</a></p>
+<p><span style="text-decoration:underline"><strong>Description</strong></span></p>
+<p>The attached script installs or uninstalls Microsoft Updates in the last 'N' days. I've used&nbsp;PSAppDeployToolkit to accomplish the task. The script uses whatever update source is made available to the machine to download and install the updates.</p>
+<p>This can be deployed using SCCM if Software Update Point is turned off or if you prefer a Package deployment method of distributing software updates.</p>
+<p>Logging is done to: C:\Windows\Logs\Software</p>
+<h1><strong>Install MS Updates:</strong></h1>
+<p>The below command will SILENTLY install all the updates released (Approved: if using WSUS) in the last 10 days from WSUS (if configured, or uses Microsoft Windows Update site).</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>Windows Shell Script</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">windowsshell</span>
+<pre class="hidden">.\Deploy-Application.EXE -DeploymentType Install -DeployMode Silent -Updatesince 10</pre>
+<div class="preview">
+<pre class="powershell">.\Deploy<span class="powerShell__operator">-</span>Application.EXE&nbsp;<span class="powerShell__operator">-</span>DeploymentType&nbsp;Install&nbsp;<span class="powerShell__operator">-</span>DeployMode&nbsp;Silent&nbsp;<span class="powerShell__operator">-</span>Updatesince&nbsp;10</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">The below command will INTERACTIVELY install all the updates released (Approved: if using WSUS) in the last 10 days from WSUS (if configured, or uses Microsoft Windows Update site).</div>
+<div class="endscriptcode"></div>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>Windows Shell Script</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">windowsshell</span>
+<pre class="hidden">.\Deploy-Application.EXE -DeploymentType Install -DeployMode Interactive -Updatesince 10</pre>
+<div class="preview">
+<pre class="js">.\Deploy-Application.EXE&nbsp;-DeploymentType&nbsp;Install&nbsp;-DeployMode&nbsp;Interactive&nbsp;-Updatesince&nbsp;<span class="js__num">10</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<h1>Uninstall MS Updates:</h1>
+<p>The below command will SILENTLY Uninstall all the updates installed in the last 10 days.</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>Windows Shell Script</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">windowsshell</span>
+<pre class="hidden">.\Deploy-Application.EXE -DeploymentType UnInstall -DeployMode Silent  -Updatesince 10</pre>
+<div class="preview">
+<pre class="windowsshell">.\Deploy<span class="windowsshell__commandext">-Application</span>.EXE&nbsp;<span class="windowsshell__commandext">-DeploymentType</span>&nbsp;UnInstall&nbsp;<span class="windowsshell__commandext">-DeployMode</span>&nbsp;Silent&nbsp;&nbsp;<span class="windowsshell__commandext">-Updatesince</span>&nbsp;<span class="windowsshell__number">10</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;The below command will INTERACTIVELY Uninstall all the updates installed in the last 10 days.</div>
+<div class="endscriptcode">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>Windows Shell Script</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">windowsshell</span>
+<pre class="hidden">.\Deploy-Application.EXE -DeploymentType UnInstall -DeployMode Interactive  -Updatesince 10</pre>
+<div class="preview">
+<pre class="windowsshell">.\Deploy<span class="windowsshell__commandext">-Application</span>.EXE&nbsp;<span class="windowsshell__commandext">-DeploymentType</span>&nbsp;UnInstall&nbsp;<span class="windowsshell__commandext">-DeployMode</span>&nbsp;Interactive&nbsp;&nbsp;<span class="windowsshell__commandext">-Updatesince</span>&nbsp;<span class="windowsshell__number">10</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+</div>
+<h1 class="endscriptcode">The content of the script:</h1>
+<div class="endscriptcode">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">Param (
+	[ValidateSet(&quot;Install&quot;,&quot;Uninstall&quot;)] 
+	[string]$DeploymentType = &quot;Install&quot;,
+	[ValidateSet(&quot;Interactive&quot;,&quot;Silent&quot;,&quot;NonInteractive&quot;)]
+	[string]$DeployMode = &quot;silent&quot;,
+	[switch] $AllowRebootPassThru = $False,
+	[switch] $TerminalServerMode = $false,
+    [switch] $ForceRestartMode = $True,
+    [Parameter(Mandatory=$true)]
+    [int] $Updatesince = 1
+)
+
+#*===============================================
+#* VARIABLE DECLARATION
+Try {
+#*===============================================
+
+#*===============================================
+# Variables: Application
+
+$appVendor = &quot;UOA&quot;
+$appName = &quot;Install or Uninstall Windows Updates&quot;
+$appVersion = [version]&quot;1.0&quot;
+$appArch = &quot;&quot;
+$appLang = &quot;EN&quot;
+$appRevision = &quot;01&quot;
+$appScriptVersion = &quot;1.0.0&quot;
+$appScriptDate = &quot;02/07/2014&quot;
+$appScriptAuthor = &quot;Topaz Paul&quot;
+
+#*===============================================
+# Variables: Script - Do not modify this section
+
+$deployAppScriptFriendlyName = &quot;Deploy Application&quot;
+$deployAppScriptVersion = [version]&quot;3.1.2&quot;
+$deployAppScriptDate = &quot;04/30/2014&quot;
+$deployAppScriptParameters = $psBoundParameters
+
+# Variables: Environment
+$scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
+# Dot source the App Deploy Toolkit Functions
+.&quot;$scriptDirectory\AppDeployToolkit\AppDeployToolkitMain.ps1&quot;
+.&quot;$scriptDirectory\SupportFiles\Get-ApplicationInfo.ps1&quot;
+.&quot;$scriptDirectory\SupportFiles\Get-PendingReboot.ps1&quot;
+.&quot;$scriptDirectory\SupportFiles\Get-ScheduledTask.ps1&quot;
+.&quot;$scriptDirectory\SupportFiles\Get-UOAHotfix.ps1&quot;
+
+
+#*===============================================
+#* END VARIABLE DECLARATION
+#*===============================================
+
+#*===============================================
+#* PRE-INSTALLATION
+If ($deploymentType -ne &quot;uninstall&quot;) { $installPhase = &quot;Pre-Installation&quot;
+#*===============================================
+
+function Get-WIAStatusValue($value)
+{
+   switch -exact ($value)
+   {
+      0   {&quot;NotStarted&quot;}
+      1   {&quot;InProgress&quot;}
+      2   {&quot;Succeeded&quot;}
+      3   {&quot;SucceededWithErrors&quot;}
+      4   {&quot;Failed&quot;}
+      5   {&quot;Aborted&quot;}
+   } 
+}
+
+#*===============================================
+#* INSTALLATION 
+$installPhase = &quot;Installation&quot;
+#*===============================================
+
+    # Is reboot pending
+    
+    if ($(Get-PendingReboot).RebootPending) {  
+        
+            Write-Log &quot;The system is pending reboot from a previous install or uninstall.&quot;
+        
+    }
+    
+
+    # Prompt the user if not silent mode:
+    
+    Show-InstallationWelcome -AllowDefer -DeferTimes 3 -CloseAppsCountdown &quot;120&quot;
+    
+    # Show Progress Message (with the default message)
+    
+    Show-InstallationProgress -StatusMessage &quot;Installing Security Updates. Please Wait...&quot; 
+    
+    if ((Get-Service -Name wuauserv).Status -ne &quot;Running&quot;){
+    
+        Write-Log &quot;WSUS Service is stopped: Restarting the service&quot;
+        
+        Set-Service  wuauserv -StartupType Automatic
+        
+        Start-Service -name wuauserv
+    }
+
+	$needsReboot = $false
+    
+	$UpdateSession = New-Object -ComObject Microsoft.Update.Session
+    
+	$UpdateSearcher = $UpdateSession.CreateUpdateSearcher()
+ 
+	Write-Log &quot; - Searching for Updates&quot;
+    
+	$SearchResult = ($UpdateSearcher.Search(&quot;IsAssigned=1 and IsHidden=0 and IsInstalled=0&quot;)).Updates
+    
+    Write-Log &quot;$($SearchResult.Count) updates in total. But checking for assigned updates in the last $Updatesince days.&quot;
+
+    $SearchResult = $SearchResult | Where-Object {$_.LastDeploymentChangeTime -gt ((Get-Date).Adddays(-$Updatesince))}
+    
+    if (!($SearchResult)) {
+    
+        Write-Log &quot;0 updates have been assigned to this machine in the last $Updatesince days.&quot;
+        
+        Exit-Script -ExitCode 0
+    
+    }
+    
+    Write-Log &quot;$($SearchResult.Count) updates in the last $Updatesince days. Starting to install $($SearchResult.Count) updates...&quot;
+    
+    $SearchResult = $SearchResult | Sort-Object LastDeploymentChangeTime -Descending # Sort updates
+    
+ 
+	foreach($Update in $SearchResult) {
+    
+		# Add Update to Collection
+		$UpdatesCollection = New-Object -ComObject Microsoft.Update.UpdateColl
+        
+		if ( $Update.EulaAccepted -eq 0 ) { $Update.AcceptEula() }
+        
+		$UpdatesCollection.Add($Update)
+ 
+		# Download
+		Write-Log &quot; &#43; Downloading - $($Update.Title)&quot;
+        
+		$UpdatesDownloader = $UpdateSession.CreateUpdateDownloader()
+        
+		$UpdatesDownloader.Updates = $UpdatesCollection
+        
+        $UpdatesDownloader.Priority = 3
+        
+		$DownloadResult = $UpdatesDownloader.Download()
+        
+		$Message = &quot;   - Download {0}&quot; -f (Get-WIAStatusValue $DownloadResult.ResultCode)
+        
+		Write-Log &quot;$message&quot; 
+ 
+		# Install
+		Write-Log &quot;   - Installing Update&quot;
+        
+		$UpdatesInstaller = $UpdateSession.CreateUpdateInstaller()
+        
+		$UpdatesInstaller.Updates = $UpdatesCollection
+        
+		$InstallResult = $UpdatesInstaller.Install()
+        
+		$Message = &quot;   - Install {0}&quot; -f (Get-WIAStatusValue $DownloadResult.ResultCode)
+        
+		Write-Log &quot;$message&quot;
+ 
+		$needsReboot = $installResult.rebootRequired
+        
+        if ((Get-Service -Name wuauserv).Status -ne &quot;Running&quot;){
+        
+            Write-Log &quot;WSUS Service is stopped: Restarting the service&quot;
+            
+            Set-Service  wuauserv -StartupType Automatic
+            
+            Start-Service -name wuauserv
+        }
+        
+	}
+ 
+	if (($needsReboot) -or ($(Get-PendingReboot).RebootPending)) {
+    
+        Write-Log &quot;Reboot required: One or more of the installed update(s) require a reboot&quot;
+        
+        if ($DeployMode -match &quot;silent&quot;) {
+        
+            Write-Log &quot;Deployment mode is SILENT. Forcing a reboot without any notification&quot;
+        
+            restart-computer -Force
+        
+        } else {
+        
+            Write-Log &quot;Deployment mode is INTERACTIVE. The script Will notify user about the reboot&quot;
+        
+            Show-InstallationRestartPrompt -Countdownseconds 600 -CountdownNoHideSeconds 60
+        
+        }
+	}
+
+#*===============================================
+#* POST-INSTALLATION
+$installPhase = &quot;Post-Installation&quot;
+#*===============================================
+ 
+       
+
+#*===============================================
+#* UNINSTALLATION
+} ElseIf ($deploymentType -eq &quot;uninstall&quot;) { $installPhase = &quot;Uninstallation&quot;
+#*===============================================
+
+    # Prompt the user to close the following applications if they are running:
+    
+    Show-InstallationWelcome -AllowDefer -DeferTimes 3 -CloseAppsCountdown &quot;120&quot;
+    
+    # Show Progress Message (with a message to indicate the application is being uninstalled)
+    
+    Show-InstallationProgress -StatusMessage &quot;Uninstalling Security Updates. Please Wait...&quot; 
+    
+    if ((Get-Service -Name wuauserv).Status -ne &quot;Running&quot;){
+    
+        Write-Log &quot;WSUS Service is stopped: Restarting the service&quot;
+        
+        Set-Service  wuauserv -StartupType Automatic
+        
+        Start-Service -name wuauserv
+    }
+    
+    $Updates = ((New-Object -ComObject Microsoft.Update.Session).CreateUpdateSearcher()).Search(&quot;IsInstalled = 1&quot;).Updates # Retrieve installed updates
+    
+    Write-Log &quot;$($Updates.Count) updates total&quot;
+
+    #$Updates = $Updates | Where-Object {$_.LastDeploymentChangeTime -gt ((Get-Date).Adddays(-$Updatesince))}
+    
+    $Updates = Get-UOAHotfix|Where-Object {$_.Installedon -gt ((Get-Date).Adddays(-$Updatesince))}
+    
+    $Updates = $Updates | Sort-Object Installedon -Descending # Sort updates
+    
+     if (!($Updates)) {
+    
+        Write-Log &quot;0 updates have been installed on this machine in the last $Updatesince days.&quot;
+        
+        Exit-Script -ExitCode 0
+    
+    }
+    
+    Write-Log &quot;$($Updates.Count) updates in the last $Updatesince days. Starting to Uninstall $($Updates.Count) updates...&quot;
+
+    Foreach($Update in $Updates) {
+    
+        if ((Get-Service -Name wuauserv).Status -ne &quot;Running&quot;){
+        
+            Write-Log &quot;WSUS Service is stopped: Restarting the service&quot;
+            
+            Set-Service  wuauserv -StartupType Automatic
+            
+            Start-Service -name wuauserv
+        }
+    
+    	$ID = $($Update.HotFixID -replace 'KB', '')
+
+    	Write-Log &quot;Removing KB$ID&quot;
+
+    	Invoke-Expression &quot;wusa.exe /uninstall /kb:$ID /quiet /log /norestart&quot;
+
+    	while (@(Get-Process wusa -ErrorAction SilentlyContinue).Count -ne 0) { Start-Sleep 1 }
+    }
+    
+    
+    if ($(Get-PendingReboot).RebootPending) {
+    
+        Write-Log &quot;Reboot required: One or more of the Uninstalled update(s) require a reboot&quot;
+        
+        if ($DeployMode -match &quot;silent&quot;) {
+        
+            Write-Log &quot;Deployment mode is SILENT. Forcing a reboot without any notification&quot;
+        
+            restart-computer -Force
+        
+        } else {
+        
+            Write-Log &quot;Deployment mode is INTERACTIVE. The script Will notify user about the reboot&quot;
+        
+            Show-InstallationRestartPrompt -Countdownseconds 600 -CountdownNoHideSeconds 60
+        
+        }
+	}
+     
+
+#*===============================================
+#* END SCRIPT BODY
+} } Catch {$exceptionMessage = &quot;$($_.Exception.Message) `($($_.ScriptStackTrace)`)&quot;; Write-Log &quot;$exceptionMessage&quot;; Exit-Script -ExitCode 1} # Catch any errors in this script 
+
+Exit-Script -ExitCode 0 # Otherwise call the Exit-Script function to perform final cleanup operations
+#*===============================================</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__keyword">Param</span>&nbsp;(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[ValidateSet(<span class="powerShell__string">&quot;Install&quot;</span>,<span class="powerShell__string">&quot;Uninstall&quot;</span>)]&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$DeploymentType</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Install&quot;</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[ValidateSet(<span class="powerShell__string">&quot;Interactive&quot;</span>,<span class="powerShell__string">&quot;Silent&quot;</span>,<span class="powerShell__string">&quot;NonInteractive&quot;</span>)]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[string]<span class="powerShell__variable">$DeployMode</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;silent&quot;</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[<span class="powerShell__keyword">switch</span>]&nbsp;<span class="powerShell__variable">$AllowRebootPassThru</span>&nbsp;=&nbsp;<span class="powerShell__variable">$False</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[<span class="powerShell__keyword">switch</span>]&nbsp;<span class="powerShell__variable">$TerminalServerMode</span>&nbsp;=&nbsp;<span class="powerShell__variable">$false</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[<span class="powerShell__keyword">switch</span>]&nbsp;<span class="powerShell__variable">$ForceRestartMode</span>&nbsp;=&nbsp;<span class="powerShell__variable">$True</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory=<span class="powerShell__variable">$true</span>)]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[int]&nbsp;<span class="powerShell__variable">$Updatesince</span>&nbsp;=&nbsp;1&nbsp;
+)&nbsp;
+&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+<span class="powerShell__com">#*&nbsp;VARIABLE&nbsp;DECLARATION</span>&nbsp;
+<span class="powerShell__keyword">Try</span>&nbsp;{&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Variables:&nbsp;Application</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$appVendor</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;UOA&quot;</span>&nbsp;
+<span class="powerShell__variable">$appName</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Install&nbsp;or&nbsp;Uninstall&nbsp;Windows&nbsp;Updates&quot;</span>&nbsp;
+<span class="powerShell__variable">$appVersion</span>&nbsp;=&nbsp;[version]<span class="powerShell__string">&quot;1.0&quot;</span>&nbsp;
+<span class="powerShell__variable">$appArch</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+<span class="powerShell__variable">$appLang</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;EN&quot;</span>&nbsp;
+<span class="powerShell__variable">$appRevision</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;01&quot;</span>&nbsp;
+<span class="powerShell__variable">$appScriptVersion</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;1.0.0&quot;</span>&nbsp;
+<span class="powerShell__variable">$appScriptDate</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;02/07/2014&quot;</span>&nbsp;
+<span class="powerShell__variable">$appScriptAuthor</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Topaz&nbsp;Paul&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Variables:&nbsp;Script&nbsp;-&nbsp;Do&nbsp;not&nbsp;modify&nbsp;this&nbsp;section</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$deployAppScriptFriendlyName</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Deploy&nbsp;Application&quot;</span>&nbsp;
+<span class="powerShell__variable">$deployAppScriptVersion</span>&nbsp;=&nbsp;[version]<span class="powerShell__string">&quot;3.1.2&quot;</span>&nbsp;
+<span class="powerShell__variable">$deployAppScriptDate</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;04/30/2014&quot;</span>&nbsp;
+<span class="powerShell__variable">$deployAppScriptParameters</span>&nbsp;=&nbsp;<span class="powerShell__variable">$psBoundParameters</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Variables:&nbsp;Environment</span>&nbsp;
+<span class="powerShell__variable">$scriptDirectory</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Split-Path</span>&nbsp;<span class="powerShell__operator">-</span>Parent&nbsp;<span class="powerShell__variable">$MyInvocation</span>.MyCommand.Definition&nbsp;
+<span class="powerShell__com">#&nbsp;Dot&nbsp;source&nbsp;the&nbsp;App&nbsp;Deploy&nbsp;Toolkit&nbsp;Functions</span>&nbsp;
+.<span class="powerShell__string">&quot;$scriptDirectory\AppDeployToolkit\AppDeployToolkitMain.ps1&quot;</span>&nbsp;
+.<span class="powerShell__string">&quot;$scriptDirectory\SupportFiles\Get-ApplicationInfo.ps1&quot;</span>&nbsp;
+.<span class="powerShell__string">&quot;$scriptDirectory\SupportFiles\Get-PendingReboot.ps1&quot;</span>&nbsp;
+.<span class="powerShell__string">&quot;$scriptDirectory\SupportFiles\Get-ScheduledTask.ps1&quot;</span>&nbsp;
+.<span class="powerShell__string">&quot;$scriptDirectory\SupportFiles\Get-UOAHotfix.ps1&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+<span class="powerShell__com">#*&nbsp;END&nbsp;VARIABLE&nbsp;DECLARATION</span>&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+<span class="powerShell__com">#*&nbsp;PRE-INSTALLATION</span>&nbsp;
+<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$deploymentType</span>&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__string">&quot;uninstall&quot;</span>)&nbsp;{&nbsp;<span class="powerShell__variable">$installPhase</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Pre-Installation&quot;</span>&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Get<span class="powerShell__operator">-</span>WIAStatusValue(<span class="powerShell__variable">$value</span>)&nbsp;
+{&nbsp;
+&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">switch</span>&nbsp;<span class="powerShell__operator">-</span>exact&nbsp;(<span class="powerShell__variable">$value</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;{<span class="powerShell__string">&quot;NotStarted&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;{<span class="powerShell__string">&quot;InProgress&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;{<span class="powerShell__string">&quot;Succeeded&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;{<span class="powerShell__string">&quot;SucceededWithErrors&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;{<span class="powerShell__string">&quot;Failed&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;{<span class="powerShell__string">&quot;Aborted&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+<span class="powerShell__com">#*&nbsp;INSTALLATION&nbsp;</span>&nbsp;
+<span class="powerShell__variable">$installPhase</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Installation&quot;</span>&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Is&nbsp;reboot&nbsp;pending</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$</span>(Get<span class="powerShell__operator">-</span>PendingReboot).RebootPending)&nbsp;{&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;The&nbsp;system&nbsp;is&nbsp;pending&nbsp;reboot&nbsp;from&nbsp;a&nbsp;previous&nbsp;install&nbsp;or&nbsp;uninstall.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Prompt&nbsp;the&nbsp;user&nbsp;if&nbsp;not&nbsp;silent&nbsp;mode:</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Show<span class="powerShell__operator">-</span>InstallationWelcome&nbsp;<span class="powerShell__operator">-</span>AllowDefer&nbsp;<span class="powerShell__operator">-</span>DeferTimes&nbsp;3&nbsp;<span class="powerShell__operator">-</span>CloseAppsCountdown&nbsp;<span class="powerShell__string">&quot;120&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Show&nbsp;Progress&nbsp;Message&nbsp;(with&nbsp;the&nbsp;default&nbsp;message)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Show<span class="powerShell__operator">-</span>InstallationProgress&nbsp;<span class="powerShell__operator">-</span>StatusMessage&nbsp;<span class="powerShell__string">&quot;Installing&nbsp;Security&nbsp;Updates.&nbsp;Please&nbsp;Wait...&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;((<span class="powerShell__cmdlets">Get-Service</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;wuauserv).Status&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__string">&quot;Running&quot;</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;WSUS&nbsp;Service&nbsp;is&nbsp;stopped:&nbsp;Restarting&nbsp;the&nbsp;service&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-Service</span>&nbsp;&nbsp;wuauserv&nbsp;<span class="powerShell__operator">-</span>StartupType&nbsp;Automatic&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Start-Service</span>&nbsp;<span class="powerShell__operator">-</span>name&nbsp;wuauserv&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$needsReboot</span>&nbsp;=&nbsp;<span class="powerShell__variable">$false</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdateSession</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;Microsoft.Update.Session&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdateSearcher</span>&nbsp;=&nbsp;<span class="powerShell__variable">$UpdateSession</span>.CreateUpdateSearcher()&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;&nbsp;-&nbsp;Searching&nbsp;for&nbsp;Updates&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SearchResult</span>&nbsp;=&nbsp;(<span class="powerShell__variable">$UpdateSearcher</span>.Search(<span class="powerShell__string">&quot;IsAssigned=1&nbsp;and&nbsp;IsHidden=0&nbsp;and&nbsp;IsInstalled=0&quot;</span>)).Updates&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;$($SearchResult.Count)&nbsp;updates&nbsp;in&nbsp;total.&nbsp;But&nbsp;checking&nbsp;for&nbsp;assigned&nbsp;updates&nbsp;in&nbsp;the&nbsp;last&nbsp;$Updatesince&nbsp;days.&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SearchResult</span>&nbsp;=&nbsp;<span class="powerShell__variable">$SearchResult</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;Where<span class="powerShell__operator">-</span>Object&nbsp;{<span class="powerShell__variable">$_</span>.LastDeploymentChangeTime&nbsp;<span class="powerShell__operator">-</span>gt&nbsp;((<span class="powerShell__cmdlets">Get-Date</span>).Adddays(<span class="powerShell__operator">-</span><span class="powerShell__variable">$Updatesince</span>))}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__operator">!</span>(<span class="powerShell__variable">$SearchResult</span>))&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;0&nbsp;updates&nbsp;have&nbsp;been&nbsp;assigned&nbsp;to&nbsp;this&nbsp;machine&nbsp;in&nbsp;the&nbsp;last&nbsp;$Updatesince&nbsp;days.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span><span class="powerShell__operator">-</span>Script&nbsp;<span class="powerShell__operator">-</span>ExitCode&nbsp;0&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;$($SearchResult.Count)&nbsp;updates&nbsp;in&nbsp;the&nbsp;last&nbsp;$Updatesince&nbsp;days.&nbsp;Starting&nbsp;to&nbsp;install&nbsp;$($SearchResult.Count)&nbsp;updates...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SearchResult</span>&nbsp;=&nbsp;<span class="powerShell__variable">$SearchResult</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">Sort</span><span class="powerShell__operator">-</span>Object&nbsp;LastDeploymentChangeTime&nbsp;<span class="powerShell__operator">-</span>Descending&nbsp;<span class="powerShell__com">#&nbsp;Sort&nbsp;updates</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">foreach</span>(<span class="powerShell__variable">$Update</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$SearchResult</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Add&nbsp;Update&nbsp;to&nbsp;Collection</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdatesCollection</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;Microsoft.Update.UpdateColl&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(&nbsp;<span class="powerShell__variable">$Update</span>.EulaAccepted&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;0&nbsp;)&nbsp;{&nbsp;<span class="powerShell__variable">$Update</span>.AcceptEula()&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdatesCollection</span>.Add(<span class="powerShell__variable">$Update</span>)&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Download</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;&nbsp;&#43;&nbsp;Downloading&nbsp;-&nbsp;$($Update.Title)&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdatesDownloader</span>&nbsp;=&nbsp;<span class="powerShell__variable">$UpdateSession</span>.CreateUpdateDownloader()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdatesDownloader</span>.Updates&nbsp;=&nbsp;<span class="powerShell__variable">$UpdatesCollection</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdatesDownloader</span>.Priority&nbsp;=&nbsp;3&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$DownloadResult</span>&nbsp;=&nbsp;<span class="powerShell__variable">$UpdatesDownloader</span>.Download()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Message</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;-&nbsp;Download&nbsp;{0}&quot;</span>&nbsp;<span class="powerShell__operator">-</span>f&nbsp;(Get<span class="powerShell__operator">-</span>WIAStatusValue&nbsp;<span class="powerShell__variable">$DownloadResult</span>.ResultCode)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;$message&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Install</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;-&nbsp;Installing&nbsp;Update&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdatesInstaller</span>&nbsp;=&nbsp;<span class="powerShell__variable">$UpdateSession</span>.CreateUpdateInstaller()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdatesInstaller</span>.Updates&nbsp;=&nbsp;<span class="powerShell__variable">$UpdatesCollection</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$InstallResult</span>&nbsp;=&nbsp;<span class="powerShell__variable">$UpdatesInstaller</span>.Install()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Message</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;-&nbsp;Install&nbsp;{0}&quot;</span>&nbsp;<span class="powerShell__operator">-</span>f&nbsp;(Get<span class="powerShell__operator">-</span>WIAStatusValue&nbsp;<span class="powerShell__variable">$DownloadResult</span>.ResultCode)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;$message&quot;</span>&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$needsReboot</span>&nbsp;=&nbsp;<span class="powerShell__variable">$installResult</span>.rebootRequired&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;((<span class="powerShell__cmdlets">Get-Service</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;wuauserv).Status&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__string">&quot;Running&quot;</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;WSUS&nbsp;Service&nbsp;is&nbsp;stopped:&nbsp;Restarting&nbsp;the&nbsp;service&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-Service</span>&nbsp;&nbsp;wuauserv&nbsp;<span class="powerShell__operator">-</span>StartupType&nbsp;Automatic&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Start-Service</span>&nbsp;<span class="powerShell__operator">-</span>name&nbsp;wuauserv&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;((<span class="powerShell__variable">$needsReboot</span>)&nbsp;<span class="powerShell__operator">-</span>or&nbsp;(<span class="powerShell__variable">$</span>(Get<span class="powerShell__operator">-</span>PendingReboot).RebootPending))&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;Reboot&nbsp;required:&nbsp;One&nbsp;or&nbsp;more&nbsp;of&nbsp;the&nbsp;installed&nbsp;update(s)&nbsp;require&nbsp;a&nbsp;reboot&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$DeployMode</span>&nbsp;<span class="powerShell__operator">-</span>match&nbsp;<span class="powerShell__string">&quot;silent&quot;</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;Deployment&nbsp;mode&nbsp;is&nbsp;SILENT.&nbsp;Forcing&nbsp;a&nbsp;reboot&nbsp;without&nbsp;any&nbsp;notification&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;restart<span class="powerShell__operator">-</span>computer&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;Deployment&nbsp;mode&nbsp;is&nbsp;INTERACTIVE.&nbsp;The&nbsp;script&nbsp;Will&nbsp;notify&nbsp;user&nbsp;about&nbsp;the&nbsp;reboot&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show<span class="powerShell__operator">-</span>InstallationRestartPrompt&nbsp;<span class="powerShell__operator">-</span>Countdownseconds&nbsp;600&nbsp;<span class="powerShell__operator">-</span>CountdownNoHideSeconds&nbsp;60&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+<span class="powerShell__com">#*&nbsp;POST-INSTALLATION</span>&nbsp;
+<span class="powerShell__variable">$installPhase</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Post-Installation&quot;</span>&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+<span class="powerShell__com">#*&nbsp;UNINSTALLATION</span>&nbsp;
+}&nbsp;<span class="powerShell__keyword">ElseIf</span>&nbsp;(<span class="powerShell__variable">$deploymentType</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;uninstall&quot;</span>)&nbsp;{&nbsp;<span class="powerShell__variable">$installPhase</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Uninstallation&quot;</span>&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Prompt&nbsp;the&nbsp;user&nbsp;to&nbsp;close&nbsp;the&nbsp;following&nbsp;applications&nbsp;if&nbsp;they&nbsp;are&nbsp;running:</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Show<span class="powerShell__operator">-</span>InstallationWelcome&nbsp;<span class="powerShell__operator">-</span>AllowDefer&nbsp;<span class="powerShell__operator">-</span>DeferTimes&nbsp;3&nbsp;<span class="powerShell__operator">-</span>CloseAppsCountdown&nbsp;<span class="powerShell__string">&quot;120&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Show&nbsp;Progress&nbsp;Message&nbsp;(with&nbsp;a&nbsp;message&nbsp;to&nbsp;indicate&nbsp;the&nbsp;application&nbsp;is&nbsp;being&nbsp;uninstalled)</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Show<span class="powerShell__operator">-</span>InstallationProgress&nbsp;<span class="powerShell__operator">-</span>StatusMessage&nbsp;<span class="powerShell__string">&quot;Uninstalling&nbsp;Security&nbsp;Updates.&nbsp;Please&nbsp;Wait...&quot;</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;((<span class="powerShell__cmdlets">Get-Service</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;wuauserv).Status&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__string">&quot;Running&quot;</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;WSUS&nbsp;Service&nbsp;is&nbsp;stopped:&nbsp;Restarting&nbsp;the&nbsp;service&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-Service</span>&nbsp;&nbsp;wuauserv&nbsp;<span class="powerShell__operator">-</span>StartupType&nbsp;Automatic&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Start-Service</span>&nbsp;<span class="powerShell__operator">-</span>name&nbsp;wuauserv&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Updates</span>&nbsp;=&nbsp;((<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>ComObject&nbsp;Microsoft.Update.Session).CreateUpdateSearcher()).Search(<span class="powerShell__string">&quot;IsInstalled&nbsp;=&nbsp;1&quot;</span>).Updates&nbsp;<span class="powerShell__com">#&nbsp;Retrieve&nbsp;installed&nbsp;updates</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;$($Updates.Count)&nbsp;updates&nbsp;total&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#$Updates&nbsp;=&nbsp;$Updates&nbsp;|&nbsp;Where-Object&nbsp;{$_.LastDeploymentChangeTime&nbsp;-gt&nbsp;((Get-Date).Adddays(-$Updatesince))}</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Updates</span>&nbsp;=&nbsp;Get<span class="powerShell__operator">-</span>UOAHotfix<span class="powerShell__operator">|</span>Where<span class="powerShell__operator">-</span>Object&nbsp;{<span class="powerShell__variable">$_</span>.Installedon&nbsp;<span class="powerShell__operator">-</span>gt&nbsp;((<span class="powerShell__cmdlets">Get-Date</span>).Adddays(<span class="powerShell__operator">-</span><span class="powerShell__variable">$Updatesince</span>))}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Updates</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Updates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">Sort</span><span class="powerShell__operator">-</span>Object&nbsp;Installedon&nbsp;<span class="powerShell__operator">-</span>Descending&nbsp;<span class="powerShell__com">#&nbsp;Sort&nbsp;updates</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__operator">!</span>(<span class="powerShell__variable">$Updates</span>))&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;0&nbsp;updates&nbsp;have&nbsp;been&nbsp;installed&nbsp;on&nbsp;this&nbsp;machine&nbsp;in&nbsp;the&nbsp;last&nbsp;$Updatesince&nbsp;days.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span><span class="powerShell__operator">-</span>Script&nbsp;<span class="powerShell__operator">-</span>ExitCode&nbsp;0&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;$($Updates.Count)&nbsp;updates&nbsp;in&nbsp;the&nbsp;last&nbsp;$Updatesince&nbsp;days.&nbsp;Starting&nbsp;to&nbsp;Uninstall&nbsp;$($Updates.Count)&nbsp;updates...&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Foreach</span>(<span class="powerShell__variable">$Update</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$Updates</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;((<span class="powerShell__cmdlets">Get-Service</span>&nbsp;<span class="powerShell__operator">-</span>Name&nbsp;wuauserv).Status&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__string">&quot;Running&quot;</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;WSUS&nbsp;Service&nbsp;is&nbsp;stopped:&nbsp;Restarting&nbsp;the&nbsp;service&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Set-Service</span>&nbsp;&nbsp;wuauserv&nbsp;<span class="powerShell__operator">-</span>StartupType&nbsp;Automatic&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Start-Service</span>&nbsp;<span class="powerShell__operator">-</span>name&nbsp;wuauserv&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ID</span>&nbsp;=&nbsp;<span class="powerShell__variable">$</span>(<span class="powerShell__variable">$Update</span>.HotFixID&nbsp;<span class="powerShell__operator">-</span>replace&nbsp;<span class="powerShell__string">'KB'</span>,&nbsp;<span class="powerShell__string">''</span>)&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;Removing&nbsp;KB$ID&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Invoke-Expression</span>&nbsp;<span class="powerShell__string">&quot;wusa.exe&nbsp;/uninstall&nbsp;/kb:$ID&nbsp;/quiet&nbsp;/log&nbsp;/norestart&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">while</span>&nbsp;(@(<span class="powerShell__cmdlets">Get-Process</span>&nbsp;wusa&nbsp;<span class="powerShell__operator">-</span>ErrorAction&nbsp;SilentlyContinue).Count&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;0)&nbsp;{&nbsp;<span class="powerShell__cmdlets">Start-Sleep</span>&nbsp;1&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$</span>(Get<span class="powerShell__operator">-</span>PendingReboot).RebootPending)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;Reboot&nbsp;required:&nbsp;One&nbsp;or&nbsp;more&nbsp;of&nbsp;the&nbsp;Uninstalled&nbsp;update(s)&nbsp;require&nbsp;a&nbsp;reboot&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$DeployMode</span>&nbsp;<span class="powerShell__operator">-</span>match&nbsp;<span class="powerShell__string">&quot;silent&quot;</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;Deployment&nbsp;mode&nbsp;is&nbsp;SILENT.&nbsp;Forcing&nbsp;a&nbsp;reboot&nbsp;without&nbsp;any&nbsp;notification&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;restart<span class="powerShell__operator">-</span>computer&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;Deployment&nbsp;mode&nbsp;is&nbsp;INTERACTIVE.&nbsp;The&nbsp;script&nbsp;Will&nbsp;notify&nbsp;user&nbsp;about&nbsp;the&nbsp;reboot&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show<span class="powerShell__operator">-</span>InstallationRestartPrompt&nbsp;<span class="powerShell__operator">-</span>Countdownseconds&nbsp;600&nbsp;<span class="powerShell__operator">-</span>CountdownNoHideSeconds&nbsp;60&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__com">#*===============================================</span>&nbsp;
+<span class="powerShell__com">#*&nbsp;END&nbsp;SCRIPT&nbsp;BODY</span>&nbsp;
+}&nbsp;}&nbsp;<span class="powerShell__keyword">Catch</span>&nbsp;{<span class="powerShell__variable">$exceptionMessage</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;$($_.Exception.Message)&nbsp;`($($_.ScriptStackTrace)`)&quot;</span>;&nbsp;Write<span class="powerShell__operator">-</span>Log&nbsp;<span class="powerShell__string">&quot;$exceptionMessage&quot;</span>;&nbsp;<span class="powerShell__keyword">Exit</span><span class="powerShell__operator">-</span>Script&nbsp;<span class="powerShell__operator">-</span>ExitCode&nbsp;1}&nbsp;<span class="powerShell__com">#&nbsp;Catch&nbsp;any&nbsp;errors&nbsp;in&nbsp;this&nbsp;script&nbsp;</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Exit</span><span class="powerShell__operator">-</span>Script&nbsp;<span class="powerShell__operator">-</span>ExitCode&nbsp;0&nbsp;<span class="powerShell__com">#&nbsp;Otherwise&nbsp;call&nbsp;the&nbsp;Exit-Script&nbsp;function&nbsp;to&nbsp;perform&nbsp;final&nbsp;cleanup&nbsp;operations</span>&nbsp;
+<span class="powerShell__com">#*===============================================</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+</div>
+<div class="endscriptcode"></div>
+<div class="endscriptcode">The&nbsp;PSAppDeployToolkit does extensive logging. Every single action is logged, which helps with the troubleshooting process.</div>
+
+        </div>
+    </body>
+</html>

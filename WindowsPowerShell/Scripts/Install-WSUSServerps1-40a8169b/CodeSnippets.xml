@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content=". .\Install-WSUSServer.ps1 -ConsoleOnly -Computername Server1" />
+  <Code Content=". .\Install-WSUSServer.ps1 -Computername TestServer -StoreUpdatesLocally -ContentDirectory &quot;D:\WSUS&quot; -InternalDatabasePath &quot;D:\&quot; -CreateDatabase" />
+  <Code Content=". .\Install-WSUSServer.ps1 -Computername A24 -StoreUpdatesLocally -ContentDirectory &quot;D:\WSUS&quot; -SQLInstance &quot;Server1\Server1&quot; -CreateDatabase" />
+  <Code Content=". .\Install-WSUSServer.ps1 -ConsoleOnly -Computername Server1" />
+  <Code Content=". .\Install-WSUSServer.ps1 -Computername TestServer -StoreUpdatesLocally -ContentDirectory &quot;D:\WSUS&quot; -InternalDatabasePath &quot;D:\&quot; -CreateDatabase" />
+  <Code Content=". .\Install-WSUSServer.ps1 -Computername A24 -StoreUpdatesLocally -ContentDirectory &quot;D:\WSUS&quot; -SQLInstance &quot;Server1\Server1&quot; -CreateDatabase" />
+</CodeSnippets>

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content="Import-Module .\MS-UPD-LOAD.psm1&#xD;&#xA;&#xD;&#xA;Get-UpdXML -Year &quot;2013&quot; -Month &quot;03&quot;&#xD;&#xA;&#xD;&#xA;Get-Update -ProductFamily &quot;Office&quot;&#xD;&#xA;&#xD;&#xA;Get-Update -ProductFamily &quot;Windows&quot;&#xD;&#xA;&#xD;&#xA;Invoke-Update -Product &quot;Office 2010&quot; -Language English&#xD;&#xA;&#xD;&#xA;Invoke-Update -Product &quot;Windows Server 2012 R2&quot;  -Language English&#xD;&#xA;&#xD;&#xA;Get-UpdCommand" />
+  <Code Content="Import-Module .\MS-UPD-LOAD.psm1&#xD;&#xA;&#xD;&#xA;Get-UpdXML -Year &quot;2013&quot; -Month &quot;03&quot;&#xD;&#xA;&#xD;&#xA;Get-Update -ProductFamily &quot;Office&quot;&#xD;&#xA;&#xD;&#xA;Get-Update -ProductFamily &quot;Windows&quot;&#xD;&#xA;&#xD;&#xA;Invoke-Update -Product &quot;Office 2010&quot; -Language English&#xD;&#xA;&#xD;&#xA;Invoke-Update -Product &quot;Windows Server 2012 R2&quot;  -Language English&#xD;&#xA;&#xD;&#xA;Get-UpdCommand" />
+</CodeSnippets>

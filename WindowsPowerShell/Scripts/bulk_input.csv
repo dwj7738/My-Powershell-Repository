@@ -1,0 +1,10 @@
+﻿GroupName,GroupType,GroupLocation
+TestGroup01,DomainLocal,"OU=TestGroups01,OU=Bulk,OU=Project"
+TestGroup02,Global,"OU=TestGroups01,OU=Groups,OU=Project"
+TestGroup03,Global,"OU=TestGroups02,OU=Groups,OU=Project"
+TestGroup04,DomainLocal,"OU=TestGroups01,OU=Groups,OU=Project"
+TestGroup05,Global,"OU=TestGroups01,OU=Bulk,OU=Project"
+TestGroup06,DomainLocal,"OU=TestGroups02,OU=Bulk,OU=Project"
+TestGroup07,Global,"OU=TestGroups02,OU=Groups,OU=Project"
+TestGroup08,Global,"OU=TestGroups03,OU=Bulk,OU=Project"
+TestGroup09,Global,"OU=TestGroups03,OU=Groups,OU=Project"

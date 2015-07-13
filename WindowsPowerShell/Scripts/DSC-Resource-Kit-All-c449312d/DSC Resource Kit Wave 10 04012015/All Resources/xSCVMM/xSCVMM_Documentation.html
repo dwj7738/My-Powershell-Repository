@@ -1,0 +1,384 @@
+﻿<body>
+<div id="longDesc">
+<span style="font-family:Calibri; font-size:medium">
+<h1 style="font-family:Calibri Light; color:#2e74b5; font-size:large">Introduction</h1>
+<p>The<strong> xSCVMM</strong> module is a part of the Windows PowerShell Desired State Configuration (DSC) Resource Kit, which is a collection of DSC Resources produced by the PowerShell Team. 
+    This module contains the following resources for for installating and updating System Center Virtual Machine Manager (VMM): </p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <strong>xSCVMManagementServerSetup: </strong>for installation of the VMM Management server
+        </li>
+        <li>
+            <strong>xSCVMMConsoleSetup: </strong>for installation of the VMM console.
+        </li>
+        <li>
+            <strong>xSCVMManagementServerUpdate: </strong>for udpating the the VMM Management server to Update Rollup 4
+        </li>
+        <li>
+            <strong>xSCVMMConsoleUpdate: </strong>for updating the VMM console to Update Rollup 4
+        </li>
+        <li>
+            <strong>xSCVMMAdmin: </strong> for adding VMM admins
+        </li>
+        <li>
+            <strong>xSCVMMOperationsManagerServer: </strong> for connecting VMM to Operations Manager
+        </li>
+    </ul>
+
+<p><strong>All of the resources in the DSC Resource Kit are provided AS IS, and are not supported through any Microsoft standard support program 
+or service. The ""x" in xSCVMM stands for experimental</strong>, which means that these resources will be <strong>fix forward</strong> 
+and monitored by the module owner(s).</p>
+<p>Please leave comments, feature requests, and bug reports in the Q &amp; A tab for this module.</p>
+<p>If you would like to modify <strong>xSCVMM</strong> module, feel free. When modifying, please update the module name, resource friendly name, 
+and MOF class name (instructions below). As specified in the license, you may copy or modify this resource as long as they are used on the Windows Platform.</p>
+<p>For more information about Windows PowerShell Desired State Configuration, check out the blog posts on the
+<a href="http://blogs.msdn.com/b/powershell/"><span style="color:#0000ff">PowerShell Blog</span></a> (</span><a href="http://blogs.msdn.com/b/powershell/archive/2013/11/01/configuration-in-a-devops-world-windows-powershell-desired-state-configuration.aspx"><span style="color:#0000ff">this</span></a> is a good starting point). There are 
+also great community resources, such as <a href="http://powershell.org/wp/tag/dsc/"><span style="color:#0000ff">PowerShell.org</span></a>, or
+<a href="http://www.powershellmagazine.com/tag/dsc/"><span style="color:#0000ff">PowerShell Magazine</span></a>. For more information on the DSC Resource Kit, check out 
+<a href="http://go.microsoft.com/fwlink/?LinkID=389546"><span style="color:#0000ff">this blog post</span></a>.<br></p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Installation</h1>
+<p>To install the <strong >xSCVMM</strong> module </p>
+    <ul style="list-style-type: disc; direction: ltr;">
+        <li>
+            If you are using WMF4 / PowerShell Version 4: Unzip the content under $env:ProgramFiles\WindowsPowerShell\Modules folder
+        </li>
+        <li>
+            If you are using WMF5 Preview: From an elevated PowerShell session run
+            ‘Install-Module xSCSR’
+        </li>
+    </ul>
+<p>To confirm installation:<br></p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>Run <strong>Get-DSCResource</strong> to see that <strong>xSCVMManagementServerSetup, xSCVMMConsoleSetup, and xSCVMMAdmin</strong> are among the DSC Resources listed.<br></li>
+</ul>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Requirements</h1>
+<p>This module requires at least PowerShell v4.0, which ships in Windows 8.1 or Windows Server 2012R2. To easily use PowerShell 4.0 on older operating systems,
+<a href="http://www.microsoft.com/en-us/download/details.aspx?id=40855"><span style="color:#0000ff">install WMF 4.0</span></a>. Please read the installation instructions 
+that are present on both the download page and the release notes for WMF 4.0.</p>
+
+<h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Details</h1>
+    <p>
+        The <strong>xSCVMM </strong> module contains the DSC Resources listed below. This DSC
+        Module enables installation and update of System Center Virtual Machine Manager (VMM).
+    </p>
+
+<p><strong>xSCVMMManagementServerSetup</strong> is used for for installation of the SCVMM Management server, and has the following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">Ensure:</span> KEY - An enumerated value (Present, Absent) that describes if the SCVMM management server is expected to be installed on the machine.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SourcePath:</span> REQUIRED - UNC path to the root of the source files for installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SourceFolder:</span> Folder within the source path containing the source files for installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SetupCredential:</span> REQUIRED - Credential to be used to perform the installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">vmmService: </span>Domain account for the VMM service.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">vmmServiceUsername: </span>Output username of the VMM service.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">ProductKey:</span> Product key for licensed installations.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">UserName: </span>Display name for the user.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">CompanyName: </span>Display name for the organization.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">ProgramFiles: </span>Installation path for the software, as defined by SCVMM Setup.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">ClusterManagementServer: </span>Boolean for if this a clustered Management Server.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">FirstManagementServer: </span>Boolean for if this is or is not the first management server. 
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">CreateNewSqlDatabase: </span>Enumeration value - 0: Use an existing Microsoft SQL Server database. 1: Create a new SQL Server database.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SqlMachineName: </span>REQUIRED - Name of the server that is hosting SQL Server.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SqlInstanceName: </span>REQUIRED - Name of the new or existing instance of SQL Server.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SqlDatabaseName: </span>Name of the new or existing SQL Server database.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">IndigoTcpPort: </span>Port for communication with the VMM console.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">IndigoHTTPSPort: </span>Port for communication with the Windows Preinstallation Environment agents.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">IndigoNETTCPPort: </span>Port for communication with Windows Deployment Services.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">IndigoHTTPPort:</span> Port for communication with Windows PE agent for time synchronization.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">WSManTcpPort: </span>Port for communication with agents on hosts and library servers.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">BitsTcpPort: </span>Port for file transfers to agents on hosts and library servers.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">CreateNewLibraryShare: </span>Enumerated value - 0: Use an existing library share. 1: Create a new library share.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">LibraryShareName: </span>Name of the file share to be used or created.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">LibrarySharePath: </span>Location of the existing file share or the new file share to be created.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">LibraryShareDescription: </span>Description of the share.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">TopContainerName: </span>Container for Distributed Key Management.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">VmmServerName: </span>Clustered service name for a highly available VMM management server.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">VMMStaticIPAddress: </span>IP address for the clustered service name for a highly available VMM management server, if you are not using Dynamic Host Configuration Protocol (DHCP).
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">RetainSqlDatabase: </span>Enumerated value - 0: Remove the SQL Server database. 1: Do not remove the SQL Server database.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">ForceHAVMMUninstall:</span> Enumerated value - 0: Do not force uninstallation if setup.exe cannot verify whether this node is the final node of the highly available installation. 1: Force the uninstallation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SQMOptIn: </span>Enumerated value - 0: Do not opt in to the Customer Experience Improvement Program (CEIP). 1: Opt in to CEIP.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">MUOptIn: </span>Enumerated value - 0: Do not opt in to Microsoft Update. 1: Opt in to Microsoft Update.
+    </li>
+</ul>
+    
+<p><strong>xSCVMMConsoleSetup</strong> is used for installation of the VMM console, and has the following properties:</p>
+<ul style="list-style-type:disc; direction:ltr">
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value (Present, Absent) that describes if the VMM console is expected to be installed on the machine.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">SetupCredential: </span>REQUIRED - Credential to be used to perform the installation.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">ProgramFiles: </span>Installation path for the software.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">IndigoTcpPort: </span>Port for communication with the VMM management server.
+    </li>
+    <li>
+        <span style="width: 250px; float: left; font-weight: bold;">MUOptIn: </span>Enumerated value - 0: Do not opt in to Microsoft Update. 1: Opt in to Microsoft Update.
+    </li>    
+</ul>
+    <p><strong>xSCVMManagementServerUpdate</strong> has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value that describes if the update is expected to be installed on the machine.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Credential: </span>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Update: </span>Output display name of the update.
+        </li>
+    </ul>
+
+    <p><strong>xSCVMMConsoleUpdate</strong> has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value that describes if the update is expected to be installed on the machine.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourcePath: </span>REQUIRED - UNC path to the root of the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SourceFolder: </span>Folder within the source path containing the source files for installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Credential: </span>REQUIRED - Credential to be used to perform the installation.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Update: </span>Output display name of the update.
+        </li>
+    </ul>
+    
+    <p><strong>xSCVMMAdmin</strong> has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>An enumerated value that describes if the principal is an Virtual Machine Manager admin.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Principal: </span>KEY - The Virtual Machine Manager admin principal.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">UserRole: </span>KEY - The Virtual Machine Manager user role.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SCVMMAdminCredential: </span>REQUIRED - Credential to be used to perform the operations.
+        </li>
+    </ul>
+
+    <p><strong>xSCVMMOperationsManagerServer</strong> has the following properties:</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">Ensure: </span>KEY - An enumerated value that describes if the Operations Manager connection exists.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">OpsMgrServer: </span>REQUIRED - Specifies the fully qualified domain name (FQDN) of the System Center Operations Manager management server to which VMM connects.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">EnablePRO: </span>Indicates whether PRO is enabled for this connection.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">EnableMaintenanceModeIntegration: </span>Indicates whether maintenance mode integration is enabled for this connection.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">VMMServerCredential: </span>Specifies the credentials that Operations Manager uses to connect with VMM.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">OpsMgrServerCredential: </span>Specifies the name of the VMM RunAs account that VMM uses to connect to the Operations Manager management group.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">UseVMMServerServiceAccount: </span>Specifies the service account that VMM uses to connect to Operations Manager.
+        </li>
+        <li>
+            <span style="width: 250px; float: left; font-weight: bold;">SCVMMAdminCredential: </span>Credential to be used to perform the operations.
+        </li>
+    </ul>
+
+        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Renaming Requirements</h1>
+        <p>When making changes to these resources, we suggest the following practice:</p>
+        <ol style="list-style-type:decimal; direction:ltr">
+            <li>
+                Update the following names by replacing MSFT with your company/community name and replacing the <strong>"x"</strong> with <strong>"c"</strong> (short for "Community") or another prefix of your choice:
+                <ul>
+                    <li>
+                        <strong>Module name (ex: xSCVMM</strong> becomes <strong>cSCVMM</strong>)
+                    </li>
+                    <li>
+                        <strong>Resource folder (ex: MSFT_xSCVMMConsoleSetup</strong> becomes <strong>Contoso_cSCVMMConsoleSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>Resource Name (ex: MSFT_xSCVMMConsoleSetup</strong> becomes <strong>Contoso_cSCVMMConsoleSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>Resource Friendly Name (ex: xSCVMMConsoleSetup</strong> becomes <strong>cSCVMMConsoleSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>MOF class name (ex: MSFT_xSCVMMConsoleSetup</strong> becomes <strong>Contoso_cSCVMMConsoleSetup</strong>)
+                    </li>
+                    <li>
+                        <strong>Filename for the &lt;resource&gt;.schema.mof (ex: MSFT_xSCVMMConsoleSetup</strong>.schema.mof becomes <strong>Contoso_cSCVMMConsoleSetup</strong>.schema.mof)
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Update module and metadata information in the module manifest
+            </li>
+            <li>
+                Update any configuration that use these resources
+            </li>
+        </ol>
+        <p><em>We reserve resource and module names without prefixes ("x" or "c") for future use (e.g. "MSFT_SCVMMConsoleSetup" or "SCVMMConsoleSetup"). If the next version of Windows Server ships with "MSFT_SCVMMConsoleSetup" resources, we don't want to break any configurations that use any community modifications. Please keep a prefix such as "c" on all community modifications.</em></p>
+
+
+        <h1 style="color:#2e74b5; font-family:Calibri Light; font-size:large">Versions</h1>
+    <p>1.2.4.0</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            Updated release wich added the following resource
+            <ul style="list-style-type:circle">
+                <li>
+                    xSCVMMOperationsManagerServer
+                </li>
+            </ul>
+        </li>
+        <li>
+            Added /norestart to xSCVMMConsoleUpdate and xSCVMMManagementServerUpdate to allow DSC to control reboots
+        </li>
+        <li>
+            Increased timeout for setup process to start to 60 seconds
+        </li>
+    </ul>
+
+    <p>1.2.0.0</p>
+    <ul style="list-style-type:disc; direction:ltr">
+        <li>
+            Updated release wich added the following resources
+            <ul style="list-style-type:circle">
+                <li>
+                    xSCVMMManagementServerUpdate
+                </li>
+                <li>
+                    xSCVMMConsoleUpdate
+                </li>
+                <li>
+                    xSCVMMAdmin
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+        <p>1.1.0.0</p>
+        <ul style="list-style-type:disc; direction:ltr">
+            <li>
+                Initial release with the following resources
+                <ul style="list-style-type:circle">
+                    <li>
+                        xSCVMMManagementServerSetup 
+                    </li>
+                    <li>
+                        xSCVMMConsoleSetup
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h1 style="margin-bottom:0pt; font-family:Calibri Light; color:#2e74b5; font-size:large">Examples</h1>
+        <p>Two example configurations are included in the Examples folder within the module.  Both examples also use the xSQLServer module.</p>
+
+        <p><strong>Single Server Installation:</strong>SCVMM-SingleServer.ps1 installs all VMM roles including prerequisites and SQL on a single server.</p>
+        <p><strong>Separate SQL:</strong> SCVMM-SeperateSQL.ps1 installs all VMM roles on one server and SQL on a seperate server.</p>
+        <p></p>
+        <p><strong>Requirements: </strong></p>
+        <p>These samples require the use of the <a href="http://blogs.msdn.com/b/powershell/archive/2014/09/04/windows-management-framework-5-0-preview-september-2014-is-now-available.aspx"><span style="color:#0000ff">Windows Management Framework (WMF) 5.0 Preview.</span></a></p>
+        <p></p>
+        <p><strong>Notes:</strong></p>
+        <p>Both examples use the exact same Configuration and just modify the behavior based on input ConfigurationData.</p>
+        <p>In the Examples folder you will see a version of each file with "-TP" appended to the name. These are the equivalent examples for deployment of System Center Technical Preview on Windows Server Technical Preview.</p>
+        <p>
+            Since the System Center 2012 R2 Virtual Machine Manager installer for the management server restarts the Windows Remote Management service,
+            if you are using -Verbose -Wait to see the progress of the configuration you will lose the connection got the VMM server during deployment.
+            However, the configuration will continue and complete without further display.
+        </p>
+        <p></p>
+        <p></p>
+        </span>
+</div>
+</body>

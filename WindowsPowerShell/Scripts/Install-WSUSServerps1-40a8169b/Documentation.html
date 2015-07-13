@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Install-WSUSServer.ps1</title>        
+        <meta name="description" content="This script allows you to install a WSUS server locally or remotely using a variety of configuration options. You can also just install the WSUS Administration Console without having to install the entire server! This script
+ makes use of psexec.exe, which is available to downlo" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p><span style="font-size:small">This script allows you to install a WSUS server locally or remotely using a variety of configuration options. You can also just install the WSUS Administration Console without having to install the entire server! This script
+ makes use of psexec.exe, which is available to download from this link: <a href="http://download.sysinternals.com/Files/SysinternalsSuite.zip" target="_blank">
+http://download.sysinternals.com/Files/SysinternalsSuite.zip</a>. This file must be in the same location as the script, otherwise the script will not run.<br>
+</span></p>
+<p><span style="font-size:small">The script also requires either the x86 or x64 installation file, which the script will download for you if you allow it to and have an available internet connection from the location you are running the script. Keep in mind
+ that the installation files must be in the same location as the script and you also need to keep the installation file's original name.</span></p>
+<p><span style="font-size:small">Also, be sure to check out my companion script: <a href="http://gallery.technet.microsoft.com/scriptcenter/Uninstall-WSUSServer-218ce694" target="_blank">
+Uninstall-WSUSServer.ps1</a> as well!</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size:small">This script will be used in the <a href="http://blogs.technet.com/b/heyscriptingguy/archive/2012/01/16/introduction-to-wsus-and-powershell.aspx" target="_blank">
+January 16th Hey, Scripting Guy blog</a>.</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size:small"><strong>Examples:</strong></span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">. .\Install-WSUSServer.ps1 -ConsoleOnly -Computername Server1</pre>
+<div class="preview">
+<pre id="codePreview" class="powershell">.&nbsp;.\Install<span class="powerShell__operator">-</span>WSUSServer.ps1&nbsp;<span class="powerShell__operator">-</span>ConsoleOnly&nbsp;<span class="powerShell__operator">-</span>Computername&nbsp;Server1</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode"><span style="font-size:small">Installs the Administration Console on the local computer.</span></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">. .\Install-WSUSServer.ps1 -Computername TestServer -StoreUpdatesLocally -ContentDirectory &quot;D:\WSUS&quot; -InternalDatabasePath &quot;D:\&quot; -CreateDatabase</pre>
+<div class="preview">
+<pre id="codePreview" class="powershell">.&nbsp;.\Install<span class="powerShell__operator">-</span>WSUSServer.ps1&nbsp;<span class="powerShell__operator">-</span>Computername&nbsp;TestServer&nbsp;<span class="powerShell__operator">-</span>StoreUpdatesLocally&nbsp;<span class="powerShell__operator">-</span>ContentDirectory&nbsp;<span class="powerShell__string">&quot;D:\WSUS&quot;</span>&nbsp;<span class="powerShell__operator">-</span>InternalDatabasePath&nbsp;&quot;D:\&quot;&nbsp;<span class="powerShell__operator">-</span>CreateDatabase</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<p><span style="font-size:small">Installs WSUS server on TestServer and stores content locally on D:\WSUS and installs an internal database on D:\</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">. .\Install-WSUSServer.ps1 -Computername A24 -StoreUpdatesLocally -ContentDirectory &quot;D:\WSUS&quot; -SQLInstance &quot;Server1\Server1&quot; -CreateDatabase</pre>
+<div class="preview">
+<pre id="codePreview" class="powershell">.&nbsp;.\Install<span class="powerShell__operator">-</span>WSUSServer.ps1&nbsp;<span class="powerShell__operator">-</span>Computername&nbsp;A24&nbsp;<span class="powerShell__operator">-</span>StoreUpdatesLocally&nbsp;<span class="powerShell__operator">-</span>ContentDirectory&nbsp;<span class="powerShell__string">&quot;D:\WSUS&quot;</span>&nbsp;<span class="powerShell__operator">-</span>SQLInstance&nbsp;<span class="powerShell__string">&quot;Server1\Server1&quot;</span>&nbsp;<span class="powerShell__operator">-</span>CreateDatabase</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<p><span style="font-size:small">Installs WSUS server on TestServer and stores content locally on D:\WSUS and creates a database on Server1\Server1 SQL instance</span></p>
+
+        </div>
+    </body>
+</html>

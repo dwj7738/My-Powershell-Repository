@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<helpItems schema="maml">
+  <_locDefinition>
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">maml:para</_locTag>
+    <_locTag _loc="locData">maml:title</_locTag>
+  </_locDefinition>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+    <command:details>
+      <command:name>Move-TransportDatabase.ps1</command:name>
+      <maml:description>
+        <maml:para _locID="CommandShortDescription">This script changes the location of the Transport database or temporary storage. It also moves the database files to the new location.</maml:para>
+      </maml:description>
+      <maml:copyright>
+        <maml:para _locID="Copyright">Copyright (c) Microsoft.  All rights reserved.</maml:para>
+      </maml:copyright>
+      <command:verb>Move</command:verb>
+      <command:noun>TransportDatabase.ps1</command:noun>
+      <dev:version />
+    </command:details>
+    <maml:description>
+      <maml:para _locID="CommandLongDescription"></maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <command:name>Move-TransportDatabase.ps1</command:name>
+        <command:parameter required="false" position="1">
+          <maml:name>queueDatabasePath</maml:name>
+          <command:parameterValue>String</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="2">
+          <maml:name>queueDatabaseLoggingPath</maml:name>
+          <command:parameterValue>String</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="3">
+          <maml:name>iPFilterDatabasePath</maml:name>
+          <command:parameterValue>String</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="4">
+          <maml:name>iPFilterDatabaseLoggingPath</maml:name>
+          <command:parameterValue>String</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="5">
+          <maml:name>temporaryStoragePath</maml:name>
+          <command:parameterValue>String</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="6">
+          <maml:name>setupMode</maml:name>
+          <command:parameterValue>Boolean</command:parameterValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="" globbing="" pipelineInput="false" position="1">
+        <maml:name>queueDatabasePath</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_queueDatabasePath">The path to move the queue database file to.</maml:para>
+        </maml:description>
+        <command:parameterValue>String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+      <command:parameter required="false" variableLength="" globbing="" pipelineInput="false" position="2">
+        <maml:name>queueDatabaseLoggingPath</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_queueDatabaseLoggingPath">The path to move the queue database log file to.</maml:para>
+        </maml:description>
+        <command:parameterValue>String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+      <command:parameter required="false" variableLength="" globbing="" pipelineInput="false" position="3">
+        <maml:name>iPFilterDatabasePath</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_iPFilterDatabasePath">The path to move the IP filtering database file to.</maml:para>
+        </maml:description>
+        <command:parameterValue>String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+      <command:parameter required="false" variableLength="" globbing="" pipelineInput="false" position="4">
+        <maml:name>iPFilterDatabaseLoggingPath</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_iPFilterDatabaseLoggingPath">The path to move the IP filtering database log file to.</maml:para>
+        </maml:description>
+        <command:parameterValue>String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+      <command:parameter required="false" variableLength="" globbing="" pipelineInput="false" position="5">
+        <maml:name>temporaryStoragePath</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_temporaryStoragePath">The new path for temporary storage.</maml:para>
+        </maml:description>
+        <command:parameterValue>String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+      <command:parameter required="false" variableLength="" globbing="" pipelineInput="false" position="6">
+        <maml:name>setupMode</maml:name>
+        <maml:description>
+          <maml:para _locID="Param_Description_setupMode">Indicate whether script is being called from setup.</maml:para>
+        </maml:description>
+        <command:parameterValue>Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue />
+      </command:parameter>
+    </command:parameters>
+    <maml:alertSet>
+      <maml:title></maml:title>
+      <maml:alert>
+        <maml:para _locID="Alert_1_Note">- If the target drive is different from the source drive, the target drive is required to have sufficient disk space (2GB) plus the space required to move existing database or log files.
+- QueueDatabasePath can't be the same as IPFilterDatabasePath.
+- QueueDatabaseLoggingPath can't be the same as IPFilterDatabaseLoggingPath.
+- If the specified directory doesn't exist, it will be created automatically.
+- Existing EdgeTransport.exe.config file will be saved as EdgeTransport.exe.config.[yyyyMMddHHmmss].old.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title _locID="Example_Title_1">-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <maml:introduction>
+          <maml:para>C:\PS&gt;</maml:para>
+        </maml:introduction>
+        <dev:code>Move-TransportDatabase -TemporaryStoragePath d:\Exchange\Temp</dev:code>
+        <dev:remarks />
+      </command:example>
+      <command:example>
+        <maml:title _locID="Example_Title_2">-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <maml:introduction>
+          <maml:para>C:\PS&gt;</maml:para>
+        </maml:introduction>
+        <dev:code>Move-TransportDatabase -QueueDatabasePath d:\Exchange\Queue -QueueDatabaseLoggingPath: d:\Exchange\Queue</dev:code>
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+  </command:command>
+</helpItems>

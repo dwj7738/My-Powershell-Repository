@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Get-Share Permissions</title>        
+        <meta name="description" content="This little script will enumerate all the shares on a computer, and list the share-level permissions for each share.&#160; It uses WMI to retrieve the shares, and to list the permissions.&#160; Thanks to Michal Gadja for his input (via the Library)." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<div>This little script will enumerate all the shares on a computer, and list the share-level permissions for each share.&nbsp; It uses WMI to retrieve the shares, and to list the permissions.&nbsp; Thanks to Michal Gadja for his input (via the Library).&nbsp;</div>
+<div></div>
+<div>Note that this script lists share-level permissions, and not NTFS permissions.&nbsp; For the purposes of sharing folders, these permissions are cumulative, and most restrictive policy wins.</div>
+<div>
+<div class="endscriptcode">
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&lt;#
+           .SYNOPSIS 
+           This script will list all shares on a computer, and list all the share permissions for each share.
+
+           .DESCRIPTION
+           The script will take a list all shares on a local or remote computer.
+    
+           .PARAMETER Computer
+           Specifies the computer or array of computers to process
+
+           .INPUTS
+           Get-SharePermissions accepts pipeline of computer name(s)
+
+           .OUTPUTS
+           Produces an array object for each share found.
+
+           .EXAMPLE
+           C:\PS&gt; .\Get-SharePermissions # Operates against local computer.
+
+           .EXAMPLE
+           C:\PS&gt; 'computerName' | .\Get-SharePermissions
+
+           .EXAMPLE
+           C:\PS&gt; Get-Content 'computerlist.txt' | .\Get-SharePermissions | Out-File 'SharePermissions.txt'
+
+           .EXAMPLE
+           Get-Help .\Get-SharePermissions -Full
+#&gt;
+
+# Written by BigTeddy November 15, 2011
+# Last updated 9 September 2012 
+# Ver. 2.0 
+# Thanks to Michal Gajda for input with the ACE handling.
+ 
+[cmdletbinding()]
+
+param([Parameter(ValueFromPipeline=$True,
+    ValueFromPipelineByPropertyName=$True)]$Computer = '.') 
+
+$shares = gwmi -Class win32_share -ComputerName $computer | select -ExpandProperty Name 
+ 
+foreach ($share in $shares) { 
+    $acl = $null 
+    Write-Host $share -ForegroundColor Green 
+    Write-Host $('-' * $share.Length) -ForegroundColor Green 
+    $objShareSec = Get-WMIObject -Class Win32_LogicalShareSecuritySetting -Filter &quot;name='$Share'&quot;  -ComputerName $computer
+    try { 
+        $SD = $objShareSec.GetSecurityDescriptor().Descriptor   
+        foreach($ace in $SD.DACL){  
+            $UserName = $ace.Trustee.Name     
+            If ($ace.Trustee.Domain -ne $Null) {$UserName = &quot;$($ace.Trustee.Domain)\$UserName&quot;}   
+            If ($ace.Trustee.Name -eq $Null) {$UserName = $ace.Trustee.SIDString }     
+            [Array]$ACL &#43;= New-Object Security.AccessControl.FileSystemAccessRule($UserName, $ace.AccessMask, $ace.AceType) 
+            } #end foreach ACE           
+        } # end try 
+    catch 
+        { Write-Host &quot;Unable to obtain permissions for $share&quot; } 
+    $ACL 
+    Write-Host $('=' * 50) 
+    } # end foreach $share</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__mlcom">&lt;#&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.SYNOPSIS&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;script&nbsp;will&nbsp;list&nbsp;all&nbsp;shares&nbsp;on&nbsp;a&nbsp;computer,&nbsp;and&nbsp;list&nbsp;all&nbsp;the&nbsp;share&nbsp;permissions&nbsp;for&nbsp;each&nbsp;share.&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.DESCRIPTION&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;script&nbsp;will&nbsp;take&nbsp;a&nbsp;list&nbsp;all&nbsp;shares&nbsp;on&nbsp;a&nbsp;local&nbsp;or&nbsp;remote&nbsp;computer.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.PARAMETER&nbsp;Computer&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies&nbsp;the&nbsp;computer&nbsp;or&nbsp;array&nbsp;of&nbsp;computers&nbsp;to&nbsp;process&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.INPUTS&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get-SharePermissions&nbsp;accepts&nbsp;pipeline&nbsp;of&nbsp;computer&nbsp;name(s)&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.OUTPUTS&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Produces&nbsp;an&nbsp;array&nbsp;object&nbsp;for&nbsp;each&nbsp;share&nbsp;found.&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C:\PS&gt;&nbsp;.\Get-SharePermissions&nbsp;#&nbsp;Operates&nbsp;against&nbsp;local&nbsp;computer.&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C:\PS&gt;&nbsp;'computerName'&nbsp;|&nbsp;.\Get-SharePermissions&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C:\PS&gt;&nbsp;Get-Content&nbsp;'computerlist.txt'&nbsp;|&nbsp;.\Get-SharePermissions&nbsp;|&nbsp;Out-File&nbsp;'SharePermissions.txt'&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get-Help&nbsp;.\Get-SharePermissions&nbsp;-Full&nbsp;
+#&gt;</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Written&nbsp;by&nbsp;BigTeddy&nbsp;November&nbsp;15,&nbsp;2011</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Last&nbsp;updated&nbsp;9&nbsp;September&nbsp;2012&nbsp;</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Ver.&nbsp;2.0&nbsp;</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Thanks&nbsp;to&nbsp;Michal&nbsp;Gajda&nbsp;for&nbsp;input&nbsp;with&nbsp;the&nbsp;ACE&nbsp;handling.</span>&nbsp;
+&nbsp;&nbsp;
+[cmdletbinding()]&nbsp;
+&nbsp;
+<span class="powerShell__keyword">param</span>([Parameter(ValueFromPipeline=<span class="powerShell__variable">$True</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;ValueFromPipelineByPropertyName=<span class="powerShell__variable">$True</span>)]<span class="powerShell__variable">$Computer</span>&nbsp;=&nbsp;<span class="powerShell__string">'.'</span>)&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__variable">$shares</span>&nbsp;=&nbsp;<span class="powerShell__alias">gwmi</span>&nbsp;<span class="powerShell__operator">-</span>Class&nbsp;win32_share&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$computer</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__alias">select</span>&nbsp;<span class="powerShell__operator">-</span>ExpandProperty&nbsp;Name&nbsp;&nbsp;
+&nbsp;&nbsp;
+<span class="powerShell__keyword">foreach</span>&nbsp;(<span class="powerShell__variable">$share</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$shares</span>)&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$acl</span>&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__variable">$share</span>&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;Green&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__variable">$</span>(<span class="powerShell__string">'-'</span>&nbsp;<span class="powerShell__operator">*</span>&nbsp;<span class="powerShell__variable">$share</span>.Length)&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;Green&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$objShareSec</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">Get-WMIObject</span>&nbsp;<span class="powerShell__operator">-</span>Class&nbsp;Win32_LogicalShareSecuritySetting&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__keyword">Filter</span>&nbsp;<span class="powerShell__string">&quot;name='$Share'&quot;</span>&nbsp;&nbsp;<span class="powerShell__operator">-</span>ComputerName&nbsp;<span class="powerShell__variable">$computer</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">try</span>&nbsp;{&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SD</span>&nbsp;=&nbsp;<span class="powerShell__variable">$objShareSec</span>.GetSecurityDescriptor().Descriptor&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">foreach</span>(<span class="powerShell__variable">$ace</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$SD</span>.DACL){&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UserName</span>&nbsp;=&nbsp;<span class="powerShell__variable">$ace</span>.Trustee.Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$ace</span>.Trustee.Domain&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__variable">$Null</span>)&nbsp;{<span class="powerShell__variable">$UserName</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;$($ace.Trustee.Domain)\$UserName&quot;</span>}&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$ace</span>.Trustee.Name&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$Null</span>)&nbsp;{<span class="powerShell__variable">$UserName</span>&nbsp;=&nbsp;<span class="powerShell__variable">$ace</span>.Trustee.SIDString&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Array]<span class="powerShell__variable">$ACL</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;Security.AccessControl.FileSystemAccessRule(<span class="powerShell__variable">$UserName</span>,&nbsp;<span class="powerShell__variable">$ace</span>.AccessMask,&nbsp;<span class="powerShell__variable">$ace</span>.AceType)&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__com">#end&nbsp;foreach&nbsp;ACE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__com">#&nbsp;end&nbsp;try&nbsp;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">catch</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Unable&nbsp;to&nbsp;obtain&nbsp;permissions&nbsp;for&nbsp;$share&quot;</span>&nbsp;}&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ACL</span>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__variable">$</span>(<span class="powerShell__string">'='</span>&nbsp;<span class="powerShell__operator">*</span>&nbsp;50)&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__com">#&nbsp;end&nbsp;foreach&nbsp;$share</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+&nbsp;</div>
+</div>
+
+        </div>
+    </body>
+</html>

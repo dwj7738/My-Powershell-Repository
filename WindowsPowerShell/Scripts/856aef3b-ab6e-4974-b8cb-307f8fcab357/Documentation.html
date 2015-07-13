@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Reset-WSUSClientID</title>        
+        <meta name="description" content="This script will perform the basic troubleshooting steps for a client that is not reporting into WSUS correctly." />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<h2>Description</h2>
+<p>This script will perform the basic troubleshooting steps for a client that is not reporting into WSUS correctly.&nbsp; This typically happens when the SusClientId is duplicated in a domain. One major cause for this is when Sysprep is not run before an image
+ is captured.</p>
+<p>Process:<br>
+1. Set Windows Update service name and get a list of computers to run against.<br>
+2. Loop through each of the computers and ping them.<br>
+3. If a PC is pingable:<br>
+&nbsp;&nbsp;&nbsp; A.&nbsp; Stop Windows Update service<br>
+&nbsp;&nbsp;&nbsp; B.&nbsp; Delete the registry keys associated with WSUS registration<br>
+&nbsp;&nbsp;&nbsp; C.&nbsp; Rename the SoftwareDistribution folder that houses WSUS info<br>
+&nbsp;&nbsp;&nbsp; D.&nbsp; Restart the Windows Updates service<br>
+&nbsp;&nbsp;&nbsp; E.&nbsp; Command computer to contact WSUS server</p>
+<p>Requirements:<br>
+Windows Powershell v2.0<br>
+PSExec (http://technet.microsoft.com/en-us/sysinternals/bb897553.aspx)<br>
+Local admin rights on remote machines</p>
+<p>Disclaimer:&nbsp; PLEASE test this in a lab environment first.&nbsp; It does not contain full checks in the script (e.g. check to make sure Windows Update service restarted before moving to next PC).&nbsp; This was written to assist in troubleshooting WSUS
+ and not as a replacement.</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">$service = &quot;wuauserv&quot;
+$pclist = &quot;C:\wsusPCerrors.txt&quot;
+
+foreach ($computername in gc $PClist)
+{
+
+$pcservice = $null
+$reg = $null
+$regkey = $null
+$SDpath = $null
+
+if (test-connection $computername -quiet -count 1)
+    {
+    write-host &quot;Processing: &quot;$computername
+
+    $pcservice = gwmi win32_service -computername $computername -filter &quot;name='$service'&quot;
+    $pcservice.stopservice() | out-null; write-host &quot;Stopping $service service.&quot;
+
+    do {start-sleep -m 250; $pcservice = gwmi win32_service -computername $computername -filter &quot;name='$service'&quot;}
+    while ($pcservice.state -eq &quot;Running&quot;)
+
+    $reg = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey('LocalMachine', $computerName)
+    $regKey = $reg.OpenSubKey(&quot;SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate&quot;, $true)
+    if ($regkey.getvalue(&quot;SUSclientid&quot;)){$regkey.deletevalue(&quot;SUSclientid&quot;)}
+    if ($regkey.getvalue(&quot;SusClientIdValidation&quot;)){$regkey.deletevalue(&quot;SusClientIdValidation&quot;)}
+    if ($regkey.getvalue(&quot;PingID&quot;)){$regkey.deletevalue(&quot;PingID&quot;)}
+    if ($regkey.getvalue(&quot;AccountDomainSid&quot;)){$regkey.deletevalue(&quot;AccountDomainSid&quot;)}
+
+    $SDpath = &quot;\\$computername\c$\Windows\SoftwareDistribution.old&quot;
+    if (test-path $SDpath){remove-item $SDpath -force}
+    rename-item -path \\$computername\c$\Windows\SoftwareDistribution -newname $SDpath
+    start-sleep -m 250
+    $pcservice.startservice() | out-null; write-host &quot;Starting $service service.&quot;
+
+    cmd /c PsExec.exe \\$computername -d C:\windows\system32\wuauclt.exe /resetauthorization /detectnow
+    }
+else{write-host &quot;Could not contact: &quot; $computername}
+write-host &quot;##################################################&quot;
+} #End foreach $pc</pre>
+<div class="preview">
+<pre id="codePreview" class="powershell"><span class="powerShell__variable">$service</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;wuauserv&quot;</span>&nbsp;
+<span class="powerShell__variable">$pclist</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;C:\wsusPCerrors.txt&quot;</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">foreach</span>&nbsp;(<span class="powerShell__variable">$computername</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__alias">gc</span>&nbsp;<span class="powerShell__variable">$PClist</span>)&nbsp;
+{&nbsp;
+&nbsp;
+<span class="powerShell__variable">$pcservice</span>&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>&nbsp;
+<span class="powerShell__variable">$reg</span>&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>&nbsp;
+<span class="powerShell__variable">$regkey</span>&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>&nbsp;
+<span class="powerShell__variable">$SDpath</span>&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(test<span class="powerShell__operator">-</span>connection&nbsp;<span class="powerShell__variable">$computername</span>&nbsp;<span class="powerShell__operator">-</span>quiet&nbsp;<span class="powerShell__operator">-</span>count&nbsp;1)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Processing:&nbsp;&quot;</span><span class="powerShell__variable">$computername</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$pcservice</span>&nbsp;=&nbsp;<span class="powerShell__alias">gwmi</span>&nbsp;win32_service&nbsp;<span class="powerShell__operator">-</span>computername&nbsp;<span class="powerShell__variable">$computername</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__keyword">filter</span>&nbsp;<span class="powerShell__string">&quot;name='$service'&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$pcservice</span>.stopservice()&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">out-null</span>;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Stopping&nbsp;$service&nbsp;service.&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">do</span>&nbsp;{<span class="powerShell__cmdlets">start-sleep</span>&nbsp;<span class="powerShell__operator">-</span>m&nbsp;250;&nbsp;<span class="powerShell__variable">$pcservice</span>&nbsp;=&nbsp;<span class="powerShell__alias">gwmi</span>&nbsp;win32_service&nbsp;<span class="powerShell__operator">-</span>computername&nbsp;<span class="powerShell__variable">$computername</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__keyword">filter</span>&nbsp;<span class="powerShell__string">&quot;name='$service'&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">while</span>&nbsp;(<span class="powerShell__variable">$pcservice</span>.state&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__string">&quot;Running&quot;</span>)&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$reg</span>&nbsp;=&nbsp;[Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey(<span class="powerShell__string">'LocalMachine'</span>,&nbsp;<span class="powerShell__variable">$computerName</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$regKey</span>&nbsp;=&nbsp;<span class="powerShell__variable">$reg</span>.OpenSubKey(<span class="powerShell__string">&quot;SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate&quot;</span>,&nbsp;<span class="powerShell__variable">$true</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$regkey</span>.getvalue(<span class="powerShell__string">&quot;SUSclientid&quot;</span>)){<span class="powerShell__variable">$regkey</span>.deletevalue(<span class="powerShell__string">&quot;SUSclientid&quot;</span>)}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$regkey</span>.getvalue(<span class="powerShell__string">&quot;SusClientIdValidation&quot;</span>)){<span class="powerShell__variable">$regkey</span>.deletevalue(<span class="powerShell__string">&quot;SusClientIdValidation&quot;</span>)}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$regkey</span>.getvalue(<span class="powerShell__string">&quot;PingID&quot;</span>)){<span class="powerShell__variable">$regkey</span>.deletevalue(<span class="powerShell__string">&quot;PingID&quot;</span>)}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$regkey</span>.getvalue(<span class="powerShell__string">&quot;AccountDomainSid&quot;</span>)){<span class="powerShell__variable">$regkey</span>.deletevalue(<span class="powerShell__string">&quot;AccountDomainSid&quot;</span>)}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SDpath</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;\\$computername\c$\Windows\SoftwareDistribution.old&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__cmdlets">test-path</span>&nbsp;<span class="powerShell__variable">$SDpath</span>){<span class="powerShell__cmdlets">remove-item</span>&nbsp;<span class="powerShell__variable">$SDpath</span>&nbsp;<span class="powerShell__operator">-</span>force}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">rename-item</span>&nbsp;<span class="powerShell__operator">-</span>path&nbsp;\\<span class="powerShell__variable">$computername</span>\c<span class="powerShell__variable">$</span>\Windows\SoftwareDistribution&nbsp;<span class="powerShell__operator">-</span>newname&nbsp;<span class="powerShell__variable">$SDpath</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">start-sleep</span>&nbsp;<span class="powerShell__operator">-</span>m&nbsp;250&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$pcservice</span>.startservice()&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">out-null</span>;&nbsp;write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Starting&nbsp;$service&nbsp;service.&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;cmd&nbsp;<span class="powerShell__operator">/</span>c&nbsp;PsExec.exe&nbsp;\\<span class="powerShell__variable">$computername</span>&nbsp;<span class="powerShell__operator">-</span>d&nbsp;C:\windows\system32\wuauclt.exe&nbsp;<span class="powerShell__operator">/</span>resetauthorization&nbsp;<span class="powerShell__operator">/</span>detectnow&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+<span class="powerShell__keyword">else</span>{write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;Could&nbsp;not&nbsp;contact:&nbsp;&quot;</span>&nbsp;<span class="powerShell__variable">$computername</span>}&nbsp;
+write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__string">&quot;##################################################&quot;</span>&nbsp;
+}&nbsp;<span class="powerShell__com">#End&nbsp;foreach&nbsp;$pc</span></pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+
+        </div>
+    </body>
+</html>

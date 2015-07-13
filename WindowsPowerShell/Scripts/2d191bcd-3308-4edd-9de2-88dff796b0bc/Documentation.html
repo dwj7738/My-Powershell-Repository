@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Windows Update PowerShell Module</title>        
+        <meta name="description" content="This function is a piece of PSWindowsUpdate module to manage Windows Update on a computer system running Windows. Whole module contain set of functions to check, download and install updates from PowerShell. " />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<h2>Windows Update PowerShell Module</h2>
+<p>The PSWindowsUpdate module allow you to manage Windows Update on your computer. Module contain set of function to check, download and install or remove update from local machine. Especially useful on machines in core edition like Windows Server 2008 R2.<br>
+<br>
+Module can be installed manualy by downloading Zip file and extract in two places:</p>
+<ul>
+<li>%USERPROFILE%\Documents\WindowsPowerShell\Modules </li><li>%WINDIR%\System32\WindowsPowerShell\v1.0\Modules </li></ul>
+<h3><strong>Importing the module</strong></h3>
+<pre>PS &gt; Import-Module PSWindowsUpdate</pre>
+<h3>Prerequisites</h3>
+<p>Windows PowerShell 2.0</p>
+<h3>Change Log:</h3>
+<p><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808"><span id="47808">v1.5.1
+ - Added Add-WUServiceManager and Remove-WUServiceManager to register/unregister updates Service Manager. Add remoting to Get-WURebootStatus.<br>
+v1.5.0 - Added Invoke-WUInstall for pseudo remoting (taskscheduler based - support only for Vista/WS2008 or later)&nbsp;and Update-WUModule to update module.</span></span></span></span></span></span></span></span><br>
+</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>v1.4.7 - Added AutoSelectOnly param&nbsp;for automatic accept only 'important' updates,
+<span class="hps">ie</span> <span class="hps">those</span> <span class="hps">
+which have the status AutoSelectOnWebsites = true</span>.</span></span></span></span></span></span></span></span><br>
+</span></span></span></span></span></span></span></span>v1.4.6 - Added function Hide-WUUpdate to auto hide updates that meets search criteria.</span></span></span></span></span></span></span></span><br>
+<a href="http://gallery.technet.microsoft.com/2d191bcd-3308-4edd-9de2-88dff796b0bc/file/66095/1/PSWindowsUpdate_1.4.5.zip" target="_blank">v1.4.5</a> - Changed default search pre crteria isHidden = 0 to show only nothidden updates. Added WithHidden param to
+ get all updates (hidden and not) and removed isNotHidden param (now it is default criteria). Added warning if don't find any updates.<br>
+v1.4.4 - Added <span class="hps x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_alt-edited">
+NotCategory, NotKBArticleID, NotTitle param to&nbsp;filter&nbsp;updates that's not match of these value.</span></span></span></span></span><br>
+<a href="http://gallery.technet.microsoft.com/2d191bcd-3308-4edd-9de2-88dff796b0bc/file/56706/1/PSWindowsUpdate_1.4.3.zip" target="_blank">v1.4.3</a> - Added&nbsp;<span class="hps x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_alt-edited">isNotHidden param
+ to show only not hidden updates. Default still show whole updates (hidden and not hidden).</span><br>
+</span></span>v1.4.2 - Added <span class="hps x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_alt-edited">
+IgroneReboot param to hide prompt for reboot, but do not reboot automaticaly.</span><br>
+</span>v1.4.1 - Added <span class="hps x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_x_alt-edited">
+ability to define own search criteria. </span>Correct fast ServerSelection param&nbsp;-WindowsUpdate&nbsp;and -MicrosoftUpdate.<br>
+v1.4.0</span> - Code optimized, <span class="hps">new</span> <span class="hps">
+filtering criteria, simple remote to obtain information about updates.</span><br>
+<a id="47807" href="/2d191bcd-3308-4edd-9de2-88dff796b0bc/file/47807/1/PSWindowsUpdate_1.3.4.zip" target="_blank">v1.3.4</a> -&nbsp;Fixed typographical bug in Get-WUInstall in type of updates.<br>
+v1.3.3 - Added progress bar in Get-WUInstall.<br>
+v1.3.2 - Fixed small bug in Add-WUOfflineSync.</p>
+<h3>PSWindowsUpdate</h3>
+<p>Depending on the security policy on machine, module may need administrator permissions to use all functions.<br>
+Module can use Windows Update offline scan file (I excluded wsusscan.cab file from the module so now need to download it individually). The latest Windows Update offline scan file (wsusscn2.cab) is available from Microsoft Baseline Security Analyzer (MSBA)
+ or System Management Server Inventory Tool for Microsoft Updates (SMS ITMU).</p>
+<h3>Available functions</h3>
+<ul>
+<li>Add-WUOfflineSync </li><li>Add-WUServiceManager </li><li>Get-WUHistory </li><li>Get-WUInstall </li><li>Get-WUInstallerStatus </li><li>Get-WUList </li><li>Hide-WUUpdate </li><li>Invoke-WUInstall </li><li>Get-WURebootStatus </li><li>Get-WUServiceManager </li><li>Get-WUUninstall </li><li>Remove-WUOfflineSync </li><li>Remove-WUServiceManager&nbsp; </li><li>Update-WUModule&nbsp; </li></ul>
+<p><strong><span class="hps">Examples of using the</span> <span class="hps">module (Source code of module&nbsp;is in attachment):</span></strong></p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&lt;#
+	.EXAMPLE
+		Get info about updates that are not require user interaction to install.
+	
+		PS C:\&gt; Get-WUInstall -MicrosoftUpdate -IgnoreUserInput -WhatIf -Verbose
+		VERBOSE: Connecting to Microsoft Update server. Please wait...
+		VERBOSE: Found [39] Updates in pre search criteria
+		VERBOSE: Found [5] Updates in post search criteria to Download
+		What if: Performing operation &quot;Aktualizacja firmy Microsoft z ekranem wybierania przeglądarki dla użytkownik&oacute;w systemu Windows 7 dla system&oacute;w opartych na procesorach x64 w Europejskim Obszarze Gospodarczym (KB976002)[1 MB]?&quot; on Target &quot;KOMPUTER&quot;.
+		What if: Performing operation &quot;Aktualizacja dla systemu Windows 7 dla system&oacute;w opartych na procesorach x64 (KB971033)[1MB]?&quot; on Target &quot;KOMPUTER&quot;.
+		What if: Performing operation &quot;Aktualizacja systemu Windows 7 dla komputer&oacute;w z procesorami x64 (KB2533552)[1 MB]?&quot; on Target &quot;KOMPUTER&quot;.
+		What if: Performing operation &quot;Program Microsoft .NET Framework 4 Client Profile w systemie Windows 7 dla system&oacute;w opartych na procesorach x64 (KB982670)[1 MB]?&quot; on Target &quot;KOMPUTER&quot;.
+		What if: Performing operation &quot;Narzędzie Windows do usuwania złośliwego oprogramowania dla komputer&oacute;w z procesorem x64 -grudzień 2011 (KB890830)[1 MB]?&quot; on Target &quot;KOMPUTER&quot;.
+
+		X Status     KB          Size Title
+		- ------     --          ---- -----
+		2 Rejected   KB890830    1 MB Aktualizacja firmy Microsoft z ekranem wybierania przeglądarki dla użytkownik&oacute;w system...
+		2 Rejected   KB890830    1 MB Aktualizacja dla systemu Windows 7 dla system&oacute;w opartych na procesorach x64 (KB971033)
+		2 Rejected   KB890830    1 MB Aktualizacja systemu Windows 7 dla komputer&oacute;w z procesorami x64 (KB2533552)
+		2 Rejected   KB890830    1 MB Program Microsoft .NET Framework 4 Client Profile w systemie Windows 7 dla system&oacute;w op...
+		2 Rejected   KB890830    1 MB Narzędzie Windows do usuwania złośliwego oprogramowania dla komputer&oacute;w z procesorem x6...
+		VERBOSE: Accept [0] Updates to Download
+	
+	.EXAMPLE
+		Get updates from specific source with title contains &quot;.NET Framework 4&quot;. Everything automatic accept and install.
+	
+		PS C:\&gt; Get-WUInstall -ServiceID 9482f4b4-e343-43b6-b170-9a65bc822c77 -Title &quot;.NET Framework 4&quot; -AcceptAll
+
+		X Status     KB          Size Title
+		- ------     --          ---- -----
+		2 Accepted   KB982670   48 MB Program Microsoft .NET Framework 4 Client Profile w systemie Windows 7 dla system&oacute;w op...
+		3 Downloaded KB982670   48 MB Program Microsoft .NET Framework 4 Client Profile w systemie Windows 7 dla system&oacute;w op...
+		4 Installed  KB982670   48 MB Program Microsoft .NET Framework 4 Client Profile w systemie Windows 7 dla system&oacute;w op...
+
+	.EXAMPLE
+		Get updates with specyfic KBArticleID. Check if type are &quot;Software&quot; and automatic install all.
+		
+		PS C:\&gt; $KBList = &quot;KB890830&quot;, &quot;KB2533552&quot;, &quot;KB2539636&quot;
+		PS C:\&gt; Get-WUInstall -Type &quot;Software&quot; -KBArticleID $KBList -AcceptAll
+
+		X Status     KB          Size Title
+		- ------     --          ---- -----
+		2 Accepted   KB2533552   9 MB Aktualizacja systemu Windows 7 dla komputer&oacute;w z procesorami x64 (KB2533552)
+		2 Accepted   KB2539636   4 MB Aktualizacja zabezpieczeń dla programu Microsoft .NET Framework 4 w systemach Windows ...
+		2 Accepted   KB890830    1 MB Narzędzie Windows do usuwania złośliwego oprogramowania dla komputer&oacute;w z procesorem x6...
+		3 Downloaded KB2533552   9 MB Aktualizacja systemu Windows 7 dla komputer&oacute;w z procesorami x64 (KB2533552)
+		3 Downloaded KB2539636   4 MB Aktualizacja zabezpieczeń dla programu Microsoft .NET Framework 4 w systemach Windows ...
+		3 Downloaded KB890830    1 MB Narzędzie Windows do usuwania złośliwego oprogramowania dla komputer&oacute;w z procesorem x6...	
+		4 Installed  KB2533552   9 MB Aktualizacja systemu Windows 7 dla komputer&oacute;w z procesorami x64 (KB2533552)
+		4 Installed  KB2539636   4 MB Aktualizacja zabezpieczeń dla programu Microsoft .NET Framework 4 w systemach Windows ...
+		4 Installed  KB890830    1 MB Narzędzie Windows do usuwania złośliwego oprogramowania dla komputer&oacute;w z procesorem x6...
+
+	.EXAMPLE
+		Get list of available updates from Microsoft Update Server.
+	
+		PS C:\&gt; Get-WUList -MicrosoftUpdate
+
+		ComputerName Status KB          Size Title
+		------------ ------ --          ---- -----
+		KOMPUTER     ------ KB976002  102 KB Aktualizacja firmy Microsoft z ekranem wybierania przeglądarki dla użytkownik&oacute;w...
+		KOMPUTER     ------ KB971033    1 MB Aktualizacja dla systemu Windows 7 dla system&oacute;w opartych na procesorach x64 (KB...
+		KOMPUTER     ------ KB2533552   9 MB Aktualizacja systemu Windows 7 dla komputer&oacute;w z procesorami x64 (KB2533552)
+		KOMPUTER     ------ KB982861   37 MB Windows Internet Explorer 9 dla systemu Windows 7 - wersja dla system&oacute;w opartyc...
+		KOMPUTER     D----- KB982670   48 MB Program Microsoft .NET Framework 4 Client Profile w systemie Windows 7 dla syst...
+		KOMPUTER     ---H-- KB890830    1 MB Narzędzie Windows do usuwania złośliwego oprogramowania dla komputer&oacute;w z proces...
+
+	.EXAMPLE
+		Get information about updates from Microsoft Update Server that are installed on remote machine G1. Updates type are software, from specific category, have specific UUID and Revision Name.
+		
+		PS C:\&gt; $UpdateIDs = &quot;40336e0a-7b9b-45a0-89e9-9bd3ce0c3137&quot;,&quot;61bfe3ec-a1dc-4eab-9481-0d8fd7319ae8&quot;,&quot;0c737c40-b687-45bc-8deb-83db8209b258&quot;
+		PS C:\&gt; Get-WUList -MicrosoftUpdate -IsInstalled -Type &quot;Software&quot; -CategoryIDs &quot;E6CF1350-C01B-414D-A61F-263D14D133B4&quot; -UpdateID $UpdateIDs -RevisionNumber 101 -ComputerName G1 -Verbose
+		VERBOSE: Connecting to Microsoft Update server. Please wait...
+		VERBOSE: Found [2] Updates in pre search criteria
+		VERBOSE: Found [2] Updates in post search criteria
+
+		ComputerName Status KB          Size Title
+		------------ ------ --          ---- -----
+		G1           DI--U- KB2345886 605 KB Aktualizacja dla systemu Windows 7 dla system&oacute;w opartych na procesorach x64 (KB...
+		G1           DI--U- KB2641690  67 KB Aktualizacja systemu Windows 7 dla komputer&oacute;w z procesorami x64 (KB2641690)
+
+	.EXAMPLE
+		Hide updates contains &quot;Internet Explorer 9&quot; in title and are in &quot;Update Rollups&quot; category.
+		
+		PS C:\&gt; $UpdatesList = Get-WUList -ServiceID &quot;9482f4b4-e343-43b6-b170-9a65bc822c77&quot; -Title &quot;Internet Explorer 9&quot; -Category &quot;Update Rollups&quot;
+		PS C:\&gt; $UpdatesList.IsHidden = $true
+		PS C:\&gt; Get-WUList -ServiceID &quot;9482f4b4-e343-43b6-b170-9a65bc822c77&quot; -Title &quot;Internet Explorer 9&quot; -Category &quot;Update Rollups&quot; -IsHidden
+
+		ComputerName Status KB          Size Title
+		------------ ------ --          ---- -----
+		KOMPUTER     ---H-- KB982861   37 MB Windows Internet Explorer 9 dla systemu Windows 7 - wersja dla system&oacute;w opartyc...
+
+
+	.EXAMPLE
+		Show currently available Windows Update Services on machine.
+	
+		PS C:\&gt; Get-WUServiceManager
+
+		ServiceID                            IsManaged IsDefault Name
+		---------                            --------- --------- ----
+		9482f4b4-e343-43b6-b170-9a65bc822c77 False     False     Windows Update
+		7971f918-a847-4430-9279-4a52d1efe18d False     False     Microsoft Update
+		3da21691-e39d-4da6-8a4b-b43877bcb1b7 True      True      Windows Server Update Service
+		13df3d8f-78d7-4eb8-bb9c-2a101870d350 False     False     Offline Sync Service2
+		a8f3b5e6-fb1f-4814-a047-2257d39c2460 False     False     Offline Sync Service
+#&gt;
+</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__mlcom">&lt;#&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get&nbsp;info&nbsp;about&nbsp;updates&nbsp;that&nbsp;are&nbsp;not&nbsp;require&nbsp;user&nbsp;interaction&nbsp;to&nbsp;install.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;Get-WUInstall&nbsp;-MicrosoftUpdate&nbsp;-IgnoreUserInput&nbsp;-WhatIf&nbsp;-Verbose&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VERBOSE:&nbsp;Connecting&nbsp;to&nbsp;Microsoft&nbsp;Update&nbsp;server.&nbsp;Please&nbsp;wait...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VERBOSE:&nbsp;Found&nbsp;[39]&nbsp;Updates&nbsp;in&nbsp;pre&nbsp;search&nbsp;criteria&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VERBOSE:&nbsp;Found&nbsp;[5]&nbsp;Updates&nbsp;in&nbsp;post&nbsp;search&nbsp;criteria&nbsp;to&nbsp;Download&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;What&nbsp;if:&nbsp;Performing&nbsp;operation&nbsp;&quot;Aktualizacja&nbsp;firmy&nbsp;Microsoft&nbsp;z&nbsp;ekranem&nbsp;wybierania&nbsp;przeglądarki&nbsp;dla&nbsp;użytkownik&oacute;w&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;system&oacute;w&nbsp;opartych&nbsp;na&nbsp;procesorach&nbsp;x64&nbsp;w&nbsp;Europejskim&nbsp;Obszarze&nbsp;Gospodarczym&nbsp;(KB976002)[1&nbsp;MB]?&quot;&nbsp;on&nbsp;Target&nbsp;&quot;KOMPUTER&quot;.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;What&nbsp;if:&nbsp;Performing&nbsp;operation&nbsp;&quot;Aktualizacja&nbsp;dla&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;system&oacute;w&nbsp;opartych&nbsp;na&nbsp;procesorach&nbsp;x64&nbsp;(KB971033)[1MB]?&quot;&nbsp;on&nbsp;Target&nbsp;&quot;KOMPUTER&quot;.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;What&nbsp;if:&nbsp;Performing&nbsp;operation&nbsp;&quot;Aktualizacja&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorami&nbsp;x64&nbsp;(KB2533552)[1&nbsp;MB]?&quot;&nbsp;on&nbsp;Target&nbsp;&quot;KOMPUTER&quot;.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;What&nbsp;if:&nbsp;Performing&nbsp;operation&nbsp;&quot;Program&nbsp;Microsoft&nbsp;.NET&nbsp;Framework&nbsp;4&nbsp;Client&nbsp;Profile&nbsp;w&nbsp;systemie&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;system&oacute;w&nbsp;opartych&nbsp;na&nbsp;procesorach&nbsp;x64&nbsp;(KB982670)[1&nbsp;MB]?&quot;&nbsp;on&nbsp;Target&nbsp;&quot;KOMPUTER&quot;.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;What&nbsp;if:&nbsp;Performing&nbsp;operation&nbsp;&quot;Narzędzie&nbsp;Windows&nbsp;do&nbsp;usuwania&nbsp;złośliwego&nbsp;oprogramowania&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorem&nbsp;x64&nbsp;-grudzień&nbsp;2011&nbsp;(KB890830)[1&nbsp;MB]?&quot;&nbsp;on&nbsp;Target&nbsp;&quot;KOMPUTER&quot;.&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Size&nbsp;Title&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;------&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----&nbsp;-----&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;Rejected&nbsp;&nbsp;&nbsp;KB890830&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;MB&nbsp;Aktualizacja&nbsp;firmy&nbsp;Microsoft&nbsp;z&nbsp;ekranem&nbsp;wybierania&nbsp;przeglądarki&nbsp;dla&nbsp;użytkownik&oacute;w&nbsp;system...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;Rejected&nbsp;&nbsp;&nbsp;KB890830&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;MB&nbsp;Aktualizacja&nbsp;dla&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;system&oacute;w&nbsp;opartych&nbsp;na&nbsp;procesorach&nbsp;x64&nbsp;(KB971033)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;Rejected&nbsp;&nbsp;&nbsp;KB890830&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;MB&nbsp;Aktualizacja&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorami&nbsp;x64&nbsp;(KB2533552)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;Rejected&nbsp;&nbsp;&nbsp;KB890830&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;MB&nbsp;Program&nbsp;Microsoft&nbsp;.NET&nbsp;Framework&nbsp;4&nbsp;Client&nbsp;Profile&nbsp;w&nbsp;systemie&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;system&oacute;w&nbsp;op...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;Rejected&nbsp;&nbsp;&nbsp;KB890830&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;MB&nbsp;Narzędzie&nbsp;Windows&nbsp;do&nbsp;usuwania&nbsp;złośliwego&nbsp;oprogramowania&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorem&nbsp;x6...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VERBOSE:&nbsp;Accept&nbsp;[0]&nbsp;Updates&nbsp;to&nbsp;Download&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get&nbsp;updates&nbsp;from&nbsp;specific&nbsp;source&nbsp;with&nbsp;title&nbsp;contains&nbsp;&quot;.NET&nbsp;Framework&nbsp;4&quot;.&nbsp;Everything&nbsp;automatic&nbsp;accept&nbsp;and&nbsp;install.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;Get-WUInstall&nbsp;-ServiceID&nbsp;9482f4b4-e343-43b6-b170-9a65bc822c77&nbsp;-Title&nbsp;&quot;.NET&nbsp;Framework&nbsp;4&quot;&nbsp;-AcceptAll&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Size&nbsp;Title&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;------&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----&nbsp;-----&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;Accepted&nbsp;&nbsp;&nbsp;KB982670&nbsp;&nbsp;&nbsp;48&nbsp;MB&nbsp;Program&nbsp;Microsoft&nbsp;.NET&nbsp;Framework&nbsp;4&nbsp;Client&nbsp;Profile&nbsp;w&nbsp;systemie&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;system&oacute;w&nbsp;op...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;Downloaded&nbsp;KB982670&nbsp;&nbsp;&nbsp;48&nbsp;MB&nbsp;Program&nbsp;Microsoft&nbsp;.NET&nbsp;Framework&nbsp;4&nbsp;Client&nbsp;Profile&nbsp;w&nbsp;systemie&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;system&oacute;w&nbsp;op...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;Installed&nbsp;&nbsp;KB982670&nbsp;&nbsp;&nbsp;48&nbsp;MB&nbsp;Program&nbsp;Microsoft&nbsp;.NET&nbsp;Framework&nbsp;4&nbsp;Client&nbsp;Profile&nbsp;w&nbsp;systemie&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;system&oacute;w&nbsp;op...&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get&nbsp;updates&nbsp;with&nbsp;specyfic&nbsp;KBArticleID.&nbsp;Check&nbsp;if&nbsp;type&nbsp;are&nbsp;&quot;Software&quot;&nbsp;and&nbsp;automatic&nbsp;install&nbsp;all.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;$KBList&nbsp;=&nbsp;&quot;KB890830&quot;,&nbsp;&quot;KB2533552&quot;,&nbsp;&quot;KB2539636&quot;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;Get-WUInstall&nbsp;-Type&nbsp;&quot;Software&quot;&nbsp;-KBArticleID&nbsp;$KBList&nbsp;-AcceptAll&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Size&nbsp;Title&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;------&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----&nbsp;-----&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;Accepted&nbsp;&nbsp;&nbsp;KB2533552&nbsp;&nbsp;&nbsp;9&nbsp;MB&nbsp;Aktualizacja&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorami&nbsp;x64&nbsp;(KB2533552)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;Accepted&nbsp;&nbsp;&nbsp;KB2539636&nbsp;&nbsp;&nbsp;4&nbsp;MB&nbsp;Aktualizacja&nbsp;zabezpieczeń&nbsp;dla&nbsp;programu&nbsp;Microsoft&nbsp;.NET&nbsp;Framework&nbsp;4&nbsp;w&nbsp;systemach&nbsp;Windows&nbsp;...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;Accepted&nbsp;&nbsp;&nbsp;KB890830&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;MB&nbsp;Narzędzie&nbsp;Windows&nbsp;do&nbsp;usuwania&nbsp;złośliwego&nbsp;oprogramowania&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorem&nbsp;x6...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;Downloaded&nbsp;KB2533552&nbsp;&nbsp;&nbsp;9&nbsp;MB&nbsp;Aktualizacja&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorami&nbsp;x64&nbsp;(KB2533552)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;Downloaded&nbsp;KB2539636&nbsp;&nbsp;&nbsp;4&nbsp;MB&nbsp;Aktualizacja&nbsp;zabezpieczeń&nbsp;dla&nbsp;programu&nbsp;Microsoft&nbsp;.NET&nbsp;Framework&nbsp;4&nbsp;w&nbsp;systemach&nbsp;Windows&nbsp;...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;Downloaded&nbsp;KB890830&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;MB&nbsp;Narzędzie&nbsp;Windows&nbsp;do&nbsp;usuwania&nbsp;złośliwego&nbsp;oprogramowania&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorem&nbsp;x6...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;Installed&nbsp;&nbsp;KB2533552&nbsp;&nbsp;&nbsp;9&nbsp;MB&nbsp;Aktualizacja&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorami&nbsp;x64&nbsp;(KB2533552)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;Installed&nbsp;&nbsp;KB2539636&nbsp;&nbsp;&nbsp;4&nbsp;MB&nbsp;Aktualizacja&nbsp;zabezpieczeń&nbsp;dla&nbsp;programu&nbsp;Microsoft&nbsp;.NET&nbsp;Framework&nbsp;4&nbsp;w&nbsp;systemach&nbsp;Windows&nbsp;...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;Installed&nbsp;&nbsp;KB890830&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;MB&nbsp;Narzędzie&nbsp;Windows&nbsp;do&nbsp;usuwania&nbsp;złośliwego&nbsp;oprogramowania&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorem&nbsp;x6...&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get&nbsp;list&nbsp;of&nbsp;available&nbsp;updates&nbsp;from&nbsp;Microsoft&nbsp;Update&nbsp;Server.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;Get-WUList&nbsp;-MicrosoftUpdate&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ComputerName&nbsp;Status&nbsp;KB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Size&nbsp;Title&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;------------&nbsp;------&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----&nbsp;-----&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KOMPUTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;------&nbsp;KB976002&nbsp;&nbsp;102&nbsp;KB&nbsp;Aktualizacja&nbsp;firmy&nbsp;Microsoft&nbsp;z&nbsp;ekranem&nbsp;wybierania&nbsp;przeglądarki&nbsp;dla&nbsp;użytkownik&oacute;w...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KOMPUTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;------&nbsp;KB971033&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;MB&nbsp;Aktualizacja&nbsp;dla&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;system&oacute;w&nbsp;opartych&nbsp;na&nbsp;procesorach&nbsp;x64&nbsp;(KB...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KOMPUTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;------&nbsp;KB2533552&nbsp;&nbsp;&nbsp;9&nbsp;MB&nbsp;Aktualizacja&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorami&nbsp;x64&nbsp;(KB2533552)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KOMPUTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;------&nbsp;KB982861&nbsp;&nbsp;&nbsp;37&nbsp;MB&nbsp;Windows&nbsp;Internet&nbsp;Explorer&nbsp;9&nbsp;dla&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;-&nbsp;wersja&nbsp;dla&nbsp;system&oacute;w&nbsp;opartyc...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KOMPUTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D-----&nbsp;KB982670&nbsp;&nbsp;&nbsp;48&nbsp;MB&nbsp;Program&nbsp;Microsoft&nbsp;.NET&nbsp;Framework&nbsp;4&nbsp;Client&nbsp;Profile&nbsp;w&nbsp;systemie&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;syst...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KOMPUTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---H--&nbsp;KB890830&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;MB&nbsp;Narzędzie&nbsp;Windows&nbsp;do&nbsp;usuwania&nbsp;złośliwego&nbsp;oprogramowania&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;proces...&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get&nbsp;information&nbsp;about&nbsp;updates&nbsp;from&nbsp;Microsoft&nbsp;Update&nbsp;Server&nbsp;that&nbsp;are&nbsp;installed&nbsp;on&nbsp;remote&nbsp;machine&nbsp;G1.&nbsp;Updates&nbsp;type&nbsp;are&nbsp;software,&nbsp;from&nbsp;specific&nbsp;category,&nbsp;have&nbsp;specific&nbsp;UUID&nbsp;and&nbsp;Revision&nbsp;Name.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;$UpdateIDs&nbsp;=&nbsp;&quot;40336e0a-7b9b-45a0-89e9-9bd3ce0c3137&quot;,&quot;61bfe3ec-a1dc-4eab-9481-0d8fd7319ae8&quot;,&quot;0c737c40-b687-45bc-8deb-83db8209b258&quot;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;Get-WUList&nbsp;-MicrosoftUpdate&nbsp;-IsInstalled&nbsp;-Type&nbsp;&quot;Software&quot;&nbsp;-CategoryIDs&nbsp;&quot;E6CF1350-C01B-414D-A61F-263D14D133B4&quot;&nbsp;-UpdateID&nbsp;$UpdateIDs&nbsp;-RevisionNumber&nbsp;101&nbsp;-ComputerName&nbsp;G1&nbsp;-Verbose&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VERBOSE:&nbsp;Connecting&nbsp;to&nbsp;Microsoft&nbsp;Update&nbsp;server.&nbsp;Please&nbsp;wait...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VERBOSE:&nbsp;Found&nbsp;[2]&nbsp;Updates&nbsp;in&nbsp;pre&nbsp;search&nbsp;criteria&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VERBOSE:&nbsp;Found&nbsp;[2]&nbsp;Updates&nbsp;in&nbsp;post&nbsp;search&nbsp;criteria&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ComputerName&nbsp;Status&nbsp;KB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Size&nbsp;Title&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;------------&nbsp;------&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----&nbsp;-----&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DI--U-&nbsp;KB2345886&nbsp;605&nbsp;KB&nbsp;Aktualizacja&nbsp;dla&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;system&oacute;w&nbsp;opartych&nbsp;na&nbsp;procesorach&nbsp;x64&nbsp;(KB...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DI--U-&nbsp;KB2641690&nbsp;&nbsp;67&nbsp;KB&nbsp;Aktualizacja&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;dla&nbsp;komputer&oacute;w&nbsp;z&nbsp;procesorami&nbsp;x64&nbsp;(KB2641690)&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hide&nbsp;updates&nbsp;contains&nbsp;&quot;Internet&nbsp;Explorer&nbsp;9&quot;&nbsp;in&nbsp;title&nbsp;and&nbsp;are&nbsp;in&nbsp;&quot;Update&nbsp;Rollups&quot;&nbsp;category.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;$UpdatesList&nbsp;=&nbsp;Get-WUList&nbsp;-ServiceID&nbsp;&quot;9482f4b4-e343-43b6-b170-9a65bc822c77&quot;&nbsp;-Title&nbsp;&quot;Internet&nbsp;Explorer&nbsp;9&quot;&nbsp;-Category&nbsp;&quot;Update&nbsp;Rollups&quot;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;$UpdatesList.IsHidden&nbsp;=&nbsp;$true&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;Get-WUList&nbsp;-ServiceID&nbsp;&quot;9482f4b4-e343-43b6-b170-9a65bc822c77&quot;&nbsp;-Title&nbsp;&quot;Internet&nbsp;Explorer&nbsp;9&quot;&nbsp;-Category&nbsp;&quot;Update&nbsp;Rollups&quot;&nbsp;-IsHidden&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ComputerName&nbsp;Status&nbsp;KB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Size&nbsp;Title&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;------------&nbsp;------&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----&nbsp;-----&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KOMPUTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---H--&nbsp;KB982861&nbsp;&nbsp;&nbsp;37&nbsp;MB&nbsp;Windows&nbsp;Internet&nbsp;Explorer&nbsp;9&nbsp;dla&nbsp;systemu&nbsp;Windows&nbsp;7&nbsp;-&nbsp;wersja&nbsp;dla&nbsp;system&oacute;w&nbsp;opartyc...&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Show&nbsp;currently&nbsp;available&nbsp;Windows&nbsp;Update&nbsp;Services&nbsp;on&nbsp;machine.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS&nbsp;C:\&gt;&nbsp;Get-WUServiceManager&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ServiceID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IsManaged&nbsp;IsDefault&nbsp;Name&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---------&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---------&nbsp;---------&nbsp;----&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9482f4b4-e343-43b6-b170-9a65bc822c77&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Windows&nbsp;Update&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7971f918-a847-4430-9279-4a52d1efe18d&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Microsoft&nbsp;Update&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3da21691-e39d-4da6-8a4b-b43877bcb1b7&nbsp;True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Windows&nbsp;Server&nbsp;Update&nbsp;Service&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;13df3d8f-78d7-4eb8-bb9c-2a101870d350&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Offline&nbsp;Sync&nbsp;Service2&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a8f3b5e6-fb1f-4814-a047-2257d39c2460&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Offline&nbsp;Sync&nbsp;Service&nbsp;
+#&gt;</span>&nbsp;
+</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+
+        </div>
+    </body>
+</html>

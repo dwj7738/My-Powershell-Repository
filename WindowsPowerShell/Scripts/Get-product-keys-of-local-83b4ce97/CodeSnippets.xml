@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content=". .\Get-ProductKey.ps1" />
+  <Code Content="Get-ProductKey -Computername Boe-PC,DC1" />
+  <Code Content=". .\Get-ProductKey.ps1" />
+  <Code Content="Get-ProductKey -Computername Boe-PC,DC1" />
+</CodeSnippets>

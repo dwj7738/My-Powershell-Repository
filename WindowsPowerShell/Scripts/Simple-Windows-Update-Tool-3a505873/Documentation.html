@@ -1,0 +1,656 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Simple Windows Update Tool (PowerShell)</title>        
+        <meta name="description" content="Search, download and install windows updates using the windows update API. You can sort which updates you wish to install based on the root categories. You can avoid downloading drivers, or BING toolbar and only install what you need. 
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p><strong><span style="font-family:Verdana; font-size:xx-small">Synopsis:</span></strong></p>
+<p><strong><span style="font-family:Verdana; font-size:xx-small">&nbsp;</span></strong><span style="font-family:Calibri; font-size:small">Search, download and install windows updates using the windows update API. You can sort which updates you wish to install
+ based on the root categories. You can avoid downloading drivers, or BING toolbar and only install what you need.
+</span></p>
+<p><span style="font-family:Calibri; font-size:small">&nbsp;</span><strong><span style="font-family:Calibri; font-size:small">Version:</span></strong></p>
+<p style="padding-left:30px"><span style="font-family:Times New Roman; font-size:small">&nbsp;</span><span style="font-family:Calibri"><span style="font-size:small"><strong><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></strong>Initial Release</span></span></p>
+<p style="padding-left:90px"><span style="font-family:Calibri"><span style="font-size:small">&nbsp;</span></span>1.0.0</p>
+<p style="padding-left:120px">- A slightly modified version I found on the internet.</p>
+<p style="padding-left:90px">&nbsp;1.0.1&nbsp;</p>
+<p style="padding-left:120px">- Adjusted&nbsp;script,&nbsp;SCANONLY&nbsp;is&nbsp;default&nbsp;$true&nbsp;to&nbsp;prevent&nbsp;accidental&nbsp;windows&nbsp;installation.&nbsp;</p>
+<p style="padding-left:120px">- Added a &quot;ShowCategories&quot; Switch to see the&nbsp; different types of updates</p>
+<p style="margin:0in 0in 8pt"><strong><span style="font-family:Calibri; font-size:small">Bugs:</span></strong><span style="font-family:Times New Roman; font-size:small"><br>
+</span></p>
+<ul style="list-style-type:disc; direction:ltr">
+<li>&nbsp;
+<ul>
+<li style="color:#000000; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+If you select multiple types of updates and &ldquo;ALL&rdquo; you only receive the updates listed before it.</p>
+</li><li style="color:#000000; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+Still working on using alternate endpoints such as WSUS, still attempting to configure</p>
+</li><li style="color:#000000; font-style:normal; font-weight:normal">If you do not have administrative credentials, Script will continuously open PS windows
+</li></ul>
+</li></ul>
+<p><strong><span style="font-family:Calibri; font-size:small">Future Features:</span></strong><span style="font-family:Times New Roman; font-size:small"><br>
+</span></p>
+<p>&nbsp;</p>
+<ul>
+<li>&nbsp;
+<ul>
+<li>Report generator </li><li style="color:#000000; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+email functionality</p>
+</li><li style="color:#000000; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+Improve WSUS/Proxy functionality *BETA*</p>
+</li><li style="color:#000000; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+Auto accept EULA</p>
+</li></ul>
+</li></ul>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">&lt;#
+    .SYNOPSIS
+		Powershell Script to Install Updates Based on the Type of update
+	.DESCRIPTION
+        Using the WIndows Update API, Each update has a specific Root category. By selecting with Type of Update you want, you can avoid installing unwanted updates
+	.PARAMETER Path
+		The full path AND name where the script is located.
+	.PARAMETER Reboot
+        If a reboot is required for an update, the system will restart.
+	.PARAMETER ScanOnly
+		As implies, It does not download or install updates, just lists the available ones based on criteria 
+	.PARAMETER ProxyAddress
+        *THIS PARAMETER IS STILL BETA!!!* Instead of using the default windows update API, use another endpoint for updates. 
+    .PARAMETER UpdateTypes
+        RootCategories that are associated with windows updates. Choose the types you wish to filter for. 
+    .EXAMPLE
+		    &amp; '.\Invoke-WindowsUpdates.ps1' -Reboot -UpdateTypes Definition, Critical, Security -Path '.\Invoke-WindowsUpdates.ps1'
+    .Notes
+        Author: Leotus Richard
+        website: http://outboxedsolutions.azurewebsites.net/
+
+        Version History
+        1.0.0  3/24/2014
+            - Initial Release
+
+        1.0.1  3/25/2014
+            - Adjusted script, SCANONLY is default $true to prevent accidental windows installation. 
+            - Added a &quot;ShowCategories&quot; Switch to view the types of updates.  
+
+        Upcoming Features
+            - Report generator
+            - email functionality
+            - Improve WSUS/Proxy functionality *BETA*
+            - Add a function determine installation status 
+#&gt;
+[CmdletBinding()]
+param(
+$Path = (Get-Location),
+[switch]$Reboot, 
+[switch]$ScanOnly = $true, 
+[string]$ProxyAddress,
+[switch]$ShowCategories,
+[String[]][ValidateSet(&quot;Critical&quot;,&quot;Definition&quot;, &quot;Drivers&quot;, &quot;FeaturePacks&quot;, &quot;Security&quot;, &quot;ServicePacks&quot;, &quot;Tools&quot;, &quot;UpdateRollups&quot;, &quot;Updates&quot;, &quot;Microsoft&quot;, &quot;ALL&quot;)]$UpdateTypes = &quot;ALL&quot;
+
+)
+    $AvailableUpdates = @()
+    $UpdateIds = @()
+    $UpdateTypes
+
+    Write-Host &quot;Checking for elevation... &quot; -NoNewline
+    $CurrentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
+    if (($CurrentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)) -eq $false){
+        $ArgumentList = &quot;-noprofile -noexit -file `&quot;{0}`&quot; -Path `&quot;$Path`&quot;&quot;
+        If ($ScanOnly) {$ArgumentList = $ArgumentList &#43; &quot; -ScanOnly&quot;}
+        If ($reboot) {$ArgumentList = $ArgumentList &#43; &quot; -Reboot&quot;}
+        If ($ProxyAddress){$ArgumentList = $ArgumentList &#43; &quot; -ProxyAddress $ProxyAddress&quot;}
+        If ($ShowCategories) {$ArgumentList = $ArgumentList &#43; &quot; -ShowCategories&quot;}
+        If ($UpdateTypes) {$ArgumentList = $ArgumentList &#43; &quot; -UpdateTypes $UpdateTypes&quot;}
+
+    Write-Host &quot;elevating&quot;
+    Start-Process powershell.exe -Verb RunAs -ArgumentList ($ArgumentList -f ($myinvocation.MyCommand.Definition))
+
+    Write-Host &quot;Exiting, please refer to console window&quot; -ForegroundColor DarkRed
+        break
+        }
+
+    if ($Reboot) {
+        Write-Host &quot;The computer will reboot if needed after installation is complete.&quot;
+        Write-Host
+    }
+    if ($ScanOnly) {
+        Write-Host &quot;Running in scan only mode.&quot;
+        Write-Host
+    }
+
+    Write-Verbose &quot;Creating Update Session&quot;
+    $Session = New-Object -com &quot;Microsoft.Update.Session&quot;
+
+
+    if ($ProxyAddress -ne $null) {
+    Write-Verbose &quot;Setting Proxy&quot;
+        $Proxy = New-Object -com &quot;Microsoft.Update.WebProxy&quot;
+        $Session.WebProxy.Address = $Proxyaddress
+        $Session.WebProxy.AutoDetect = $FALSE
+        $Session.WebProxy.BypassProxyOnLocal = $TRUE
+    }
+
+    Write-Verbose &quot;Creating Update Type Array&quot;
+    foreach($UpdateType in $UpdateTypes)
+    {
+        $UpdateID
+        switch ($UpdateType)
+        {
+        &quot;Critical&quot; {$UpdateID = 0}
+        &quot;Definition&quot;{$UpdateID = 1}
+        &quot;Drivers&quot;{$UpdateID = 2}
+        &quot;FeaturePacks&quot;{$UpdateID = 3}
+        &quot;Security&quot;{$UpdateID = 4}
+        &quot;ServicePacks&quot;{$UpdateID = 5}
+        &quot;Tools&quot;{$UpdateID = 6}
+        &quot;UpdateRollups&quot;{$UpdateID = 7}
+        &quot;Updates&quot;{$UpdateID = 8}
+        &quot;Microsoft&quot;{$UpdateID = 9}
+        default {$UpdateID=99}
+        }
+        $UpdateIds &#43;= $UpdateID
+    }
+
+    Write-Host &quot;Searching for updates...&quot;
+    $Search = $Session.CreateUpdateSearcher()
+    $SearchResults = $Search.Search(&quot;IsInstalled=0 and IsHidden=0&quot;)
+    Write-Host &quot;There are &quot; $SearchResults.Updates.Count &quot;TOTAL updates available.&quot;
+
+    if($UpdateIds -eq 99)
+    {
+        $AvailableUpdates = $SearchResults.Updates
+    }
+    else{
+        
+        foreach($UpdateID in $UpdateIds)
+        {
+            $AvailableUpdates &#43;= $SearchResults.RootCategories.Item($UpdateID).Updates
+        }
+    }
+
+    Write-Host &quot;Updates selected for installation&quot;
+    $AvailableUpdates | ForEach-Object {
+    
+        if (($_.InstallationBehavior.CanRequestUserInput) -or ($_.EulaAccepted -eq $FALSE)) {
+            Write-Host $_.Title &quot; *** Requires user input and will not be installed.&quot; -ForegroundColor Yellow
+            if($ShowCategories)
+            {
+                $_.Categories | ForEach-Object {Write-Host &quot;     &quot;$_.Name.ToString() -ForegroundColor Cyan}
+                
+            }
+                
+        }
+        else {
+            Write-Host $_.Title -ForegroundColor Green
+            if($ShowCategories)
+            {
+                $_.Categories | ForEach-Object {Write-Host &quot;     &quot;$_.Name.ToString() -ForegroundColor Cyan}
+                
+            }
+        }
+    }
+
+    # Exit script if no updates are available
+    if ($ScanOnly) {
+        Write-Host &quot;Exiting...&quot;;
+        break
+    }
+    if($AvailableUpdates.count -lt 1){
+        Write-Host &quot;No results meet your criteria. Exiting&quot;;
+        break
+    }
+    
+    Write-Verbose &quot;Creating Download Selection&quot;
+    $DownloadCollection = New-Object -com &quot;Microsoft.Update.UpdateColl&quot;
+
+    $AvailableUpdates | ForEach-Object {
+        if ($_.InstallationBehavior.CanRequestUserInput -ne $TRUE) {
+            $DownloadCollection.Add($_) | Out-Null
+            }
+        }
+
+    Write-Verbose &quot;Downloading Updates&quot;
+    Write-Host &quot;Downloading updates...&quot;
+    $Downloader = $Session.CreateUpdateDownloader()
+    $Downloader.Updates = $DownloadCollection
+    $Downloader.Download()
+
+    Write-Host &quot;Download complete.&quot;
+
+    Write-Verbose &quot;Creating Installation Object&quot;
+    $InstallCollection = New-Object -com &quot;Microsoft.Update.UpdateColl&quot;
+    $AvailableUpdates | ForEach-Object {
+	    if ($_.IsDownloaded) {
+		    $InstallCollection.Add($_) | Out-Null
+        }
+    }
+
+    Write-Verbose &quot;Installing Updates&quot;
+    Write-Host &quot;Installing updates...&quot;
+    $Installer = $Session.CreateUpdateInstaller()
+    $Installer.Updates = $InstallCollection
+    $Results = $Installer.Install()
+    Write-Host &quot;Installation complete.&quot;
+    Write-Host
+
+
+    # Reboot if needed
+    if ($Results.RebootRequired) {
+        if ($Reboot) {
+            Write-Host &quot;Rebooting...&quot;
+            Restart-Computer ## add computername here
+        }
+        else {
+	        Write-Host &quot;Please reboot.&quot;
+        }
+    }
+    else {
+	    Write-Host &quot;No reboot required.&quot;
+    }</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__mlcom">&lt;#&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.SYNOPSIS&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Powershell&nbsp;Script&nbsp;to&nbsp;Install&nbsp;Updates&nbsp;Based&nbsp;on&nbsp;the&nbsp;Type&nbsp;of&nbsp;update&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.DESCRIPTION&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Using&nbsp;the&nbsp;WIndows&nbsp;Update&nbsp;API,&nbsp;Each&nbsp;update&nbsp;has&nbsp;a&nbsp;specific&nbsp;Root&nbsp;category.&nbsp;By&nbsp;selecting&nbsp;with&nbsp;Type&nbsp;of&nbsp;Update&nbsp;you&nbsp;want,&nbsp;you&nbsp;can&nbsp;avoid&nbsp;installing&nbsp;unwanted&nbsp;updates&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.PARAMETER&nbsp;Path&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;full&nbsp;path&nbsp;AND&nbsp;name&nbsp;where&nbsp;the&nbsp;script&nbsp;is&nbsp;located.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.PARAMETER&nbsp;Reboot&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;a&nbsp;reboot&nbsp;is&nbsp;required&nbsp;for&nbsp;an&nbsp;update,&nbsp;the&nbsp;system&nbsp;will&nbsp;restart.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.PARAMETER&nbsp;ScanOnly&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As&nbsp;implies,&nbsp;It&nbsp;does&nbsp;not&nbsp;download&nbsp;or&nbsp;install&nbsp;updates,&nbsp;just&nbsp;lists&nbsp;the&nbsp;available&nbsp;ones&nbsp;based&nbsp;on&nbsp;criteria&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.PARAMETER&nbsp;ProxyAddress&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*THIS&nbsp;PARAMETER&nbsp;IS&nbsp;STILL&nbsp;BETA!!!*&nbsp;Instead&nbsp;of&nbsp;using&nbsp;the&nbsp;default&nbsp;windows&nbsp;update&nbsp;API,&nbsp;use&nbsp;another&nbsp;endpoint&nbsp;for&nbsp;updates.&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.PARAMETER&nbsp;UpdateTypes&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RootCategories&nbsp;that&nbsp;are&nbsp;associated&nbsp;with&nbsp;windows&nbsp;updates.&nbsp;Choose&nbsp;the&nbsp;types&nbsp;you&nbsp;wish&nbsp;to&nbsp;filter&nbsp;for.&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.EXAMPLE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;'.\Invoke-WindowsUpdates.ps1'&nbsp;-Reboot&nbsp;-UpdateTypes&nbsp;Definition,&nbsp;Critical,&nbsp;Security&nbsp;-Path&nbsp;'.\Invoke-WindowsUpdates.ps1'&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;.Notes&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Author:&nbsp;Leotus&nbsp;Richard&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;website:&nbsp;http://outboxedsolutions.azurewebsites.net/&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Version&nbsp;History&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.0.0&nbsp;&nbsp;3/24/2014&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Initial&nbsp;Release&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.0.1&nbsp;&nbsp;3/25/2014&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Adjusted&nbsp;script,&nbsp;SCANONLY&nbsp;is&nbsp;default&nbsp;$true&nbsp;to&nbsp;prevent&nbsp;accidental&nbsp;windows&nbsp;installation.&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Added&nbsp;a&nbsp;&quot;ShowCategories&quot;&nbsp;Switch&nbsp;to&nbsp;view&nbsp;the&nbsp;types&nbsp;of&nbsp;updates.&nbsp;&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Upcoming&nbsp;Features&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Report&nbsp;generator&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;email&nbsp;functionality&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Improve&nbsp;WSUS/Proxy&nbsp;functionality&nbsp;*BETA*&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Add&nbsp;a&nbsp;function&nbsp;determine&nbsp;installation&nbsp;status&nbsp;&nbsp;
+#&gt;</span>&nbsp;
+[CmdletBinding()]&nbsp;
+<span class="powerShell__keyword">param</span>(&nbsp;
+<span class="powerShell__variable">$Path</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-Location</span>),&nbsp;
+[<span class="powerShell__keyword">switch</span>]<span class="powerShell__variable">$Reboot</span>,&nbsp;&nbsp;
+[<span class="powerShell__keyword">switch</span>]<span class="powerShell__variable">$ScanOnly</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>,&nbsp;&nbsp;
+[string]<span class="powerShell__variable">$ProxyAddress</span>,&nbsp;
+[<span class="powerShell__keyword">switch</span>]<span class="powerShell__variable">$ShowCategories</span>,&nbsp;
+[String[]][ValidateSet(<span class="powerShell__string">&quot;Critical&quot;</span>,<span class="powerShell__string">&quot;Definition&quot;</span>,&nbsp;<span class="powerShell__string">&quot;Drivers&quot;</span>,&nbsp;<span class="powerShell__string">&quot;FeaturePacks&quot;</span>,&nbsp;<span class="powerShell__string">&quot;Security&quot;</span>,&nbsp;<span class="powerShell__string">&quot;ServicePacks&quot;</span>,&nbsp;<span class="powerShell__string">&quot;Tools&quot;</span>,&nbsp;<span class="powerShell__string">&quot;UpdateRollups&quot;</span>,&nbsp;<span class="powerShell__string">&quot;Updates&quot;</span>,&nbsp;<span class="powerShell__string">&quot;Microsoft&quot;</span>,&nbsp;<span class="powerShell__string">&quot;ALL&quot;</span>)]<span class="powerShell__variable">$UpdateTypes</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;ALL&quot;</span>&nbsp;
+&nbsp;
+)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$AvailableUpdates</span>&nbsp;=&nbsp;@()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdateIds</span>&nbsp;=&nbsp;@()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdateTypes</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Checking&nbsp;for&nbsp;elevation...&nbsp;&quot;</span>&nbsp;<span class="powerShell__operator">-</span>NoNewline&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$CurrentUser</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;Security.Principal.WindowsPrincipal&nbsp;<span class="powerShell__variable">$</span>([Security.Principal.WindowsIdentity]::GetCurrent())&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;((<span class="powerShell__variable">$CurrentUser</span>.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator))&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$false</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ArgumentList</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;-noprofile&nbsp;-noexit&nbsp;-file&nbsp;`&quot;</span>{0}`<span class="powerShell__string">&quot;&nbsp;-Path&nbsp;`&quot;</span><span class="powerShell__variable">$Path</span>`<span class="powerShell__string">&quot;&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$ScanOnly</span>)&nbsp;{<span class="powerShell__variable">$ArgumentList</span>&nbsp;=&nbsp;<span class="powerShell__variable">$ArgumentList</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&nbsp;-ScanOnly&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$reboot</span>)&nbsp;{<span class="powerShell__variable">$ArgumentList</span>&nbsp;=&nbsp;<span class="powerShell__variable">$ArgumentList</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&nbsp;-Reboot&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$ProxyAddress</span>){<span class="powerShell__variable">$ArgumentList</span>&nbsp;=&nbsp;<span class="powerShell__variable">$ArgumentList</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&nbsp;-ProxyAddress&nbsp;$ProxyAddress&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$ShowCategories</span>)&nbsp;{<span class="powerShell__variable">$ArgumentList</span>&nbsp;=&nbsp;<span class="powerShell__variable">$ArgumentList</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&nbsp;-ShowCategories&quot;</span>}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$UpdateTypes</span>)&nbsp;{<span class="powerShell__variable">$ArgumentList</span>&nbsp;=&nbsp;<span class="powerShell__variable">$ArgumentList</span>&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;<span class="powerShell__string">&quot;&nbsp;-UpdateTypes&nbsp;$UpdateTypes&quot;</span>}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;elevating&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Start<span class="powerShell__operator">-</span><span class="powerShell__keyword">Process</span>&nbsp;powershell.exe&nbsp;<span class="powerShell__operator">-</span>Verb&nbsp;RunAs&nbsp;<span class="powerShell__operator">-</span>ArgumentList&nbsp;(<span class="powerShell__variable">$ArgumentList</span>&nbsp;<span class="powerShell__operator">-</span>f&nbsp;(<span class="powerShell__variable">$myinvocation</span>.MyCommand.Definition))&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Exiting,&nbsp;please&nbsp;refer&nbsp;to&nbsp;console&nbsp;window&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;DarkRed&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">break</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$Reboot</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;The&nbsp;computer&nbsp;will&nbsp;reboot&nbsp;if&nbsp;needed&nbsp;after&nbsp;installation&nbsp;is&nbsp;complete.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$ScanOnly</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Running&nbsp;in&nbsp;scan&nbsp;only&nbsp;mode.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Creating&nbsp;Update&nbsp;Session&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Session</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>com&nbsp;<span class="powerShell__string">&quot;Microsoft.Update.Session&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$ProxyAddress</span>&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__variable">$null</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Setting&nbsp;Proxy&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Proxy</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>com&nbsp;<span class="powerShell__string">&quot;Microsoft.Update.WebProxy&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Session</span>.WebProxy.Address&nbsp;=&nbsp;<span class="powerShell__variable">$Proxyaddress</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Session</span>.WebProxy.AutoDetect&nbsp;=&nbsp;<span class="powerShell__variable">$FALSE</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Session</span>.WebProxy.BypassProxyOnLocal&nbsp;=&nbsp;<span class="powerShell__variable">$TRUE</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Creating&nbsp;Update&nbsp;Type&nbsp;Array&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">foreach</span>(<span class="powerShell__variable">$UpdateType</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$UpdateTypes</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdateID</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">switch</span>&nbsp;(<span class="powerShell__variable">$UpdateType</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;Critical&quot;</span>&nbsp;{<span class="powerShell__variable">$UpdateID</span>&nbsp;=&nbsp;0}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;Definition&quot;</span>{<span class="powerShell__variable">$UpdateID</span>&nbsp;=&nbsp;1}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;Drivers&quot;</span>{<span class="powerShell__variable">$UpdateID</span>&nbsp;=&nbsp;2}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;FeaturePacks&quot;</span>{<span class="powerShell__variable">$UpdateID</span>&nbsp;=&nbsp;3}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;Security&quot;</span>{<span class="powerShell__variable">$UpdateID</span>&nbsp;=&nbsp;4}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;ServicePacks&quot;</span>{<span class="powerShell__variable">$UpdateID</span>&nbsp;=&nbsp;5}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;Tools&quot;</span>{<span class="powerShell__variable">$UpdateID</span>&nbsp;=&nbsp;6}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;UpdateRollups&quot;</span>{<span class="powerShell__variable">$UpdateID</span>&nbsp;=&nbsp;7}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;Updates&quot;</span>{<span class="powerShell__variable">$UpdateID</span>&nbsp;=&nbsp;8}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__string">&quot;Microsoft&quot;</span>{<span class="powerShell__variable">$UpdateID</span>&nbsp;=&nbsp;9}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;{<span class="powerShell__variable">$UpdateID</span>=99}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$UpdateIds</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__variable">$UpdateID</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Searching&nbsp;for&nbsp;updates...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Search</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Session</span>.CreateUpdateSearcher()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$SearchResults</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Search</span>.Search(<span class="powerShell__string">&quot;IsInstalled=0&nbsp;and&nbsp;IsHidden=0&quot;</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;There&nbsp;are&nbsp;&quot;</span>&nbsp;<span class="powerShell__variable">$SearchResults</span>.Updates.Count&nbsp;<span class="powerShell__string">&quot;TOTAL&nbsp;updates&nbsp;available.&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$UpdateIds</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;99)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$AvailableUpdates</span>&nbsp;=&nbsp;<span class="powerShell__variable">$SearchResults</span>.Updates&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">foreach</span>(<span class="powerShell__variable">$UpdateID</span>&nbsp;<span class="powerShell__keyword">in</span>&nbsp;<span class="powerShell__variable">$UpdateIds</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$AvailableUpdates</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__variable">$SearchResults</span>.RootCategories.Item(<span class="powerShell__variable">$UpdateID</span>).Updates&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Updates&nbsp;selected&nbsp;for&nbsp;installation&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$AvailableUpdates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">ForEach</span><span class="powerShell__operator">-</span>Object&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;((<span class="powerShell__variable">$_</span>.InstallationBehavior.CanRequestUserInput)&nbsp;<span class="powerShell__operator">-</span>or&nbsp;(<span class="powerShell__variable">$_</span>.EulaAccepted&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$FALSE</span>))&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__variable">$_</span>.Title&nbsp;<span class="powerShell__string">&quot;&nbsp;***&nbsp;Requires&nbsp;user&nbsp;input&nbsp;and&nbsp;will&nbsp;not&nbsp;be&nbsp;installed.&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;Yellow&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$ShowCategories</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$_</span>.Categories&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">ForEach</span><span class="powerShell__operator">-</span>Object&nbsp;{Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;</span><span class="powerShell__variable">$_</span>.Name.ToString()&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;Cyan}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__variable">$_</span>.Title&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;Green&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$ShowCategories</span>)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$_</span>.Categories&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">ForEach</span><span class="powerShell__operator">-</span>Object&nbsp;{Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;</span><span class="powerShell__variable">$_</span>.Name.ToString()&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;Cyan}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Exit&nbsp;script&nbsp;if&nbsp;no&nbsp;updates&nbsp;are&nbsp;available</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$ScanOnly</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Exiting...&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">break</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>(<span class="powerShell__variable">$AvailableUpdates</span>.count&nbsp;<span class="powerShell__operator">-</span>lt&nbsp;1){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;No&nbsp;results&nbsp;meet&nbsp;your&nbsp;criteria.&nbsp;Exiting&quot;</span>;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">break</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Creating&nbsp;Download&nbsp;Selection&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$DownloadCollection</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>com&nbsp;<span class="powerShell__string">&quot;Microsoft.Update.UpdateColl&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$AvailableUpdates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">ForEach</span><span class="powerShell__operator">-</span>Object&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$_</span>.InstallationBehavior.CanRequestUserInput&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__variable">$TRUE</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$DownloadCollection</span>.Add(<span class="powerShell__variable">$_</span>)&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Out-Null</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Downloading&nbsp;Updates&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Downloading&nbsp;updates...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Downloader</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Session</span>.CreateUpdateDownloader()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Downloader</span>.Updates&nbsp;=&nbsp;<span class="powerShell__variable">$DownloadCollection</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Downloader</span>.Download()&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Download&nbsp;complete.&quot;</span>&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Creating&nbsp;Installation&nbsp;Object&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$InstallCollection</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-Object</span>&nbsp;<span class="powerShell__operator">-</span>com&nbsp;<span class="powerShell__string">&quot;Microsoft.Update.UpdateColl&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$AvailableUpdates</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__keyword">ForEach</span><span class="powerShell__operator">-</span>Object&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$_</span>.IsDownloaded)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$InstallCollection</span>.Add(<span class="powerShell__variable">$_</span>)&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Out-Null</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Write-Verbose</span>&nbsp;<span class="powerShell__string">&quot;Installing&nbsp;Updates&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Installing&nbsp;updates...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Installer</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Session</span>.CreateUpdateInstaller()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Installer</span>.Updates&nbsp;=&nbsp;<span class="powerShell__variable">$InstallCollection</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$Results</span>&nbsp;=&nbsp;<span class="powerShell__variable">$Installer</span>.Install()&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Installation&nbsp;complete.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;Reboot&nbsp;if&nbsp;needed</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$Results</span>.RebootRequired)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__variable">$Reboot</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Rebooting...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Restart<span class="powerShell__operator">-</span>Computer&nbsp;<span class="powerShell__com">##&nbsp;add&nbsp;computername&nbsp;here</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Please&nbsp;reboot.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;No&nbsp;reboot&nbsp;required.&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}</pre>
+</div>
+</div>
+</div>
+<p>&nbsp;</p>
+<p><span style="font-family:Calibri; font-size:small">Please let me know what you all think, I know there are other options out there, however, I had a hard time finding one that compartmentalizes the types of updates I want to install.
+<br>
+<br>
+THIS IS MY FIRST CONTRIBUTION!!! </span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-family:Calibri; font-size:small">&nbsp;</span></p>
+<p><span style="font-family:Times New Roman; font-size:small">&nbsp;</span></p>
+<p style="margin:0in 0in 8pt"><span style="font-size:small">Root Category Descriptions</span></p>
+<p><span style="font-family:Times New Roman; font-size:small">&nbsp;</span></p>
+<ol style="list-style-type:decimal; direction:ltr">
+<li style="color:#000000; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+<span style="font-size:small">Critical - A broadly released fix for a specific problem addressing a critical, non-security related bug.</span></p>
+</li><li style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+Definition &ndash; A broadly-released and frequent software update containing additions to a product's definition database. Definition databases are often used to detect objects with specific attributes, such as malicious code, phishing Web sites, or junk e-mail.</p>
+</li><li style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+Drivers &ndash; A software component necessary to control or regulate another device</p>
+</li><li style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+FeaturePacks - New product functionality that is first distributed outside the context of a product release, and usually included in the next full product release.</p>
+</li><li style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+Security &ndash; A broadly released fix for a product-specific security-related vulnerability. Security vulnerabilities are rated based on their severity which is indicated in the Microsoft&reg; security bulletin as critical, important, moderate, or low.</p>
+</li><li style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+ServicePacks - A tested, cumulative set of all hotfixes, security updates, critical updates and updates, as well as additional fixes for problems found internally since the release of the product. Service packs may also contain a limited number of customer-requested
+ design changes or features</p>
+</li><li style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+Tools - A utility or feature that aids in accomplishing a task or set of tasks.</p>
+</li><li style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+UpdateRollups - A tested, cumulative set of hotfixes, security updates, critical updates, and updates packaged together for easy deployment. A rollup generally targets a specific area, such as security, or a component of a product, such as Internet Information
+ Services &quot;IIS&quot;.</p>
+</li><li style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+Updates - A broadly released fix for a specific problem addressing a noncritical, non-security-related bug.</p>
+</li><li style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:0pt">
+Microsoft &ndash; Microsoft related applications that need updates, occasionally you see Office thrown in here, expression, etc.&hellip;</p>
+</li><li style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal">
+<p style="color:#000000; font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;; font-size:11pt; font-style:normal; font-weight:normal; margin-top:0in; margin-bottom:8pt">
+ALL - I made this one up. But it&rsquo;s self-explanatory.</p>
+</li></ol>
+<p><span style="font-family:Times New Roman; font-size:small">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-family:Times New Roman; font-size:small">&nbsp;</span></p>
+<div id="_mcePaste" class="mcePaste" style="left:-10000px; top:0px; width:1px; height:1px; overflow:hidden">
+</div>
+
+        </div>
+    </body>
+</html>

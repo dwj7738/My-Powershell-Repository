@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>WSUS Reset and delete SoftwareDistribution Folder</title>        
+        <meta name="description" content="*** This script has been tested however, USE AT YOUR OWN RISK. *** We recently had to change the name of our WSUS server, actually rebuilt it and used a different naming convention. Once it was up and running we made the change in Group Policy and pushed it out to all our clients" />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p><strong>*** This script has been tested however, USE AT YOUR OWN RISK. *** </strong>
+</p>
+<p>We recently had to change the name of our WSUS server, actually rebuilt it and used a different naming convention. Once it was up and running we made the change in Group Policy and pushed it out to all our clients. This change caused Windows Update Error
+ 8024402C on all our Servers. We also got this error on some clients (Windows 7) but a gpupdate /force and a reboot took care of it. On the Servers the gpupdate and reboot thing did not work.</p>
+<p>The only fix we could come up with on our Servers was to stop the wuauserv service, delete the SoftwareDistribution folder and restart the wuauserv service. That&rsquo;s exactly what this script will do for you.</p>
+<p>We&rsquo;ve tested this on Windows Server 2K3, Windows Server 2K8, Windows Server 2K8 R2, Windows Vista x32, Windows Vista x64, Windows 7 x32 and Windows 7 x64.</p>
+<p></p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">#  *** THIS SCRIPT IS PROVIDED WITHOUT WARRANTY, USE AT YOUR OWN RISK ***
+# Author: David Hall, signalwarrant.com
+# This script will allow you to stop the wuauserv service on a client, check to see if the softwaredistribution exists and if so delete it.
+# Once the service is stopped and the folder is deleted it restarts the wuauserv service and forces WSUS checkin.
+# This is my solution to Windows Update error 8024402C on Windows Server 2008 Servers.
+
+$path = &quot;c:\windows\SoftwareDistribution&quot;
+
+
+# Stopping the wuauserv service
+Write-host -foregroundcolor Cyan &quot;1. STOPPING wuauserv service...&quot;
+Stop-Service wuauserv  
+
+# This is just to make sure the wuauserv service has time to stop before moving 
+# on to the next portion of the script.
+[System.Threading.Thread]::Sleep(2500)
+
+# Testing to see if the c:\windows\SoftwareDistribution folder exists
+if (Test-Path $path) {
+    
+    # If the folder exists Delete it and restart the wuauserv service,
+    # force WSUS checkin and exit
+    Write-host -foregroundcolor Red &quot;2. SoftwareDistribution Folder Exists... Deleting&quot;
+    [System.Threading.Thread]::Sleep(1500)
+    Remove-Item -path $path -recurse
+    Write-host -foregroundcolor Red &quot;3. *** DELETED ***&quot;
+    [System.Threading.Thread]::Sleep(1500)
+    Write-host -foregroundcolor Cyan &quot;4. STARTING wuauserv service...&quot;
+    Start-Service wuauserv 
+    [System.Threading.Thread]::Sleep(2500)
+    Write-host -foregroundcolor Cyan &quot;5. Forcing WSUS Checkin&quot;
+    [System.Threading.Thread]::Sleep(1500)
+    Invoke-Command {wuauclt.exe /detectnow}
+    Write-host -foregroundcolor Cyan &quot;6. Checkin Complete&quot;
+    Exit
+    
+    } else {
+    
+    # If the folder does not exist restart the wuauserv service,
+    # force WSUS checkin and exit
+    Write-host -foregroundcolor Red &quot;2. SoftwareDistribution Folder does not exists, STARTING wuauserv&quot;
+    [System.Threading.Thread]::Sleep(1500)
+    Write-host -foregroundcolor Cyan &quot;3. STARTING wuauserv service...&quot;
+    Start-Service wuauserv
+    [System.Threading.Thread]::Sleep(2500)
+    Write-host -foregroundcolor Cyan &quot;4. Forcing WSUS Checkin&quot;
+    [System.Threading.Thread]::Sleep(1500)
+    Invoke-Command {wuauclt.exe /detectnow}
+    Write-host -foregroundcolor Cyan &quot;5. Checkin Complete&quot;
+    Exit
+    }</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__com">#&nbsp;&nbsp;***&nbsp;THIS&nbsp;SCRIPT&nbsp;IS&nbsp;PROVIDED&nbsp;WITHOUT&nbsp;WARRANTY,&nbsp;USE&nbsp;AT&nbsp;YOUR&nbsp;OWN&nbsp;RISK&nbsp;***</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Author:&nbsp;David&nbsp;Hall,&nbsp;signalwarrant.com</span>&nbsp;
+<span class="powerShell__com">#&nbsp;This&nbsp;script&nbsp;will&nbsp;allow&nbsp;you&nbsp;to&nbsp;stop&nbsp;the&nbsp;wuauserv&nbsp;service&nbsp;on&nbsp;a&nbsp;client,&nbsp;check&nbsp;to&nbsp;see&nbsp;if&nbsp;the&nbsp;softwaredistribution&nbsp;exists&nbsp;and&nbsp;if&nbsp;so&nbsp;delete&nbsp;it.</span>&nbsp;
+<span class="powerShell__com">#&nbsp;Once&nbsp;the&nbsp;service&nbsp;is&nbsp;stopped&nbsp;and&nbsp;the&nbsp;folder&nbsp;is&nbsp;deleted&nbsp;it&nbsp;restarts&nbsp;the&nbsp;wuauserv&nbsp;service&nbsp;and&nbsp;forces&nbsp;WSUS&nbsp;checkin.</span>&nbsp;
+<span class="powerShell__com">#&nbsp;This&nbsp;is&nbsp;my&nbsp;solution&nbsp;to&nbsp;Windows&nbsp;Update&nbsp;error&nbsp;8024402C&nbsp;on&nbsp;Windows&nbsp;Server&nbsp;2008&nbsp;Servers.</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$path</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;c:\windows\SoftwareDistribution&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Stopping&nbsp;the&nbsp;wuauserv&nbsp;service</span>&nbsp;
+Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;1.&nbsp;STOPPING&nbsp;wuauserv&nbsp;service...&quot;</span>&nbsp;
+<span class="powerShell__cmdlets">Stop-Service</span>&nbsp;wuauserv&nbsp;&nbsp;&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;This&nbsp;is&nbsp;just&nbsp;to&nbsp;make&nbsp;sure&nbsp;the&nbsp;wuauserv&nbsp;service&nbsp;has&nbsp;time&nbsp;to&nbsp;stop&nbsp;before&nbsp;moving&nbsp;</span>&nbsp;
+<span class="powerShell__com">#&nbsp;on&nbsp;to&nbsp;the&nbsp;next&nbsp;portion&nbsp;of&nbsp;the&nbsp;script.</span>&nbsp;
+[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(2500)&nbsp;
+&nbsp;
+<span class="powerShell__com">#&nbsp;Testing&nbsp;to&nbsp;see&nbsp;if&nbsp;the&nbsp;c:\windows\SoftwareDistribution&nbsp;folder&nbsp;exists</span>&nbsp;
+<span class="powerShell__keyword">if</span>&nbsp;(<span class="powerShell__cmdlets">Test-Path</span>&nbsp;<span class="powerShell__variable">$path</span>)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;If&nbsp;the&nbsp;folder&nbsp;exists&nbsp;Delete&nbsp;it&nbsp;and&nbsp;restart&nbsp;the&nbsp;wuauserv&nbsp;service,</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;force&nbsp;WSUS&nbsp;checkin&nbsp;and&nbsp;exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Red&nbsp;<span class="powerShell__string">&quot;2.&nbsp;SoftwareDistribution&nbsp;Folder&nbsp;Exists...&nbsp;Deleting&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(1500)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Remove-Item</span>&nbsp;<span class="powerShell__operator">-</span>path&nbsp;<span class="powerShell__variable">$path</span>&nbsp;<span class="powerShell__operator">-</span>recurse&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Red&nbsp;<span class="powerShell__string">&quot;3.&nbsp;***&nbsp;DELETED&nbsp;***&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(1500)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;4.&nbsp;STARTING&nbsp;wuauserv&nbsp;service...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Start-Service</span>&nbsp;wuauserv&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(2500)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;5.&nbsp;Forcing&nbsp;WSUS&nbsp;Checkin&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(1500)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Invoke<span class="powerShell__operator">-</span>Command&nbsp;{wuauclt.exe&nbsp;<span class="powerShell__operator">/</span>detectnow}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;6.&nbsp;Checkin&nbsp;Complete&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<span class="powerShell__keyword">else</span>&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;If&nbsp;the&nbsp;folder&nbsp;does&nbsp;not&nbsp;exist&nbsp;restart&nbsp;the&nbsp;wuauserv&nbsp;service,</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__com">#&nbsp;force&nbsp;WSUS&nbsp;checkin&nbsp;and&nbsp;exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Red&nbsp;<span class="powerShell__string">&quot;2.&nbsp;SoftwareDistribution&nbsp;Folder&nbsp;does&nbsp;not&nbsp;exists,&nbsp;STARTING&nbsp;wuauserv&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(1500)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;3.&nbsp;STARTING&nbsp;wuauserv&nbsp;service...&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__cmdlets">Start-Service</span>&nbsp;wuauserv&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(2500)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;4.&nbsp;Forcing&nbsp;WSUS&nbsp;Checkin&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[System.Threading.Thread]::<span class="powerShell__alias">Sleep</span>(1500)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Invoke<span class="powerShell__operator">-</span>Command&nbsp;{wuauclt.exe&nbsp;<span class="powerShell__operator">/</span>detectnow}&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Write<span class="powerShell__operator">-</span>host&nbsp;<span class="powerShell__operator">-</span>foregroundcolor&nbsp;Cyan&nbsp;<span class="powerShell__string">&quot;5.&nbsp;Checkin&nbsp;Complete&quot;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__keyword">Exit</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+<p></p>
+
+        </div>
+    </body>
+</html>

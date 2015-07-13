@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets>
+  <Code Content=". .\Invoke-WSUSDBMaintenance.ps1" />
+  <Code Content="Invoke-WSUSDBMaintenance -UpdateServer DC1 -Port 80 -Verbose" />
+  <Code Content=". .\Invoke-WSUSDBMaintenance.ps1" />
+  <Code Content="Invoke-WSUSDBMaintenance -UpdateServer DC1 -Port 80 -Verbose" />
+</CodeSnippets>

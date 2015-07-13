@@ -1,0 +1,572 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>Update-CauSchedule</title>        
+        <meta name="description" content="This script automates the updating of the Cluster-Aware Updating Self Updating mode schedule to run on the Thursday following Microsoft Update Tuesday, which is sometimes week 2, sometimes week 3 of the month.This script was created to address the shortcomings of the inbuilt CAU " />
+        <link href="https://i1.code.msdn.s-msft.com/RequestReduceContent/c82dc8ab865be0fb7316b2e09ac97654-bafb67d64bd55a2b1fd123070a82b424-RequestReducedStyle.css" rel="Stylesheet" type="text/css" />        
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.6.1.min.js" type="text/javascript" ></script>
+        <script src="https://i1.code.msdn.s-msft.com/RequestReduceContent/a12c72272a8fe142a00d8aae0ff5525e-cf9957f54e208c66abb738158989dd84-RequestReducedScript.js" type="text/javascript" ></script>                        <script type="text/javascript">
+            function initializePage() {
+                var activeTabData = 'activeTab';
+                var otherTabClass = 'otherTab';
+                var hiddenPreClass = 'hidden';
+                $("a[href^=#]").attr("target","_self");
+                $("div.scriptcode").each(function (i) {
+                    var scriptBlock = $(this);
+                    scriptBlock.trackCopy(trackCodeSnippetCodeDownload);
+                    var labelElems = scriptBlock.find("div.title > span");
+                    if (labelElems.length == 0) {
+                        labelElems = scriptBlock.find("div.title");
+                    }
+                    var languageSpans = scriptBlock.find("span.hidden");
+                    var pres = scriptBlock.find("pre");
+                    if (languageSpans.length > 0 && pres.length > 1) {
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            var languageSpan = $(languageSpans[index]);
+                            labelSpan.data('code', codePre.text().replace(/(\r(\n)?)|((\r)?\n)/ig, '\r\n'));
+                            codePre.removeClass(hiddenPreClass);  
+                            codePre.addClass(languageSpan.text().replace(/^\s+|\s+$/g,""));
+                            codePre.chili();
+                            languageSpan.remove();
+                        });
+
+                        pres = scriptBlock.find("pre");
+                        labelElems.each(function(index, elem) {
+                            var codePre = $(pres[index]);
+                            var labelSpan = $(elem);
+                            if (index == 0) {
+                                scriptBlock.data(activeTabData, 0);
+                            }
+                            else {
+                                labelSpan.addClass(otherTabClass);
+                                codePre.addClass(hiddenPreClass);  
+                            }
+                            labelSpan.click(function (e) {
+                                var activeTab = scriptBlock.data(activeTabData);
+                                $(labelElems[activeTab]).addClass(otherTabClass);   
+                                $(pres[activeTab]).addClass(hiddenPreClass);   
+                                        
+                                codePre.removeClass(hiddenPreClass);    
+                                labelSpan.removeClass(otherTabClass);
+                                scriptBlock.data(activeTabData, index);
+
+                                if( window.parent.Galleries ) {
+                                    window.parent.Galleries.project.resizeDesc();
+                                }
+                            });
+                        });
+
+                        var preview = scriptBlock.find('div.preview');
+                        if (preview.length == 0) {
+                            preview = $(pres[pres.length - 1]);
+                        }
+                        preview.remove();
+
+                        if (window.clipboardData && clipboardData.setData) {
+                            var copyLink = $("<a href='#' class='copyCode'>Copy code</a>");
+                            copyLink.click(function (e) {
+                                trackCodeSnippetCodeDownload();
+                                clipboardData.setData("Text", $(labelElems[scriptBlock.data(activeTabData)]).data('code'));
+                                return false;
+                            });
+                            $(this).prepend(copyLink);
+                        }
+                    }
+                });
+
+                if ((window.parent) && (window.parent.Galleries)) {
+                    window.parent.Galleries.project.resizeDesc();
+                }
+
+                    if (top.location == self.location) {
+                         window.location.replace(window.location.href.replace('/description', ''));
+                    }
+            }
+
+            function trackCodeSnippetCodeDownload() {
+                if ((window.parent) && (window.parent.gTracker)) {
+                    window.parent.gTracker.createActionEvent('Description', 'Download', 'Copy', 'CodeSnippet', null);
+                }
+            }
+            
+            function overrideAnchorLinksForFirefoxAndChrome(iframeId) {
+                if(($.browser.mozilla && parseInt($.browser.version, 10) >= 2) || $.browser.webkit) {
+                    var iframeOffset = $("#" + iframeId, window.parent.document).offset();
+                    $("a").each(function () {
+                        var link = $(this);
+                        var href = link.attr("href");
+                        if (href && href[0] == "#") {
+                            var name = href.substring(1);
+                            $(this).click(function () {
+                                var nameElement = $("[name='" + name + "']");
+                                var idElement = $("#" + name);
+                                var element = null;
+                                if (nameElement.length > 0) {
+                                    element = nameElement;
+                                } else if (idElement.length > 0) {
+                                    element = idElement;
+                                }
+
+                                if (element) {
+                                    var offset = element.offset();
+                                    window.parent.scrollTo(offset.left, offset.top + iframeOffset.top);
+                                }
+
+                                return false;
+                            });
+                        }
+                    });
+                }
+            }
+
+            $(window).load(function(){
+                initializePage();
+                overrideAnchorLinksForFirefoxAndChrome("longdescIframe");
+
+            });
+
+        </script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div id="longDesc">
+            
+<p>This script automates the updating of the Cluster-Aware Updating Self Updating mode schedule to run on the Thursday following Microsoft Update Tuesday, which is sometimes week 2, sometimes week 3 of the month.</p>
+<p>This script was created to address the shortcomings of the inbuilt CAU scheduling, which only allows a week number to be selected, and our company policy is to apply updates on the Thursday night scheduled change window immediately following the Tuesday
+ the updates are released on.</p>
+<p>We have a number of Hyper-V 2012 R2 clusters, and in the words of Kimberly &quot;Sweet Brown&quot; Wilkins, 'ain't nobody got time for that!'</p>
+<p>&nbsp;</p>
+<p>Create a scheduled task that runs on the 1st day of every month to call the script using the following command, as an example:</p>
+<p>C:\scripts\Update-CauSchedule.ps1 -ClusterName cluster01.contoso.local -EmailRecipient caualerts@contoso.com</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="scriptcode">
+<div class="pluginEditHolder" pluginCommand="mceScriptCode">
+<div class="title"><span>PowerShell</span></div>
+<div class="pluginLinkHolder"><span class="pluginEditHolderLink">Edit</span>|<span class="pluginRemoveHolderLink">Remove</span></div>
+<span class="hidden">powershell</span>
+<pre class="hidden">#==========================================
+#
+#Script ID / Name:  Update-CauSchedule.ps1
+#
+#Author:   				Justin Lipple (JL)
+#
+#Owner:	   				Justin Lipple (JL)
+#
+#Copyright: 			
+#
+#Created:   			03/04/2014
+#
+#Language: 				PowerShell v4
+#
+#Interpreter: 			PowerShell v4
+#
+#Requirements:
+# 	
+#
+#-------------------------------------------------------------------------
+#Purpose:  The Purpose of this script is to automate the updating of Cluster Aware Updating Self Updating mode schedules
+#
+#Additional Detail:
+#    -Unfortunately the CAU schedule only allows WeeksOfMonth and DaysOfWeek. However our work's Patch Thursday is sometimes week 2, somethimes week 3
+#     depending on what week the 2nd Tuesday of the month falls on.
+#     This script will determine that, update designated CAU clusters, and email results.
+#
+#==========================================================================
+#==============================
+#Changelog
+#==============================
+#
+# V1.0.0 JL 03/04/2014:
+# - Created script
+# V2.0.0 JL 11/04/2014:
+# - Updates and tested working version
+#
+#
+#==============================
+# End Changelog
+#==============================
+
+#Input Parameters
+Param(
+&nbsp;&nbsp;&nbsp; [Parameter(Mandatory=$true,
+&nbsp;&nbsp;&nbsp; ValueFromPipeline=$True)]
+&nbsp;&nbsp;&nbsp; $ClusterName,
+    [Parameter(Mandatory=$true,
+&nbsp;&nbsp;&nbsp; ValueFromPipeline=$True)]
+    $EmailRecipient
+)
+
+#declare constants
+
+$emailSubject = &quot;Cluster Aware Updating patch day validation - $(Get-Date)&quot;
+$emailSender = 'CAUscript-NoReply@contoso.com'
+$SMTP_SERVER = 'mailrelay.contoso.local'
+
+
+
+#Script setup for logging &amp; output purposes
+$date = $((Get-Date).ToString(&quot;yyyyMMddHHmm&quot;))
+$scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
+$scriptName = split-path -leaf $MyInvocation.MyCommand.Definition
+$CSVFile =  &quot;$($date)-$scriptName.csv&quot;
+
+
+
+function Send-Email{
+Param(                     
+    $currentWeekOfMonth,
+    $actualWeekOfMonth, 
+    $ClusterName, 
+    $actualPatchThursday,
+    $changeRequired,
+    $newActualWeeksOfMonth)
+ $head = @'
+<style type="text/css"><!--mce:0--></style>
+&lt;!-- End Styles --&gt;
+'@
+
+$body = $head
+$body &#43;= &quot;&lt;table class='myOtherTable'&gt;&quot;
+$body &#43;= &quot;&lt;tr&gt;&lt;th&gt;$($ClusterName.ToUpper()): Cluster Aware Updating patch day validation&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&quot;
+$body &#43;= &quot;&lt;tr&gt;&lt;td&gt;The clusters current 'WeekOfMonth' schedule is&lt;/td&gt;&lt;td&gt;$currentWeekOfMonth&lt;/td&gt;&lt;/tr&gt;&quot;
+$body &#43;= &quot;&lt;tr&gt;&lt;td&gt;The clusters current 'StartDate' schedule is&lt;/td&gt;&lt;td&gt;$currentStartDate&lt;/td&gt;&lt;/tr&gt;&quot;
+$body &#43;= &quot;&lt;tr&gt;&lt;td&gt;This month's Patch Thursday date is&lt;/td&gt;&lt;td&gt;$actualPatchThursday&lt;/td&gt;&lt;/tr&gt;&quot;
+$body &#43;= &quot;&lt;tr&gt;&lt;td&gt;This month's actual 'WeekOfMonth' is&lt;/td&gt;&lt;td&gt;$actualWeekOfMonth&lt;/td&gt;&lt;/tr&gt;&quot;
+$body &#43;= &quot;&lt;tr&gt;&lt;td&gt;Is there a change required?&lt;/td&gt;&lt;td&gt;$changeRequired&lt;/td&gt;&lt;/tr&gt;&quot;
+$body &#43;= &quot;&lt;tr&gt;&lt;td&gt;The clusters refreshed current 'WeekOfMonth' is&lt;/td&gt;&lt;td&gt;$newActualWeeksOfMonth&lt;/td&gt;&lt;/tr&gt;&quot;
+$body &#43;= &quot;&lt;/table&gt;&quot;
+
+
+Send-MailMessage -To $emailRecipient -Subject $emailSubject -From $emailSender -SmtpServer $SMTP_SERVER -Body ($Body | Out-String) -BodyAsHtml
+
+
+}
+
+function Get-CauSchedule{ #function to retrieve the current schedule on a given cluster
+Param(                     
+    $clusterName)
+$objCauSchedule = $null
+$objCauSchedule = Get-CauClusterRole -ClusterName $clusterName
+
+$global:CauSchedule = $null
+$global:CauSchedule = New-object PSObject
+$global:CauSchedule | Add-Member NoteProperty DaysOfWeek $objCauSchedule.GetValue(8).Value
+$global:CauSchedule | Add-Member NoteProperty WeeksOfMonth $objCauSchedule.GetValue(9).Value
+$global:CauSchedule | Add-Member NoteProperty StartDate $objCauSchedule.GetValue(2).Value
+
+Return $global:CauSchedule
+
+}
+
+
+function Set-CauSchedule{ #function to update the existing schedule on a given cluster to provided values
+Param(                     
+    $clusterName,
+    $newWeeksOfMonth)
+
+Set-CauClusterRole -ClusterName $clustername -WeeksOfMonth $newWeeksOfMonth -StartDate $(Get-Date -Date &quot;2013-01-01 18:30:00&quot;) -Force #sets start time to 6:30 PM
+
+Return $global:newActualWeeksOfMonth = ((Get-CauClusterRole -ClusterName $clusterName).GetValue(9).Value)
+
+}
+
+
+function Get-PatchThursday{ #function to find Contoso Patch Thursday, for a given month &amp; year
+Param(                     
+    $month = (Get-Date).Month, 
+    $year = (Get-Date).Year)
+
+$FindNthDay=2
+$WeekDay='Tuesday'
+
+If(($month -lt 1) -or ($month -gt 12)){Write-Host &quot;Month not valid&quot; -ForegroundColor Red ;Break}
+
+
+$strTargetMonth = $month.toString()
+$strTargetYear = $year.ToString()
+
+
+[string]$strTempDate = $strTargetMonth&#43;'/1/'&#43;$strTargetYear
+[datetime]$strFirstInstance = $strTempDate
+
+while ($strFirstInstance.DayofWeek -ine $WeekDay ) { $strFirstInstance = $strFirstInstance.AddDays(1) }
+
+
+#Get the nth weekday, then find 2 days later
+$global:target = ($strFirstInstance.AddDays(7*($FindNthDay-1))).AddDays(2)
+
+Return $global:target.ToString(&quot;dd/MM/yyyy&quot;)
+
+}
+
+function Get-PatchThursdayWeek{ 
+Param(                     
+    $patchDay)
+
+$patchThursdaydt = [datetime]::ParseExact($patchDay, &quot;dd/MM/yyyy&quot;, $null)
+
+$numDaysDecremented = 0
+[string]$strTempDate = ($patchThursdaydt.Month).Tostring()&#43;'/1/'&#43;($patchThursdaydt.Year).ToString()
+[datetime]$strFirstInstance = $strTempDate
+while ($patchThursdaydt -ine $strFirstInstance ) {
+    $patchThursdaydt = $patchThursdaydt.AddDays(-1)
+    $numDaysDecremented&#43;&#43;
+    }
+
+Return ([math]::Truncate($numDaysDecremented / 7) &#43; 1)
+
+}
+
+    
+#get cluster's current WeekOfMonth value
+$currentWeekOfMonth = (Get-CauSchedule $ClusterName).WeeksOfMonth[0]
+
+#get cluster's current StartDate value
+$currentStartDate = (Get-CauSchedule $ClusterName).StartDate[0]
+
+#for ($i = 1; $i -le 12; $i&#43;&#43;){ this loop is for testing the script for each month of the year
+
+$actualPatchThursday = Get-PatchThursday #-month $i uncomment for loop testing the script for each month of the year
+$actualWeekOfMonth = Get-PatchThursdayWeek -patchday $actualPatchThursday
+
+#decide if update is required, and perform the update
+If ($currentWeekOfMonth -eq $actualWeekOfMonth){
+    $changeRequired = $false
+    $newWeekOfMonth = $currentWeekOfMonth
+    }
+ElseIf ($currentWeekOfMonth -ne $actualWeekOfMonth){
+    $changeRequired = $true
+    Set-CauSchedule $ClusterName $actualWeekOfMonth | Out-Null
+    $newWeekOfMonth = $newActualWeeksOfMonth
+    }
+
+
+
+ 
+Send-Email $currentWeekOfMonth $actualWeekOfMonth $ClusterName $actualPatchThursday $changeRequired $newWeekOfMonth
+
+#} this loop is for testing the script for each month of the year
+
+</pre>
+<div class="preview">
+<pre class="powershell"><span class="powerShell__com">#==========================================</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#Script&nbsp;ID&nbsp;/&nbsp;Name:&nbsp;&nbsp;Update-CauSchedule.ps1</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#Author:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Justin&nbsp;Lipple&nbsp;(JL)</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#Owner:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Justin&nbsp;Lipple&nbsp;(JL)</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#Copyright:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#Created:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;03/04/2014</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#Language:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PowerShell&nbsp;v4</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#Interpreter:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PowerShell&nbsp;v4</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#Requirements:</span>&nbsp;
+<span class="powerShell__com">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#-------------------------------------------------------------------------</span>&nbsp;
+<span class="powerShell__com">#Purpose:&nbsp;&nbsp;The&nbsp;Purpose&nbsp;of&nbsp;this&nbsp;script&nbsp;is&nbsp;to&nbsp;automate&nbsp;the&nbsp;updating&nbsp;of&nbsp;Cluster&nbsp;Aware&nbsp;Updating&nbsp;Self&nbsp;Updating&nbsp;mode&nbsp;schedules</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#Additional&nbsp;Detail:</span>&nbsp;
+<span class="powerShell__com">#&nbsp;&nbsp;&nbsp;&nbsp;-Unfortunately&nbsp;the&nbsp;CAU&nbsp;schedule&nbsp;only&nbsp;allows&nbsp;WeeksOfMonth&nbsp;and&nbsp;DaysOfWeek.&nbsp;However&nbsp;our&nbsp;work's&nbsp;Patch&nbsp;Thursday&nbsp;is&nbsp;sometimes&nbsp;week&nbsp;2,&nbsp;somethimes&nbsp;week&nbsp;3</span>&nbsp;
+<span class="powerShell__com">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depending&nbsp;on&nbsp;what&nbsp;week&nbsp;the&nbsp;2nd&nbsp;Tuesday&nbsp;of&nbsp;the&nbsp;month&nbsp;falls&nbsp;on.</span>&nbsp;
+<span class="powerShell__com">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;script&nbsp;will&nbsp;determine&nbsp;that,&nbsp;update&nbsp;designated&nbsp;CAU&nbsp;clusters,&nbsp;and&nbsp;email&nbsp;results.</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#==========================================================================</span>&nbsp;
+<span class="powerShell__com">#==============================</span>&nbsp;
+<span class="powerShell__com">#Changelog</span>&nbsp;
+<span class="powerShell__com">#==============================</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#&nbsp;V1.0.0&nbsp;JL&nbsp;03/04/2014:</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Created&nbsp;script</span>&nbsp;
+<span class="powerShell__com">#&nbsp;V2.0.0&nbsp;JL&nbsp;11/04/2014:</span>&nbsp;
+<span class="powerShell__com">#&nbsp;-&nbsp;Updates&nbsp;and&nbsp;tested&nbsp;working&nbsp;version</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#</span>&nbsp;
+<span class="powerShell__com">#==============================</span>&nbsp;
+<span class="powerShell__com">#&nbsp;End&nbsp;Changelog</span>&nbsp;
+<span class="powerShell__com">#==============================</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#Input&nbsp;Parameters</span>&nbsp;
+<span class="powerShell__keyword">Param</span>(&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory=<span class="powerShell__variable">$true</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;ValueFromPipeline=<span class="powerShell__variable">$True</span>)]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ClusterName</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[Parameter(Mandatory=<span class="powerShell__variable">$true</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;ValueFromPipeline=<span class="powerShell__variable">$True</span>)]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$EmailRecipient</span>&nbsp;
+)&nbsp;
+&nbsp;
+<span class="powerShell__com">#declare&nbsp;constants</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$emailSubject</span>&nbsp;=&nbsp;<span class="powerShell__string">&quot;Cluster&nbsp;Aware&nbsp;Updating&nbsp;patch&nbsp;day&nbsp;validation&nbsp;-&nbsp;$(Get-Date)&quot;</span>&nbsp;
+<span class="powerShell__variable">$emailSender</span>&nbsp;=&nbsp;<span class="powerShell__string">'CAUscript-NoReply@contoso.com'</span>&nbsp;
+<span class="powerShell__variable">$SMTP_SERVER</span>&nbsp;=&nbsp;<span class="powerShell__string">'mailrelay.contoso.local'</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#Script&nbsp;setup&nbsp;for&nbsp;logging&nbsp;&amp;&nbsp;output&nbsp;purposes</span>&nbsp;
+<span class="powerShell__variable">$date</span>&nbsp;=&nbsp;<span class="powerShell__variable">$</span>((<span class="powerShell__cmdlets">Get-Date</span>).ToString(<span class="powerShell__string">&quot;yyyyMMddHHmm&quot;</span>))&nbsp;
+<span class="powerShell__variable">$scriptPath</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">split-path</span>&nbsp;<span class="powerShell__operator">-</span>parent&nbsp;<span class="powerShell__variable">$MyInvocation</span>.MyCommand.Definition&nbsp;
+<span class="powerShell__variable">$scriptName</span>&nbsp;=&nbsp;<span class="powerShell__cmdlets">split-path</span>&nbsp;<span class="powerShell__operator">-</span>leaf&nbsp;<span class="powerShell__variable">$MyInvocation</span>.MyCommand.Definition&nbsp;
+<span class="powerShell__variable">$CSVFile</span>&nbsp;=&nbsp;&nbsp;<span class="powerShell__string">&quot;$($date)-$scriptName.csv&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Send<span class="powerShell__operator">-</span>Email{&nbsp;
+<span class="powerShell__keyword">Param</span>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$currentWeekOfMonth</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$actualWeekOfMonth</span>,&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$ClusterName</span>,&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$actualPatchThursday</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$changeRequired</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$newActualWeeksOfMonth</span>)&nbsp;
+&nbsp;<span class="powerShell__variable">$head</span>&nbsp;=&nbsp;@'&nbsp;
+&lt;style&nbsp;<span class="powerShell__alias">type</span>=<span class="powerShell__string">&quot;text/css&quot;</span>&gt;&nbsp;
+.myOtherTable&nbsp;{&nbsp;background<span class="powerShell__operator">-</span>color:<span class="powerShell__com">#FFFFE0;border-collapse:collapse;color:#000;font-size:18px;&nbsp;}</span>&nbsp;
+.myOtherTable&nbsp;th&nbsp;{&nbsp;background<span class="powerShell__operator">-</span>color:<span class="powerShell__com">#BDB76B;color:white;width:50%;&nbsp;}</span>&nbsp;
+.myOtherTable&nbsp;td,&nbsp;.myOtherTable&nbsp;th&nbsp;{&nbsp;padding:5px;border:0;&nbsp;}&nbsp;
+.myOtherTable&nbsp;td&nbsp;{&nbsp;border<span class="powerShell__operator">-</span>bottom:1px&nbsp;dotted&nbsp;<span class="powerShell__com">#BDB76B;&nbsp;}</span>&nbsp;
+&lt;<span class="powerShell__operator">/</span>style&gt;&nbsp;
+&lt;<span class="powerShell__operator">!</span><span class="powerShell__operator">-</span><span class="powerShell__operator">-</span>&nbsp;<span class="powerShell__keyword">End</span>&nbsp;Styles&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__operator">-</span>&gt;&nbsp;
+'@&nbsp;
+&nbsp;
+<span class="powerShell__variable">$body</span>&nbsp;=&nbsp;<span class="powerShell__variable">$head</span>&nbsp;
+<span class="powerShell__variable">$body</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__string">&quot;&lt;table&nbsp;class='myOtherTable'&gt;&quot;</span>&nbsp;
+<span class="powerShell__variable">$body</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__string">&quot;&lt;tr&gt;&lt;th&gt;$($ClusterName.ToUpper()):&nbsp;Cluster&nbsp;Aware&nbsp;Updating&nbsp;patch&nbsp;day&nbsp;validation&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&quot;</span>&nbsp;
+<span class="powerShell__variable">$body</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__string">&quot;&lt;tr&gt;&lt;td&gt;The&nbsp;clusters&nbsp;current&nbsp;'WeekOfMonth'&nbsp;schedule&nbsp;is&lt;/td&gt;&lt;td&gt;$currentWeekOfMonth&lt;/td&gt;&lt;/tr&gt;&quot;</span>&nbsp;
+<span class="powerShell__variable">$body</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__string">&quot;&lt;tr&gt;&lt;td&gt;The&nbsp;clusters&nbsp;current&nbsp;'StartDate'&nbsp;schedule&nbsp;is&lt;/td&gt;&lt;td&gt;$currentStartDate&lt;/td&gt;&lt;/tr&gt;&quot;</span>&nbsp;
+<span class="powerShell__variable">$body</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__string">&quot;&lt;tr&gt;&lt;td&gt;This&nbsp;month's&nbsp;Patch&nbsp;Thursday&nbsp;date&nbsp;is&lt;/td&gt;&lt;td&gt;$actualPatchThursday&lt;/td&gt;&lt;/tr&gt;&quot;</span>&nbsp;
+<span class="powerShell__variable">$body</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__string">&quot;&lt;tr&gt;&lt;td&gt;This&nbsp;month's&nbsp;actual&nbsp;'WeekOfMonth'&nbsp;is&lt;/td&gt;&lt;td&gt;$actualWeekOfMonth&lt;/td&gt;&lt;/tr&gt;&quot;</span>&nbsp;
+<span class="powerShell__variable">$body</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__string">&quot;&lt;tr&gt;&lt;td&gt;Is&nbsp;there&nbsp;a&nbsp;change&nbsp;required?&lt;/td&gt;&lt;td&gt;$changeRequired&lt;/td&gt;&lt;/tr&gt;&quot;</span>&nbsp;
+<span class="powerShell__variable">$body</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__string">&quot;&lt;tr&gt;&lt;td&gt;The&nbsp;clusters&nbsp;refreshed&nbsp;current&nbsp;'WeekOfMonth'&nbsp;is&lt;/td&gt;&lt;td&gt;$newActualWeeksOfMonth&lt;/td&gt;&lt;/tr&gt;&quot;</span>&nbsp;
+<span class="powerShell__variable">$body</span>&nbsp;<span class="powerShell__operator">&#43;</span>=&nbsp;<span class="powerShell__string">&quot;&lt;/table&gt;&quot;</span>&nbsp;
+&nbsp;
+&nbsp;
+Send<span class="powerShell__operator">-</span>MailMessage&nbsp;<span class="powerShell__operator">-</span>To&nbsp;<span class="powerShell__variable">$emailRecipient</span>&nbsp;<span class="powerShell__operator">-</span>Subject&nbsp;<span class="powerShell__variable">$emailSubject</span>&nbsp;<span class="powerShell__operator">-</span><span class="powerShell__keyword">From</span>&nbsp;<span class="powerShell__variable">$emailSender</span>&nbsp;<span class="powerShell__operator">-</span>SmtpServer&nbsp;<span class="powerShell__variable">$SMTP_SERVER</span>&nbsp;<span class="powerShell__operator">-</span>Body&nbsp;(<span class="powerShell__variable">$Body</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Out-String</span>)&nbsp;<span class="powerShell__operator">-</span>BodyAsHtml&nbsp;
+&nbsp;
+&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Get<span class="powerShell__operator">-</span>CauSchedule{&nbsp;<span class="powerShell__com">#function&nbsp;to&nbsp;retrieve&nbsp;the&nbsp;current&nbsp;schedule&nbsp;on&nbsp;a&nbsp;given&nbsp;cluster</span>&nbsp;
+<span class="powerShell__keyword">Param</span>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$clusterName</span>)&nbsp;
+<span class="powerShell__variable">$objCauSchedule</span>&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>&nbsp;
+<span class="powerShell__variable">$objCauSchedule</span>&nbsp;=&nbsp;Get<span class="powerShell__operator">-</span>CauClusterRole&nbsp;<span class="powerShell__operator">-</span>ClusterName&nbsp;<span class="powerShell__variable">$clusterName</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$global</span>:CauSchedule&nbsp;=&nbsp;<span class="powerShell__variable">$null</span>&nbsp;
+<span class="powerShell__variable">$global</span>:CauSchedule&nbsp;=&nbsp;<span class="powerShell__cmdlets">New-object</span>&nbsp;PSObject&nbsp;
+<span class="powerShell__variable">$global</span>:CauSchedule&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Add-Member</span>&nbsp;NoteProperty&nbsp;DaysOfWeek&nbsp;<span class="powerShell__variable">$objCauSchedule</span>.GetValue(8).Value&nbsp;
+<span class="powerShell__variable">$global</span>:CauSchedule&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Add-Member</span>&nbsp;NoteProperty&nbsp;WeeksOfMonth&nbsp;<span class="powerShell__variable">$objCauSchedule</span>.GetValue(9).Value&nbsp;
+<span class="powerShell__variable">$global</span>:CauSchedule&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Add-Member</span>&nbsp;NoteProperty&nbsp;StartDate&nbsp;<span class="powerShell__variable">$objCauSchedule</span>.GetValue(2).Value&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Return</span>&nbsp;<span class="powerShell__variable">$global</span>:CauSchedule&nbsp;
+&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Set<span class="powerShell__operator">-</span>CauSchedule{&nbsp;<span class="powerShell__com">#function&nbsp;to&nbsp;update&nbsp;the&nbsp;existing&nbsp;schedule&nbsp;on&nbsp;a&nbsp;given&nbsp;cluster&nbsp;to&nbsp;provided&nbsp;values</span>&nbsp;
+<span class="powerShell__keyword">Param</span>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$clusterName</span>,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$newWeeksOfMonth</span>)&nbsp;
+&nbsp;
+Set<span class="powerShell__operator">-</span>CauClusterRole&nbsp;<span class="powerShell__operator">-</span>ClusterName&nbsp;<span class="powerShell__variable">$clustername</span>&nbsp;<span class="powerShell__operator">-</span>WeeksOfMonth&nbsp;<span class="powerShell__variable">$newWeeksOfMonth</span>&nbsp;<span class="powerShell__operator">-</span>StartDate&nbsp;<span class="powerShell__variable">$</span>(<span class="powerShell__cmdlets">Get-Date</span>&nbsp;<span class="powerShell__operator">-</span>Date&nbsp;<span class="powerShell__string">&quot;2013-01-01&nbsp;18:30:00&quot;</span>)&nbsp;<span class="powerShell__operator">-</span>Force&nbsp;<span class="powerShell__com">#sets&nbsp;start&nbsp;time&nbsp;to&nbsp;6:30&nbsp;PM</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Return</span>&nbsp;<span class="powerShell__variable">$global</span>:newActualWeeksOfMonth&nbsp;=&nbsp;((Get<span class="powerShell__operator">-</span>CauClusterRole&nbsp;<span class="powerShell__operator">-</span>ClusterName&nbsp;<span class="powerShell__variable">$clusterName</span>).GetValue(9).Value)&nbsp;
+&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Get<span class="powerShell__operator">-</span>PatchThursday{&nbsp;<span class="powerShell__com">#function&nbsp;to&nbsp;find&nbsp;Contoso&nbsp;Patch&nbsp;Thursday,&nbsp;for&nbsp;a&nbsp;given&nbsp;month&nbsp;&amp;&nbsp;year</span>&nbsp;
+<span class="powerShell__keyword">Param</span>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$month</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-Date</span>).Month,&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$year</span>&nbsp;=&nbsp;(<span class="powerShell__cmdlets">Get-Date</span>).Year)&nbsp;
+&nbsp;
+<span class="powerShell__variable">$FindNthDay</span>=2&nbsp;
+<span class="powerShell__variable">$WeekDay</span>=<span class="powerShell__string">'Tuesday'</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">If</span>((<span class="powerShell__variable">$month</span>&nbsp;<span class="powerShell__operator">-</span>lt&nbsp;1)&nbsp;<span class="powerShell__operator">-</span>or&nbsp;(<span class="powerShell__variable">$month</span>&nbsp;<span class="powerShell__operator">-</span>gt&nbsp;12)){Write<span class="powerShell__operator">-</span>Host&nbsp;<span class="powerShell__string">&quot;Month&nbsp;not&nbsp;valid&quot;</span>&nbsp;<span class="powerShell__operator">-</span>ForegroundColor&nbsp;Red&nbsp;;<span class="powerShell__keyword">Break</span>}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__variable">$strTargetMonth</span>&nbsp;=&nbsp;<span class="powerShell__variable">$month</span>.toString()&nbsp;
+<span class="powerShell__variable">$strTargetYear</span>&nbsp;=&nbsp;<span class="powerShell__variable">$year</span>.ToString()&nbsp;
+&nbsp;
+&nbsp;
+[string]<span class="powerShell__variable">$strTempDate</span>&nbsp;=&nbsp;<span class="powerShell__variable">$strTargetMonth</span><span class="powerShell__operator">&#43;</span><span class="powerShell__string">'/1/'</span><span class="powerShell__operator">&#43;</span><span class="powerShell__variable">$strTargetYear</span>&nbsp;
+[datetime]<span class="powerShell__variable">$strFirstInstance</span>&nbsp;=&nbsp;<span class="powerShell__variable">$strTempDate</span>&nbsp;
+&nbsp;
+<span class="powerShell__keyword">while</span>&nbsp;(<span class="powerShell__variable">$strFirstInstance</span>.DayofWeek&nbsp;<span class="powerShell__operator">-</span>ine&nbsp;<span class="powerShell__variable">$WeekDay</span>&nbsp;)&nbsp;{&nbsp;<span class="powerShell__variable">$strFirstInstance</span>&nbsp;=&nbsp;<span class="powerShell__variable">$strFirstInstance</span>.AddDays(1)&nbsp;}&nbsp;
+&nbsp;
+&nbsp;
+<span class="powerShell__com">#Get&nbsp;the&nbsp;nth&nbsp;weekday,&nbsp;then&nbsp;find&nbsp;2&nbsp;days&nbsp;later</span>&nbsp;
+<span class="powerShell__variable">$global</span>:target&nbsp;=&nbsp;(<span class="powerShell__variable">$strFirstInstance</span>.AddDays(7<span class="powerShell__operator">*</span>(<span class="powerShell__variable">$FindNthDay</span><span class="powerShell__operator">-</span>1))).AddDays(2)&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Return</span>&nbsp;<span class="powerShell__variable">$global</span>:target.ToString(<span class="powerShell__string">&quot;dd/MM/yyyy&quot;</span>)&nbsp;
+&nbsp;
+}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">function</span>&nbsp;Get<span class="powerShell__operator">-</span>PatchThursdayWeek{&nbsp;&nbsp;
+<span class="powerShell__keyword">Param</span>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$patchDay</span>)&nbsp;
+&nbsp;
+<span class="powerShell__variable">$patchThursdaydt</span>&nbsp;=&nbsp;[datetime]::ParseExact(<span class="powerShell__variable">$patchDay</span>,&nbsp;<span class="powerShell__string">&quot;dd/MM/yyyy&quot;</span>,&nbsp;<span class="powerShell__variable">$null</span>)&nbsp;
+&nbsp;
+<span class="powerShell__variable">$numDaysDecremented</span>&nbsp;=&nbsp;0&nbsp;
+[string]<span class="powerShell__variable">$strTempDate</span>&nbsp;=&nbsp;(<span class="powerShell__variable">$patchThursdaydt</span>.Month).Tostring()<span class="powerShell__operator">&#43;</span><span class="powerShell__string">'/1/'</span><span class="powerShell__operator">&#43;</span>(<span class="powerShell__variable">$patchThursdaydt</span>.Year).ToString()&nbsp;
+[datetime]<span class="powerShell__variable">$strFirstInstance</span>&nbsp;=&nbsp;<span class="powerShell__variable">$strTempDate</span>&nbsp;
+<span class="powerShell__keyword">while</span>&nbsp;(<span class="powerShell__variable">$patchThursdaydt</span>&nbsp;<span class="powerShell__operator">-</span>ine&nbsp;<span class="powerShell__variable">$strFirstInstance</span>&nbsp;)&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$patchThursdaydt</span>&nbsp;=&nbsp;<span class="powerShell__variable">$patchThursdaydt</span>.AddDays(<span class="powerShell__operator">-</span>1)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$numDaysDecremented</span><span class="powerShell__operator">&#43;</span><span class="powerShell__operator">&#43;</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+<span class="powerShell__keyword">Return</span>&nbsp;([math]::Truncate(<span class="powerShell__variable">$numDaysDecremented</span>&nbsp;<span class="powerShell__operator">/</span>&nbsp;7)&nbsp;<span class="powerShell__operator">&#43;</span>&nbsp;1)&nbsp;
+&nbsp;
+}&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="powerShell__com">#get&nbsp;cluster's&nbsp;current&nbsp;WeekOfMonth&nbsp;value</span>&nbsp;
+<span class="powerShell__variable">$currentWeekOfMonth</span>&nbsp;=&nbsp;(Get<span class="powerShell__operator">-</span>CauSchedule&nbsp;<span class="powerShell__variable">$ClusterName</span>).WeeksOfMonth[0]&nbsp;
+&nbsp;
+<span class="powerShell__com">#get&nbsp;cluster's&nbsp;current&nbsp;StartDate&nbsp;value</span>&nbsp;
+<span class="powerShell__variable">$currentStartDate</span>&nbsp;=&nbsp;(Get<span class="powerShell__operator">-</span>CauSchedule&nbsp;<span class="powerShell__variable">$ClusterName</span>).StartDate[0]&nbsp;
+&nbsp;
+<span class="powerShell__com">#for&nbsp;($i&nbsp;=&nbsp;1;&nbsp;$i&nbsp;-le&nbsp;12;&nbsp;$i&#43;&#43;){&nbsp;this&nbsp;loop&nbsp;is&nbsp;for&nbsp;testing&nbsp;the&nbsp;script&nbsp;for&nbsp;each&nbsp;month&nbsp;of&nbsp;the&nbsp;year</span>&nbsp;
+&nbsp;
+<span class="powerShell__variable">$actualPatchThursday</span>&nbsp;=&nbsp;Get<span class="powerShell__operator">-</span>PatchThursday&nbsp;<span class="powerShell__com">#-month&nbsp;$i&nbsp;uncomment&nbsp;for&nbsp;loop&nbsp;testing&nbsp;the&nbsp;script&nbsp;for&nbsp;each&nbsp;month&nbsp;of&nbsp;the&nbsp;year</span>&nbsp;
+<span class="powerShell__variable">$actualWeekOfMonth</span>&nbsp;=&nbsp;Get<span class="powerShell__operator">-</span>PatchThursdayWeek&nbsp;<span class="powerShell__operator">-</span>patchday&nbsp;<span class="powerShell__variable">$actualPatchThursday</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#decide&nbsp;if&nbsp;update&nbsp;is&nbsp;required,&nbsp;and&nbsp;perform&nbsp;the&nbsp;update</span>&nbsp;
+<span class="powerShell__keyword">If</span>&nbsp;(<span class="powerShell__variable">$currentWeekOfMonth</span>&nbsp;<span class="powerShell__operator">-</span>eq&nbsp;<span class="powerShell__variable">$actualWeekOfMonth</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$changeRequired</span>&nbsp;=&nbsp;<span class="powerShell__variable">$false</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$newWeekOfMonth</span>&nbsp;=&nbsp;<span class="powerShell__variable">$currentWeekOfMonth</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+<span class="powerShell__keyword">ElseIf</span>&nbsp;(<span class="powerShell__variable">$currentWeekOfMonth</span>&nbsp;<span class="powerShell__operator">-</span>ne&nbsp;<span class="powerShell__variable">$actualWeekOfMonth</span>){&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$changeRequired</span>&nbsp;=&nbsp;<span class="powerShell__variable">$true</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Set<span class="powerShell__operator">-</span>CauSchedule&nbsp;<span class="powerShell__variable">$ClusterName</span>&nbsp;<span class="powerShell__variable">$actualWeekOfMonth</span>&nbsp;<span class="powerShell__operator">|</span>&nbsp;<span class="powerShell__cmdlets">Out-Null</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="powerShell__variable">$newWeekOfMonth</span>&nbsp;=&nbsp;<span class="powerShell__variable">$newActualWeeksOfMonth</span>&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;&nbsp;
+Send<span class="powerShell__operator">-</span>Email&nbsp;<span class="powerShell__variable">$currentWeekOfMonth</span>&nbsp;<span class="powerShell__variable">$actualWeekOfMonth</span>&nbsp;<span class="powerShell__variable">$ClusterName</span>&nbsp;<span class="powerShell__variable">$actualPatchThursday</span>&nbsp;<span class="powerShell__variable">$changeRequired</span>&nbsp;<span class="powerShell__variable">$newWeekOfMonth</span>&nbsp;
+&nbsp;
+<span class="powerShell__com">#}&nbsp;this&nbsp;loop&nbsp;is&nbsp;for&nbsp;testing&nbsp;the&nbsp;script&nbsp;for&nbsp;each&nbsp;month&nbsp;of&nbsp;the&nbsp;year</span>&nbsp;
+&nbsp;
+</pre>
+</div>
+</div>
+</div>
+<div class="endscriptcode">&nbsp;</div>
+
+        </div>
+    </body>
+</html>

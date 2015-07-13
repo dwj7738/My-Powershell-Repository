@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+   <SelectionSets>
+      <SelectionSet>
+         <Name>OptionalHeaderTypes</Name>
+         <Types>
+            <TypeName>IMAGE_OPTIONAL_HEADER32</TypeName>
+            <TypeName>IMAGE_OPTIONAL_HEADER64</TypeName>
+         </Types>
+      </SelectionSet>
+   </SelectionSets>
+   <ViewDefinitions>
+      <View>
+         <Name>Get-DumpBin</Name>
+         <ViewSelectedBy>
+            <TypeName>DUMPBIN</TypeName>
+         </ViewSelectedBy>
+         <ListControl>
+            <ListEntries>
+               <ListEntry>
+                  <ListItems>
+                     <ListItem>
+                        <PropertyName>FileHeader</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>OptionalHeader</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <Label>DataDirectory</Label>
+                        <ScriptBlock>'IMAGE_DATA_DIRECTORY[]'</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>Sections</PropertyName>
+                     </ListItem>
+                  </ListItems>
+               </ListEntry>
+            </ListEntries>
+         </ListControl>
+      </View>
+      <!-- IMAGE_DOS_HEADER -->
+      <View>
+         <Name>Get-DumpBin</Name>
+         <ViewSelectedBy>
+            <TypeName>IMAGE_DOS_HEADER</TypeName>
+         </ViewSelectedBy>
+         <ListControl>
+            <ListEntries>
+               <ListEntry>
+                  <ListItems>
+                     <ListItem>
+                        <Label>Magic number</Label>
+                        <ScriptBlock>$_.e_magic</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Bytes on last page of file</Label>
+                        <ScriptBlock>$_.e_cblp</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Pages in file</Label>
+                        <ScriptBlock>$_.e_cp</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Relocations</Label>
+                        <ScriptBlock>$_.e_crlc</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Size of header in paragraphs</Label>
+                        <ScriptBlock>$_.e_cparhdr</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Minimum extra paragraphs needed</Label>
+                        <ScriptBlock>$_.e_minalloc</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Maximum extra paragraphs needed</Label>
+                        <ScriptBlock>$_.e_maxalloc</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Initial (relative) SS value</Label>
+                        <ScriptBlock>$_.e_ss</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Initial SP value</Label>
+                        <ScriptBlock>$_.e_sp</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Checksum</Label>
+                        <ScriptBlock>$_.e_csum</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Initial IP value</Label>
+                        <ScriptBlock>$_.e_ip</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Initial (relative) CS value</Label>
+                        <ScriptBlock>$_.e_cs</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>File address of relocation table</Label>
+                        <ScriptBlock>$_.e_lfarlc</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Overlay number</Label>
+                        <ScriptBlock>$_.e_ovno</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Reserved words</Label>
+                        <ScriptBlock>$_.e_res</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>OEM identifier</Label>
+                        <ScriptBlock>$_.e_oemid</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>OEM information</Label>
+                        <ScriptBlock>$_.e_oeminfo</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Reserved words</Label>
+                        <ScriptBlock>$_.e_res2</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>File address of new exe header</Label>
+                        <ScriptBlock>$_.e_lfanew</ScriptBlock>
+                     </ListItem>
+                  </ListItems>
+               </ListEntry>
+            </ListEntries>
+         </ListControl>
+      </View>
+      <!-- IMAGE_OS2_HEADER -->
+      <View>
+         <Name>Get-DumpBin</Name>
+         <ViewSelectedBy>
+            <TypeName>IMAGE_OS2_HEADER</TypeName>
+         </ViewSelectedBy>
+         <ListControl>
+            <ListEntries>
+               <ListEntry>
+                  <ListItems>
+                     <ListItem>
+                        <Label>Magic number</Label>
+                        <ScriptBlock>$_.ne_magic</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Version number</Label>
+                        <ScriptBlock>$_.ne_ver</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Revision number</Label>
+                        <ScriptBlock>$_.ne_rev</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Entry Table</Label>
+                        <ScriptBlock>$_.ne_enttab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Number of bytes in Entry Table</Label>
+                        <ScriptBlock>$_.ne_cbenttab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Checksum of whole file</Label>
+                        <ScriptBlock>'0x{0:X8}' -f $_.ne_crc</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Flag words</Label>
+                        <ScriptBlock>'0x{0:X}' -f $_.ne_flags</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Automatic data segment number</Label>
+                        <ScriptBlock>$_.ne_autodata</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Initial heap allocation</Label>
+                        <ScriptBlock>$_.ne_heap</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Initial stack allocation</Label>
+                        <ScriptBlock>$_.ne_stack</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Initial CS:IP setting</Label>
+                        <ScriptBlock>'0x{0:X8}' -f $_.ne_csip</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Initial SS:SP setting</Label>
+                        <ScriptBlock>'0x{0:X8}' -f $_.ne_sssp</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Count file segments</Label>
+                        <ScriptBlock>$_.ne_cseg</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Entries in Module Reference Table</Label>
+                        <ScriptBlock>$_.ne_cmod</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Size of non-resident table</Label>
+                        <ScriptBlock>$_.ne_cbnrestab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Segment Table</Label>
+                        <ScriptBlock>$_.ne_segtab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Resource Table</Label>
+                        <ScriptBlock>$_.ne_rsrctab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of resident name table</Label>
+                        <ScriptBlock>$_.ne_restab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Module Reference Table</Label>
+                        <ScriptBlock>$_.ne_modtab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Imported Names Table</Label>
+                        <ScriptBlock>$_.ne_imptab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Non-resident Names Tabel</Label>
+                        <ScriptBlock>$_.ne_nrestab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Count of movable entries</Label>
+                        <ScriptBlock>$_.ne_cmovent</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Segment alignment shift count</Label>
+                        <ScriptBlock>$_.ne_align</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Count of resource segments</Label>
+                        <ScriptBlock>$_.ne_cres</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Target Operating system</Label>
+                        <ScriptBlock>$_.ne_exetyp</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Other .EXE flags</Label>
+                        <ScriptBlock>'0x{0:X}' -f $_.ne_flagsothers</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset to return thunks</Label>
+                        <ScriptBlock>$_.ne_pretthunks</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset to segment ref. bytes</Label>
+                        <ScriptBlock>$_.ne_psegrefbytes</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Minimum code swap area size</Label>
+                        <ScriptBlock>$_.ne_swaparea</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Expected Windows version number</Label>
+                        <ScriptBlock>
+                           '{0}.{1}' -f (cmd /c set /a $_.ne_expver ^>^> $_.ne_flagsothers), ($_.ne_expver -band 0xff)
+                        </ScriptBlock>
+                     </ListItem>
+                  </ListItems>
+               </ListEntry>
+            </ListEntries>
+         </ListControl>
+      </View>
+      <!-- IMAGE_VXD_HEADER -->
+      <View>
+         <Name>Get-DumpBin</Name>
+         <ViewSelectedBy>
+            <TypeName>IMAGE_VXD_HEADER</TypeName>
+         </ViewSelectedBy>
+         <ListControl>
+            <ListEntries>
+               <ListEntry>
+                  <ListItems>
+                     <ListItem>
+                        <Label>Magic number</Label>
+                        <ScriptBlock>$_.e32_magic</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>The byte ordering for the VXD</Label>
+                        <ScriptBlock>$_.e32_border</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>The word ordering for the VXD</Label>
+                        <ScriptBlock>$_.e32_worder</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>The EXE format level for now</Label>
+                        <ScriptBlock>$_.e32_level</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>The CPU type</Label>
+                        <ScriptBlock>$_.e32_cpu</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>The OS type</Label>
+                        <ScriptBlock>$_.e32_os</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Module version</Label>
+                        <ScriptBlock>$_.e32_ver</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Module flags</Label>
+                        <ScriptBlock>$_.e32_mflags</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Module pages</Label>
+                        <ScriptBlock>$_.e32_mpages</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Object for instrcution pointer</Label>
+                        <ScriptBlock>$_.e32_startobj</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Extended instruction pointer</Label>
+                        <ScriptBlock>$_.e32_eip</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Object for stack pointer</Label>
+                        <ScriptBlock>$_.e32_stackobj</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Extended stack pointer</Label>
+                        <ScriptBlock>$_.e32_esp</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>VXD page size</Label>
+                        <ScriptBlock>$_.e32_pagesize</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Last page size in VXD</Label>
+                        <ScriptBlock>$_.e32_lastpagesize</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Fixup section size</Label>
+                        <ScriptBlock>$_.e32_fixupsize</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Fixup section checksum</Label>
+                        <ScriptBlock>$_.e32_fixupsum</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Loader section size</Label>
+                        <ScriptBlock>$_.e32_ldrsize</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Loader section checksum</Label>
+                        <ScriptBlock>$_.e32_ldrsum</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Object table offset</Label>
+                        <ScriptBlock>$_.e32_objtab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Number of objects in module</Label>
+                        <ScriptBlock>$_.e32_objcnt</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Object page map offset</Label>
+                        <ScriptBlock>$_.e32_objmap</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Object iterated data map offset</Label>
+                        <ScriptBlock>$_.e32_itermap</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Resource Table</Label>
+                        <ScriptBlock>$_.e32_rsrctab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Number of resource entries</Label>
+                        <ScriptBlock>$_.e32_rsrccnt</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of resident name table</Label>
+                        <ScriptBlock>$_.e32_restab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Entry Table</Label>
+                        <ScriptBlock>$_.e32_enttab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Module Directive Table</Label>
+                        <ScriptBlock>$_.e32_dirtab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Number of module directives</Label>
+                        <ScriptBlock>$_.e32_dircnt</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Fixup Page Table</Label>
+                        <ScriptBlock>$_.e32_fpagetab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Fixup Record Table</Label>
+                        <ScriptBlock>$_.e32_frectab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Import Module Name Table</Label>
+                        <ScriptBlock>$_.e32_impmod</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Number of entries in Import Name Table</Label>
+                        <ScriptBlock>$_.e32_impmodcnt</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Import Procedure Name Table</Label>
+                        <ScriptBlock>$_.e32_impproc</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Per-Page Checksum Table</Label>
+                        <ScriptBlock>$_.e32_pagesum</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Enumerated Data Pages</Label>
+                        <ScriptBlock>$_.e32_datapage</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Number of preload pages</Label>
+                        <ScriptBlock>$_.e32_preload</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of Non-resident Name Table</Label>
+                        <ScriptBlock>$_.e32_nrestab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Size of Non-resident Name Table</Label>
+                        <ScriptBlock>$_.e32_cbnrestab</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Non-resident Name Table Checksum</Label>
+                        <ScriptBlock>$_.e32_nressum</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Object for automatic data object</Label>
+                        <ScriptBlock>$_.e32_autodata</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Offset of the debugging information</Label>
+                        <ScriptBlock>$_.e32_debuginfo</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>The length of the debugging info. in bytes</Label>
+                        <ScriptBlock>$_.e32_debuglen</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Number of instance pages in preload section of VXD file</Label>
+                        <ScriptBlock>$_.e32_instpreload</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Number of instance pages in demand load section of VXD file</Label>
+                        <ScriptBlock>$_.e32_instdemand</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Size of heap - for 16-bit apps</Label>
+                        <ScriptBlock>$_.e32_heapsize</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Reserved words</Label>
+                        <ScriptBlock>$_.e32_res3</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>e_winresoff</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>e_winreslen</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <Label>Device ID for VXD</Label>
+                        <ScriptBlock>$_.e32_devid</ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <Label>DDK version for VXD</Label>
+                        <ScriptBlock>$_.e32_ddkver</ScriptBlock>
+                     </ListItem>
+                  </ListItems>
+               </ListEntry>
+            </ListEntries>
+         </ListControl>
+      </View>
+      <!-- IMAGE_FILE_HEADER -->
+      <View>
+         <Name>Get-DumpBin</Name>
+         <ViewSelectedBy>
+            <TypeName>IMAGE_FILE_HEADER</TypeName>
+         </ViewSelectedBy>
+         <ListControl>
+            <ListEntries>
+               <ListEntry>
+                  <ListItems>
+                     <ListItem>
+                        <PropertyName>Machine</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>NumberOfSections</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <Label>TimeDateStamp</Label>
+                        <ScriptBlock>
+                           [TimeZone]::CurrentTimeZone.ToLocalTime(
+                              ([DateTime]'1.1.1970').AddSeconds($_.TimeDateStamp)
+                           )
+                        </ScriptBlock>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>PointerToSymbolTable</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>NumberOfSymbols</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>SizeOfOptionalHeader</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>Characteristics</PropertyName>
+                     </ListItem>
+                  </ListItems>
+               </ListEntry>
+            </ListEntries>
+         </ListControl>
+      </View>
+      <!-- IMAGE_OPTIONAL_HEADER -->
+      <View>
+         <Name>Get-DumpBin</Name>
+         <ViewSelectedBy>
+            <SelectionSetName>OptionalHeaderTypes</SelectionSetName>
+         </ViewSelectedBy>
+         <ListControl>
+            <ListEntries>
+               <ListEntry>
+                  <ListItems>
+                     <ListItem>
+                        <PropertyName>Magic</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>MajorLinkerVersion</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>MinorLinkerVersion</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>SizeOfCode</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>SizeOfInitializedData</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>SizeOfUninitializedData</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>BaseOfCode</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>BaseOfData</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>ImageBase</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>SectionAlignment</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>FileAlignment</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>MajorOperatingSystemVersion</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>MinorOperatingSystemVersion</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>MajorImageVersion</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>MinorImageVersion</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>MajorSubsystemVersion</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>MinorSubsystemVersion</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>Win32VersionValue</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>SizeOfImage</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>SizeOfHeaders</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>CheckSum</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>Subsystem</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>DllCharacteristics</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>SizeOfStackReserve</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>SizeOfStackCommit</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>SizeOfHeapReserve</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>SizeOfHeapCommit</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>LoaderFlags</PropertyName>
+                     </ListItem>
+                     <ListItem>
+                        <PropertyName>NumberOfRvaAndSizes</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </ListItem>
+                  </ListItems>
+               </ListEntry>
+            </ListEntries>
+         </ListControl>
+      </View>
+      <!-- IMAGE_SECTION_HEADER -->
+      <View>
+         <Name>Get-DumpBin</Name>
+         <ViewSelectedBy>
+            <TypeName>IMAGE_SECTION_HEADER</TypeName>
+         </ViewSelectedBy>
+         <TableControl>
+         <AutoSize />
+            <TableHeaders>
+               <TableColumnHeader>
+                  <Label>Name</Label>
+               </TableColumnHeader>
+               <TableColumnHeader>
+                  <Label>VirtualSize</Label>
+               </TableColumnHeader>
+               <TableColumnHeader>
+                  <Label>VirtualAddress</Label>
+               </TableColumnHeader>
+               <TableColumnHeader>
+                  <Label>SizeOfRawData</Label>
+               </TableColumnHeader>
+               <TableColumnHeader>
+                  <Label>PointerToRawData</Label>
+               </TableColumnHeader>
+               <TableColumnHeader>
+                  <Label>Characteristics</Label>
+               </TableColumnHeader>
+            </TableHeaders>
+            <TableRowEntries>
+               <TableRowEntry>
+                  <TableColumnItems>
+                     <TableColumnItem>
+                        <PropertyName>Name</PropertyName>
+                     </TableColumnItem>
+                     <TableColumnItem>
+                        <PropertyName>VirtualSize</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </TableColumnItem>
+                     <TableColumnItem>
+                        <PropertyName>VirtualAddress</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </TableColumnItem>
+                     <TableColumnItem>
+                        <PropertyName>SizeOfRawData</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </TableColumnItem>
+                     <TableColumnItem>
+                        <PropertyName>PointerToRawData</PropertyName>
+                        <FormatString>0x{0:X}</FormatString>
+                     </TableColumnItem>
+                     <TableColumnItem>
+                        <PropertyName>Characteristics</PropertyName>
+                     </TableColumnItem>
+                  </TableColumnItems>
+               </TableRowEntry>
+            </TableRowEntries>
+         </TableControl>
+      </View>
+   </ViewDefinitions>
+</Configuration>
+
+<!-- SIG # Begin signature block -->
+<!-- MIINGAYJKoZIhvcNAQcCoIINCTCCDQUCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB -->
+<!-- gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR -->
+<!-- AgEAAgEAAgEAAgEAAgEAMCEwCQYFKw4DAhoFAAQUcV2IjJg09pNX22UyM1yl3Aew -->
+<!-- utCgggpaMIIFIjCCBAqgAwIBAgIQBg4i3l65iHFvsYhyMrxXATANBgkqhkiG9w0B -->
+<!-- AQsFADByMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYD -->
+<!-- VQQLExB3d3cuZGlnaWNlcnQuY29tMTEwLwYDVQQDEyhEaWdpQ2VydCBTSEEyIEFz -->
+<!-- c3VyZWQgSUQgQ29kZSBTaWduaW5nIENBMB4XDTE0MDcxNzAwMDAwMFoXDTE1MDcy -->
+<!-- MjEyMDAwMFowaTELMAkGA1UEBhMCQ0ExCzAJBgNVBAgTAk9OMREwDwYDVQQHEwhI -->
+<!-- YW1pbHRvbjEcMBoGA1UEChMTRGF2aWQgV2F5bmUgSm9obnNvbjEcMBoGA1UEAxMT -->
+<!-- RGF2aWQgV2F5bmUgSm9obnNvbjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC -->
+<!-- ggEBAN0ZOWCIOEyhtxA/koB0azqKK40Pw3fa8GLif/ZM0cXJWGawkVgxOMbejeJW -->
+<!-- YCqXgEHF2MX/cJY8svCmLlX8M7AdjXYgtAS+C+cEHxrGAMMzj3/9EOu6DjzxIcwL -->
+<!-- l1GKoUwy8X3/GRGk3sBWT5CwKYRJdh9goWy74ltZN+sTKKeDHqpfuvxye6c++PC7 -->
+<!-- 86wzm4MwfOIuPE9StFeo/0nKheEukfK9cpthlE5dUHpW0OjmJdX/g0mEdIjm2/Q2 -->
+<!-- 50fzQyLQXOuMVIJ4Qk2comMDNRvZZvSPOBwWZ6fAR4tXfZwlpUcLv3wBbIjslhT7 -->
+<!-- XasCm73TdBj+ZFDx2tUtpWguP/0CAwEAAaOCAbswggG3MB8GA1UdIwQYMBaAFFrE -->
+<!-- uXsqCqOl6nEDwGD5LfZldQ5YMB0GA1UdDgQWBBS+FASXsrRle2tLXdkVyoT1Dbw7 -->
+<!-- QDAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAwwCgYIKwYBBQUHAwMwdwYDVR0fBHAw -->
+<!-- bjA1oDOgMYYvaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL3NoYTItYXNzdXJlZC1j -->
+<!-- cy1nMS5jcmwwNaAzoDGGL2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNvbS9zaGEyLWFz -->
+<!-- c3VyZWQtY3MtZzEuY3JsMEIGA1UdIAQ7MDkwNwYJYIZIAYb9bAMBMCowKAYIKwYB -->
+<!-- BQUHAgEWHGh0dHBzOi8vd3d3LmRpZ2ljZXJ0LmNvbS9DUFMwgYQGCCsGAQUFBwEB -->
+<!-- BHgwdjAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tME4GCCsG -->
+<!-- AQUFBzAChkJodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRTSEEy -->
+<!-- QXNzdXJlZElEQ29kZVNpZ25pbmdDQS5jcnQwDAYDVR0TAQH/BAIwADANBgkqhkiG -->
+<!-- 9w0BAQsFAAOCAQEAbhjcmv+WCZwWCIYQwiEsH94SesBr0cPqWjEtJrBefqU9zFdB -->
+<!-- u5oc/WytxdCkEj5bxkoN9aJmuDAZnHNHBwIYeUz0vNByZRz6HsPzNPxLxThajJTe -->
+<!-- YOHlSTMI/XzBhJ7VzCb3YFhkD5f9gcJ5n+Z94ebd/1SoIvc9iwC3tTf5x2O7aHPN -->
+<!-- iyoWLTV4+PgDntCy/YDj11+uviI9sUUjAajYPEDvoiWinyT+7RlbStlcEuBwqvqT -->
+<!-- nLaiRsK17rjawW87Nkq/jB8rymUR/fzluIpHmPA4P0NazH4v5f62mpMFqdk0osMU -->
+<!-- QJ/qqACQ+2+/eAw7Gr6igNvlsxQpPfxsPNtUkTCCBTAwggQYoAMCAQICEAQJGBtf -->
+<!-- 1btmdVNDtW+VUAgwDQYJKoZIhvcNAQELBQAwZTELMAkGA1UEBhMCVVMxFTATBgNV -->
+<!-- BAoTDERpZ2lDZXJ0IEluYzEZMBcGA1UECxMQd3d3LmRpZ2ljZXJ0LmNvbTEkMCIG -->
+<!-- A1UEAxMbRGlnaUNlcnQgQXNzdXJlZCBJRCBSb290IENBMB4XDTEzMTAyMjEyMDAw -->
+<!-- MFoXDTI4MTAyMjEyMDAwMFowcjELMAkGA1UEBhMCVVMxFTATBgNVBAoTDERpZ2lD -->
+<!-- ZXJ0IEluYzEZMBcGA1UECxMQd3d3LmRpZ2ljZXJ0LmNvbTExMC8GA1UEAxMoRGln -->
+<!-- aUNlcnQgU0hBMiBBc3N1cmVkIElEIENvZGUgU2lnbmluZyBDQTCCASIwDQYJKoZI -->
+<!-- hvcNAQEBBQADggEPADCCAQoCggEBAPjTsxx/DhGvZ3cH0wsxSRnP0PtFmbE620T1 -->
+<!-- f+Wondsy13Hqdp0FLreP+pJDwKX5idQ3Gde2qvCchqXYJawOeSg6funRZ9PG+ykn -->
+<!-- x9N7I5TkkSOWkHeC+aGEI2YSVDNQdLEoJrskacLCUvIUZ4qJRdQtoaPpiCwgla4c -->
+<!-- SocI3wz14k1gGL6qxLKucDFmM3E+rHCiq85/6XzLkqHlOzEcz+ryCuRXu0q16XTm -->
+<!-- K/5sy350OTYNkO/ktU6kqepqCquE86xnTrXE94zRICUj6whkPlKWwfIPEvTFjg/B -->
+<!-- ougsUfdzvL2FsWKDc0GCB+Q4i2pzINAPZHM8np+mM6n9Gd8lk9ECAwEAAaOCAc0w -->
+<!-- ggHJMBIGA1UdEwEB/wQIMAYBAf8CAQAwDgYDVR0PAQH/BAQDAgGGMBMGA1UdJQQM -->
+<!-- MAoGCCsGAQUFBwMDMHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDov -->
+<!-- L29jc3AuZGlnaWNlcnQuY29tMEMGCCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5k -->
+<!-- aWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURSb290Q0EuY3J0MIGBBgNVHR8E -->
+<!-- ejB4MDqgOKA2hjRodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1 -->
+<!-- cmVkSURSb290Q0EuY3JsMDqgOKA2hjRodHRwOi8vY3JsMy5kaWdpY2VydC5jb20v -->
+<!-- RGlnaUNlcnRBc3N1cmVkSURSb290Q0EuY3JsME8GA1UdIARIMEYwOAYKYIZIAYb9 -->
+<!-- bAACBDAqMCgGCCsGAQUFBwIBFhxodHRwczovL3d3dy5kaWdpY2VydC5jb20vQ1BT -->
+<!-- MAoGCGCGSAGG/WwDMB0GA1UdDgQWBBRaxLl7KgqjpepxA8Bg+S32ZXUOWDAfBgNV -->
+<!-- HSMEGDAWgBRF66Kv9JLLgjEtUYunpyGd823IDzANBgkqhkiG9w0BAQsFAAOCAQEA -->
+<!-- PuwNWiSz8yLRFcgsfCUpdqgdXRwtOhrE7zBh134LYP3DPQ/Er4v97yrfIFU3sOH2 -->
+<!-- 0ZJ1D1G0bqWOWuJeJIFOEKTuP3GOYw4TS63XX0R58zYUBor3nEZOXP+QsRsHDpEV -->
+<!-- +7qvtVHCjSSuJMbHJyqhKSgaOnEoAjwukaPAJRHinBRHoXpoaK+bp1wgXNlxsQyP -->
+<!-- u6j4xRJon89Ay0BEpRPw5mQMJQhCMrI2iiQC/i9yfhzXSUWW6Fkd6fp0ZGuy62ZD -->
+<!-- 2rOwjNXpDd32ASDOmTFjPQgaGLOBm0/GkxAG/AeB+ova+YJJ92JuoVP6EpQYhS6S -->
+<!-- kepobEQysmah5xikmmRR7zGCAigwggIkAgEBMIGGMHIxCzAJBgNVBAYTAlVTMRUw -->
+<!-- EwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20x -->
+<!-- MTAvBgNVBAMTKERpZ2lDZXJ0IFNIQTIgQXNzdXJlZCBJRCBDb2RlIFNpZ25pbmcg -->
+<!-- Q0ECEAYOIt5euYhxb7GIcjK8VwEwCQYFKw4DAhoFAKB4MBgGCisGAQQBgjcCAQwx -->
+<!-- CjAIoAKAAKECgAAwGQYJKoZIhvcNAQkDMQwGCisGAQQBgjcCAQQwHAYKKwYBBAGC -->
+<!-- NwIBCzEOMAwGCisGAQQBgjcCARUwIwYJKoZIhvcNAQkEMRYEFEu8id0eIB84Y+2i -->
+<!-- YrVrq4SLfEW2MA0GCSqGSIb3DQEBAQUABIIBAGk2geEEDEwB9arxaMjO1ZPn/BjD -->
+<!-- JWClmd1zcJsIlfaUuDTUnJAiUghHpfe8KN6s427pfzIcZ4xV9JD2zgvWcP3y9ZD2 -->
+<!-- ug8e392+/b90nVPpxZ4VBqDkFYd95Y339X8L/KeqOfQ9uS9E9yWXVERkvN5nXQm4 -->
+<!-- ifK68nYzwlbHur8cLElNLlaB2GUn6rkhWKUsoOk0zlyvAyQFLHbFzXXq8Y1Zfo9S -->
+<!-- jaXK+wWtCxR9vijIcRfMyWJ9NDfwI/OZbaRJOwPSpxae5dwhjxuTVzK4sSF/i+xI -->
+<!-- 5cPY3nQLkXfZwFKBpkhBQViazrZoH7BkntGDhzpJC4NbIOzEBCq3eKcGJvw= -->
+<!-- SIG # End signature block -->
