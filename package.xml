@@ -1,0 +1,443 @@
+<?xml version="1.0"?>
+<SCMPackage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:admx="http://schemas.microsoft.com/GroupPolicy/2008/03/PolicyDefinitions" xmlns:mssasc-core="http://schemas.microsoft.com/SolutionAccelerator/SecurityCompliance/core" xsi:schemaLocation="http://schemas.microsoft.com/SolutionAccelerator/SecurityCompliance xtrans20-definitions-schema.xsd" xmlns="http://schemas.microsoft.com/SolutionAccelerator/SecurityCompliance">
+  <FormatInfo>
+    <Version Major="1" Minor="0" />
+    <Description>Windows 7 SP1 - Extended DCM checks</Description>
+  </FormatInfo>
+  <Baseline ID="{c99b8b29-1b5b-461b-b5a5-d4bd4a361a4d}" Name="Win7SP1 Extended DCM Checks" GenerateDCM="true" GenerateSCAP="false" GenerateGPO="false">
+    <mssasc-core:Description>Use this baseline to generate a DCM Pack to check for critical configuration items like Administrator Group membership and missing Windows Updates.</mssasc-core:Description>
+    <mssasc-core:Version Major="1" Minor="0" />
+    <Mode Mode="Edit" />
+    <VersionControl>
+      <Publisher ID="{f36fa61d-22fa-4a50-a532-ca4e83b23c00}">
+        <DisplayName>Microsoft</DisplayName>
+      </Publisher>
+      <OriginalBaselineID>{c99b8b29-1b5b-461b-b5a5-d4bd4a361a4d}</OriginalBaselineID>
+      <RevisionNumber>1</RevisionNumber>
+      <OriginalRevisionNumber>1</OriginalRevisionNumber>
+    </VersionControl>
+    <SettingGroup ID="{5e4d7c5b-96a8-4737-b3a4-f87dbe4a208e}" Name="Least Privilege" OriginalSettingGroupID="{799d218c-e436-444f-97e0-32db954665e2}">
+      <mssasc-core:Version Major="1" Minor="0" />
+      <Author />
+      <Setting ID="{85539787-ad64-4ba6-be75-2ecc4db90d98}" Name="Check Administrator Group Membership" Index="5735" RevisionNumber="1" OriginalSettingID="{d9b6b1ff-a82f-4f84-99d3-d00c52802102}" LockdownDate="2012-03-30T15:59:24.0257367-07:00" GenerateDCM="true" GenerateSCAP="false" GenerateGPO="false">
+        <mssasc-core:Version Major="1" Minor="0" />
+        <Publisher ID="{f36fa61d-22fa-4a50-a532-ca4e83b23c00}">
+          <DisplayName>Microsoft</DisplayName>
+        </Publisher>
+        <PMOwner>Microsoft</PMOwner>
+        <DevOwner>Microsoft</DevOwner>
+        <TestOwner>Microsoft</TestOwner>
+        <ReviewedBy>Microsoft</ReviewedBy>
+        <ReviewStatus>Complete</ReviewStatus>
+        <Content>
+          <ProductInfo>
+            <ProductRef product_ref="{ca347361-ac97-4dfa-a666-eeca698eff9f}" />
+            <ShortDescription>Compares Administrator Group Membership to a specified list.
+</ShortDescription>
+            <FullDescription>This configuration item uses PowerShell to compare membership of the local Administrators group on the system with a list of approved accounts. 
+
+It is designed to be exported within DCM Management Packs.  
+
+To function it requires that the PowerShell execution policy be set to RemoteSigned. 
+</FullDescription>
+            <UIPath>PowerShell</UIPath>
+            <DefaultValue />
+            <Vulnerability>Users with administrative privileges log on with their administrative capabilities enabled. This could allow administrative tasks to occur accidentally or maliciously without the knowledge of the individual, as in the following examples:
+
+• A user unknowingly downloads and installs malware from a malicious or infected website.
+
+• A user is tricked into opening an email attachment that contains malware, which runs and possibly installs itself on the computer.
+
+• A removable drive is inserted into the computer and the AutoPlay feature then attempts to run the malicious software automatically.
+
+• A user installs unsupported applications that can affect the computers performance or reliability.</Vulnerability>
+            <Countermeasure>To effectively utilize this configuration item you must edit the second line of the script to define the list of accounts approved for membership in the local Administrator's group using the following steps:
+
+1. Customize the baseline value in SCM with a comma-separated list of approved accounts.
+
+2. Export the baseline with the configuration item as a DCM Management Pack.
+
+3. Import the DCM Management Pack into System Center Configuration Manager (SCCM).
+
+4. Edit the script for this configuration item within SCCM by specifying a comma-separated list of approved accounts between the quotation marks in the line of the script that consists of the following: $DesiredAdminList = ""
+
+For example, $DesiredAdminList = "CONTOSO/Domain Admins,Administrators"
+</Countermeasure>
+            <PotentialImpact>Implementing this configuration item will have no impact because the associated script merely checks the state of the system being assessed. It does not make any changes to the configuration. 
+
+However, limiting membership of the local Administrator's group will have an impact: users who are not members of that group will be unable to perform most administrative tasks. 
+</PotentialImpact>
+            <ManualTestProcedure />
+          </ProductInfo>
+          <ProductStartedFrom product_ref="{ca347361-ac97-4dfa-a666-eeca698eff9f}" />
+          <Unit />
+          <ValueMappingTable>
+            <Mapping FriendlyName="Not Defined">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Defined" />
+              <SCAPValue ValueA="Not Defined" />
+              <GPOValue ValueA="Not Defined" />
+            </Mapping>
+            <Mapping FriendlyName="Not Configured">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Configured" />
+              <SCAPValue ValueA="Not Configured" />
+              <GPOValue ValueA="Not Configured" />
+            </Mapping>
+            <Mapping FriendlyName="Not Applicable">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Applicable" />
+              <SCAPValue ValueA="Not Applicable" />
+              <GPOValue ValueA="Not Applicable" />
+            </Mapping>
+            <Mapping FriendlyName="Not Recommended">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Recommended" />
+              <SCAPValue ValueA="Not Recommended" />
+              <GPOValue ValueA="Not Recommended" />
+            </Mapping>
+            <Mapping FriendlyName="Recommended">
+              <BehaviorDescription />
+              <DCMValue ValueA="Recommended" />
+              <SCAPValue ValueA="Recommended" />
+              <GPOValue ValueA="Recommended" />
+            </Mapping>
+          </ValueMappingTable>
+        </Content>
+        <DiscoveryInfo>
+          <SettingDiscoveryInfo DiscoveryType="Script" Scope="Machine">
+            <ScriptDiscoveryInfo>
+              <mssasc-core:ScriptType>PowerShell</mssasc-core:ScriptType>
+              <mssasc-core:ScriptBody>#Must be modified with desired Admin Group members
+$DesiredAdminList = ""
+
+$strComputer = $env:computername
+$Domain = Get-WmiObject -Class Win32_ComputerSystem -computername $strComputer
+$adminGroup = Get-WmiObject -Class Win32_Group -computername $strComputer -Filter "SID='S-1-5-32-544' AND LocalAccount='True'"
+$strDomain = $Domain.domain.substring(0,$Domain.domain.indexOf("."))
+
+$group = [ADSI]("WinNT://" + $strComputer + "/" + $adminGroup.Name + ",group")
+
+$members = @($group.psbase.Invoke("Members"))
+
+$arrAdminList = $members | foreach {$_.GetType().InvokeMember("adspath", 'GetProperty', $null, $_, $null)} | Select-Object @{n='MemberName';e={$_ }}
+
+$arrAdminList = $arrAdminList -replace "@{MemberName=WinNT://$strDomain/$strComputer/"
+$arrAdminList = $arrAdminList -replace "@{MemberName=WinNT://"
+$arrAdminList = $arrAdminList -replace "}"
+
+$AdminList = ""
+
+foreach ($member in $arrAdminList)
+{
+	$Adminlist = "$AdminList,$member"
+
+}
+
+$Adminlist = $AdminList.Substring(1)
+
+$arrDesiredAdminList = $DesiredAdminList.Split(',')
+
+$result = Compare-Object $arrAdminList $arrDesiredAdminList
+
+If ($result -eq $Null)
+{
+	return $DesiredAdminList
+}
+Else
+{
+	return $AdminList
+}
+</mssasc-core:ScriptBody>
+            </ScriptDiscoveryInfo>
+          </SettingDiscoveryInfo>
+          <DataType>String</DataType>
+        </DiscoveryInfo>
+        <supportedOn>Windows 7 SP1, Windows Server R2 SP1</supportedOn>
+        <ExportInfo GPOGenerateFormat="NA" />
+      </Setting>
+    </SettingGroup>
+    <SettingGroup ID="{dae6ba69-1d2e-4ca3-b27f-7187a5436783}" Name="Patch Management" OriginalSettingGroupID="{7788f8ea-2c9d-47bc-8502-890fd5afa1b5}">
+      <mssasc-core:Version Major="1" Minor="0" />
+      <Author />
+      <Setting ID="{be0fe963-a65a-418f-8481-55bd271ee995}" Name="Check for missing Windows Updates" Index="5737" RevisionNumber="1" OriginalSettingID="{47034e45-15a8-404b-a80a-92583e327afc}" LockdownDate="2012-03-30T15:59:25.5704015-07:00" GenerateDCM="true" GenerateSCAP="false" GenerateGPO="false">
+        <mssasc-core:Version Major="1" Minor="0" />
+        <Publisher ID="{f36fa61d-22fa-4a50-a532-ca4e83b23c00}">
+          <DisplayName>Microsoft</DisplayName>
+        </Publisher>
+        <PMOwner>Microsoft</PMOwner>
+        <DevOwner>Microsoft</DevOwner>
+        <TestOwner>Microsoft</TestOwner>
+        <ReviewedBy>Microsoft</ReviewedBy>
+        <ReviewStatus>Complete</ReviewStatus>
+        <Content>
+          <ProductInfo>
+            <ProductRef product_ref="{ca347361-ac97-4dfa-a666-eeca698eff9f}" />
+            <ShortDescription>This configuration item is a PowerShell-based script that checks to see if all required updates are installed. </ShortDescription>
+            <FullDescription>This configuration item is a PowerShell-based script that checks to see if all required updates are installed. 
+
+It is designed to be exported within DCM Management Packs.  To function it requires that the PowerShell execution policy be set to RemoteSigned. 
+
+You can control what is checked by configuring the appropriate Windows Update settings. In other words, if the Windows Update settings are at their default values the list of available updates from Microsoft's online Windows Update service will be checked. You can force it to check against your internal Software Update Services server instead, and control the list of available updates on that server. 
+
+Any missing updates will be listed in the DCM report. The list will include the related KB article for the missing update.
+
+</FullDescription>
+            <UIPath>PowerShell</UIPath>
+            <DefaultValue />
+            <Vulnerability>Although each version of Windows is thoroughly tested before release, it is possible that problems will be discovered after the products are shipped. Configuring the Automatic Updates feature so that updates are installed in a timely manner can help you ensure that the computers in your environment will always have the most recent critical operating system updates and service packs installed.
+</Vulnerability>
+            <Countermeasure>Configure the Configure Automatic Updates setting to Enabled and select 4. Automatically download updates and install them on the schedule specified below from the Configure automatic updating list box.
+</Countermeasure>
+            <PotentialImpact>Critical operating system updates and service packs will automatically download and install daily.
+</PotentialImpact>
+            <ManualTestProcedure />
+          </ProductInfo>
+          <ProductStartedFrom product_ref="{ca347361-ac97-4dfa-a666-eeca698eff9f}" />
+          <Unit />
+          <ValueMappingTable SelectedFriendlyName="Enabled">
+            <Mapping FriendlyName="Not Defined">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Defined" />
+              <SCAPValue ValueA="Not Defined" />
+              <GPOValue ValueA="Not Defined" />
+            </Mapping>
+            <Mapping FriendlyName="Not Configured">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Configured" />
+              <SCAPValue ValueA="Not Configured" />
+              <GPOValue ValueA="Not Configured" />
+            </Mapping>
+            <Mapping FriendlyName="Not Applicable">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Applicable" />
+              <SCAPValue ValueA="Not Applicable" />
+              <GPOValue ValueA="Not Applicable" />
+            </Mapping>
+            <Mapping FriendlyName="Not Recommended">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Recommended" />
+              <SCAPValue ValueA="Not Recommended" />
+              <GPOValue ValueA="Not Recommended" />
+            </Mapping>
+            <Mapping FriendlyName="Recommended">
+              <BehaviorDescription />
+              <DCMValue ValueA="Recommended" />
+              <SCAPValue ValueA="Recommended" />
+              <GPOValue ValueA="Recommended" />
+            </Mapping>
+            <Mapping FriendlyName="Enabled">
+              <BehaviorDescription />
+              <DCMValue ValueA="Compliant" />
+              <SCAPValue ValueA="Compliant" />
+              <GPOValue ValueA="Compliant" />
+            </Mapping>
+          </ValueMappingTable>
+        </Content>
+        <DiscoveryInfo>
+          <SettingDiscoveryInfo DiscoveryType="Script" Scope="Machine">
+            <ScriptDiscoveryInfo>
+              <mssasc-core:ScriptType>PowerShell</mssasc-core:ScriptType>
+              <mssasc-core:ScriptBody>$criteria = "IsInstalled=0 and Type='Software'"
+$updateSession = new-object -com "Microsoft.Update.Session"
+$updates=$updateSession.CreateupdateSearcher().Search($criteria).Updates
+
+if ($updates.count -eq 0)
+{		  
+	return "Compliant"
+}
+else
+{
+	#Returns no more than 75 characters of update title to improve DCM reporting
+	#Attempts to preserve KB article number
+	$missingUpdates = $updates | foreach-object `
+	{if ($_.Title.IndexOf("(KB") -gt 0)
+	{
+		if ($_.Title.length -gt 75)
+		{
+			$_.Title.Substring(0,60) + "..." + $_.Title.Substring($_.Title.IndexOf("(KB")) 
+		}
+		else
+		{
+			$_.Title
+		}
+	
+	}
+	else
+	{
+		$_.Title.Substring(0,75)
+	}}
+	$missingUpdates | Format-List
+}
+</mssasc-core:ScriptBody>
+            </ScriptDiscoveryInfo>
+          </SettingDiscoveryInfo>
+          <DataType>String</DataType>
+        </DiscoveryInfo>
+        <supportedOn>Unspecified</supportedOn>
+        <ExportInfo GPOGenerateFormat="NA" />
+      </Setting>
+    </SettingGroup>
+    <SettingGroup ID="{fb7d18ef-f5a2-414c-ba8a-4f4e041d7659}" Name="Least Functionality" OriginalSettingGroupID="{ba5e521a-c23d-45e2-8949-f69a5673d92e}">
+      <mssasc-core:Version Major="1" Minor="0" />
+      <Author />
+      <Setting ID="{3e024cf5-686b-42de-937d-3086c97cbbb2}" Name="Check if AppLocker is Enabled" Index="5734" RevisionNumber="1" OriginalSettingID="{425553f4-25e6-400c-99c1-6c1654f62ed7}" LockdownDate="2012-03-30T15:59:25.7451771-07:00" GenerateDCM="true" GenerateSCAP="false" GenerateGPO="false">
+        <mssasc-core:Version Major="1" Minor="0" />
+        <Publisher ID="{f36fa61d-22fa-4a50-a532-ca4e83b23c00}">
+          <DisplayName>Microsoft</DisplayName>
+        </Publisher>
+        <PMOwner>Microsoft</PMOwner>
+        <DevOwner>Microsoft</DevOwner>
+        <TestOwner>Microsoft</TestOwner>
+        <ReviewedBy>Microsoft</ReviewedBy>
+        <ReviewStatus>Complete</ReviewStatus>
+        <Content>
+          <ProductInfo>
+            <ProductRef product_ref="{ca347361-ac97-4dfa-a666-eeca698eff9f}" />
+            <ShortDescription>Determines if AppLocker is enabled by checking if any AppLocker rules are defined</ShortDescription>
+            <FullDescription>This configuration item uses PowerShell to check whether or not AppLocker policies are enabled on the system either locally or through Group Policy. It is designed to be exported within DCM packs. 
+
+To function it requires that the PowerShell execution policy be set to RemoteSigned. 
+
+AppLocker advances the features and functionality of Software Restriction Policies. AppLocker allows you to create rules to allow or deny applications from running based on unique identities of files and to specify which users or groups can run those applications.
+
+For more information about AppLocker see ""AppLocker Technical Documentation for Windows 7 and Windows Server 2008 R2: http://www.microsoft.com/download/en/details.aspx?displaylang=en&amp;id=13431.
+</FullDescription>
+            <UIPath>PowerShell</UIPath>
+            <DefaultValue />
+            <Vulnerability>Whenever a user installs an unauthorized application on a company computer, there are risks associated with that process. At a minimum, the installation process modifies the attack surface of the computer, and creates the risk of starting additional services or opening firewall ports. It is also possible that the application is malicious in intent, and was installed either by mistake or intentionally by the user, which can then launch an attack on other systems after the computer connects to the organizations network.
+</Vulnerability>
+            <Countermeasure>Information about designing, testing, and deploying AppLocker policies can be found in the Windows 7 SP1 Security Guide available in SCM. 
+
+Additional information is available online in the "AppLocker Technical Documentation for Windows 7 and Windows Server 2008 R2:: http://www.microsoft.com/download/en/details.aspx?displaylang=en&amp;id=13431.
+</Countermeasure>
+            <PotentialImpact>Implementing this configuration item alone will have no impact because the associated script merely checks the state of the system being assessed, and does not make any changes to the configuration. 
+
+However, using AppLocker policies to restrict what applications can run, will have an impact. Properly designed and tested AppLocker policies can significantly increase the security of a system, but poorly designed AppLocker policies can make a system difficult or even impossible to use.
+</PotentialImpact>
+            <ManualTestProcedure />
+          </ProductInfo>
+          <ProductStartedFrom product_ref="{ca347361-ac97-4dfa-a666-eeca698eff9f}" />
+          <Unit />
+          <ValueMappingTable SelectedFriendlyName="Enabled">
+            <Mapping FriendlyName="Not Defined">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Defined" />
+              <SCAPValue ValueA="Not Defined" />
+              <GPOValue ValueA="Not Defined" />
+            </Mapping>
+            <Mapping FriendlyName="Not Configured">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Configured" />
+              <SCAPValue ValueA="Not Configured" />
+              <GPOValue ValueA="Not Configured" />
+            </Mapping>
+            <Mapping FriendlyName="Not Applicable">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Applicable" />
+              <SCAPValue ValueA="Not Applicable" />
+              <GPOValue ValueA="Not Applicable" />
+            </Mapping>
+            <Mapping FriendlyName="Not Recommended">
+              <BehaviorDescription />
+              <DCMValue ValueA="Not Recommended" />
+              <SCAPValue ValueA="Not Recommended" />
+              <GPOValue ValueA="Not Recommended" />
+            </Mapping>
+            <Mapping FriendlyName="Recommended">
+              <BehaviorDescription />
+              <DCMValue ValueA="Recommended" />
+              <SCAPValue ValueA="Recommended" />
+              <GPOValue ValueA="Recommended" />
+            </Mapping>
+            <Mapping FriendlyName="Enabled">
+              <BehaviorDescription />
+              <DCMValue ValueA="Enabled" />
+              <SCAPValue ValueA="Enabled" />
+              <GPOValue ValueA="Enabled" />
+            </Mapping>
+            <Mapping FriendlyName="Disabled">
+              <BehaviorDescription />
+              <DCMValue ValueA="Disabled" />
+              <SCAPValue ValueA="Disabled" />
+              <GPOValue ValueA="Disabled" />
+            </Mapping>
+          </ValueMappingTable>
+        </Content>
+        <DiscoveryInfo>
+          <SettingDiscoveryInfo DiscoveryType="Script" Scope="Machine">
+            <ScriptDiscoveryInfo>
+              <mssasc-core:ScriptType>PowerShell</mssasc-core:ScriptType>
+              <mssasc-core:ScriptBody>Import-Module AppLocker
+
+$AppLockerPolicy = Get-AppLockerPolicy -Effective
+
+If (($AppLockerPolicy.RuleCollections | select -skip 1) -eq $Null)
+{
+	Return "Disabled"
+}
+Else
+{
+	Return "Enabled"
+}
+</mssasc-core:ScriptBody>
+            </ScriptDiscoveryInfo>
+          </SettingDiscoveryInfo>
+          <DataType>String</DataType>
+        </DiscoveryInfo>
+        <supportedOn>Unspecified</supportedOn>
+        <ExportInfo GPOGenerateFormat="NA" />
+      </Setting>
+    </SettingGroup>
+    <Check>
+      <SettingRef setting_ref="{85539787-ad64-4ba6-be75-2ecc4db90d98}" Severity="Important" />
+      <ExistentialRule Name="Check Administrator Group Membership - PS" Operator="GreaterThan" Severity="Informational" ValueA="0">
+        <Description>Check Administrator Group Membership - PS</Description>
+      </ExistentialRule>
+      <ValidationRules>
+        <SettingRule Name="Check Administrator Group Membership - PS" Operator="Equals" Severity="Informational" id="bc245bccc2e54cf8927bb777f081f832">
+          <Description />
+          <Value ValueA="Administrators,Contoso/Domain Admins" />
+        </SettingRule>
+      </ValidationRules>
+    </Check>
+    <Check>
+      <SettingRef setting_ref="{be0fe963-a65a-418f-8481-55bd271ee995}" Severity="Important" />
+      <ExistentialRule Name="Check if Windows Updates are missing (List missing updates)" Operator="GreaterThan" Severity="Informational" ValueA="0">
+        <Description>Check if Windows Updates are missing (List missing updates)</Description>
+      </ExistentialRule>
+      <ValidationRules>
+        <SettingRule Name="Check if Windows Updates are missing (List missing updates)" Operator="Equals" Severity="Informational" id="1f85b98470fa4a71b0c62ee75a2d8d4b">
+          <Description />
+          <Value ValueA="Compliant" />
+        </SettingRule>
+      </ValidationRules>
+    </Check>
+    <Check>
+      <SettingRef setting_ref="{3e024cf5-686b-42de-937d-3086c97cbbb2}" Severity="Important" />
+      <ExistentialRule Name="Check if AppLocker is Enabled" Operator="GreaterThan" Severity="Informational" ValueA="0">
+        <Description>Check if AppLocker is Enabled</Description>
+      </ExistentialRule>
+      <ValidationRules>
+        <SettingRule Name="Check if AppLocker is Enabled" Operator="Equals" Severity="Informational" id="1f85b98470fa4a71b0c62ee75a2d8d4b">
+          <Description />
+          <Value ValueA="Enabled" />
+        </SettingRule>
+      </ValidationRules>
+    </Check>
+    <Document ID="{9be8af2d-ccbc-403a-ae0e-43df59745902}" Name="Extended DCM Checks.docx">
+      <RelativePath>BaselineDocuments\c99b8b29-1b5b-461b-b5a5-d4bd4a361a4d\Extended DCM Checks.docx</RelativePath>
+    </Document>
+  </Baseline>
+  <Product DisplayName="Windows 7 SP1" ID="{ca347361-ac97-4dfa-a666-eeca698eff9f}">
+    <OperatingSystemInfo MajorVersion="6" MinorVersion="1" BuildVersion="7601" ServicePackMinorVersion="1" />
+    <ProductFamilyRef productfamily_ref="{5cea53d1-8a08-4804-8886-1ddea5899aea}" />
+    <CPE>
+      <CPE-Dictionary>cpe\Windows7SP1-cpe.xml</CPE-Dictionary>
+      <CPE-Oval>cpe\cpe-oval.xml</CPE-Oval>
+    </CPE>
+  </Product>
+  <ProductFamily ID="{5cea53d1-8a08-4804-8886-1ddea5899aea}" DisplayName="Windows Family">
+    <Description>The Microsoft Windows product family includes Windows XP, Windows Server 2003, Windows Vista, Windows Server 2008, and later versions of the Microsoft Windows operating system.</Description>
+  </ProductFamily>
+</SCMPackage>

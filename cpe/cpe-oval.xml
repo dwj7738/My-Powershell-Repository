@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oval_definitions xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" 
+      xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5" 
+      xmlns:oval-def="http://oval.mitre.org/XMLSchema/oval-definitions-5" 
+      xmlns:win-def="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" 
+      xmlns:ind-def="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows http://oval.mitre.org/language/download/schema/version5.3/ovaldefinition/complete/windows-definitions-schema.xsd
+      http://oval.mitre.org/XMLSchema/oval-definitions-5#independent http://oval.mitre.org/language/download/schema/version5.3/ovaldefinition/complete/independent-definitions-schema.xsd
+      http://oval.mitre.org/XMLSchema/oval-definitions-5 http://oval.mitre.org/language/download/schema/version5.3/ovaldefinition/complete/oval-definitions-schema.xsd
+      http://oval.mitre.org/XMLSchema/oval-common-5 http://oval.mitre.org/language/download/schema/version5.3/ovaldefinition/complete/oval-common-schema.xsd">
+      <generator>
+            <oval:product_name>Microsoft</oval:product_name>
+            <oval:schema_version>5.3</oval:schema_version>
+            <oval:timestamp>2008-09-02T12:28:40.000-04:00</oval:timestamp>
+      </generator>
+      <!-- ==================================================================================================== -->
+      <!-- ==========================================  DEFINITIONS  =========================================== -->
+      <!-- ==================================================================================================== -->
+      <definitions>
+            <definition id="oval:org.mitre.oval:def:228" version="3" class="inventory" xmlns:oval-def="http://oval.mitre.org/XMLSchema/oval-definitions-5">
+                  <metadata>
+                        <title>Microsoft Windows 7 is installed</title>
+                        <affected family="windows">
+                              <platform>Microsoft Windows 7</platform>
+                        </affected>
+                        <reference source="CPE" ref_id="cpe:/o:microsoft:windows7"/>
+                        <description>The operating system installed on the system is Microsoft Windows 7</description>
+                  </metadata>
+                  <criteria operator="AND">
+                        <criterion comment="the installed operating system is part of the Microsoft Windows family" test_ref="oval:org.mitre.oval:tst:99"/>
+                        <criterion comment="Windows 7 is installed" test_ref="oval:org.mitre.oval:tst:7914"/>
+                  </criteria>
+            </definition>
+      </definitions>
+      <!-- ==================================================================================================== -->
+      <!-- ============================================  TESTS  =============================================== -->
+      <!-- ==================================================================================================== -->
+      <tests>
+            <family_test id="oval:org.mitre.oval:tst:99" version="1" comment="the installed operating system is part of the Microsoft Windows family" check_existence="at_least_one_exists" check="only one" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" xmlns:oval-def="http://oval.mitre.org/XMLSchema/oval-definitions-5">
+                  <object object_ref="oval:org.mitre.oval:obj:99"/>
+                  <state state_ref="oval:org.mitre.oval:ste:99"/>
+            </family_test>
+            <registry_test id="oval:org.mitre.oval:tst:7914" version="1" comment="Windows 7 is installed" check_existence="at_least_one_exists" check="at least one" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" xmlns:oval-def="http://oval.mitre.org/XMLSchema/oval-definitions-5">
+                  <object object_ref="oval:org.mitre.oval:obj:5590"/>
+                  <state state_ref="oval:org.mitre.oval:ste:3828"/>
+            </registry_test>
+      </tests>
+      <!-- ==================================================================================================== -->
+      <!-- ============================================  OBJECTS  ============================================= -->
+      <!-- ==================================================================================================== -->
+      <objects>
+            <family_object id="oval:org.mitre.oval:obj:99" version="1" comment="This is the default family object. Only one family object should exist." xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" xmlns:oval-def="http://oval.mitre.org/XMLSchema/oval-definitions-5"/>
+            <registry_object id="oval:org.mitre.oval:obj:5590" version="1" comment="This registry key  ProductName" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" xmlns:oval-def="http://oval.mitre.org/XMLSchema/oval-definitions-5">
+                  <hive>HKEY_LOCAL_MACHINE</hive>
+                  <key>SOFTWARE\Microsoft\Windows NT\CurrentVersion</key>
+                  <name>CurrentVersion</name>
+            </registry_object>
+      </objects>
+      <!-- ==================================================================================================== -->
+      <!-- =============================================  STATES  ============================================= -->
+      <!-- ==================================================================================================== -->
+      <states>
+            <family_state id="oval:org.mitre.oval:ste:99" version="1" comment="Microsoft Windows family" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" xmlns:oval-def="http://oval.mitre.org/XMLSchema/oval-definitions-5">
+                  <family>windows</family>
+            </family_state>
+            <registry_state id="oval:org.mitre.oval:ste:3828" version="1" comment="The registry key matches with 7" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows" xmlns:oval-def="http://oval.mitre.org/XMLSchema/oval-definitions-5">
+                  <value>6.1</value>
+            </registry_state>
+      </states>
+      <!-- ==================================================================================================== -->
+      <!-- ==================================================================================================== -->
+      <!-- ==================================================================================================== -->
+</oval_definitions>

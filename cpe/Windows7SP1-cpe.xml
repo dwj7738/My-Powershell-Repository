@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<cpe-list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cpe.mitre.org/dictionary/2.0 http://cpe.mitre.org/files/cpe-dictionary_2.1.xsd" xmlns="http://cpe.mitre.org/dictionary/2.0">
+  <cpe-item name="cpe:/o:microsoft:windows7">
+    <title>The operating system installed on the system is Microsoft Windows 7</title>
+    <check system="http://oval.mitre.org/XMLSchema/oval-definitions-5" href="cpe-oval.xml">oval:org.mitre.oval:def:228</check>
+  </cpe-item>
+</cpe-list>

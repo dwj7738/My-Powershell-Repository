@@ -1,0 +1,4 @@
+﻿These code listings are intended to be used as described in the book,
+"PowerShell Scripting and Toolmaking in a Month of Lunches." In most
+cases, that will require you to rename the files and move them to specific
+locations on your computer. Please consult the book for details.

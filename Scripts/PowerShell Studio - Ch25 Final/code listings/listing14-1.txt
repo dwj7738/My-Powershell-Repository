@@ -1,0 +1,20 @@
+﻿CREATE DATABASE [Inventory] ON  PRIMARY 
+( NAME = N'Inventory', FILENAME = N'c:\sampledata\Inventory.mdf' , SIZE = 3096KB , FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'Inventory_log', FILENAME = N'c:\sampledata\Inventory_log.ldf' , SIZE = 1024KB , FILEGROWTH = 10%)
+GO
+USE [Inventory]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Computers](
+ [computername] [nvarchar](50) NULL,
+ [osversion] [nvarchar](100) NULL,
+ [spversion] [nvarchar](100) NULL,
+ [manufacturer] [nvarchar](100) NULL,
+ [model] [nvarchar](100) NULL
+) ON [PRIMARY]
+
+GO
