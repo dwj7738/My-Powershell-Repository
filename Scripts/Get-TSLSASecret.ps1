@@ -207,7 +207,7 @@ Add-Type -MemberDefinition $signature -Name LSAUtil -Namespace LSAUtil
         }
 
         [LSAUtil.LSAUtil+LSA_UNICODE_STRING]$lusSecretData =
-        [LSAUtil.LSAUtil+LSA_UNICODE_STRING][System.Runtime.InteropServices.marshal]::PtrToStructure($privateData, [LSAUtil.LSAUtil+LSA_UNICODE_STRING])
+        [LSAUtil.LSAUtil+LSA_UNICODE_STRING][System.Runtime.InteropServices.marshal]::PtrToStructure($privateData, [System.Type][LSAUtil.LSAUtil+LSA_UNICODE_STRING])
 
         Try {
           [string]$value = [System.Runtime.InteropServices.marshal]::PtrToStringAuto($lusSecretData.Buffer)
