@@ -1,6 +1,7 @@
 ﻿# ------------------------------------------------------------------
 # Title: Get Ping status along with Server Uptime - HTML Report
 # Author: Bhavik Solanki
+# Collaborator: Michael Monestel Arias CR
 # Description: Introduction: This script is used to check Ping status of the server. If server is up and running then it will retrive uptime of the server. Script will generate HTML report as output. It will also highlight list of servers which are down.Before you start:This script expect text
 # Date Published: 29-Mar-12 12:14:50 AM
 # Source: http://gallery.technet.microsoft.com/scriptcenter/Get-Ping-status-along-with-bd579238
@@ -52,6 +53,46 @@ Function GetUpTime
 	"Days: $($Uptime.Days); Hours: $($Uptime.Hours); Minutes: $($Uptime.Minutes); Seconds: $($Uptime.Seconds)" 
 }
 
+Function Get-UserLogon ($Equipo){ 
+        $User_Login = $Null
+        try {
+        $Searcher = [WmiSearcher]'SELECT * FROM Win32_ComputerSystem'
+        $Searcher.Options.TimeOut = "0:0:35"
+        $ConnectionOptions = New-Object Management.ConnectionOptions
+        $ManagementScope = New-Object Management.ManagementScope("\\$Equipo\root\cimv2", $ConnectionOptions)
+        $Searcher.Scope = $ManagementScope
+        $User_LoginO = $Searcher.Get() | select username 
+
+            if(!$User_LoginO){
+            $User_Login = $User_LoginO.username
+            }else{
+                $quserResult = quser /SERVER:$Equipo 2>&1
+                if (!$quserResult){}else{
+
+                    Try
+                    {
+                    $quserRegex = $quserResult | ForEach-Object -Process { $_.trim() -replace '\s{2,}',',' -replace '>',''}
+                    $quserObject = $quserRegex | ConvertFrom-Csv
+                    }
+                    Catch
+                    {
+                    }
+                    
+                    if (!$quserObject){}else{
+                    $UserEnLogon = ($quserObject | select USERNAME).username -join ","
+                    $User_Login = $UserEnLogon
+                    }
+                }
+            }
+       
+
+        }catch {
+        $User_Login = ""
+        }
+
+return $User_Login 
+}
+
 #Change value of the following parameter as needed
 $OutputFile = "D:\Output.htm"
 $ServerList = Get-Content "D:\ServerList.txt"
@@ -62,10 +103,12 @@ Foreach($ServerName in $ServerList)
 	$pingStatus = Get-WmiObject -Query "Select * from win32_PingStatus where Address='$ServerName'"
 		
 	$Uptime = $null
+	$UserLogonM = $null
 	if($pingStatus.StatusCode -eq 0)
 	{
 		$OperatingSystem = Get-WmiObject Win32_OperatingSystem -ComputerName $ServerName -ErrorAction SilentlyContinue
 		$Uptime = GetUptime( $OperatingSystem.LastBootUpTime )
+		$UserLogonM = Get-UserLogon $ServerName
 	}
 	
     $Result += New-Object PSObject -Property @{
@@ -73,6 +116,7 @@ Foreach($ServerName in $ServerList)
 		IPV4Address = $pingStatus.IPV4Address
 		Status = GetStatusCode( $pingStatus.StatusCode )
 		Uptime = $Uptime
+		UserLogon = $UserLogonM
 	}
 }
 
@@ -91,7 +135,9 @@ if($Result -ne $null)
 			<TH><B>IP Address</B></TD>
 			<TH><B>Status</B></TH>
 			<TH><B>Uptime</B></TH>
+			<TH><B>UserLogon</B></TH>
 		</TR>"
+    $Result = $Result | sort ServerName				
     Foreach($Entry in $Result)
     {
         if($Entry.Status -ne "Success")
@@ -107,6 +153,7 @@ if($Result -ne $null)
 						<TD>$($Entry.IPV4Address)</TD>
 						<TD>$($Entry.Status)</TD>
 						<TD>$($Entry.Uptime)</TD>
+						<TD>$($Entry.UserLogon)</TD>
 					</TR>"
     }
     $HTML += "</Table></BODY></HTML>"
